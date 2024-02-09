@@ -1,5 +1,5 @@
 import { world, system } from '@minecraft/server';
-import {ActionFormData } from "@minecraft/server-ui";
+import {ActionFormData, ActionFormResponse } from "@minecraft/server-ui";
 
 var blockBreaks = {}
 var blocksUsed = {}
@@ -65,12 +65,23 @@ world.afterEvents.targetBlockHit.subscribe(event=>{
 
 //ui functions----------------------------------------
 function statList(player){
-	let statForm = new ActionFormData();
-	statForm.title(player.name);
-	let getBdy = statListBody(player);
-	statForm.body(getBdy);
-	statForm.button("Ok");
-	statForm.show(player);
+	let statForm = new ActionFormData()
+		.title(player.name)
+		.body(statListBody(player))
+		.button("Close")
+		.button("Achievements")
+		.button("Advancements");
+		
+		statForm.show(player).then((response) => {
+			switch(response.selection){
+				case 1 :
+					achieveList(player);
+					break;
+				case 2 :
+					advanceList(player);
+					break;
+			}
+		});
 }
 function statListBody(player){
 	//add text
@@ -81,6 +92,41 @@ function statListBody(player){
 		statArrayTxt[2] = "Total blocks placed: " + getSomeScore("stats", "blockPlaced_total", player);
 		statArrayTxt[3] = "Total blocks broken: " + getSomeScore("stats", "blockBroken_total", player);
 		
+	//construct the body
+		let boolPos = "\u2717";
+		let boolNeg = " ";
+		let indentSize = "    ";
+		let nextLine = '\n';
+		let indentNextLine = nextLine + indentSize;
+		var i;
+		
+	    //stats--------------------
+		let statBodyTxt = "";
+		
+		for(i = 0; i < statArrayTxt.length; i++){
+			statBodyTxt = statBodyTxt + statArrayTxt[i] + indentNextLine;
+		}
+		
+		//display text
+		return statBodyTxt;
+}
+function achieveList(player){
+	let achieveForm = new ActionFormData()
+		.title(player.name)
+		.body(achieveListBody(player))
+		.button("Close")
+		.button("Stats");
+		
+		achieveForm.show(player).then((response) => {
+			switch(response.selection){
+				case 1 :
+					statList(player);
+					break;
+			}
+		});
+}
+function achieveListBody(player){
+	//add text
 	    //achievements--------------------
 		let achievementTxt = "Achievements";
 		
@@ -147,13 +193,6 @@ function statListBody(player){
 		let indentNextLine = nextLine + indentSize;
 		var i;
 		
-	    //stats--------------------
-		let statBodyTxt = "";
-		
-		for(i = 0; i < statArrayTxt.length; i++){
-			statBodyTxt = statBodyTxt + statArrayTxt[i] + indentNextLine;
-		}
-		
 	    //achievements--------------------
 		//initialize variables
 		let getSomeWhereBodyTxt = "";
@@ -180,9 +219,123 @@ function statListBody(player){
 		}
 		
 		//display text
-		return statBodyTxt
-			+ nextLine
-			+ achievementTxt
+		return achievementTxt
+			+ getSomeWhereBodyTxt
+			+ itemInventoryBodyTxt
+			+ statusAndEffectsBodyTxt
+			+ spawnAndBreedBodyTxt
+			+ weaponsToolsArmorBodyTxt;
+}
+function advanceList(player){
+	let advanceForm = new ActionFormData()
+		.title(player.name)
+		.body(advanceListBody(player))
+		.button("Close")
+		.button("Stats");
+		
+		advanceForm.show(player).then((response) => {
+			switch(response.selection){
+				case 1 :
+					statList(player);
+					break;
+			}
+		});
+}
+function advanceListBody(player){
+	//add text
+	    //advancements--------------------
+		let advancementTxt = "advancements";
+		
+		//getSomeWhere
+		let getSomeWhereArrayTxt = [];
+		getSomeWhereArrayTxt[0] = "Go to the Nether: " + getSomeScore("getSomeWhere", "nether", player);
+		getSomeWhereArrayTxt[1] = "Go to The End: " + getSomeScore("getSomeWhere", "the_end", player);
+		getSomeWhereArrayTxt[2] = "Visit a Bastion: " + getSomeScore("getSomeWhere", "bastion_remnant", player);
+		getSomeWhereArrayTxt[3] = "Visit a Fortress: " + getSomeScore("getSomeWhere", "nether_fortress", player);
+		getSomeWhereArrayTxt[4] = "Go 7000 blocks in the Overworld: " + getSomeScore("getSomeWhere", "overworld7000", player);
+		
+		//itemInventory
+		let itemInventoryArrayTxt = [];
+		itemInventoryArrayTxt[0] = "Get a crafting table: " + getSomeScore("itemInventory", "crafting_table", player);
+		itemInventoryArrayTxt[1] = "Get a stone pickaxe: " + getSomeScore("itemInventory", "stone_pickaxe", player);
+		itemInventoryArrayTxt[2] = "Get an iron pickaxe: " + getSomeScore("itemInventory", "iron_pickaxe", player);
+		itemInventoryArrayTxt[3] = "Get a netherite hoe: " + getSomeScore("itemInventory", "netherite_hoe", player);
+		itemInventoryArrayTxt[4] = "Get some iron armor: " + getSomeScore("itemInventory", "iron_armor", player);
+		itemInventoryArrayTxt[5] = "Get some diamond armor: " + getSomeScore("itemInventory", "diamond_armor", player);
+		itemInventoryArrayTxt[6] = "Full set of netherite armor: " + getSomeScore("itemInventory", "netherite_armor", player);
+		itemInventoryArrayTxt[7] = "Get a pair of elytra: " + getSomeScore("itemInventory", "elytra", player);
+		itemInventoryArrayTxt[8] = "Get an iron ingot: " + getSomeScore("itemInventory", "iron_ingot", player);
+		itemInventoryArrayTxt[9] = "Get a diamond: " + getSomeScore("itemInventory", "diamond", player);
+		itemInventoryArrayTxt[10] = "Get some ancient debris: " + getSomeScore("itemInventory", "ancient_debris", player);
+		itemInventoryArrayTxt[11] = "Get a bucket of lava: " + getSomeScore("itemInventory", "lava_bucket", player);
+		itemInventoryArrayTxt[12] = "Catch a fish in a bucket: " + getSomeScore("itemInventory", "fish_bucket", player);
+		itemInventoryArrayTxt[13] = "Get a bucket of axolotl: " + getSomeScore("itemInventory", "axolotl_bucket", player);
+		itemInventoryArrayTxt[14] = "Catch a tadpole in a bucket: " + getSomeScore("itemInventory", "tadpole_bucket", player);
+		itemInventoryArrayTxt[15] = "Get cobblestone, blackstone,\n        or cobbled deepslate: " + getSomeScore("itemInventory", "got_cobble", player);
+		itemInventoryArrayTxt[16] = "Get some obsidian: " + getSomeScore("itemInventory", "obsidian", player);
+		itemInventoryArrayTxt[17] = "Get some crying obsidian: " + getSomeScore("itemInventory", "crying_obsidian", player);
+		itemInventoryArrayTxt[18] = "Get a blaze rod: " + getSomeScore("itemInventory", "blaze_rod", player);
+		itemInventoryArrayTxt[19] = "Get a dragon egg: " + getSomeScore("itemInventory", "dragon_egg", player);
+		itemInventoryArrayTxt[20] = "Get a sniffer egg: " + getSomeScore("itemInventory", "sniffer_egg", player);
+		itemInventoryArrayTxt[21] = "Get a pottery sherd: " + getSomeScore("itemInventory", "pottery_sherd", player);
+		
+		//statusAndEffects
+		let statusAndEffectsArrayTxt = [];
+		statusAndEffectsArrayTxt[0] = "Get hero of the village: " + getSomeScore("statusAndEffects", "hero_of_the_village", player);
+		statusAndEffectsArrayTxt[1] = "All potion effects at once: " + getSomeScore("statusAndEffects", "potion_effects_bool", player);
+		statusAndEffectsArrayTxt[2] = "All effects at once: " + getSomeScore("statusAndEffects", "all_effects_bool", player);
+		
+		//spawnAndBreed
+		let spawnAndBreedArrayTxt = [];
+		spawnAndBreedArrayTxt[0] = "Summon an iron golem: " + getSomeScore("spawnAndBreed", "iron_golem", player);
+		spawnAndBreedArrayTxt[1] = "Summon a wither: " + getSomeScore("spawnAndBreed", "wither", player);
+		spawnAndBreedArrayTxt[2] = "Respawn the dragon: " + getSomeScore("spawnAndBreed", "ender_dragon_bool", player);
+		spawnAndBreedArrayTxt[3] = "Breed 2 animals together: " + getSomeScore("spawnAndBreed", "breed_some", player);
+		spawnAndBreedArrayTxt[4] = "Breed all the animals: " + getSomeScore("spawnAndBreed", "breed_all_bool", player);
+		
+		//weaponsToolsArmor
+		let weaponsToolsArmorArrayTxt = [];
+		weaponsToolsArmorArrayTxt[0] = "Shoot a Crossbow: " + getSomeScore("weaponsToolsArmor", "crossbow", player);
+		weaponsToolsArmorArrayTxt[1] = "Shoot something with an arrow: " + getSomeScore("weaponsToolsArmor", "arrow", player);
+		weaponsToolsArmorArrayTxt[2] = "Hit a mob with a thrown trident: " + getSomeScore("weaponsToolsArmor", "thrown_trident", player);
+		weaponsToolsArmorArrayTxt[3] = "Hit a target block bulls eye: " + getSomeScore("weaponsToolsArmor", "target", player);
+		weaponsToolsArmorArrayTxt[4] = "Catch a fish: " + getSomeScore("weaponsToolsArmor", "catch_fish", player);
+		
+	//construct the body
+		let boolPos = "\u2717";
+		let boolNeg = " ";
+		let indentSize = "    ";
+		let nextLine = '\n';
+		let indentNextLine = nextLine + indentSize;
+		var i;
+		
+	    //advancements--------------------
+		//initialize variables
+		let getSomeWhereBodyTxt = "";
+		let itemInventoryBodyTxt = "";
+		let statusAndEffectsBodyTxt = "";
+		let spawnAndBreedBodyTxt = "";
+		let weaponsToolsArmorBodyTxt = "";
+		
+		//concatenate text sections
+		for(i = 0; i < getSomeWhereArrayTxt.length; i++){
+			getSomeWhereBodyTxt = getSomeWhereBodyTxt + indentNextLine + (getSomeWhereArrayTxt[i].concat(".,.").replace("0.,.", boolNeg).replace("1.,.", boolPos).replace(".,.", ""));
+		}
+		for(i = 0; i < itemInventoryArrayTxt.length; i++){
+			itemInventoryBodyTxt = itemInventoryBodyTxt + indentNextLine + (itemInventoryArrayTxt[i].concat(".,.").replace("0.,.", boolNeg).replace("1.,.", boolPos).replace(".,.", ""));
+		}
+		for(i = 0; i < statusAndEffectsArrayTxt.length; i++){
+			statusAndEffectsBodyTxt = statusAndEffectsBodyTxt + indentNextLine + (statusAndEffectsArrayTxt[i].concat(".,.").replace("0.,.", boolNeg).replace("1.,.", boolPos).replace(".,.", ""));
+		}
+		for(i = 0; i < spawnAndBreedArrayTxt.length; i++){
+			spawnAndBreedBodyTxt = spawnAndBreedBodyTxt + indentNextLine + (spawnAndBreedArrayTxt[i].concat(".,.").replace("0.,.", boolNeg).replace("1.,.", boolPos).replace(".,.", ""));
+		}
+		for(i = 0; i < weaponsToolsArmorArrayTxt.length; i++){
+			weaponsToolsArmorBodyTxt = weaponsToolsArmorBodyTxt + indentNextLine + (weaponsToolsArmorArrayTxt[i].concat(".,.").replace("0.,.", boolNeg).replace("1.,.", boolPos).replace(".,.", ""));
+		}
+		
+		//display text
+		return advancementTxt
 			+ getSomeWhereBodyTxt
 			+ itemInventoryBodyTxt
 			+ statusAndEffectsBodyTxt
