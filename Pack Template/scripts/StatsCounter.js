@@ -43,6 +43,9 @@ world.afterEvents.leverAction.subscribe(event=>{
 world.afterEvents.playerBreakBlock.subscribe(event=>{
 	blockBroken(event);
 });
+world.beforeEvents.playerBreakBlock.subscribe(event=>{
+	preBreak(event);
+});
 world.afterEvents.playerDimensionChange.subscribe(event =>{ 
 	changedDimension(event);
 });
@@ -189,10 +192,76 @@ function statListBody(player){
 //end ui functions----------------------------------------
 
 //event functions----------------------------------------
+function preBreak(event){
+	blockBreaks["L"+event.block.x+" "+event.block.y+" "+event.block.z]=event.block.getTags()
+}
 function blockBroken(event){
 	let player = event.player;
+	let blockTags = blockBreaks["L"+event.block.x+" "+event.block.y+" "+event.block.z]
+	delete blockBreaks["L"+event.block.x+" "+event.block.y+" "+event.block.z]
+	addToScore("stats", processBlockTags(blockTags), player)
 	
 	addToScore("stats", "blockBroken_total", player);
+}
+function processBlockTags(tags){
+	for(let index in tags) {
+		const tag = tags[index]
+		switch(tag){
+			case "dirt":
+				if (tags.includes("grass")){
+					if (tags.includes("fertilize_area")){
+						return "grass"
+					}
+					return "dirt"
+				}
+				return "Dirt Variants"
+				break;
+			case "stone":
+				return "Stone bits"
+			case "stone_pick_diggable":
+				return "Copper Ore"
+			case "iron_pick_diggable":
+				break;
+			case "diamond_pick_diggable":
+				if(!tags.includes("iron_pick_diggable")){
+					return "Obsidian"
+				}
+				return "Ore Blocks"
+				break;
+			case "wood":
+				let tempTags=tags
+				if (tags.includes("log")){
+					let index = tempTags.indexOf("wood");
+					tempTags.splice(index, 1)
+					index = tempTags.indexOf("log");
+					tempTags.splice(index, 1)
+					return tempTags[0]+" Log"
+				}
+				if ("text_sign" in tags){
+					return "Signs"
+				}
+				return "Wood Bits"
+			case "pumpkin":
+				return "Pumpkins"
+			case "plant":
+				return "2 high Plants or saplings"
+			case "fertilize_area":
+				if(!tags.includes("grass")){
+					return "Flowers"
+				}
+			case "minecraft:crop":
+				return "crop"
+			case "sand":
+				return "Sand"
+			case "gravel":
+				return "Gravel"
+			case "metal":
+				//cauldron and blocks of smelted iron bars
+				return "Metal Blocks"
+			case "snow":
+				return "Snow Layers"
+		}
+	}
 }
 function blockPlaced(event){
 	let player = event.player;
