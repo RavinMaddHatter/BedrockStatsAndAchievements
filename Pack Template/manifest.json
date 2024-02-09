@@ -1,0 +1,44 @@
+{
+  "format_version": 2,
+  "header": {
+    "name": "Stats Counter",
+    "description": "This is a scoreboard tool that allows you to count stats as you go. It is event driven to reduce lag",
+    "uuid": "393bf41c-19e7-4fc9-81cb-59c8d00cbf66",
+    "version": [
+      1,
+      0,
+      0
+    ],
+    "min_engine_version": [
+      1,
+      20,
+      0
+    ]
+  },
+  "modules": [
+    {
+      "uuid": "4f59811c-6ab0-4064-8343-bf90bb2f82d2",
+      "version": [
+        1,
+        0,
+        0
+      ],
+      "type": "script",
+      "language": "javascript",
+      "entry": "scripts/StatsCounter.js"
+    }
+  ],
+  "capabilities": [
+    "script_eval"
+  ],
+  "dependencies": [
+    {
+      "module_name": "@minecraft/server",
+      "version": "1.7.0"
+    },
+    {
+      "module_name": "@minecraft/server-ui",
+      "version": "1.1.0"
+    }
+  ]
+}
