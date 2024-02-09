@@ -507,6 +507,7 @@ function blockInteractions(item,Block){
 		//[achievement] Freight Station | Use a Hopper to move an item from a Chest Minecart to a Chest. | —
 		//[achievement] One Pickle, Two Pickle, Sea Pickle, Four | Place four Sea Pickles in a group | —
 		//[achievement] Organizational Wizard | Name a Shulker Box with an Anvil | —
+		//[achievement] Me Gold! | Dig up a buried treasure | Open a buried treasure chest
 		//[achievement] Sneak 100 | Sneaking [sic] next to a Sculk Sensor without triggering it | Sneak next to a Sculk Sensor or Warden without triggering or aggravating it.
 		//[achievement] Sound the Alarm! | Ring the bell with a hostile enemy in the village. | —
 		//[achievement] Sticky Situation | Slide down a honey block to slow your fall. | —
@@ -519,7 +520,6 @@ function blockInteractions(item,Block){
 		//[advancement] Country Lode, Take Me Home | Use a Compass on a Lodestone | —
 		//[advancement] Enchanter | Enchant an item at an Enchanting Table | Insert an item in an enchanting table, then apply an enchantment.
 		//[advancement] Not Quite ""Nine"" Lives | Charge a Respawn Anchor to the maximum | —
-		//[advancement] Respecting the Remnants | Brush a Suspicious block to obtain a Pottery Sherd | —
 		//[advancement] Sneak 100 | Sneak near a Sculk Sensor or Warden to prevent it from detecting you | Sneak within 8 blocks from a sculk sensor, or 16 blocks from a warden.
 		//[advancement] Sticky Situation | Jump into a Honey Block to break your fall | Collide on a vertical side of a honey block when in air.
 		//[advancement] Sweet Dreams | Sleep in a Bed to change your respawn point | Lie down in a bed. The advancement is granted as soon as the player is in the bed, even if the player does not successfully sleep.
@@ -532,32 +532,17 @@ function blockInteractions(item,Block){
 }
 function craftAndCook(){
 	//to-do--------------------
-		//[achievement] Acquire Hardware | Smelt an iron ingot | Pick up an iron ingot from a furnace output.
 		//[achievement] Alternative Fuel | Power a furnace with a kelp block | This achievement is awarded only if the dried kelp block is put into the furnace's fuel slot manually, not via redstone components such as hoppers.
-		//[achievement] Bake Bread | Turn wheat into bread. | Pick up bread from a crafting table output.
-		//[achievement] Benchmaking | Craft a workbench with four blocks of wooden planks. | Pick up a crafting table from the inventory's crafting field output or a crafting table output.
-		//[achievement] Careful restoration | Make a Decorated Pot out of 4 Pottery Sherds | —
 		//[achievement] Delicious Fish | Catch and cook a fish! | Pick up a cooked cod after cooking it in a Furnace, Smoker, Campfire, or Soul Campfire. Doesn't work if the block used is hooked up to a hopper, as the player is not getting the item directly from the output.
-		//[achievement] Dispense with This | Construct a Dispenser. | —
-		//[achievement] Dry Spell | Dry a sponge in a furnace | —
-		//[achievement] Enchanter | Construct an Enchantment Table. | Pick up an enchantment table from a crafting table output.
 		//[achievement] Fruit on the Loom | Make a banner using an Enchanted Apple Stencil | Make a banner using an enchanted apple.
-		//[achievement] Hot Topic | Construct a furnace out of eight cobblestone blocks. | Pick up a furnace from a crafting table output.
 		//[achievement] Into The Nether | Construct a Nether Portal. | Light a nether portal.
-		//[achievement] Librarian | Build some bookshelves to improve your enchantment table. | Pick up a bookshelf from a crafting table output.
 		//[achievement] Local Brewery | Brew a potion. | Pick up a potion from a brewing stand potion slot. An already-created potion placed and removed qualifies.
 		//[achievement] Moskstraumen | Activate a Conduit | Place a conduit in a valid prismarine/sea lantern structure to activate it.
 		//[achievement] Pot Planter | Craft and place a Flower Pot. | —
 		//[achievement] Renewable Energy | Smelt wood trunks using charcoal to make more charcoal. | Smelt a wooden log with charcoal as the fuel.
 		//[achievement] Smelt Everything! | Connect 3 Chests to a single Furnace using 3 Hoppers. | Be within the range of three chests connected to a Furnace with 3 Hoppers.
 		//[achievement] Super Fuel | Power a Furnace with Lava | —
-		//[achievement] The Lie | Bake a cake using: wheat, sugar, milk, and eggs. | Pick up a cake from a crafting table output.
-		//[achievement] Time to Farm! | Make a Hoe. | Pick up any type of hoe from a crafting table output.
-		//[achievement] Time to Mine! | Use planks and sticks to make a pickaxe. | Pick up any type of pickaxe from a crafting table output.
-		//[achievement] Time to Strike! | Use planks and sticks to make a sword. | Pick up any type of sword from a crafting table output.
-		//[advancement] Careful Restoration | Make a Decorated Pot out of 4 Pottery Sherds | —
 		//[advancement] Local Brewery | Brew a Potion | Pick up an item from a brewing stand potion slot. This does not need to be a potion. Water bottles or even glass bottles can also trigger this advancement.[3]
-		//[advancement] Minecraft | The heart and story of the game | Have a crafting table in your inventory.
 		//[advancement] We Need to Go Deeper | Build, light and enter a Nether Portal | Enter the Nether dimension.
 	//in work--------------------
 	//done--------------------
@@ -580,39 +565,34 @@ function getSomeWhere(location, player){
 		//[achievement] Atlantis? | Find an underwater ruin | —
 		//[achievement] Caves & Cliffs | Freefall from the top of the world (build limit) to the bottom of the world and survive. | —
 		//[achievement] On A Rail | Travel by minecart to a point at least 500m in a single direction from where you started. | Travel by minecart 500 blocks in a straight line away from the player's starting point.
-		//[achievement] The End? | Enter an End Portal | Enter a stronghold End Portal activated with all twelve eyes of ender.
 		//[achievement] Treasure Hunter | Acquire a map from a cartographer villager, then enter the revealed structure | Visit the structure indicated while the purchased map is in your main hand (hotbar).
-		//[advancement] A Terrible Fortress | Break your way into a Nether Fortress | Enter a nether fortress.
 		//[advancement] Caves & Cliffs | Free fall from the top of the world (build limit) to the bottom of the world and survive | Fall from at least y=319 to at most y=-59 with a vertical distance of greater than 379 blocks.
 		//[advancement] Eye Spy | Follow an Eye of Ender | Enter a stronghold.
-		//[advancement] Nether | Bring summer clothes | Enter the Nether dimension.
 		//[advancement] Remote Getaway | Escape the island | Throw an ender pearl through, fly, or walk into an end gateway.
-		//[advancement] Subspace Bubble | Use the Nether to travel 7 km in the Overworld | Use the Nether to travel between 2 points in the Overworld with a minimum horizontal euclidean distance of 7000 blocks between each other, which is 875 blocks in the Nether.
 		//[advancement] The City at the End of the Game | Go on in, what could happen? | Enter an end city.
-		//[advancement] The End | Or the beginning? | Enter the End dimension.
-		//[advancement] The End? | Enter the End Portal | Enter the End dimension.
-		//[advancement] Those Were the Days | Enter a Bastion Remnant | —
 	//in work--------------------
 	//done--------------------
 		switch(location){
-		    //enter the nether: checked by changedDimension(). triggered by player changing dimensions into the nether 
+		    //[advancement] Nether | Bring summer clothes | Enter the Nether dimension.
 			case "nether" :
 				//console.warn("Some things you can't unsee")
 				boolScore("getSomeWhere", "nether", player, 1);
 				break;
-		    //enter the end: checked by changedDimension(). triggered by player changing dimensions into the end
+		    //[achievement] The End? | Enter an End Portal | Enter a stronghold End Portal activated with all twelve eyes of ender.
+		    //[advancement] The End | Or the beginning? | Enter the End dimension.
+		    //[advancement] The End? | Enter the End Portal | Enter the End dimension.
 			case "the_end" :
 				boolScore("getSomeWhere", "the_end", player, 1);
 				break;
-		    //enter a bastion: checked by loadedEntity(). triggered when a piglin_brute is loaded within range of player
+		    //[advancement] Those Were the Days | Enter a Bastion Remnant | —
 			case "bastion_remnant" :
 				boolScore("getSomeWhere", "bastion_remnant", player, 1);
 				break;
-		    //enter a nether fortress: checked by spawnedEntity(). triggered when a blaze or wither_skeleton spawns within range of player
+		    //[advancement] A Terrible Fortress | Break your way into a Nether Fortress | Enter a nether fortress.
 			case "nether_fortress" :
 				boolScore("getSomeWhere", "nether_fortress", player, 1);
 				break;
-		    //travel 7000 blocks in the overworld: checked by overworldBlocksTravelled(). triggered when overworldBlocksTravelled() modulo 7000 == 0
+		    //[advancement] Subspace Bubble | Use the Nether to travel 7 km in the Overworld | Use the Nether to travel between 2 points in the Overworld with a minimum horizontal euclidean distance of 7000 blocks between each other, which is 875 blocks in the Nether.
 			case "overworld7000" :
 				boolScore("getSomeWhere", "overworld7000", player, 1);
 				break;
@@ -620,67 +600,39 @@ function getSomeWhere(location, player){
 }
 function itemInventory(player){
 	//to-do--------------------
-		//have a wither skeleton skull
-		//have trimmed armor in your inventory
+		//[achievement] Bake Bread | Turn wheat into bread. | Pick up bread from a crafting table output.
+		//[achievement] Careful restoration | Make a Decorated Pot out of 4 Pottery Sherds | —
 		//[achievement] Chestful of Cobblestone | Mine 1,728 Cobblestone and place it in a chest. | A player must mine 1,728 cobblestone and place 1,728 cobblestone, or 27 stacks, in a chest. The cobblestone placed in the chest does not have to be the same cobblestone that was mined.
 		//[achievement] Cow Tipper | Harvest some leather. | Pick up leather from the ground.
-		//[achievement] DIAMONDS! | Acquire diamonds with your iron tools. | Pick up a diamond from the ground.
-		//[achievement] Getting an Upgrade | Construct a better pickaxe. | Pick up a stone pickaxe from a crafting table output.
+		//[achievement] Dispense with This | Construct a Dispenser. | —
+		//[achievement] Dry Spell | Dry a sponge in a furnace | —
+		//[achievement] Enchanter | Construct an Enchantment Table. | Pick up an enchantment table from a crafting table output.
 		//[achievement] Getting Wood | Punch a tree until a block of wood pops out. | Pick up a log from the ground.
-		//[achievement] I am a Marine Biologist | Collect a fish in a bucket | Use an empty bucket on any fish mob to collect it.
-		//[achievement] Into Fire | Relieve a Blaze of its rod. | Pick up a blaze rod from the ground.
+		//[achievement] Hot Topic | Construct a furnace out of eight cobblestone blocks. | Pick up a furnace from a crafting table output.
 		//[achievement] Iron Man | Wear a full suit of Iron Armor. | —
+		//[achievement] Librarian | Build some bookshelves to improve your enchantment table. | Pick up a bookshelf from a crafting table output.
 		//[achievement] MOAR Tools | Construct one type of each tool. | Construct one pickaxe, one shovel, one axe, and one hoe with the same material.
 		//[achievement] Rainbow Collection | Gather all 16 colors of wool. | All the colors of wool do not have to be in the inventory at the same time, but must have been picked up by the player at least once.
 		//[achievement] Taking Inventory | Open your inventory. | —
+		//[achievement] The Lie | Bake a cake using: wheat, sugar, milk, and eggs. | Pick up a cake from a crafting table output.
+		//[achievement] Time to Farm! | Make a Hoe. | Pick up any type of hoe from a crafting table output.
+		//[achievement] Time to Mine! | Use planks and sticks to make a pickaxe. | Pick up any type of pickaxe from a crafting table output.
+		//[achievement] Time to Strike! | Use planks and sticks to make a sword. | Pick up any type of sword from a crafting table output.
 		//[achievement] With our powers combined! | Have all 3 froglights in your inventory | Acquire at least one of each pearlescent, verdant, and ochre froglights in your inventory at the same time.
 		//[achievement] You Need a Mint | Collect dragons breath in a glass bottle | Have a dragon's breath bottle in your inventory
-		//[advancement] Acquire Hardware | Smelt an Iron Ingot | Have an iron ingot in your inventory.
-		//[advancement] Bukkit Bukkit | Catch a Tadpole in a Bucket | —
-		//[advancement] Cover Me in Debris | Get a full suit of Netherite armor | Have a full set of netherite armor in your inventory.
-		//[advancement] Cover Me with Diamonds | Diamond armor saves lives | Have any type of diamond armor in your inventory.
-		//[advancement] Diamonds! | Acquire diamonds | Have a diamond in your inventory.
-		//[advancement] Getting an Upgrade | Construct a better Pickaxe | Have a stone pickaxe in your inventory.
-		//[advancement] Hidden in the Depths | Obtain Ancient Debris | Have an ancient debris in your inventory.
-		//[advancement] Hot Stuff | Fill a Bucket with lava | Have a lava bucket in your inventory.
-		//[advancement] Ice Bucket Challenge | Obtain a block of Obsidian | Have a block of obsidian in your inventory.
-		//[advancement] Into Fire | Relieve a Blaze of its rod | Have a blaze rod in your inventory.
-		//[advancement] Isn't It Iron Pick | Upgrade your Pickaxe | Have an iron pickaxe in your inventory.
-		//[advancement] Serious Dedication | Use a Netherite Ingot to upgrade a Hoe, and then reevaluate your life choices | Have a netherite hoe in your inventory.
-		//[advancement] Sky's the Limit | Find Elytra | Have a pair of elytra in your inventory.
-		//[advancement] Smells Interesting | Obtain a Sniffer Egg | Have a sniffer egg in your inventory.
+		//[advancement] Careful Restoration | Make a Decorated Pot out of 4 Pottery Sherds | —
 		//[advancement] Spooky Scary Skeleton | Obtain a Wither Skeleton's skull | Have a wither skeleton skull in your inventory.
-		//[advancement] Stone Age | Mine Stone with your new Pickaxe | Have one of these 3 stones in the #stone_tool_materials item tag:, Cobblestone, Blackstone, Cobbled Deepslate, in your inventory.
-		//[advancement] Suit Up | Protect yourself with a piece of iron armor | Have any type of iron armor in your inventory.
-		//[advancement] Tactical Fishing | Catch a Fish... without a Fishing Rod! | Use a water bucket on any fish mob.
-		//[advancement] The Cutest Predator | Catch an Axolotl in a Bucket | Use a water bucket on an axolotl.
-		//[advancement] The Next Generation | Hold the Dragon Egg | Have a dragon egg in your inventory.
-		//[advancement] Who is Cutting Onions? | Obtain Crying Obsidian | Have a block of crying obsidian in your inventory.
 		//[advancement] With Our Powers Combined! | Have all Froglights in your inventory | Have a Pearlescent, Ochre, and Verdant Froglight in your inventory.
 		//[advancement] You Need a Mint | Collect Dragon's Breath in a Glass Bottle | Have a bottle of dragon's breath in your inventory.
 	//in work--------------------
 	//done--------------------
-	    //have a crafting table in your inventory
-	    //have a stone pickaxe
-	    //have  an iron pick
-	    //have a netherite hoe
-	    //have a pair of elytra
-	    //have an iron ingot
-	    //have a diamond in your inventory
-	    //obtain ancient debris
-	    //have a bucket of lava
-	    //have a bucket of axolotl
-	    //catch a tad pole in a bucket
-	    //have a block of obsidian
-	    //obtain crying obsidian
-	    //have a blaze rod
-	    //hold the dragon egg
-	    //have a sniffer egg in your inventory
 		let slotArray = [];
-		slotArray[0] = "crafting_table";
-		slotArray[1] = "stone_pickaxe";
-		slotArray[2] = "iron_pickaxe";
-		slotArray[3] = "netherite_hoe";
+		slotArray[0] = "crafting_table";	//[achievement] Benchmaking | Craft a workbench with four blocks of wooden planks. | Pick up a crafting table from the inventory's crafting field output or a crafting table output.
+								//[advancement] Minecraft | The heart and story of the game | Have a crafting table in your inventory.
+		slotArray[1] = "stone_pickaxe";	//[achievement] Getting an Upgrade | Construct a better pickaxe. | Pick up a stone pickaxe from a crafting table output.
+								//[advancement] Getting an Upgrade | Construct a better Pickaxe | Have a stone pickaxe in your inventory.
+		slotArray[2] = "iron_pickaxe";	//[advancement] Isn't It Iron Pick | Upgrade your Pickaxe | Have an iron pickaxe in your inventory.
+		slotArray[3] = "netherite_hoe";	//[advancement] Serious Dedication | Use a Netherite Ingot to upgrade a Hoe, and then reevaluate your life choices | Have a netherite hoe in your inventory.
 		slotArray[4] = "iron_helmet";
 		slotArray[5] = "iron_chestplate";
 		slotArray[6] = "iron_leggings";
@@ -693,25 +645,28 @@ function itemInventory(player){
 		slotArray[13] = "netherite_chestplate";
 		slotArray[14] = "netherite_leggings";
 		slotArray[15] = "netherite_boots";
-		slotArray[16] = "elytra";
-		slotArray[17] = "iron_ingot";
-		slotArray[18] = "diamond";
-		slotArray[19] = "ancient_debris";
-		slotArray[20] = "lava_bucket";
+		slotArray[16] = "elytra";	//[advancement] Sky's the Limit | Find Elytra | Have a pair of elytra in your inventory.
+		slotArray[17] = "iron_ingot";	//[achievement] Acquire Hardware | Smelt an iron ingot | Pick up an iron ingot from a furnace output.
+								//[advancement] Acquire Hardware | Smelt an Iron Ingot | Have an iron ingot in your inventory.
+		slotArray[18] = "diamond";	//[achievement] DIAMONDS! | Acquire diamonds with your iron tools. | Pick up a diamond from the ground.
+								//[advancement] Diamonds! | Acquire diamonds | Have a diamond in your inventory.
+		slotArray[19] = "ancient_debris";	//[advancement] Hidden in the Depths | Obtain Ancient Debris | Have an ancient debris in your inventory.
+		slotArray[20] = "lava_bucket";	//[advancement] Hot Stuff | Fill a Bucket with lava | Have a lava bucket in your inventory.
 		slotArray[21] = "cod_bucket";
 		slotArray[22] = "salmon_bucket";
 		slotArray[23] = "tropical_fish_bucket";
 		slotArray[24] = "pufferfish_bucket";
-		slotArray[25] = "axolotl_bucket";
-		slotArray[26] = "tadpole_bucket";
+		slotArray[25] = "axolotl_bucket";	//[advancement] The Cutest Predator | Catch an Axolotl in a Bucket | Use a water bucket on an axolotl.
+		slotArray[26] = "tadpole_bucket";	//[advancement] Bukkit Bukkit | Catch a Tadpole in a Bucket | —
 		slotArray[27] = "cobblestone";
 		slotArray[28] = "blackstone";
 		slotArray[29] = "cobbled_deepslate";
-		slotArray[30] = "obsidian";
-		slotArray[31] = "crying_obsidian";
-		slotArray[32] = "blaze_rod";
-		slotArray[33] = "dragon_egg";
-		slotArray[34] = "sniffer_egg";
+		slotArray[30] = "obsidian";	//[advancement] Ice Bucket Challenge | Obtain a block of Obsidian | Have a block of obsidian in your inventory.
+		slotArray[31] = "crying_obsidian";	//[advancement] Who is Cutting Onions? | Obtain Crying Obsidian | Have a block of crying obsidian in your inventory.
+		slotArray[32] = "blaze_rod";	//[achievement] Into Fire | Relieve a Blaze of its rod. | Pick up a blaze rod from the ground.
+								//[advancement] Into Fire | Relieve a Blaze of its rod | Have a blaze rod in your inventory.
+		slotArray[33] = "dragon_egg";	//[advancement] The Next Generation | Hold the Dragon Egg | Have a dragon egg in your inventory.
+		slotArray[34] = "sniffer_egg";	//[advancement] Smells Interesting | Obtain a Sniffer Egg | Have a sniffer egg in your inventory.
 		let inventoryPlayer = player.getComponent("minecraft:inventory");
 		var i;
 		var j;
@@ -731,41 +686,43 @@ function itemInventory(player){
 			}
 		}
 		
-	    //have iron armor
+	    //[advancement] Suit Up | Protect yourself with a piece of iron armor | Have any type of iron armor in your inventory.
 		if(getSomeScore("itemInventory", "iron_armor", player) == 0){
 			if(getSomeScore("itemInventory", "iron_helmet", player) == 1 || (getSomeScore("itemInventory", "iron_chestplate", player) == 1 || (getSomeScore("itemInventory", "iron_leggings", player) == 1 || (getSomeScore("itemInventory", "iron_boots", player) == 1)))){
 				boolScore("itemInventory", "iron_armor", player, 1);
 			}
 		}
 		
-	    //have diamond armor
+	    //[advancement] Cover Me with Diamonds | Diamond armor saves lives | Have any type of diamond armor in your inventory.
 		if(getSomeScore("itemInventory", "diamond_armor", player) == 0){
 			if(getSomeScore("itemInventory", "diamond_helmet", player) == 1 || (getSomeScore("itemInventory", "diamond_chestplate", player) == 1 || (getSomeScore("itemInventory", "diamond_leggings", player) == 1 || (getSomeScore("itemInventory", "diamond_boots", player) == 1)))){
 				boolScore("itemInventory", "diamond_armor", player, 1);
 			}
 		}
 		
-	    //have a full set of netherite armor
+	    //[achievement] Cover me in debris | Wear a full set of Netherite armor | Have a full set of Netherite armor in your inventory.
+	    //[advancement] Cover Me in Debris | Get a full suit of Netherite armor | Have a full set of netherite armor in your inventory.
 		if(getSomeScore("itemInventory", "netherite_armor", player) == 0){
 			if(getSomeScore("itemInventory", "netherite_helmet", player) == 1 && (getSomeScore("itemInventory", "netherite_chestplate", player) == 1 && (getSomeScore("itemInventory", "netherite_leggings", player) == 1 && (getSomeScore("itemInventory", "netherite_boots", player) == 1)))){
 				boolScore("itemInventory", "netherite_armor", player, 1);
 			}
 		}
 		
-	    //catch a fish in a bucket
+	    //[achievement] I am a Marine Biologist | Collect a fish in a bucket | Use an empty bucket on any fish mob to collect it.
+	    //[advancement] Tactical Fishing | Catch a Fish... without a Fishing Rod! | Use a water bucket on any fish mob.
 		if(getSomeScore("itemInventory", "fish_bucket", player) == 0){
 			if(getSomeScore("itemInventory", "cod_bucket", player) == 1 || (getSomeScore("itemInventory", "salmon_bucket", player) == 1 || (getSomeScore("itemInventory", "tropical_fish_bucket", player) == 1 || (getSomeScore("itemInventory", "pufferfish_bucket", player) == 1)))){
 				boolScore("itemInventory", "fish_bucket", player, 1);
 			}
 		}
 		
-	    //have cobblestone, blackstone or cobbled deepslate in your inventory
+	    //[advancement] Stone Age | Mine Stone with your new Pickaxe | Have one of these 3 stones in the #stone_tool_materials item tag:, Cobblestone, Blackstone, Cobbled Deepslate, in your inventory.
 		if(getSomeScore("itemInventory", "got_cobble", player) == 0){
 			if(getSomeScore("itemInventory", "cobblestone", player) == 1 || (getSomeScore("itemInventory", "blackstone", player) == 1 || (getSomeScore("itemInventory", "cobbled_deepslate", player) == 1))){
 				boolScore("itemInventory", "got_cobble", player, 1);
 			}
 		}
-	    //have a pottery sherd
+	    //[advancement] Respecting the Remnants | Brush a Suspicious block to obtain a Pottery Sherd | —
 		if(getSomeScore("itemInventory", "pottery_sherd", player) == 0){
 			let potSlotArray = [];
 			potSlotArray[0] = "angler_pottery_sherd";
@@ -804,21 +761,6 @@ function itemInventory(player){
 }
 function entityInteractions(){
 	//to-do--------------------
-		//ride on a strider with warpped fugnus on a stick
-		//travel 50 blocks on a strider in the overworld
-		//cure a zombie villager
-		//distract a piglin with gold
-		//look at a parrot through a spy glass
-		//look at a ghast through a spy glass
-		//look at the ender dragon with a spy glass
-		//protect a villager with a lightning rod or water
-		//sneak within 9 blocks of a sculk sensor or 16 from a warden
-		//get in a boat with a goat
-		//have an alay bring you times
-		//have an allay drop a cake at a note block
-		//tame all types of cats
-		//get each frog on a lead
-		//feed a snifflet a torch flower
 		//[achievement] Birthday song | Have an Allay drop a cake at a noteblock | Tame an allay by giving it a cake while having dropped cake items and play a noteblock nearby.
 		//[achievement] Diamonds to you! | Throw diamonds at another player. | Drop a diamond. Another player or a mob must then pick up this diamond.
 		//[achievement] Echolocation | Feed a dolphin fish to have it lead you to treasure | Feed a dolphin cod or salmon and have it lure you to treasure.
@@ -830,7 +772,6 @@ function entityInteractions(){
 		//[achievement] Saddle Up | Tame a horse. | —
 		//[achievement] So I Got That Going for Me | Lead a Caravan containing at least 5 Llamas | —
 		//[achievement] Taste of Your Own Medicine | Poison a witch with a splash potion. | Throw a splash potion of poison at a witch (by facing the witch and pressing the use key).
-		//[achievement] The Healing Power of Friendship! | Team up with an axolotl and win a fight | Team up with an axolotl by killing the hostile aquatic mob [verify] while the axolotl is fighting it (not playing dead).
 		//[achievement] Time for Stew | Give someone a suspicious stew. | —
 		//[achievement] Whatever Floats Your Goat | Get in a boat and float with a goat | Use a boat and put a goat inside that boat, then ride it
 		//[achievement] When Pigs Fly | Use a saddle to ride a pig, and then have the pig get hurt from fall damage while riding it. | Be riding a pig (e.g. using a saddle) when it hits the ground with a fall distance greater than 5.
@@ -846,7 +787,6 @@ function entityInteractions(){
 		//[advancement] Little Sniffs | Feed a Snifflet | Feed a snifflet torchflower seeds.
 		//[advancement] Oh Shiny | Distract Piglins with gold | While aggravated, give a piglin one of these 25 gold-related items in the #piglin_loved item tag:, Bell, Block of Gold, Block of Raw Gold, Clock, Enchanted Golden Apple, Gilded Blackstone, Glistering Melon Slice, Gold Ingot, Gold Ore, Golden Apple, Golden Axe, Golden Boots, Golden Carrot, Golden Chestplate, Golden Helmet, Golden Hoe, Golden Horse Armor, Golden Leggings, Golden Pickaxe, Golden Shovel, Golden Sword, Light Weighted Pressure Plate, Nether Gold Ore, Deepslate Gold Ore, Raw Gold, Other gold-related items do not distract the piglin and do not trigger this advancement.
 		//[advancement] Surge Protector | Protect a Villager from an undesired shock without starting a fire | Be within 30 blocks of a lightning strike that doesn't set any blocks on fire, while an unharmed villager is within or up to six blocks above a 30×30×30 volume centered on the lightning strike.
-		//[advancement] The Healing Power of Friendship! | Team up with an axolotl and win a fight | Have the Regeneration effect applied from assisting an axolotl or it killing a mob.
 		//[advancement] This Boat Has Legs | Ride a Strider with a Warped Fungus on a Stick | Boost[2] a strider with a warped fungus on a stick.
 		//[advancement] Whatever Floats Your Goat! | Get in a Boat and float with a Goat | Enter a boat or a raft with a goat.
 		//[advancement] When the Squad Hops into Town | Get each Frog variant on a Lead | The frogs don't need to be leashed at the same time.[5]
@@ -857,18 +797,6 @@ function entityInteractions(){
 }
 function entityKills(entity){
 	//to-do--------------------
-		// kill a ghast with a ghast fire ball
-		// kill a ghast while in the overworld
-		// kill or be killed by any entityDie
-		// kill a raid captian and get bad ohmen
-		// kill a monster
-		// kill a mob and spread sculk
-		// kill one of every hostile monster type.
-		// kill a pillager with a cross bow.
-		// kill five unique mobs with a cross bow
-		// kill a skeleton with a bow from 50 blocks away
-		// kill the dragon
-		// two birds one arrow. use a crossbow to kill 2 phantoms with 1 arrow
 		//[achievement] Archer | Kill a creeper with arrows. | —
 		//[achievement] Camouflage | Kill a mob while wearing the same type of mob head. | —
 		//[achievement] Feeling Ill | Defeat an Evoker | —
@@ -899,7 +827,6 @@ function entityKills(entity){
 }
 function redstoneInteractions(){
 	//to-do--------------------
-		//read the signal strenght of a chiseld book shelf
 		//[achievement] Inception | Push a piston with a piston, then pull the original piston with that piston. | —
 		//[advancement] The Power of Books | Read the power signal of a Chiseled Bookshelf using a Comparator | Place a comparator on any side of a chiseled bookshelf or the chiseled bookshelf against a comparator to trigger the advancement.
 	//in work--------------------
@@ -908,27 +835,22 @@ function redstoneInteractions(){
 function spawnAndBreed(entity, player){
 	//to-do--------------------
 		//[achievement] Artificial Selection | Breed a mule from a horse and a donkey. | —
-		//[achievement] Body Guard | Create an Iron Golem | —
 		//[achievement] Repopulation | Breed two cows with wheat. | Breed two cows or two mooshrooms.
-		//[achievement] The Beginning? | Spawn the Wither | Be within a 100.9×100.9×103.5 cuboid centered on the Wither when it is spawned.
-		//[achievement] The End... Again... | Respawn the Enderdragon [sic] | —
 		//[achievement] Zoologist | Breed two pandas with bamboo. | —
-		//[advancement] Hired Help | Summon an Iron Golem to help defend a village | Summon an iron golem.
-		//[advancement] The End... Again... | Respawn the Ender Dragon | Be within a 192 block radius from the coordinates (0.0, 128, 0.0) when an ender dragon is summoned using end crystals.
-		//[advancement] The Parrots and the Bats | Breed two animals together | Breed a pair of any of these 25 mobs:, Axolotl, Bee, Camel, Cat, Chicken, Cow, Donkey, Fox, Frog, Goat, Hoglin, Horse, Llama, Mooshroom, Mule, Ocelot, Panda, Pig, Rabbit, Sheep, Sniffer, Strider, Trader Llama, Turtle, Wolf, A mule must be the result of breeding a horse and a donkey for this advancement as they are not breedable together. Other breedable mobs are ignored for this advancement.
-		//[advancement] Two by Two | Breed all the animals! | Breed a pair of each of these 24 mobs:, Axolotl, Bee, Camel, Cat, Chicken, Cow, Donkey, Fox, Frog, Goat, Hoglin, Horse, Llama, Mooshroom, Mule, Ocelot, Panda, Pig, Rabbit, Sheep, Sniffer, Strider, Turtle, Wolf, A trader llama does not count as a llama, and a mule must be the result of breeding a horse and a donkey for this advancement as they are not breedable together. Other breedable mobs can be bred, but are ignored for this advancement.
-		//[advancement] Withering Heights | Summon the Wither | Be within a 100.9×100.9×103.5 cuboid centered on the wither when it is spawned.
 	//in work--------------------
 	//done--------------------
 		switch(entity){
-		    //summon an iron golem
+		    //[achievement] Body Guard | Create an Iron Golem | —
+		    //[advancement] Hired Help | Summon an Iron Golem to help defend a village | Summon an iron golem.
 			case "iron_golem" ://*fall through*
-		    //summon a wither
+		    //[achievement] The Beginning? | Spawn the Wither | Be within a 100.9×100.9×103.5 cuboid centered on the Wither when it is spawned.
+		    //[advancement] Withering Heights | Summon the Wither | Be within a 100.9×100.9×103.5 cuboid centered on the wither when it is spawned.
 			case "wither" :
 				//console.warn("I made a friend");
 				boolScore("spawnAndBreed", entity, player, 1);
 				break;
-		    //respawn the dragon
+		    //[achievement] The End... Again... | Respawn the Enderdragon [sic] | —
+		    //[advancement] The End... Again... | Respawn the Ender Dragon | Be within a 192 block radius from the coordinates (0.0, 128, 0.0) when an ender dragon is summoned using end crystals.
 			case "ender_dragon" :
 				if(getSomeScore("spawnAndBreed", "ender_dragon_bool", player) == 0){
 					addToScore("spawnAndBreed", "ender_dragon_score", player);
@@ -938,8 +860,8 @@ function spawnAndBreed(entity, player){
 					}
 				}
 				break;
-		    //breed 2 animals
-		    //breed all animals
+		    //[advancement] The Parrots and the Bats | Breed two animals together | Breed a pair of any of these 25 mobs:, Axolotl, Bee, Camel, Cat, Chicken, Cow, Donkey, Fox, Frog, Goat, Hoglin, Horse, Llama, Mooshroom, Mule, Ocelot, Panda, Pig, Rabbit, Sheep, Sniffer, Strider, Trader Llama, Turtle, Wolf, A mule must be the result of breeding a horse and a donkey for this advancement as they are not breedable together. Other breedable mobs are ignored for this advancement.
+		    //[advancement] Two by Two | Breed all the animals! | Breed a pair of each of these 24 mobs:, Axolotl, Bee, Camel, Cat, Chicken, Cow, Donkey, Fox, Frog, Goat, Hoglin, Horse, Llama, Mooshroom, Mule, Ocelot, Panda, Pig, Rabbit, Sheep, Sniffer, Strider, Turtle, Wolf, A trader llama does not count as a llama, and a mule must be the result of breeding a horse and a donkey for this advancement as they are not breedable together. Other breedable mobs can be bred, but are ignored for this advancement.
 			case "axolotl" ://*fall through*
 			case "bee" ://*fall through*
 			case "camel" ://*fall through*
@@ -988,20 +910,16 @@ function spawnAndBreed(entity, player){
 }
 function statusAndEffects(player){
 	//to-do--------------------
-		//be within beacon effect Range
-		//be within full beacon power Range
-		//get the healing effect from an axolotl by helping it kill a mob
-		//levitate 50 blocks from a shulker effect
 		//[achievement] Great View From Up Here | Levitate up 50 blocks from the attacks of a Shulker | —
 		//[achievement] Stayin' Frosty | Swim in lava while having the Fire Resistance effect. | —
 		//[achievement] The Beaconator | Create and fully power a Beacon | Be within a 20×20×14 cuboid centered on the pyramid when the beacon block realizes it is fully powered.
+		//[achievement] The Healing Power of Friendship! | Team up with an axolotl and win a fight | Team up with an axolotl by killing the hostile aquatic mob [verify] while the axolotl is fighting it (not playing dead).
 		//[achievement] We're being attacked! | Trigger a Pillager Raid. | Walk in a village with the Bad Omen effect applied.
-		//[advancement] A Furious Cocktail | Have every potion effect applied at the same time | Have all of these 13 status effects applied to the player at the same time:, Fire Resistance, Invisibility, Jump Boost, Night Vision, Poison, Regeneration, Resistance, Slow Falling, Slowness, Speed, Strength, Water Breathing, Weakness, The source of the effects is irrelevant for the purposes of this advancement. Other status effects may be applied to the player, but are ignored for this advancement.
 		//[advancement] Beaconator | Bring a Beacon to full power | Be within a 20×20×14 cuboid centered on a beacon block when it realizes it is being powered by a size 4 pyramid.
 		//[advancement] Bring Home the Beacon | Construct and place a Beacon | Be within a 20×20×14 cuboid centered on a beacon block when it realizes it has become powered.
 		//[advancement] Great View From Up Here | Levitate up 50 blocks from the attacks of a Shulker | Move a distance of 50 blocks vertically with the Levitation effect applied, regardless of direction or whether it is caused by the effect.
 		//[advancement] Hero of the Village | Successfully defend a village from a raid | Kill at least one raid mob during a raid and wait until it ends in victory.
-		//[advancement] How Did We Get Here? | Have every effect applied at the same time | Have all of these 27 status effects applied to the player at the same time:, Absorption, Bad Omen, Blindness, Conduit Power, Darkness, Dolphin's Grace, Fire Resistance, Glowing, Haste, Hero of the Village, Hunger, Invisibility, Jump Boost, Levitation, Mining Fatigue, Nausea, Night Vision, Poison, Regeneration, Resistance, Slow Falling, Slowness, Speed, Strength, Water Breathing, Weakness, Wither, The source of the effects is irrelevant for the purposes of this advancement. Other status effects may be applied to the player, but are ignored for this advancement.
+		//[advancement] The Healing Power of Friendship! | Team up with an axolotl and win a fight | Have the Regeneration effect applied from assisting an axolotl or it killing a mob.
 	//in work--------------------
 	//done--------------------
 		let effectArray = [];
@@ -1034,7 +952,7 @@ function statusAndEffects(player){
 		effectArray[24] = "wither";
 		let effectPlayer = player.getEffects();
 		
-	    //have every potion effect applied at the same time
+	    //[advancement] A Furious Cocktail | Have every potion effect applied at the same time | Have all of these 13 status effects applied to the player at the same time:, Fire Resistance, Invisibility, Jump Boost, Night Vision, Poison, Regeneration, Resistance, Slow Falling, Slowness, Speed, Strength, Water Breathing, Weakness, The source of the effects is irrelevant for the purposes of this advancement. Other status effects may be applied to the player, but are ignored for this advancement.
 		if(getSomeScore("statusAndEffects", "potion_effects_bool", player) == 0){
 			for(var i = 0; i < effectPlayer.length; i++){
 				for(var j = 0; j < 13; j++){
@@ -1051,7 +969,7 @@ function statusAndEffects(player){
 			}
 		}
 		
-	    //have every effect applied at the same time
+	    //[advancement] How Did We Get Here? | Have every effect applied at the same time | Have all of these 27 status effects applied to the player at the same time:, Absorption, Bad Omen, Blindness, Conduit Power, Darkness, Dolphin's Grace, Fire Resistance, Glowing, Haste, Hero of the Village, Hunger, Invisibility, Jump Boost, Levitation, Mining Fatigue, Nausea, Night Vision, Poison, Regeneration, Resistance, Slow Falling, Slowness, Speed, Strength, Water Breathing, Weakness, Wither, The source of the effects is irrelevant for the purposes of this advancement. Other status effects may be applied to the player, but are ignored for this advancement.
 		if(getSomeScore("statusAndEffects", "all_effects_bool", player) == 0){
 			for(var i = 0; i < effectPlayer.length; i++){
 				for(var j = 0; j < effectArray.length; j++){
@@ -1075,8 +993,6 @@ function statusAndEffects(player){
 }
 function trading(){
 	//to-do--------------------
-		//trade with a villager
-		//trade with a villager standing on 318
 		//[achievement] Buy Low, Sell High | Trade for the best possible price. | Buy something for 1 emerald, or when the Hero of the Village effect is applied.
 		//[achievement] Master Trader | Trade for 1,000 emeralds. | Obtain 1,000 emeralds from trading with villagers.
 		//[achievement] Star trader | Trade with a villager at the build height limit. | Trade with a villager at y320.
@@ -1088,9 +1004,6 @@ function trading(){
 }
 function usingItems(item){
 	//to-do--------------------
-		//plant any sniffer seed
-		//plant a seed
-		//use a totem of undying
 		//[achievement] Beam Me Up | Teleport over 100 meters from a single throw of an Ender Pearl | Throw an ender pearl 100 blocks in any direction
 		//[achievement] Cheating Death | Use the Totem of Undying to cheat death | Have the Totem of Undying in your hand when you die.
 		//[achievement] It's a Sign! | Craft and place an Oak Sign. | —
@@ -1104,42 +1017,32 @@ function usingItems(item){
 }
 function weaponsToolsArmor(subject, player){
 	//to-do--------------------
-		//block projectile with shield
-		//apply each smiting template
-		//walk on powdered snow with leather boots
-		//strike a villager with lightning using a channeling trident
-		//[achievement] Bullseye | Hit the bullseye of a Target block | —
-		//[achievement] Cover me in debris | Wear a full set of Netherite armor | Have a full set of Netherite armor in your inventory.
 		//[achievement] Do a Barrel Roll! | Use Riptide to give yourself a boost | Obtain a trident enchanted with Riptide and launch yourself any distance with it.
 		//[achievement] Have a Shearful Day | Use Shears to obtain wool from a sheep. | —
 		//[achievement] Let It Go! | Using the Frost Walker boots, walk on at least 1 block on frozen water on a deep ocean | —
 		//[achievement] Smithing with style | Apply these smithing templates at least once: Spire, Snout, Rib, Ward, Silence, Vex, Tide, Wayfinder | —
 		//[achievement] Super Sonic | Use Elytra to fly through a 1 by 1 gap while moving faster than 40 m/s | —
-		//[advancement] A Throwaway Joke | Throw a Trident at something. Note: Throwing away your only weapon is not a good idea. | Hit a mob with a thrown trident.
 		//[advancement] Bullseye | Hit the bullseye of a Target block from at least 30 meters away | Be at least 30 blocks away horizontally when the center of a target is shot with a projectile by the player.
 		//[advancement] Crafting a New Look | Craft a trimmed armor at a Smithing Table | —
-		//[advancement] Fishy Business | Catch a fish | Use a fishing rod to catch any of these fishes:, Cod, Salmon, Tropical Fish, Pufferfish
 		//[advancement] Light as a Rabbit | Walk on Powder Snow... without sinking in it | Walk on powder snow while wearing leather boots.
 		//[advancement] Not Today, Thank You | Deflect a projectile with a Shield | Block any projectile with a shield.
-		//[advancement] Ol' Betsy | Shoot a Crossbow | —
 		//[advancement] Smithing with Style | Apply these smithing templates at least once: Spire, Snout, Rib, Ward, Silence, Vex, Tide, Wayfinder | —
-		//[advancement] Take Aim | Shoot something with an Arrow | Using a bow or a crossbow, shoot an entity with an arrow, tipped arrow, or spectral arrow.
 		//[advancement] Very Very Frightening | Strike a Villager with lightning | Hit a villager with lightning created by a trident with the Channeling enchantment.
 	//in work--------------------
 	//done--------------------
 		switch(subject){
-		    //shoot a cross bow
+		    //[advancement] Ol' Betsy | Shoot a Crossbow | —
 			case "crossbow" ://*fall through*
-		    //shoot something with an arrow
+		    //[advancement] Take Aim | Shoot something with an Arrow | Using a bow or a crossbow, shoot an entity with an arrow, tipped arrow, or spectral arrow.
 			case "arrow" ://*fall through*
-		    //hit a mob with a thrown trident
+		    //[advancement] A Throwaway Joke | Throw a Trident at something. Note: Throwing away your only weapon is not a good idea. | Hit a mob with a thrown trident.
 			case "thrown_trident" ://*fall through*
-		    //hit the bulls eye on a target block
+		    //[achievement] Bullseye | Hit the bullseye of a Target block | —
 			case "target" :
 				//console.warn("Here goes nothing");
 				boolScore("weaponsToolsArmor", subject, player, 1);
 				break;
-		    //catch a fish
+		    //[advancement] Fishy Business | Catch a fish | Use a fishing rod to catch any of these fishes:, Cod, Salmon, Tropical Fish, Pufferfish
 			case "fishing_rod" :
 				if(getSomeScore("weaponsToolsArmor", "catch_fish", player) == 0){
 					let fishArray = [];
@@ -1191,14 +1094,10 @@ function weaponsToolsArmor(subject, player){
 }
 function worldAndBiome(){
 	//to-do--------------------
-		//explore all nether biomes *maybe check inventory for blacks that come from each biome?
-		//discover every biome
-		//while in a meadows biome place a juke box and play music
 		//[achievement] Adventuring Time | Discover 17 biomes. | Visit any 17 biomes. Does not have to be in a single world.
 		//[achievement] Free Diver | Stay underwater for 2 minutes | Drink a potion of water breathing that can last for 2 minutes or more, then jump into the water or activate a conduit or sneak on a magma block underwater for 2 minutes.
 		//[achievement] Hot tourist destination | Visit all Nether biomes | The achievement can be completed if one visit biomes in different worlds.
 		//[achievement] Map Room | Place 9 fully explored, adjacent map items into 9 item frames in a 3 by 3 square. | The frames have to be on a wall, not the floor.
-		//[achievement] Me Gold! | Dig up a buried treasure | Open a buried treasure chest
 		//[achievement] Passing the Time | Play for 100 days. | Play for 100 Minecraft days, which is equivalent to 33 hours in real time.
 		//[achievement] Sail the 7 Seas | Visit all ocean biomes | Visit all ocean biomes except the deep warm ocean/legacy frozen ocean (as they are unused)
 		//[achievement] Sleep with the Fishes | Spend a day underwater. | Spend 20 minutes underwater without any air.
