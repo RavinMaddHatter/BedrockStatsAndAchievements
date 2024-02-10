@@ -86,11 +86,12 @@ function statList(player){
 function statListBody(player){
 	//add text
 	    //stats--------------------
+		let statTxt = "Stats";
+		
 		let statArrayTxt = [];
-		statArrayTxt[0] = "Stats";
-		statArrayTxt[1] = "Overworld Travel: " + getSomeScore("stats", "overworld_blocks", player) + " blocks";
-		statArrayTxt[2] = "Total blocks placed: " + getSomeScore("stats", "blockPlaced_total", player);
-		statArrayTxt[3] = "Total blocks broken: " + getSomeScore("stats", "blockBroken_total", player);
+		statArrayTxt[0] = "Overworld Travel: " + getSomeScore("stats", "overworld_blocks", player) + " blocks";
+		statArrayTxt[1] = "Total blocks placed: " + getSomeScore("stats", "blockPlaced_total", player);
+		statArrayTxt[2] = "Total blocks broken: " + getSomeScore("stats", "blockBroken_total", player);
 		
 	//construct the body
 		let boolPos = "\u2717";
@@ -104,11 +105,12 @@ function statListBody(player){
 		let statBodyTxt = "";
 		
 		for(i = 0; i < statArrayTxt.length; i++){
-			statBodyTxt = statBodyTxt + statArrayTxt[i] + indentNextLine;
+			statBodyTxt = statBodyTxt + indentNextLine + statArrayTxt[i];
 		}
 		
 		//display text
-		return statBodyTxt;
+		return statTxt
+			+ statBodyTxt;
 }
 function achieveList(player){
 	let achieveForm = new ActionFormData()
@@ -130,60 +132,69 @@ function achieveListBody(player){
 	    //achievements--------------------
 		let achievementTxt = "Achievements";
 		
+		//blockInteractions
+		let blockInteractionsArrayTxt = [];
+		blockInteractionsArrayTxt[0] = ""
+		
+		//craftAndCook
+		let craftAndCookArrayTxt = [];
+		craftAndCookArrayTxt[0] = ""
+		
+		//eatAndDrink
+		let eatAndDrinkArrayTxt = [];
+		eatAndDrinkArrayTxt[0] = ""
+		
 		//getSomeWhere
 		let getSomeWhereArrayTxt = [];
-		getSomeWhereArrayTxt[0] = "Go to the Nether: " + getSomeScore("getSomeWhere", "nether", player);
-		getSomeWhereArrayTxt[1] = "Go to The End: " + getSomeScore("getSomeWhere", "the_end", player);
-		getSomeWhereArrayTxt[2] = "Visit a Bastion: " + getSomeScore("getSomeWhere", "bastion_remnant", player);
-		getSomeWhereArrayTxt[3] = "Visit a Fortress: " + getSomeScore("getSomeWhere", "nether_fortress", player);
-		getSomeWhereArrayTxt[4] = "Go 7000 blocks in the Overworld: " + getSomeScore("getSomeWhere", "overworld7000", player);
+		getSomeWhereArrayTxt[0] = "Go to The End: " + getSomeScore("getSomeWhere", "the_end", player);
 		
 		//itemInventory
 		let itemInventoryArrayTxt = [];
 		itemInventoryArrayTxt[0] = "Get a crafting table: " + getSomeScore("itemInventory", "crafting_table", player);
 		itemInventoryArrayTxt[1] = "Get a stone pickaxe: " + getSomeScore("itemInventory", "stone_pickaxe", player);
-		itemInventoryArrayTxt[2] = "Get an iron pickaxe: " + getSomeScore("itemInventory", "iron_pickaxe", player);
-		itemInventoryArrayTxt[3] = "Get a netherite hoe: " + getSomeScore("itemInventory", "netherite_hoe", player);
-		itemInventoryArrayTxt[4] = "Get some iron armor: " + getSomeScore("itemInventory", "iron_armor", player);
-		itemInventoryArrayTxt[5] = "Get some diamond armor: " + getSomeScore("itemInventory", "diamond_armor", player);
-		itemInventoryArrayTxt[6] = "Full set of netherite armor: " + getSomeScore("itemInventory", "netherite_armor", player);
-		itemInventoryArrayTxt[7] = "Get a pair of elytra: " + getSomeScore("itemInventory", "elytra", player);
-		itemInventoryArrayTxt[8] = "Get an iron ingot: " + getSomeScore("itemInventory", "iron_ingot", player);
-		itemInventoryArrayTxt[9] = "Get a diamond: " + getSomeScore("itemInventory", "diamond", player);
-		itemInventoryArrayTxt[10] = "Get some ancient debris: " + getSomeScore("itemInventory", "ancient_debris", player);
-		itemInventoryArrayTxt[11] = "Get a bucket of lava: " + getSomeScore("itemInventory", "lava_bucket", player);
-		itemInventoryArrayTxt[12] = "Catch a fish in a bucket: " + getSomeScore("itemInventory", "fish_bucket", player);
-		itemInventoryArrayTxt[13] = "Get a bucket of axolotl: " + getSomeScore("itemInventory", "axolotl_bucket", player);
-		itemInventoryArrayTxt[14] = "Catch a tadpole in a bucket: " + getSomeScore("itemInventory", "tadpole_bucket", player);
-		itemInventoryArrayTxt[15] = "Get cobblestone, blackstone,\n        or cobbled deepslate: " + getSomeScore("itemInventory", "got_cobble", player);
-		itemInventoryArrayTxt[16] = "Get some obsidian: " + getSomeScore("itemInventory", "obsidian", player);
-		itemInventoryArrayTxt[17] = "Get some crying obsidian: " + getSomeScore("itemInventory", "crying_obsidian", player);
-		itemInventoryArrayTxt[18] = "Get a blaze rod: " + getSomeScore("itemInventory", "blaze_rod", player);
-		itemInventoryArrayTxt[19] = "Get a dragon egg: " + getSomeScore("itemInventory", "dragon_egg", player);
-		itemInventoryArrayTxt[20] = "Get a sniffer egg: " + getSomeScore("itemInventory", "sniffer_egg", player);
-		itemInventoryArrayTxt[21] = "Get a pottery sherd: " + getSomeScore("itemInventory", "pottery_sherd", player);
+		itemInventoryArrayTxt[2] = "Full set of netherite armor: " + getSomeScore("itemInventory", "netherite_armor", player);
+		itemInventoryArrayTxt[3] = "Get an iron ingot: " + getSomeScore("itemInventory", "iron_ingot", player);
+		itemInventoryArrayTxt[4] = "Get a diamond: " + getSomeScore("itemInventory", "diamond", player);
+		itemInventoryArrayTxt[5] = "Catch a fish in a bucket: " + getSomeScore("itemInventory", "fish_bucket", player);
+		itemInventoryArrayTxt[6] = "Get a blaze rod: " + getSomeScore("itemInventory", "blaze_rod", player);
 		
-		//statusAndEffects
-		let statusAndEffectsArrayTxt = [];
-		statusAndEffectsArrayTxt[0] = "Get hero of the village: " + getSomeScore("statusAndEffects", "hero_of_the_village", player);
-		statusAndEffectsArrayTxt[1] = "All potion effects at once: " + getSomeScore("statusAndEffects", "potion_effects_bool", player);
-		statusAndEffectsArrayTxt[2] = "All effects at once: " + getSomeScore("statusAndEffects", "all_effects_bool", player);
+		//entityInteractions
+		let entityInteractionsArrayTxt = [];
+		entityInteractionsArrayTxt[0] = ""
+		
+		//entityKills
+		let entityKillsArrayTxt = [];
+		entityKillsArrayTxt[0] = ""
+		
+		//redstoneInteractions
+		let redstoneInteractionsArrayTxt = [];
+		redstoneInteractionsArrayTxt[0] = ""
 		
 		//spawnAndBreed
 		let spawnAndBreedArrayTxt = [];
 		spawnAndBreedArrayTxt[0] = "Summon an iron golem: " + getSomeScore("spawnAndBreed", "iron_golem", player);
 		spawnAndBreedArrayTxt[1] = "Summon a wither: " + getSomeScore("spawnAndBreed", "wither", player);
 		spawnAndBreedArrayTxt[2] = "Respawn the dragon: " + getSomeScore("spawnAndBreed", "ender_dragon_bool", player);
-		spawnAndBreedArrayTxt[3] = "Breed 2 animals together: " + getSomeScore("spawnAndBreed", "breed_some", player);
-		spawnAndBreedArrayTxt[4] = "Breed all the animals: " + getSomeScore("spawnAndBreed", "breed_all_bool", player);
+		
+		//statusAndEffects
+		let statusAndEffectsArrayTxt = [];
+		statusAndEffectsArrayTxt[0] = ""
+		
+		//trading
+		let tradingArrayTxt = [];
+		tradingArrayTxt[0] = ""
+				
+		//usingItems
+		let usingItemsArrayTxt = [];
+		usingItemsArrayTxt[0] = ""
 		
 		//weaponsToolsArmor
 		let weaponsToolsArmorArrayTxt = [];
-		weaponsToolsArmorArrayTxt[0] = "Shoot a Crossbow: " + getSomeScore("weaponsToolsArmor", "crossbow", player);
-		weaponsToolsArmorArrayTxt[1] = "Shoot something with an arrow: " + getSomeScore("weaponsToolsArmor", "arrow", player);
-		weaponsToolsArmorArrayTxt[2] = "Hit a mob with a thrown trident: " + getSomeScore("weaponsToolsArmor", "thrown_trident", player);
-		weaponsToolsArmorArrayTxt[3] = "Hit a target block bulls eye: " + getSomeScore("weaponsToolsArmor", "target", player);
-		weaponsToolsArmorArrayTxt[4] = "Catch a fish: " + getSomeScore("weaponsToolsArmor", "catch_fish", player);
+		weaponsToolsArmorArrayTxt[0] = "Hit a target block bulls eye: " + getSomeScore("weaponsToolsArmor", "target", player);
+		
+		//worldAndBiome
+		let worldAndBiomeArrayTxt = [];
+		worldAndBiomeArrayTxt[0] = ""
 		
 	//construct the body
 		let boolPos = "\u2717";
@@ -195,36 +206,81 @@ function achieveListBody(player){
 		
 	    //achievements--------------------
 		//initialize variables
+		let blockInteractionsBodyTxt = "";
+		let craftAndCookBodyTxt = "";
+		let eatAndDrinkBodyTxt = "";
 		let getSomeWhereBodyTxt = "";
 		let itemInventoryBodyTxt = "";
+		let entityInteractionsBodyTxt = "";
+		let entityKillsBodyTxt = "";
+		let redstoneInteractionsBodyTxt = "";
 		let statusAndEffectsBodyTxt = "";
 		let spawnAndBreedBodyTxt = "";
+		let tradingBodyTxt = "";
+		let usingItemsBodyTxt = "";
 		let weaponsToolsArmorBodyTxt = "";
+		let worldAndBiomeBodyTxt = "";
 		
 		//concatenate text sections
+		for(i = 0; i < blockInteractionsArrayTxt.length; i++){
+			blockInteractionsBodyTxt = blockInteractionsBodyTxt + indentNextLine + (blockInteractionsArrayTxt[i].concat(".,.").replace("0.,.", boolNeg).replace("1.,.", boolPos).replace(".,.", ""));
+		}
+		for(i = 0; i < craftAndCookArrayTxt.length; i++){
+			craftAndCookBodyTxt = craftAndCookBodyTxt + indentNextLine + (craftAndCookArrayTxt[i].concat(".,.").replace("0.,.", boolNeg).replace("1.,.", boolPos).replace(".,.", ""));
+		}
+		for(i = 0; i < eatAndDrinkArrayTxt.length; i++){
+			eatAndDrinkBodyTxt = eatAndDrinkBodyTxt + indentNextLine + (eatAndDrinkArrayTxt[i].concat(".,.").replace("0.,.", boolNeg).replace("1.,.", boolPos).replace(".,.", ""));
+		}
 		for(i = 0; i < getSomeWhereArrayTxt.length; i++){
 			getSomeWhereBodyTxt = getSomeWhereBodyTxt + indentNextLine + (getSomeWhereArrayTxt[i].concat(".,.").replace("0.,.", boolNeg).replace("1.,.", boolPos).replace(".,.", ""));
 		}
 		for(i = 0; i < itemInventoryArrayTxt.length; i++){
 			itemInventoryBodyTxt = itemInventoryBodyTxt + indentNextLine + (itemInventoryArrayTxt[i].concat(".,.").replace("0.,.", boolNeg).replace("1.,.", boolPos).replace(".,.", ""));
 		}
-		for(i = 0; i < statusAndEffectsArrayTxt.length; i++){
-			statusAndEffectsBodyTxt = statusAndEffectsBodyTxt + indentNextLine + (statusAndEffectsArrayTxt[i].concat(".,.").replace("0.,.", boolNeg).replace("1.,.", boolPos).replace(".,.", ""));
+		for(i = 0; i < entityInteractionsArrayTxt.length; i++){
+			entityInteractionsBodyTxt = entityInteractionsBodyTxt + indentNextLine + (entityInteractionsArrayTxt[i].concat(".,.").replace("0.,.", boolNeg).replace("1.,.", boolPos).replace(".,.", ""));
+		}
+		for(i = 0; i < entityKillsArrayTxt.length; i++){
+			entityKillsBodyTxt = entityKillsBodyTxt + indentNextLine + (entityKillsArrayTxt[i].concat(".,.").replace("0.,.", boolNeg).replace("1.,.", boolPos).replace(".,.", ""));
+		}
+		for(i = 0; i < redstoneInteractionsArrayTxt.length; i++){
+			redstoneInteractionsBodyTxt = redstoneInteractionsBodyTxt + indentNextLine + (redstoneInteractionsArrayTxt[i].concat(".,.").replace("0.,.", boolNeg).replace("1.,.", boolPos).replace(".,.", ""));
 		}
 		for(i = 0; i < spawnAndBreedArrayTxt.length; i++){
 			spawnAndBreedBodyTxt = spawnAndBreedBodyTxt + indentNextLine + (spawnAndBreedArrayTxt[i].concat(".,.").replace("0.,.", boolNeg).replace("1.,.", boolPos).replace(".,.", ""));
 		}
+		for(i = 0; i < statusAndEffectsArrayTxt.length; i++){
+			statusAndEffectsBodyTxt = statusAndEffectsBodyTxt + indentNextLine + (statusAndEffectsArrayTxt[i].concat(".,.").replace("0.,.", boolNeg).replace("1.,.", boolPos).replace(".,.", ""));
+		}
+		for(i = 0; i < tradingArrayTxt.length; i++){
+			tradingBodyTxt = tradingBodyTxt + indentNextLine + (tradingArrayTxt[i].concat(".,.").replace("0.,.", boolNeg).replace("1.,.", boolPos).replace(".,.", ""));
+		}
+		for(i = 0; i < usingItemsArrayTxt.length; i++){
+			usingItemsBodyTxt = usingItemsBodyTxt + indentNextLine + (usingItemsArrayTxt[i].concat(".,.").replace("0.,.", boolNeg).replace("1.,.", boolPos).replace(".,.", ""));
+		}
 		for(i = 0; i < weaponsToolsArmorArrayTxt.length; i++){
 			weaponsToolsArmorBodyTxt = weaponsToolsArmorBodyTxt + indentNextLine + (weaponsToolsArmorArrayTxt[i].concat(".,.").replace("0.,.", boolNeg).replace("1.,.", boolPos).replace(".,.", ""));
+		}
+		for(i = 0; i < worldAndBiomeArrayTxt.length; i++){
+			worldAndBiomeBodyTxt = worldAndBiomeBodyTxt + indentNextLine + (worldAndBiomeArrayTxt[i].concat(".,.").replace("0.,.", boolNeg).replace("1.,.", boolPos).replace(".,.", ""));
 		}
 		
 		//display text
 		return achievementTxt
+			+ blockInteractionsBodyTxt
+			+ craftAndCookBodyTxt
+			+ eatAndDrinkBodyTxt
 			+ getSomeWhereBodyTxt
 			+ itemInventoryBodyTxt
-			+ statusAndEffectsBodyTxt
+			+ entityInteractionsBodyTxt
+			+ entityKillsBodyTxt
+			+ redstoneInteractionsBodyTxt
 			+ spawnAndBreedBodyTxt
-			+ weaponsToolsArmorBodyTxt;
+			+ statusAndEffectsBodyTxt
+			+ tradingBodyTxt
+			+ usingItemsBodyTxt
+			+ weaponsToolsArmorBodyTxt
+			+ worldAndBiomeBodyTxt;
 }
 function advanceList(player){
 	let advanceForm = new ActionFormData()
@@ -244,14 +300,26 @@ function advanceList(player){
 function advanceListBody(player){
 	//add text
 	    //advancements--------------------
-		let advancementTxt = "advancements";
+		let advancementTxt = "Advancements";
+		
+		//blockInteractions
+		let blockInteractionsArrayTxt = [];
+		blockInteractionsArrayTxt[0] = ""
+		
+		//craftAndCook
+		let craftAndCookArrayTxt = [];
+		craftAndCookArrayTxt[0] = ""
+		
+		//eatAndDrink
+		let eatAndDrinkArrayTxt = [];
+		eatAndDrinkArrayTxt[0] = ""
 		
 		//getSomeWhere
 		let getSomeWhereArrayTxt = [];
 		getSomeWhereArrayTxt[0] = "Go to the Nether: " + getSomeScore("getSomeWhere", "nether", player);
 		getSomeWhereArrayTxt[1] = "Go to The End: " + getSomeScore("getSomeWhere", "the_end", player);
-		getSomeWhereArrayTxt[2] = "Visit a Bastion: " + getSomeScore("getSomeWhere", "bastion_remnant", player);
-		getSomeWhereArrayTxt[3] = "Visit a Fortress: " + getSomeScore("getSomeWhere", "nether_fortress", player);
+		getSomeWhereArrayTxt[2] = "Enter a Bastion: " + getSomeScore("getSomeWhere", "bastion_remnant", player);
+		getSomeWhereArrayTxt[3] = "Enter a Fortress: " + getSomeScore("getSomeWhere", "nether_fortress", player);
 		getSomeWhereArrayTxt[4] = "Go 7000 blocks in the Overworld: " + getSomeScore("getSomeWhere", "overworld7000", player);
 		
 		//itemInventory
@@ -279,11 +347,17 @@ function advanceListBody(player){
 		itemInventoryArrayTxt[20] = "Get a sniffer egg: " + getSomeScore("itemInventory", "sniffer_egg", player);
 		itemInventoryArrayTxt[21] = "Get a pottery sherd: " + getSomeScore("itemInventory", "pottery_sherd", player);
 		
-		//statusAndEffects
-		let statusAndEffectsArrayTxt = [];
-		statusAndEffectsArrayTxt[0] = "Get hero of the village: " + getSomeScore("statusAndEffects", "hero_of_the_village", player);
-		statusAndEffectsArrayTxt[1] = "All potion effects at once: " + getSomeScore("statusAndEffects", "potion_effects_bool", player);
-		statusAndEffectsArrayTxt[2] = "All effects at once: " + getSomeScore("statusAndEffects", "all_effects_bool", player);
+		//entityInteractions
+		let entityInteractionsArrayTxt = [];
+		entityInteractionsArrayTxt[0] = ""
+		
+		//entityKills
+		let entityKillsArrayTxt = [];
+		entityKillsArrayTxt[0] = ""
+		
+		//redstoneInteractions
+		let redstoneInteractionsArrayTxt = [];
+		redstoneInteractionsArrayTxt[0] = ""
 		
 		//spawnAndBreed
 		let spawnAndBreedArrayTxt = [];
@@ -293,13 +367,30 @@ function advanceListBody(player){
 		spawnAndBreedArrayTxt[3] = "Breed 2 animals together: " + getSomeScore("spawnAndBreed", "breed_some", player);
 		spawnAndBreedArrayTxt[4] = "Breed all the animals: " + getSomeScore("spawnAndBreed", "breed_all_bool", player);
 		
+		//statusAndEffects
+		let statusAndEffectsArrayTxt = [];
+		statusAndEffectsArrayTxt[0] = "Get hero of the village: " + getSomeScore("statusAndEffects", "hero_of_the_village", player);
+		statusAndEffectsArrayTxt[1] = "All potion effects at once: " + getSomeScore("statusAndEffects", "potion_effects_bool", player);
+		statusAndEffectsArrayTxt[2] = "All effects at once: " + getSomeScore("statusAndEffects", "all_effects_bool", player);
+		
+		//trading
+		let tradingArrayTxt = [];
+		tradingArrayTxt[0] = ""
+				
+		//usingItems
+		let usingItemsArrayTxt = [];
+		usingItemsArrayTxt[0] = ""
+		
 		//weaponsToolsArmor
 		let weaponsToolsArmorArrayTxt = [];
 		weaponsToolsArmorArrayTxt[0] = "Shoot a Crossbow: " + getSomeScore("weaponsToolsArmor", "crossbow", player);
 		weaponsToolsArmorArrayTxt[1] = "Shoot something with an arrow: " + getSomeScore("weaponsToolsArmor", "arrow", player);
 		weaponsToolsArmorArrayTxt[2] = "Hit a mob with a thrown trident: " + getSomeScore("weaponsToolsArmor", "thrown_trident", player);
-		weaponsToolsArmorArrayTxt[3] = "Hit a target block bulls eye: " + getSomeScore("weaponsToolsArmor", "target", player);
-		weaponsToolsArmorArrayTxt[4] = "Catch a fish: " + getSomeScore("weaponsToolsArmor", "catch_fish", player);
+		weaponsToolsArmorArrayTxt[3] = "Catch a fish: " + getSomeScore("weaponsToolsArmor", "catch_fish", player);
+		
+		//worldAndBiome
+		let worldAndBiomeArrayTxt = [];
+		worldAndBiomeArrayTxt[0] = ""
 		
 	//construct the body
 		let boolPos = "\u2717";
@@ -311,36 +402,81 @@ function advanceListBody(player){
 		
 	    //advancements--------------------
 		//initialize variables
+		let blockInteractionsBodyTxt = "";
+		let craftAndCookBodyTxt = "";
+		let eatAndDrinkBodyTxt = "";
 		let getSomeWhereBodyTxt = "";
 		let itemInventoryBodyTxt = "";
+		let entityInteractionsBodyTxt = "";
+		let entityKillsBodyTxt = "";
+		let redstoneInteractionsBodyTxt = "";
 		let statusAndEffectsBodyTxt = "";
 		let spawnAndBreedBodyTxt = "";
+		let tradingBodyTxt = "";
+		let usingItemsBodyTxt = "";
 		let weaponsToolsArmorBodyTxt = "";
+		let worldAndBiomeBodyTxt = "";
 		
 		//concatenate text sections
+		for(i = 0; i < blockInteractionsArrayTxt.length; i++){
+			blockInteractionsBodyTxt = blockInteractionsBodyTxt + indentNextLine + (blockInteractionsArrayTxt[i].concat(".,.").replace("0.,.", boolNeg).replace("1.,.", boolPos).replace(".,.", ""));
+		}
+		for(i = 0; i < craftAndCookArrayTxt.length; i++){
+			craftAndCookBodyTxt = craftAndCookBodyTxt + indentNextLine + (craftAndCookArrayTxt[i].concat(".,.").replace("0.,.", boolNeg).replace("1.,.", boolPos).replace(".,.", ""));
+		}
+		for(i = 0; i < eatAndDrinkArrayTxt.length; i++){
+			eatAndDrinkBodyTxt = eatAndDrinkBodyTxt + indentNextLine + (eatAndDrinkArrayTxt[i].concat(".,.").replace("0.,.", boolNeg).replace("1.,.", boolPos).replace(".,.", ""));
+		}
 		for(i = 0; i < getSomeWhereArrayTxt.length; i++){
 			getSomeWhereBodyTxt = getSomeWhereBodyTxt + indentNextLine + (getSomeWhereArrayTxt[i].concat(".,.").replace("0.,.", boolNeg).replace("1.,.", boolPos).replace(".,.", ""));
 		}
 		for(i = 0; i < itemInventoryArrayTxt.length; i++){
 			itemInventoryBodyTxt = itemInventoryBodyTxt + indentNextLine + (itemInventoryArrayTxt[i].concat(".,.").replace("0.,.", boolNeg).replace("1.,.", boolPos).replace(".,.", ""));
 		}
-		for(i = 0; i < statusAndEffectsArrayTxt.length; i++){
-			statusAndEffectsBodyTxt = statusAndEffectsBodyTxt + indentNextLine + (statusAndEffectsArrayTxt[i].concat(".,.").replace("0.,.", boolNeg).replace("1.,.", boolPos).replace(".,.", ""));
+		for(i = 0; i < entityInteractionsArrayTxt.length; i++){
+			entityInteractionsBodyTxt = entityInteractionsBodyTxt + indentNextLine + (entityInteractionsArrayTxt[i].concat(".,.").replace("0.,.", boolNeg).replace("1.,.", boolPos).replace(".,.", ""));
+		}
+		for(i = 0; i < entityKillsArrayTxt.length; i++){
+			entityKillsBodyTxt = entityKillsBodyTxt + indentNextLine + (entityKillsArrayTxt[i].concat(".,.").replace("0.,.", boolNeg).replace("1.,.", boolPos).replace(".,.", ""));
+		}
+		for(i = 0; i < redstoneInteractionsArrayTxt.length; i++){
+			redstoneInteractionsBodyTxt = redstoneInteractionsBodyTxt + indentNextLine + (redstoneInteractionsArrayTxt[i].concat(".,.").replace("0.,.", boolNeg).replace("1.,.", boolPos).replace(".,.", ""));
 		}
 		for(i = 0; i < spawnAndBreedArrayTxt.length; i++){
 			spawnAndBreedBodyTxt = spawnAndBreedBodyTxt + indentNextLine + (spawnAndBreedArrayTxt[i].concat(".,.").replace("0.,.", boolNeg).replace("1.,.", boolPos).replace(".,.", ""));
 		}
+		for(i = 0; i < statusAndEffectsArrayTxt.length; i++){
+			statusAndEffectsBodyTxt = statusAndEffectsBodyTxt + indentNextLine + (statusAndEffectsArrayTxt[i].concat(".,.").replace("0.,.", boolNeg).replace("1.,.", boolPos).replace(".,.", ""));
+		}
+		for(i = 0; i < tradingArrayTxt.length; i++){
+			tradingBodyTxt = tradingBodyTxt + indentNextLine + (tradingArrayTxt[i].concat(".,.").replace("0.,.", boolNeg).replace("1.,.", boolPos).replace(".,.", ""));
+		}
+		for(i = 0; i < usingItemsArrayTxt.length; i++){
+			usingItemsBodyTxt = usingItemsBodyTxt + indentNextLine + (usingItemsArrayTxt[i].concat(".,.").replace("0.,.", boolNeg).replace("1.,.", boolPos).replace(".,.", ""));
+		}
 		for(i = 0; i < weaponsToolsArmorArrayTxt.length; i++){
 			weaponsToolsArmorBodyTxt = weaponsToolsArmorBodyTxt + indentNextLine + (weaponsToolsArmorArrayTxt[i].concat(".,.").replace("0.,.", boolNeg).replace("1.,.", boolPos).replace(".,.", ""));
+		}
+		for(i = 0; i < worldAndBiomeArrayTxt.length; i++){
+			worldAndBiomeBodyTxt = worldAndBiomeBodyTxt + indentNextLine + (worldAndBiomeArrayTxt[i].concat(".,.").replace("0.,.", boolNeg).replace("1.,.", boolPos).replace(".,.", ""));
 		}
 		
 		//display text
 		return advancementTxt
+			+ blockInteractionsBodyTxt
+			+ craftAndCookBodyTxt
+			+ eatAndDrinkBodyTxt
 			+ getSomeWhereBodyTxt
 			+ itemInventoryBodyTxt
-			+ statusAndEffectsBodyTxt
+			+ entityInteractionsBodyTxt
+			+ entityKillsBodyTxt
+			+ redstoneInteractionsBodyTxt
 			+ spawnAndBreedBodyTxt
-			+ weaponsToolsArmorBodyTxt;
+			+ statusAndEffectsBodyTxt
+			+ tradingBodyTxt
+			+ usingItemsBodyTxt
+			+ weaponsToolsArmorBodyTxt
+			+ worldAndBiomeBodyTxt;
 }
 //end ui functions----------------------------------------
 
@@ -1071,7 +1207,6 @@ function statusAndEffects(player){
 		//[advancement] Beaconator | Bring a Beacon to full power | Be within a 20×20×14 cuboid centered on a beacon block when it realizes it is being powered by a size 4 pyramid.
 		//[advancement] Bring Home the Beacon | Construct and place a Beacon | Be within a 20×20×14 cuboid centered on a beacon block when it realizes it has become powered.
 		//[advancement] Great View From Up Here | Levitate up 50 blocks from the attacks of a Shulker | Move a distance of 50 blocks vertically with the Levitation effect applied, regardless of direction or whether it is caused by the effect.
-		//[advancement] Hero of the Village | Successfully defend a village from a raid | Kill at least one raid mob during a raid and wait until it ends in victory.
 		//[advancement] The Healing Power of Friendship! | Team up with an axolotl and win a fight | Have the Regeneration effect applied from assisting an axolotl or it killing a mob.
 	//in work--------------------
 	//done--------------------
@@ -1129,7 +1264,7 @@ function statusAndEffects(player){
 					if(effectPlayer[i].typeId == effectArray[j]){
 						addToScore("statusAndEffects", "all_effects_score", player);
 					}
-					//get hero of the village
+					//[advancement] Hero of the Village | Successfully defend a village from a raid | Kill at least one raid mob during a raid and wait until it ends in victory.
 					if(getSomeScore("statusAndEffects", "hero_of_the_village", player) == 0){
 						if(effectPlayer[i].typeId == "hero_of_the_village"){
 							boolScore("statusAndEffects", "hero_of_the_village", player, 1);
