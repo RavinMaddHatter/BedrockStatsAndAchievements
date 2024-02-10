@@ -172,9 +172,12 @@ function achieveListBody(player){
 		
 		//spawnAndBreed
 		let spawnAndBreedArrayTxt = [];
-		spawnAndBreedArrayTxt[0] = "Summon an iron golem: " + getSomeScore("spawnAndBreed", "iron_golem", player);
-		spawnAndBreedArrayTxt[1] = "Summon a wither: " + getSomeScore("spawnAndBreed", "wither", player);
-		spawnAndBreedArrayTxt[2] = "Respawn the dragon: " + getSomeScore("spawnAndBreed", "ender_dragon_bool", player);
+		spawnAndBreedArrayTxt[0] = "Breed cows or mooshrooms: " + getSomeScore("spawnAndBreed", "cow", player);
+		spawnAndBreedArrayTxt[1] = "Get a mule from breeding: " + getSomeScore("spawnAndBreed", "mule", player);
+		spawnAndBreedArrayTxt[2] = "Breed pandas: " + getSomeScore("spawnAndBreed", "panda", player);
+		spawnAndBreedArrayTxt[3] = "Summon an iron golem: " + getSomeScore("spawnAndBreed", "iron_golem", player);
+		spawnAndBreedArrayTxt[4] = "Summon a wither: " + getSomeScore("spawnAndBreed", "wither", player);
+		spawnAndBreedArrayTxt[5] = "Respawn the dragon: " + getSomeScore("spawnAndBreed", "ender_dragon_bool", player);
 		
 		//statusAndEffects
 		let statusAndEffectsArrayTxt = [];
@@ -386,7 +389,8 @@ function advanceListBody(player){
 		weaponsToolsArmorArrayTxt[0] = "Shoot a Crossbow: " + getSomeScore("weaponsToolsArmor", "crossbow", player);
 		weaponsToolsArmorArrayTxt[1] = "Shoot something with an arrow: " + getSomeScore("weaponsToolsArmor", "arrow", player);
 		weaponsToolsArmorArrayTxt[2] = "Hit a mob with a thrown trident: " + getSomeScore("weaponsToolsArmor", "thrown_trident", player);
-		weaponsToolsArmorArrayTxt[3] = "Catch a fish: " + getSomeScore("weaponsToolsArmor", "catch_fish", player);
+		weaponsToolsArmorArrayTxt[3] = "Hit a bullseye 30 blocks away: " + getSomeScore("weaponsToolsArmor", "targetFrom30", player);
+		weaponsToolsArmorArrayTxt[4] = "Catch a fish: " + getSomeScore("weaponsToolsArmor", "catch_fish", player);
 		
 		//worldAndBiome
 		let worldAndBiomeArrayTxt = [];
@@ -728,13 +732,24 @@ function targetHit(event){
 	
 	if(power == 15){
 		let closePlayers = event.dimension.getPlayers({
-			maxDistance: 70,
+			maxDistance: 100,
 			location: {x: event.hitVector.x, y: event.hitVector.y, z: event.hitVector.z}
 		});
+		let farPlayers = event.dimension.getPlayers({
+			minDistance: 30,
+			maxDistance: 100,
+			location: {x: event.hitVector.x, y: event.hitVector.y, z: event.hitVector.z}
+		});
+		var i;
 		
-		for(var i = 0; i < closePlayers.length; i++){
+		for(i = 0; i < closePlayers.length; i++){
 			if(getSomeScore("weaponsToolsArmor", "shoot_bool", closePlayers[i]) == 1){
 				weaponsToolsArmor("target", closePlayers[i]);
+			}
+		}
+		for(i = 0; i < farPlayers.length; i++){
+			if(getSomeScore("weaponsToolsArmor", "shoot_bool", farPlayers[i]) == 1){
+				weaponsToolsArmor("targetFrom30", farPlayers[i]);
 			}
 		}
 	}
@@ -1123,9 +1138,6 @@ function redstoneInteractions(){
 }
 function spawnAndBreed(entity, player){
 	//to-do--------------------
-		//[achievement] Artificial Selection | Breed a mule from a horse and a donkey. | —
-		//[achievement] Repopulation | Breed two cows with wheat. | Breed two cows or two mooshrooms.
-		//[achievement] Zoologist | Breed two pandas with bamboo. | —
 	//in work--------------------
 	//done--------------------
 		switch(entity){
@@ -1156,7 +1168,7 @@ function spawnAndBreed(entity, player){
 			case "camel" ://*fall through*
 			case "cat" ://*fall through*
 			case "chicken" ://*fall through*
-			case "cow" ://*fall through*
+			case "cow" ://*fall through*	//[achievement] Repopulation | Breed two cows with wheat. | Breed two cows or two mooshrooms.
 			case "donkey" ://*fall through*
 			case "fox" ://*fall through*
 			case "frog" ://*fall through*
@@ -1165,9 +1177,9 @@ function spawnAndBreed(entity, player){
 			case "horse" ://*fall through*
 			case "llama" ://*fall through*
 			case "mooshroom" ://*fall through*
-			case "mule" ://*fall through*
+			case "mule" ://*fall through*	//[achievement] Artificial Selection | Breed a mule from a horse and a donkey. | —
 			case "ocelot" ://*fall through*
-			case "panda" ://*fall through*
+			case "panda" ://*fall through*	//[achievement] Zoologist | Breed two pandas with bamboo. | —
 			case "pig" ://*fall through*
 			case "rabbit" ://*fall through*
 			case "sheep" ://*fall through*
@@ -1310,7 +1322,6 @@ function weaponsToolsArmor(subject, player){
 		//[achievement] Let It Go! | Using the Frost Walker boots, walk on at least 1 block on frozen water on a deep ocean | —
 		//[achievement] Smithing with style | Apply these smithing templates at least once: Spire, Snout, Rib, Ward, Silence, Vex, Tide, Wayfinder | —
 		//[achievement] Super Sonic | Use Elytra to fly through a 1 by 1 gap while moving faster than 40 m/s | —
-		//[advancement] Bullseye | Hit the bullseye of a Target block from at least 30 meters away | Be at least 30 blocks away horizontally when the center of a target is shot with a projectile by the player.
 		//[advancement] Crafting a New Look | Craft a trimmed armor at a Smithing Table | —
 		//[advancement] Light as a Rabbit | Walk on Powder Snow... without sinking in it | Walk on powder snow while wearing leather boots.
 		//[advancement] Not Today, Thank You | Deflect a projectile with a Shield | Block any projectile with a shield.
@@ -1326,7 +1337,9 @@ function weaponsToolsArmor(subject, player){
 		    //[advancement] A Throwaway Joke | Throw a Trident at something. Note: Throwing away your only weapon is not a good idea. | Hit a mob with a thrown trident.
 			case "thrown_trident" ://*fall through*
 		    //[achievement] Bullseye | Hit the bullseye of a Target block | —
-			case "target" :
+			case "target" ://*fall through*
+		    //[advancement] Bullseye | Hit the bullseye of a Target block from at least 30 meters away | Be at least 30 blocks away horizontally when the center of a target is shot with a projectile by the player.
+			case "targetFrom30" :
 				//console.warn("Here goes nothing");
 				boolScore("weaponsToolsArmor", subject, player, 1);
 				break;
