@@ -3,6 +3,7 @@ import {ActionFormData, ActionFormResponse } from "@minecraft/server-ui";
 
 var blockBreaks = {}
 var blocksUsed = {}
+const debugToggle = 1
 timer10Sec();
 
 //subscriptions----------------------------------------
@@ -72,6 +73,10 @@ function statList(player){
 		.button("Achievements")
 		.button("Advancements");
 		
+		if(debugToggle){
+			statForm.button("Debug");
+		}
+		
 		statForm.show(player).then((response) => {
 			switch(response.selection){
 				case 1 :
@@ -79,6 +84,9 @@ function statList(player){
 					break;
 				case 2 :
 					advanceList(player);
+					break;
+				case 3 :
+					debugList(player);
 					break;
 			}
 		});
@@ -481,6 +489,64 @@ function advanceListBody(player){
 			+ usingItemsBodyTxt
 			+ weaponsToolsArmorBodyTxt
 			+ worldAndBiomeBodyTxt;
+}
+function debugList(player){
+	let debugForm = new ActionFormData()
+		.title(player.name)
+		.body(debugListBody(player))
+		.button("Close")
+		.button("Stats");
+		
+		debugForm.show(player).then((response) => {
+			switch(response.selection){
+				case 1 :
+					statList(player);
+					break;
+			}
+		});
+}
+function debugListBody(player){
+	//add text
+	    //debug--------------------
+		let debugTxt = "Additional game info";
+		
+		let debugArrayTxt = [];
+		debugArrayTxt[0] = "Dimension: " + playerPosition(player, "dimension");
+		debugArrayTxt[1] = "XYZ: " + playerPosition(player, "xyz");
+		debugArrayTxt[2] = "Block: " + playerPosition(player, "block");
+		debugArrayTxt[3] = "Block within chunk: " + playerPosition(player, "blockInChunk");
+		debugArrayTxt[4] = "Chunk: " + playerPosition(player, "chunk");
+		debugArrayTxt[5] = "Region: " + playerPosition(player, "region");
+		debugArrayTxt[6] = "Overworld coord: " + playerPosition(player, "overworld");
+		debugArrayTxt[7] = "Nether coord: " + playerPosition(player, "nether");
+		debugArrayTxt[8] = "Player spawnpoint: " + playerRespawn(player);
+		debugArrayTxt[9] = "World spawnpoint: " + worldSpawn();
+		debugArrayTxt[10] = "Facing: " + facingDirection(player);
+		debugArrayTxt[11] = "Light at player's head: " + lightLevel(player);
+		debugArrayTxt[12] = "Biome: " + biomeFinder(player);
+		debugArrayTxt[13] = "Moon phase: " + moonCycle();
+		debugArrayTxt[14] = "Time of day: " + "\n        Tick: " + getTheTime("tick") + "\n        Minecraft: " + getTheTime("minecraft") + "\n        12hr: " + getTheTime("12hr") + "\n        24hr: " + getTheTime("24hr");
+		debugArrayTxt[15] = "World life in ticks: " + "\n        " + worldlife("tick");
+		debugArrayTxt[16] = "World day: " + worldlife("day");
+		
+	//construct the body
+		let boolPos = "\u2717";
+		let boolNeg = " ";
+		let indentSize = "    ";
+		let nextLine = '\n';
+		let indentNextLine = nextLine + indentSize;
+		var i;
+		
+	    //stats--------------------
+		let debugBodyTxt = "";
+		
+		for(i = 0; i < debugArrayTxt.length; i++){
+			debugBodyTxt = debugBodyTxt + indentNextLine + debugArrayTxt[i];
+		}
+		
+		//display text
+		return debugTxt
+			+ debugBodyTxt;
 }
 //end ui functions----------------------------------------
 
@@ -1725,8 +1791,11 @@ function playerPosition(player, option){
 	let playerPosTxt = "";
 	
 	switch(option){
+		case "xyz" :
+			playerPosTxt =  "\n        " + playerPosX + ",\n        " + playerPosY + ",\n        " + playerPosZ;
+			break;
 		case "block" :
-			playerPosTxt =  playerPosX + ", " + playerPosY + ", " + playerPosZ;
+			playerPosTxt =  "\n        " + Math.floor(playerPosX) + ",\n        " + Math.floor(playerPosY) + ",\n        " + Math.floor(playerPosZ);
 			break;
 		case "chunk" :
 			playerPosTxt = Math.floor(playerPosX / 16) + ", " + Math.floor(playerPosY / 16) + ", " + Math.floor(playerPosZ / 16);
@@ -1757,7 +1826,7 @@ function playerRespawn(player){
 		let spawnX = player.getSpawnPoint().x;
 		let spawnY = player.getSpawnPoint().y;
 		let spawnZ = player.getSpawnPoint().z;
-		let spawnTxt = spawnDim + ", " + spawnX + ", " + spawnY + ", " + spawnZ;
+		let spawnTxt = "\n        " + spawnDim + ",\n        " + spawnX + ",\n        " + spawnY + ",\n        " + spawnZ;
 		
 		//console.warn(spawnTxt);
 		return spawnTxt;
@@ -1784,7 +1853,7 @@ function worldSpawn(){
 	let spawnX = world.getDefaultSpawnLocation().x;
 	let spawnY = world.getDefaultSpawnLocation().y;
 	let spawnZ = world.getDefaultSpawnLocation().z;
-	let spawnTxt = spawnX + ", " + spawnY + ", " + spawnZ;
+	let spawnTxt = "\n        " + spawnX + ",\n        " + spawnY + ",\n        " + spawnZ;
 	
 	//console.warn(spawnTxt);
 	return spawnTxt;
