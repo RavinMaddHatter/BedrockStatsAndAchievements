@@ -1513,3 +1513,280 @@ function timer10Sec(){
 	}, 200);
 }
 //end helper functions----------------------------------------
+
+//debug functions----------------------------------------
+function biomeFinder(player){
+	let biomeArray = [];
+	biomeArray[0] = "biome_id";
+	biomeArray[1] = "the_end";
+	biomeArray[2] = "river";
+	biomeArray[3] = "mushroom_island";
+	biomeArray[4] = "mangrove_swamp";
+	biomeArray[5] = "warped_forest";
+	biomeArray[6] = "mushroom_island_shore";
+	biomeArray[7] = "frozen_river";
+	biomeArray[8] = "ocean";
+	biomeArray[9] = "legacy_frozen_ocean";
+	biomeArray[10] = "stony_peaks";
+	biomeArray[11] = "mesa";
+	biomeArray[12] = "desert";
+	biomeArray[13] = "savanna";
+	biomeArray[14] = "deep_dark";
+	biomeArray[15] = "ice_plains";
+	biomeArray[16] = "warm_ocean";
+	biomeArray[17] = "beach";
+	biomeArray[18] = "taiga";
+	biomeArray[19] = "swampland";
+	biomeArray[20] = "stone_beach";
+	biomeArray[21] = "basalt_deltas";
+	biomeArray[22] = "soulsand_valley";
+	biomeArray[23] = "mesa_plateau";
+	biomeArray[24] = "jungle";
+	biomeArray[25] = "desert_mutated";
+	biomeArray[26] = "lukewarm_ocean";
+	biomeArray[27] = "frozen_ocean";
+	biomeArray[28] = "deep_ocean";
+	biomeArray[29] = "cold_ocean";
+	biomeArray[30] = "ice_mountains";
+	biomeArray[31] = "desert_hills";
+	biomeArray[32] = "extreme_hills";
+	biomeArray[33] = "cold_beach";
+	biomeArray[34] = "lush_caves";
+	biomeArray[35] = "dripstone_caves";
+	biomeArray[36] = "forest";
+	biomeArray[37] = "deep_warm_ocean";
+	biomeArray[38] = "mesa_plateau_stone";
+	biomeArray[39] = "crimson_forest";
+	biomeArray[40] = "savanna_plateau";
+	biomeArray[41] = "savanna_mutated";
+	biomeArray[42] = "mesa_plateau_stone_mutated";
+	biomeArray[43] = "swampland_mutated";
+	biomeArray[44] = "jungle_mutated";
+	biomeArray[45] = "deep_lukewarm_ocean";
+	biomeArray[46] = "deep_frozen_ocean";
+	biomeArray[47] = "deep_cold_ocean";
+	biomeArray[48] = "mesa_bryce";
+	biomeArray[49] = "ice_plains_spikes";
+	biomeArray[50] = "extreme_hills_mutated";
+	biomeArray[51] = "jungle_hills";
+	biomeArray[52] = "jungle_edge";
+	biomeArray[53] = "bamboo_jungle";
+	biomeArray[54] = "jagged_peaks";
+	biomeArray[55] = "grove";
+	biomeArray[56] = "frozen_peaks";
+	biomeArray[57] = "snowy_slopes";
+	biomeArray[58] = "plains";
+	biomeArray[59] = "flower_forest";
+	biomeArray[60] = "meadow";
+	biomeArray[61] = "cherry_grove";
+	biomeArray[62] = "taiga_hills";
+	biomeArray[63] = "cold_taiga";
+	biomeArray[64] = "mesa_plateau_mutated";
+	biomeArray[65] = "savanna_plateau_mutated";
+	biomeArray[66] = "roofed_forest";
+	biomeArray[67] = "taiga_mutated";
+	biomeArray[68] = "roofed_forest_mutated";
+	biomeArray[69] = "jungle_edge_mutated";
+	biomeArray[70] = "extreme_hills_plus_trees_mutated";
+	biomeArray[71] = "extreme_hills_plus_trees";
+	biomeArray[72] = "extreme_hills_edge";
+	biomeArray[73] = "bamboo_jungle_hills";
+	biomeArray[74] = "sunflower_plains";
+	biomeArray[75] = "birch_forest";
+	biomeArray[76] = "forest_hills";
+	biomeArray[77] = "mega_taiga";
+	biomeArray[78] = "redwood_taiga_mutated";
+	biomeArray[79] = "mega_taiga_hills";
+	biomeArray[80] = "cold_taiga_hills";
+	biomeArray[81] = "hell";
+	biomeArray[82] = "cold_taiga_mutated";
+	biomeArray[83] = "birch_forest_hills_mutated";
+	biomeArray[84] = "birch_forest_mutated";
+	biomeArray[85] = "birch_forest_hills";
+	biomeArray[86] = "redwood_taiga_hills_mutated";
+	let variantPlayer = player.getComponent("minecraft:variant").value;
+	let biomeId = biomeArray[variantPlayer];
+	
+	//console.warn(biomeId);
+	return biomeId;
+}
+function facingDirection(player){
+	let faceDir = player.getRotation().y;
+	let faceTxt = "";
+	
+	switch(true){
+		case (faceDir > 157.5) || (faceDir < -157.5) :
+			faceTxt = "North";
+			break;
+		case (faceDir > -157.5) && (faceDir < -112.5) :
+			faceTxt = "Northeast";
+			break;
+		case (faceDir > -112.5) && (faceDir < -67.5) :
+			faceTxt = "East";
+			break;
+		case (faceDir > -67.5) && (faceDir < -22.5) :
+			faceTxt = "Southeast";
+			break;
+		case (faceDir > -22.5) && (faceDir < 22.5) :
+			faceTxt = "South";
+			break;
+		case (faceDir > 22.5) && (faceDir < 67.5) :
+			faceTxt = "Southwest";
+			break;
+		case (faceDir > 67.5) && (faceDir < 112.5) :
+			faceTxt = "West";
+			break;
+		case (faceDir > 112.5) && (faceDir < 157.5) :
+			faceTxt = "Northwest";
+			break;
+	}
+	
+	//console.warn(faceTxt);
+	return faceTxt;
+}
+function getTheTime(style){
+	let timeVal = world.getTimeOfDay();
+	let timeOffset = timeVal + 6000
+	let timeHour = 0;
+	let timeMin = 0;
+	let timePeriod = "";
+	let timeClock = "";
+	
+	switch(style){
+		case "tick" :
+			timeClock = timeVal;
+			break;
+		case "12hr" :
+			timeHour = Math.floor(0.001 * (timeOffset % 12000));
+			timeMin = Math.floor(0.06 * (timeOffset % 1000));
+			timePeriod = (Math.floor(0.001 * (timeOffset % 24000)) < 12 ? " am" : " pm");
+			timeClock = (timeHour == 0 ? "12" : timeHour) + " : " +  (timeMin < 10 ? "0" : "") + timeMin + timePeriod;
+			break;
+		case "24hr" :
+			timeHour = Math.floor(0.001 * (timeOffset % 24000));
+			timeMin = Math.floor(0.06 * (timeOffset % 1000));
+			timeClock = timeHour + " : " +  (timeMin < 10 ? "0" : "") + timeMin;
+			break;
+		case "minecraft" :
+			timeHour = Math.floor(0.001 * (timeVal % 24000));
+			timeMin = Math.floor(0.06 * (timeVal % 1000));
+			timeClock = timeHour + " : " +  (timeMin < 10 ? "0" : "") + timeMin;
+			break;
+	}
+	
+	//console.warn(timeVal);
+	return timeClock;
+}
+function lightLevel(player){
+	let markVariantPlayer = player.getComponent("minecraft:mark_variant").value;
+	
+	//console.warn(markVariantPlayer);
+	return markVariantPlayer;
+}
+function moonCycle(){
+	let moonPh = world.getMoonPhase();
+	let moonTxt = "";
+	
+	switch(moonPh){
+		case 0 :
+			moonTxt = "FullMoon";
+			break;
+		case 1 :
+			moonTxt = "WaningGibbous";
+			break;
+		case 2 :
+			moonTxt = "FirstQuarter";
+			break;
+		case 3 :
+			moonTxt = "WaningCrescent";
+			break;
+		case 4 :
+			moonTxt = "NewMoon";
+			break;
+		case 5 :
+			moonTxt = "WaxingCrescent";
+			break;
+		case 6 :
+			moonTxt = "LastQuarter";
+			break;
+		case 7 :
+			moonTxt = "WaxingGibbous";
+			break;
+	}
+	
+	//console.warn(moonTxt);
+	return moonTxt;
+}
+function playerPosition(player, option){
+	let playerDim = player.dimension.id.replace("minecraft:", "");
+	let playerPosX = player.location.x;
+	let playerPosY = player.location.y;
+	let playerPosZ = player.location.z;
+	let playerPosTxt = "";
+	
+	switch(option){
+		case "block" :
+			playerPosTxt =  playerPosX + ", " + playerPosY + ", " + playerPosZ;
+			break;
+		case "chunk" :
+			playerPosTxt = Math.floor(playerPosX / 16) + ", " + Math.floor(playerPosY / 16) + ", " + Math.floor(playerPosZ / 16);
+			break;
+		case "region" :
+			playerPosTxt = Math.floor(Math.floor(playerPosX / 16) / 32) + ", " + Math.floor(Math.floor(playerPosZ / 16) / 32);
+			break;
+		case "blockInChunk" :
+			playerPosTxt = Math.floor(playerPosX - (Math.floor(playerPosX / 16) * 16)) + ", " + Math.floor(playerPosZ - (Math.floor(playerPosZ / 16) * 16));
+			break;
+		case "dimension" :
+			playerPosTxt = playerDim;
+			break;
+		case "nether" :
+			playerPosTxt = (playerDim == "overworld" ? (Math.floor(playerPosX/8) + ", " + Math.floor(playerPosZ/8)) : "");
+			break;
+		case "overworld" :
+			playerPosTxt = (playerDim == "nether" ? (Math.floor(playerPosX*8) + ", " + Math.floor(playerPosZ*8)) : "");
+			break;
+	}
+	
+	//console.warn(playerPosTxt);
+	return playerPosTxt;
+}
+function playerRespawn(player){
+	if(player.getSpawnPoint()){
+		let spawnDim = player.getSpawnPoint().dimension.id.replace("minecraft:", "");
+		let spawnX = player.getSpawnPoint().x;
+		let spawnY = player.getSpawnPoint().y;
+		let spawnZ = player.getSpawnPoint().z;
+		let spawnTxt = spawnDim + ", " + spawnX + ", " + spawnY + ", " + spawnZ;
+		
+		//console.warn(spawnTxt);
+		return spawnTxt;
+	}else{
+		return "not set";
+	}
+}
+function worldlife(unit){
+	let lifeVal = 0;
+	
+	switch(unit){
+		case "tick" :
+			lifeVal = world.getAbsoluteTime();
+			break;
+		case "day" :
+			lifeVal = world.getDay();
+			break;
+	}
+	
+	//console.warn(lifeVal);
+	return lifeVal;
+}
+function worldSpawn(){
+	let spawnX = world.getDefaultSpawnLocation().x;
+	let spawnY = world.getDefaultSpawnLocation().y;
+	let spawnZ = world.getDefaultSpawnLocation().z;
+	let spawnTxt = spawnX + ", " + spawnY + ", " + spawnZ;
+	
+	//console.warn(spawnTxt);
+	return spawnTxt;
+}
+//end debug functions----------------------------------------
