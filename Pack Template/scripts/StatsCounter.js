@@ -316,10 +316,33 @@ function blockStatsDisplay(player){
 	let scorestext= ["These are the scores being tracked"];
 	let scoreboards = world.scoreboard.getObjectives();
 	let tempScore = 0;
+	let blocksBroken = [];
+	let blocksPlaced = [];
+	let entitiesKilled = [];
 	let totalBlocksBroken = world.scoreboard.getObjective("stats_blocksBroken_total");
+	if (totalBlocksBroken){
+		if (totalBlocksBroken.hasParticipant(player)){
+			tempScore =totalBlocksBroken.getScore(player)
+		}
+		blocksBroken = ["Total: " + tempScore.toString()];
+		tempScore = 0;
+	}
 	let totalBlocksPlaced = world.scoreboard.getObjective("stats_blocksPlaced_total");
-	let blocksBroken = ["Total: " + totalBlocksBroken.getScore(player).toString()];
-	let blocksPlaced = ["Total: " + totalBlocksPlaced.getScore(player).toString()];
+	if (totalBlocksPlaced){
+		if (totalBlocksPlaced.hasParticipant(player)){
+			tempScore =totalBlocksPlaced.getScore(player)
+		}
+		blocksPlaced = ["Total: " + tempScore.toString()];
+		tempScore = 0;
+	}
+	let totalKilled = world.scoreboard.getObjective("stats_entitiesKilled_total");
+	if(totalKilled){
+		if (totalKilled.hasParticipant(player)){
+			tempScore =totalKilled.getScore(player)
+		}
+		entitiesKilled = ["Total: " + tempScore.toString()];
+		tempScore = 0;
+	}
 	for( let i in scoreboards){
 		let board = scoreboards[i];
 		let temp = board.displayName.split("_");
@@ -347,6 +370,15 @@ function blockStatsDisplay(player){
 							blocksPlaced.push(name+ ": " + tempScore.toString());
 						}
 						break;
+					case "entitiesKilled":
+						
+						if (board.hasParticipant(player)){
+							tempScore = board.getScore(player);
+						}
+						if (!name.includes("total") && name.length>1){
+							entitiesKilled.push(name+ ": " + tempScore.toString());
+						}
+						break;
 				}
 				break;
 		}
@@ -357,6 +389,7 @@ function blockStatsDisplay(player){
 	let allStats=scorestext.join(nextLine)
 		+ "\nBlocks Broken:" + indentNextLine + blocksBroken.join(indentNextLine)
 		+ "\nBlocks Placed:" + indentNextLine + blocksPlaced.join(indentNextLine)
+		+ "\nEntities Killed:" + indentNextLine + entitiesKilled.join(indentNextLine)
 	let statsForm = new ActionFormData()
 		.title(player.name)
 		.body(allStats)
@@ -711,7 +744,10 @@ function entityDied(event){
 	if(event.damageSource.damagingEntity){
 		const killer = event.damageSource.damagingEntity
 		if(killer.typeId == "minecraft:player"){
-			addToScore("Entities Killed","Player", event.source)
+			let victimType = victim.typeId.replace("minecraft:","").replace("_"," ")
+			addToScore("stats_entitiesKilled_",victimType, killer)
+			addToScore("stats_entitiesKilled_","total", killer)
+			
 		}
 	}
 	if(victim.typeId == "minecraft:player"){
