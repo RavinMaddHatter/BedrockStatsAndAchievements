@@ -312,6 +312,13 @@ function advanceList(player){
 			}
 		});
 }
+function getScoreIfExists(board, player){
+	let tempScore = 0;
+	if (board.hasParticipant(player)){
+		tempScore =board.getScore(player)
+	}
+	return tempScore
+}
 function blockStatsDisplay(player){
 	let scorestext= ["These are the scores being tracked"];
 	let scoreboards = world.scoreboard.getObjectives();
@@ -319,29 +326,23 @@ function blockStatsDisplay(player){
 	let blocksBroken = [];
 	let blocksPlaced = [];
 	let entitiesKilled = [];
+	let deaths=[];
 	let totalBlocksBroken = world.scoreboard.getObjective("stats_blocksBroken_total");
-	if (totalBlocksBroken){
-		if (totalBlocksBroken.hasParticipant(player)){
-			tempScore =totalBlocksBroken.getScore(player)
-		}
-		blocksBroken = ["Total: " + tempScore.toString()];
-		tempScore = 0;
-	}
 	let totalBlocksPlaced = world.scoreboard.getObjective("stats_blocksPlaced_total");
-	if (totalBlocksPlaced){
-		if (totalBlocksPlaced.hasParticipant(player)){
-			tempScore =totalBlocksPlaced.getScore(player)
-		}
-		blocksPlaced = ["Total: " + tempScore.toString()];
-		tempScore = 0;
+	let totalKilled = world.scoreboard.getObjective("stats_entitiesKilled_");
+	let totalDeaths = world.scoreboard.getObjective("stats_Deaths_");
+	console.warn(totalDeaths)
+	if (totalBlocksBroken){
+		blocksBroken = ["Total: " +getScoreIfExists(totalBlocksBroken,player)];
 	}
-	let totalKilled = world.scoreboard.getObjective("stats_entitiesKilled_total");
+	if (totalBlocksPlaced){
+		blocksPlaced = ["Total: " +getScoreIfExists(totalBlocksPlaced,player)];
+	}
 	if(totalKilled){
-		if (totalKilled.hasParticipant(player)){
-			tempScore =totalKilled.getScore(player)
-		}
-		entitiesKilled = ["Total: " + tempScore.toString()];
-		tempScore = 0;
+		entitiesKilled = ["Total: " +getScoreIfExists(totalKilled,player)];
+	}
+	if(totalDeaths){
+		deaths = ["Total: " +getScoreIfExists(totalDeaths,player)];
 	}
 	for( let i in scoreboards){
 		let board = scoreboards[i];
@@ -351,32 +352,27 @@ function blockStatsDisplay(player){
 		let name = temp[2];
 		switch (type){
 			case "stats":
-				tempScore=0;
+				tempScore = getScoreIfExists(board,player)
 				switch(category){
 					case "blocksBroken":
-						if (board.hasParticipant(player)){
-							tempScore = board.getScore(player);
-						}
 						if (!name.includes("total") && name.length>1){
 							blocksBroken.push(name+ ": " + tempScore.toString());
 						}
 						break;
 					case "blocksPlaced":
-						
-						if (board.hasParticipant(player)){
-							tempScore = board.getScore(player);
-						}
 						if (!name.includes("total") && name.length>1){
 							blocksPlaced.push(name+ ": " + tempScore.toString());
 						}
 						break;
 					case "entitiesKilled":
-						
-						if (board.hasParticipant(player)){
-							tempScore = board.getScore(player);
-						}
 						if (!name.includes("total") && name.length>1){
 							entitiesKilled.push(name+ ": " + tempScore.toString());
+						}
+						break;
+					case "Deaths":
+						
+						if (!name.includes("total") && name.length>1){
+							deaths.push(name+ ": " + tempScore.toString());
 						}
 						break;
 				}
@@ -390,6 +386,7 @@ function blockStatsDisplay(player){
 		+ "\nBlocks Broken:" + indentNextLine + blocksBroken.join(indentNextLine)
 		+ "\nBlocks Placed:" + indentNextLine + blocksPlaced.join(indentNextLine)
 		+ "\nEntities Killed:" + indentNextLine + entitiesKilled.join(indentNextLine)
+		+ "\nDeaths:" + indentNextLine + deaths.join(indentNextLine)
 	let statsForm = new ActionFormData()
 		.title(player.name)
 		.body(allStats)
@@ -751,7 +748,7 @@ function entityDied(event){
 		}
 	}
 	if(victim.typeId == "minecraft:player"){
-		addToScore("Deaths",event.damageSource.cause, event.source)
+		addToScore("stats_Deaths_",event.damageSource.cause, victim)
 	}
 }
 function hitByProjectile(event){
@@ -1586,7 +1583,7 @@ function addToScore(category, item, player){
 	let itemId=categoryId+item.replace(" ","");
 	const allBoards = world.scoreboard.getObjectives();
 	const checkCategoryID = obj => obj.displayName === category;
-	
+	console.warn(itemId)
 	if(!allBoards.some(checkCategoryID)){ 
 		world.scoreboard.addObjective(categoryId, category);
 	}
