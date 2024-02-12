@@ -621,7 +621,7 @@ function blockBroken(event){
 	let blockData = blockBreaks["L"+event.block.x+" "+event.block.y+" "+event.block.z]
 	delete blockBreaks["L"+event.block.x+" "+event.block.y+" "+event.block.z]
 	if (blockData!=undefined){
-		addToScore("stats_blocksBroken_", processBlockTags(blockTags), player)
+		addToScore("stats_blocksBroken_", blockData, player)
 	}
 	addToScore("stats_blocksBroken_", "total", player);
 }
@@ -632,9 +632,9 @@ function processBlockTags(tags){
 			case "dirt":
 				if (tags.includes("grass")){
 					if (tags.includes("fertilize_area")){
-						return "grass"
+						return "Grass"
 					}
-					return "dirt"
+					return "Dirt"
 				}
 				return "Dirt Variants"
 				break;
@@ -671,8 +671,9 @@ function processBlockTags(tags){
 				if(!tags.includes("grass")){
 					return "Flowers"
 				}
+				break;
 			case "minecraft:crop":
-				return "crop"
+				return "Cropland"
 			case "sand":
 				return "Sand"
 			case "gravel":
