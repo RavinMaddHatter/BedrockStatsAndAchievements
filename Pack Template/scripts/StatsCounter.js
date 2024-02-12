@@ -191,30 +191,14 @@ function blockStatsDisplay(player){
 	let totalEnteredDimensions = world.scoreboard.getObjective("stats_enteredDimension_");
 	let totalEnimiesShot = world.scoreboard.getObjective("stats_projectilesHitEnemy_");
 	let totalItemsReleased = world.scoreboard.getObjective("stats_itemsReleased_");
-	if (totalBlocksBroken){
-		blocksBroken = ["Total: " +getScoreIfExists(totalBlocksBroken,player)];
-	}
-	if (totalBlocksPlaced){
-		blocksPlaced = ["Total: " +getScoreIfExists(totalBlocksPlaced,player)];
-	}
-	if(totalKilled){
-		entitiesKilled = ["Total: " +getScoreIfExists(totalKilled,player)];
-	}
-	if(totalDeaths){
-		deaths = ["Total: " +getScoreIfExists(totalDeaths,player)];
-	}
-	if(totalEnteredDimensions){
-		enteredDimensions = ["Total: " +getScoreIfExists(totalEnteredDimensions,player)];
-	}
-	if(totalRedstoneInteractions){
-		redstoneInteractions = ["Total: " +getScoreIfExists(totalRedstoneInteractions,player)];
-	}
-	if(totalEnimiesShot){
-		enemiesShot = ["Total: " +getScoreIfExists(totalEnimiesShot,player)];
-	}
-	if(totalItemsReleased){
-		itemsReleased = ["Total: " +getScoreIfExists(totalItemsReleased,player)];
-	}
+	blocksBroken = ["Total: " +getScoreIfExists(totalBlocksBroken,player)];
+	blocksPlaced = ["Total: " +getScoreIfExists(totalBlocksPlaced,player)];
+	entitiesKilled = ["Total: " +getScoreIfExists(totalKilled,player)];
+	deaths = ["Total: " +getScoreIfExists(totalDeaths,player)];
+	enteredDimensions = ["Total: " +getScoreIfExists(totalEnteredDimensions,player)];
+	redstoneInteractions = ["Total: " +getScoreIfExists(totalRedstoneInteractions,player)];
+	enemiesShot = ["Total: " +getScoreIfExists(totalEnimiesShot,player)];
+	itemsReleased = ["Total: " +getScoreIfExists(totalItemsReleased,player)];
 	for( let i in scoreboards){
 		let tempScore=0;
 		let board = scoreboards[i];
