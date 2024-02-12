@@ -182,11 +182,17 @@ function blockStatsDisplay(player){
 	let entitiesKilled = [];
 	let deaths=[];
 	let redstoneInteractions=[];
+	let enteredDimensions=[];
+	let enemiesShot=[];
+	let itemsReleased=[];
 	let totalBlocksBroken = world.scoreboard.getObjective("stats_blocksBroken_total");
 	let totalBlocksPlaced = world.scoreboard.getObjective("stats_blocksPlaced_total");
 	let totalKilled = world.scoreboard.getObjective("stats_entitiesKilled_");
 	let totalDeaths = world.scoreboard.getObjective("stats_Deaths_");
 	let totalRedstoneInteractions = world.scoreboard.getObjective("stats_redstonInteractions_");
+	let totalEnteredDimensions = world.scoreboard.getObjective("stats_enteredDimension_");
+	let totalEnimiesShot = world.scoreboard.getObjective("stats_projectilesHitEnemy_");
+	let totalItemsReleased = world.scoreboard.getObjective("stats_itemsReleased_");
 	if (totalBlocksBroken){
 		blocksBroken = ["Total: " +getScoreIfExists(totalBlocksBroken,player)];
 	}
@@ -199,8 +205,17 @@ function blockStatsDisplay(player){
 	if(totalDeaths){
 		deaths = ["Total: " +getScoreIfExists(totalDeaths,player)];
 	}
-	if(totalDeaths){
+	if(totalEnteredDimensions){
+		enteredDimensions = ["Total: " +getScoreIfExists(totalEnteredDimensions,player)];
+	}
+	if(totalRedstoneInteractions){
 		redstoneInteractions = ["Total: " +getScoreIfExists(totalRedstoneInteractions,player)];
+	}
+	if(totalEnimiesShot){
+		enemiesShot = ["Total: " +getScoreIfExists(totalEnimiesShot,player)];
+	}
+	if(totalItemsReleased){
+		itemsReleased = ["Total: " +getScoreIfExists(totalItemsReleased,player)];
 	}
 	for( let i in scoreboards){
 		let tempScore=0;
@@ -209,37 +224,45 @@ function blockStatsDisplay(player){
 		let type = temp[0];
 		let category = temp[1];
 		let name = temp[2];
+		if(!(name)){
+			name=""
+		}
 		switch (type){
 			case "stats":
 				tempScore = getScoreIfExists(board,player)
-				switch(category){
-					case "blocksBroken":
-						if (!name.includes("total") && name.length>1){
-							blocksBroken.push(name+ ": " + tempScore.toString());
-						}
-						break;
-					case "blocksPlaced":
-						if (!name.includes("total") && name.length>1){
-							blocksPlaced.push(name+ ": " + tempScore.toString());
-						}
-						break;
-					case "entitiesKilled":
-						if (!name.includes("total") && name.length>1){
+				if(name.length>0){
+					switch(category){
+						case "blocksBroken":
+							if (!name.includes("total")){
+								blocksBroken.push(name+ ": " + tempScore.toString());
+							}
+							break;
+						case "blocksPlaced":
+							if (!name.includes("total")){
+								blocksPlaced.push(name+ ": " + tempScore.toString());
+							}
+							break;
+						case "entitiesKilled":
 							entitiesKilled.push(name+ ": " + tempScore.toString());
-						}
-						break;
-					case "Deaths":
-						
-						if (!name.includes("total") && name.length>1){
+							break;
+						case "Deaths":
 							deaths.push(name+ ": " + tempScore.toString());
-						}
-						break;
-					case "redstonInteractions":
-						if (!name.includes("total") && name.length>1){
+							break;
+						case "redstonInteractions":
 							redstoneInteractions.push(name+ ": " + tempScore.toString());
-						}
-				}
-				break;
+							break;
+						case "enteredDimension":
+							enteredDimensions.push(name+ ": " + tempScore.toString());
+							break;
+						case "projectilesHitEnemy":
+							enemiesShot.push(name+ ": " + tempScore.toString());
+							break;
+						case "itemsReleased":
+							itemsReleased.push(name+ ": " + tempScore.toString());
+							break
+					}
+					break;
+			}
 		}
 	}
 	let indentSize = "    ";
@@ -251,6 +274,9 @@ function blockStatsDisplay(player){
 		+ "\nEntities Killed:" + indentNextLine + entitiesKilled.join(indentNextLine)
 		+ "\nDeaths:" + indentNextLine + deaths.join(indentNextLine)
 		+ "\nRedstone Interactions:" + indentNextLine + redstoneInteractions.join(indentNextLine)
+		+ "\nPortals Traveled:" + indentNextLine + enteredDimensions.join(indentNextLine)
+		+ "\nEnimies Shot:" + indentNextLine + enemiesShot.join(indentNextLine)
+		+ "\nItems Fired:" + indentNextLine + itemsReleased.join(indentNextLine)
 	let statsForm = new ActionFormData()
 		.title(player.name)
 		.body(allStats)
@@ -404,9 +430,20 @@ function buttonPushed(event){
 function changedDimension(event){
 	let player = event.player;
 	let getDim = event.toDimension.id.replace("minecraft:","");
-	
-	if(getDim == "nether" || (getDim == "the_end")){
-		getSomeWhere(getDim, player);
+	switch(getDim){
+		case "nether":
+			addToScore("stats_enteredDimension_","Nether",player)
+			getSomeWhere(getDim, player);
+			break;
+		case "the_end":
+			addToScore("stats_enteredDimension_","The End",player)
+			getSomeWhere(getDim, player);
+			break;
+		case "overworld":
+			addToScore("stats_enteredDimension_","Overworld",player)
+			getSomeWhere(getDim, player);
+			break;
+			
 	}
 }
 function entityDied(event){
@@ -431,12 +468,21 @@ function hitByProjectile(event){
 	
 	if(source && (source.typeId == "minecraft:player")){
 		switch(projectile){
-			case "arrow" ://*fall through*
+			case "arrow" :
+				weaponsToolsArmor(projectile, source);
+				addToScore("stats_projectilesHitEnemy_",getArrowType(event.projectile),source)
+				break;
 			case "thrown_trident" :
 				weaponsToolsArmor(projectile, source);
+				addToScore("stats_projectilesHitEnemy_","Trident",source)
+
 				break;
 		}
 	}
+}
+function getArrowType(arrow){
+	//cant do this yet...
+	return "Arrow"
 }
 function initSpawn(event){
 	let player = event.player;
@@ -478,10 +524,17 @@ function itemRelease(event){
 	
 	switch(itemName){
 		case "bow" :
+			addToScore("stats_itemsReleased_","Bow",player)
 			boolScore("weaponsToolsArmor", "shoot_bool", player, 1);
 			system.runTimeout(() => {
 				boolScore("weaponsToolsArmor", "shoot_bool", player, 0);
 			}, 40);
+			break;
+		case "crossbow":
+			addToScore("stats_itemsReleased_","Crossbow",player)
+			break
+		case "trident":
+			addToScore("stats_itemsReleased_","Trident",player)
 			break;
 	}
 }
@@ -1312,8 +1365,10 @@ function calculateDistance(x1, z1, x2, z2) {
 }
 function getScoreIfExists(board, player){
 	let tempScore = 0;
-	if (board.hasParticipant(player)){
-		tempScore =board.getScore(player)
+	if (board){
+		if (board.hasParticipant(player)){
+			tempScore =board.getScore(player)
+		}
 	}
 	return tempScore
 }
