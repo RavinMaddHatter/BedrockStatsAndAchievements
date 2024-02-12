@@ -475,6 +475,7 @@ function initSpawn(event){
 		//console.warn("I've initialized");
 		scoreSet("tracking_initSpawn_","initialPointX", player, player.location.x);//record player initial location x
 		scoreSet("tracking_initSpawn_","initialPointZ", player, player.location.z);//record player initial location z
+		initializeObjectives(player)
 		player.addTag("firstSpawn");//add tag to record that player has already spawned initially
 	}
 }
@@ -906,7 +907,7 @@ function itemInventory(player){
 		
 	    //[achievement] Cover me in debris | Wear a full set of Netherite armor | Have a full set of Netherite armor in your inventory.
 	    //[advancement] Cover Me in Debris | Get a full suit of Netherite armor | Have a full set of netherite armor in your inventory.
-		if((getSomeScore("objectives_achievement_", "Get a full suit of Netherite armor", player) == 0)
+		if((getSomeScore("objectives_achievement_", "Get a full Netherite\n        armor set", player) == 0)
 		    || (getSomeScore("objectives_advancement_", "Get a full suit of Netherite armor", player) == 0)){
 			
 			if((getSomeScore("itemInventory", "netherite_helmet", player) == 1)
@@ -914,14 +915,14 @@ function itemInventory(player){
 			    && (getSomeScore("itemInventory", "netherite_leggings", player) == 1)
 			    && (getSomeScore("itemInventory", "netherite_boots", player) == 1)){
 				
-				boolScore("objectives_achievement_", "Get a full suit of Netherite armor", player, 1);
+				boolScore("objectives_achievement_", "Get a full Netherite\n        armor set", player, 1);
 				boolScore("objectives_advancement_", "Get a full suit of Netherite armor", player, 1);
 			}
 		}
 		
 	    //[achievement] I am a Marine Biologist | Collect a fish in a bucket | Use an empty bucket on any fish mob to collect it.
 	    //[advancement] Tactical Fishing | Catch a Fish... without a Fishing Rod! | Use a water bucket on any fish mob.
-		if((getSomeScore("objectives_achievement_", "Get a fish in a bucket", player) == 0)
+		if((getSomeScore("objectives_achievement_", "Get a bucket of fish", player) == 0)
 		    || (getSomeScore("objectives_advancement_", "Get a fish in a bucket", player) == 0)){
 			
 			switch(true){
@@ -929,7 +930,7 @@ function itemInventory(player){
 				case (getSomeScore("tracking_itemInventory_", "salmon_bucket", player) == 1) ://*fall through*
 				case (getSomeScore("tracking_itemInventory_", "tropical_fish_bucket", player) == 1) ://*fall through*
 				case (getSomeScore("tracking_itemInventory_", "pufferfish_bucket", player) == 1) :
-					boolScore("objectives_achievement_", "Get a fish in a bucket", player, 1);
+					boolScore("objectives_achievement_", "Get a bucket of fish", player, 1);
 					boolScore("objectives_advancement_", "Get a fish in a bucket", player, 1);
 					break;
 			}
@@ -1404,6 +1405,136 @@ function getSomeScore(category, item, player){
 	
 	//return categoryBoard.getScore(player);
 	return itemBoard.getScore(player);
+}
+function initializeObjectives(player){
+	//achievements--------------------
+		getSomeScore("objectives_achievement_", "100m from an Ender Pearl\n        throw", player);
+		getSomeScore("objectives_achievement_", "Activate a Conduit", player);
+		getSomeScore("objectives_achievement_", "Apply Spire, Snout, Rib, Ward,\n        Silence, Vex, Tide, Wayfinder\n        smithing templates", player);
+		getSomeScore("objectives_achievement_", "Assist an axolotl in a fight", player);
+		getSomeScore("objectives_achievement_", "Bake a cake", player);
+		getSomeScore("objectives_achievement_", "Bounce 30m from a\n        slime block", player);
+		getSomeScore("objectives_achievement_", "Breed a mule", player);
+		getSomeScore("objectives_achievement_", "Breed two cows", player);
+		getSomeScore("objectives_achievement_", "Breed two pandas", player);
+		getSomeScore("objectives_achievement_", "Buy something for 1 emerald", player);
+		getSomeScore("objectives_achievement_", "Connect 3 Chests to\n        a Furnace", player);
+		getSomeScore("objectives_achievement_", "Create an Iron Golem", player);
+		getSomeScore("objectives_achievement_", "Cure a zombie villager", player);
+		getSomeScore("objectives_achievement_", "Dig up a buried treasure", player);
+		getSomeScore("objectives_achievement_", "Discover 17 biomes", player);
+		getSomeScore("objectives_achievement_", "Distract a Piglin using gold", player);
+		getSomeScore("objectives_achievement_", "Do nine hearts damage\n        in a hit", player);
+		getSomeScore("objectives_achievement_", "Dry a sponge", player);
+		getSomeScore("objectives_achievement_", "Dye a full leather armor set", player);
+		getSomeScore("objectives_achievement_", "Eat a pork chop", player);
+		getSomeScore("objectives_achievement_", "Eat an Enchanted Apple", player);
+		getSomeScore("objectives_achievement_", "Eat cooked rabbit", player);
+		getSomeScore("objectives_achievement_", "Eat only dried kelp for 3 days", player);
+		getSomeScore("objectives_achievement_", "Eat Rotten Flesh", player);
+		getSomeScore("objectives_achievement_", "Enter an End Portal", player);
+		getSomeScore("objectives_achievement_", "Fall from build limit\n        and live", player);
+		getSomeScore("objectives_achievement_", "Feed a dolphin", player);
+		getSomeScore("objectives_achievement_", "Find a shipwreck", player);
+		getSomeScore("objectives_achievement_", "Find an underwater ruin", player);
+		getSomeScore("objectives_achievement_", "Float with a goat in a boat", player);
+		getSomeScore("objectives_achievement_", "Get 16 colors of wool", player);
+		getSomeScore("objectives_achievement_", "Get a blaze rod", player);
+		getSomeScore("objectives_achievement_", "Get a bucket of fish", player);
+		getSomeScore("objectives_achievement_", "Get a cooked fish", player);
+		getSomeScore("objectives_achievement_", "Get a crafting table", player);
+		getSomeScore("objectives_achievement_", "Get a diamond", player);
+		getSomeScore("objectives_achievement_", "Get a full Iron armor set", player);
+		getSomeScore("objectives_achievement_", "Get a full Netherite\n        armor set", player);
+		getSomeScore("objectives_achievement_", "Get a gift from a cat", player);
+		getSomeScore("objectives_achievement_", "Get a log", player);
+		getSomeScore("objectives_achievement_", "Get a map from a cartographer\n        then visit the structure", player);
+		getSomeScore("objectives_achievement_", "Get all 3 froglights", player);
+		getSomeScore("objectives_achievement_", "Get an iron ingot", player);
+		getSomeScore("objectives_achievement_", "Get bottle of dragons breath", player);
+		getSomeScore("objectives_achievement_", "Get bread", player);
+		getSomeScore("objectives_achievement_", "Get experience from\n        a Grindstone", player);
+		getSomeScore("objectives_achievement_", "Get Honey without\n        upsetting bees", player);
+		getSomeScore("objectives_achievement_", "Get or spend 30 Emeralds\n        trading", player);
+		getSomeScore("objectives_achievement_", "Get potion from a\n        brewing stand", player);
+		getSomeScore("objectives_achievement_", "Get some leather", player);
+		getSomeScore("objectives_achievement_", "Get wool with shears", player);
+		getSomeScore("objectives_achievement_", "Give someone a\n        suspicious stew", player);
+		getSomeScore("objectives_achievement_", "Go in lava with Fire Resist", player);
+		getSomeScore("objectives_achievement_", "Have an Allay drop a cake\n        at a noteblock", player);
+		getSomeScore("objectives_achievement_", "Hit a Target block bullseye", player);
+		getSomeScore("objectives_achievement_", "Kill a creeper with arrows", player);
+		getSomeScore("objectives_achievement_", "Kill a ghast with a fireball", player);
+		getSomeScore("objectives_achievement_", "Kill a mob near a catalyst", player);
+		getSomeScore("objectives_achievement_", "Kill a monster", player);
+		getSomeScore("objectives_achievement_", "Kill a Pillager Captain", player);
+		getSomeScore("objectives_achievement_", "Kill a Ravager", player);
+		getSomeScore("objectives_achievement_", "Kill a Skeleton with an\n        arrow at 50m", player);
+		getSomeScore("objectives_achievement_", "Kill an Elder Guardian", player);
+		getSomeScore("objectives_achievement_", "Kill an Evoker", player);
+		getSomeScore("objectives_achievement_", "Kill mob wearing\n        the same head", player);
+		getSomeScore("objectives_achievement_", "Kill the Enderdragon", player);
+		getSomeScore("objectives_achievement_", "Kill the Wither", player);
+		getSomeScore("objectives_achievement_", "Lead a Caravan of 5 Llamas", player);
+		getSomeScore("objectives_achievement_", "Make a Decorated Pot", player);
+		getSomeScore("objectives_achievement_", "Make a Dispenser", player);
+		getSomeScore("objectives_achievement_", "Make a fully powered Beacon", player);
+		getSomeScore("objectives_achievement_", "Make a furnace", player);
+		getSomeScore("objectives_achievement_", "Make a Hoe", player);
+		getSomeScore("objectives_achievement_", "Make a Nether Portal", player);
+		getSomeScore("objectives_achievement_", "Make a pickaxe, shovel, axe, hoe\n        with the same material", player);
+		getSomeScore("objectives_achievement_", "Make a stone pickaxe", player);
+		getSomeScore("objectives_achievement_", "Make an Apple banner", player);
+		getSomeScore("objectives_achievement_", "Make an Enchantment Table", player);
+		getSomeScore("objectives_achievement_", "Make any type of pickaxe", player);
+		getSomeScore("objectives_achievement_", "Make any type of sword", player);
+		getSomeScore("objectives_achievement_", "Make some bookshelves", player);
+		getSomeScore("objectives_achievement_", "Mine 1728 Cobblestone", player);
+		getSomeScore("objectives_achievement_", "Move a Bee Nest with 3 bees", player);
+		getSomeScore("objectives_achievement_", "Name a Shulker Box", player);
+		getSomeScore("objectives_achievement_", "Open your inventory", player);
+		getSomeScore("objectives_achievement_", "Place 9 maps on the wall", player);
+		getSomeScore("objectives_achievement_", "Place a Flower Pot", player);
+		getSomeScore("objectives_achievement_", "Place an Oak Sign", player);
+		getSomeScore("objectives_achievement_", "Place four Sea Pickles", player);
+		getSomeScore("objectives_achievement_", "Place scaffolding to\n        build limit", player);
+		getSomeScore("objectives_achievement_", "Plant a Sniffer seed", player);
+		getSomeScore("objectives_achievement_", "Play for 100 days", player);
+		getSomeScore("objectives_achievement_", "Poison a witch with a potion", player);
+		getSomeScore("objectives_achievement_", "Power a furnace with kelp", player);
+		getSomeScore("objectives_achievement_", "Power a Furnace with Lava", player);
+		getSomeScore("objectives_achievement_", "Push a piston with a piston\n        then pull the original piston\n        with that piston", player);
+		getSomeScore("objectives_achievement_", "Respawn the Enderdragon", player);
+		getSomeScore("objectives_achievement_", "Ride a pig suffering\n        fall damage", player);
+		getSomeScore("objectives_achievement_", "Ride a strider 50m in\n        the Overworld", player);
+		getSomeScore("objectives_achievement_", "Ring the bell with hostiles\n        in the village", player);
+		getSomeScore("objectives_achievement_", "Rise 50m from Shulker attack", player);
+		getSomeScore("objectives_achievement_", "Slide down a honey block", player);
+		getSomeScore("objectives_achievement_", "Smelt a log with charcoal", player);
+		getSomeScore("objectives_achievement_", "Sneak past a Sculk Sensor", player);
+		getSomeScore("objectives_achievement_", "Spawn the Wither", player);
+		getSomeScore("objectives_achievement_", "Spend a day underwater", player);
+		getSomeScore("objectives_achievement_", "Stay underwater for 2min", player);
+		getSomeScore("objectives_achievement_", "Tame 20 cats", player);
+		getSomeScore("objectives_achievement_", "Tame a horse", player);
+		getSomeScore("objectives_achievement_", "Tame an Ocelot", player);
+		getSomeScore("objectives_achievement_", "Tame five wolves", player);
+		getSomeScore("objectives_achievement_", "Throw diamonds at a player", player);
+		getSomeScore("objectives_achievement_", "Trade at y320", player);
+		getSomeScore("objectives_achievement_", "Trade for 1000 emeralds", player);
+		getSomeScore("objectives_achievement_", "Travel 500m in one\n        minecart trip", player);
+		getSomeScore("objectives_achievement_", "Trigger a Pillager Raid", player);
+		getSomeScore("objectives_achievement_", "Use a Hopper from a\n        Chest Minecart to a Chest", player);
+		getSomeScore("objectives_achievement_", "Use a jukebox in a Meadow", player);
+		getSomeScore("objectives_achievement_", "Use a trident with Riptide", player);
+		getSomeScore("objectives_achievement_", "Use the Frost Walker boots", player);
+		getSomeScore("objectives_achievement_", "Use the Totem of Undying", player);
+		getSomeScore("objectives_achievement_", "Visit all Nether biomes", player);
+		getSomeScore("objectives_achievement_", "Visit all ocean biomes", player);
+		getSomeScore("objectives_achievement_", "Wax and de-wax all\n        Copper Blocks", player);
+		getSomeScore("objectives_achievement_", "With Elytra fly through a 1x1\n        gap faster than 40m/s", player);
+	
+	//advancements--------------------
 }
 function scoreSet(category, item, player, score){
 	let categoryId = category.replace(" ","");
