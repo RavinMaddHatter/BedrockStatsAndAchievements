@@ -257,26 +257,28 @@ function blockStatsDisplay(player){
 }
 function debugDisplay(player){
 	//add text
-	    //debug--------------------
 		let debugTxt = "Additional game info";
+		let titleFormat = "\u00A7d";
+		let subtitleFormat = "\u00A73";
+		let bodyFormat = "\u00A7r";
 		let debugArrayTxt = [];
-		debugArrayTxt[0] = "Dimension: " + playerPosition(player, "dimension");
-		debugArrayTxt[1] = "XYZ: " + playerPosition(player, "xyz");
-		debugArrayTxt[2] = "Block: " + playerPosition(player, "block");
-		debugArrayTxt[3] = "Block within chunk: " + playerPosition(player, "blockInChunk");
-		debugArrayTxt[4] = "Chunk: " + playerPosition(player, "chunk");
-		debugArrayTxt[5] = "Region: " + playerPosition(player, "region");
-		debugArrayTxt[6] = "Overworld coord: " + playerPosition(player, "overworld");
-		debugArrayTxt[7] = "Nether coord: " + playerPosition(player, "nether");
-		debugArrayTxt[8] = "Player spawnpoint: " + playerRespawn(player);
-		debugArrayTxt[9] = "World spawnpoint: " + worldSpawn();
-		debugArrayTxt[10] = "Facing: " + facingDirection(player);
-		debugArrayTxt[11] = "Light at player's head: " + lightLevel(player);
-		debugArrayTxt[12] = "Biome: " + biomeFinder(player);
-		debugArrayTxt[13] = "Moon phase: " + moonCycle();
-		debugArrayTxt[14] = "Time of day: " + "\n        Tick: " + getTheTime("tick") + "\n        Minecraft: " + getTheTime("minecraft") + "\n        12hr: " + getTheTime("12hr") + "\n        24hr: " + getTheTime("24hr");
-		debugArrayTxt[15] = "World life in ticks: " + "\n        " + worldlife("tick");
-		debugArrayTxt[16] = "World day: " + worldlife("day");
+		debugArrayTxt[0] = subtitleFormat + "Dimension: " + bodyFormat + playerPosition(player, "dimension");
+		debugArrayTxt[1] = subtitleFormat + "XYZ: " + bodyFormat + playerPosition(player, "xyz");
+		debugArrayTxt[2] = subtitleFormat + "Block: " + bodyFormat + playerPosition(player, "block");
+		debugArrayTxt[3] = subtitleFormat + "Block within chunk: " + bodyFormat + playerPosition(player, "blockInChunk");
+		debugArrayTxt[4] = subtitleFormat + "Chunk: " + bodyFormat + playerPosition(player, "chunk");
+		debugArrayTxt[5] = subtitleFormat + "Region: " + bodyFormat + playerPosition(player, "region");
+		debugArrayTxt[6] = subtitleFormat + "Overworld coord: " + bodyFormat + playerPosition(player, "overworld");
+		debugArrayTxt[7] = subtitleFormat + "Nether coord: " + bodyFormat + playerPosition(player, "nether");
+		debugArrayTxt[8] = subtitleFormat + "Player spawnpoint: " + bodyFormat + playerRespawn(player);
+		debugArrayTxt[9] = subtitleFormat + "World spawnpoint: " + bodyFormat + worldSpawn();
+		debugArrayTxt[10] = subtitleFormat + "Facing: " + bodyFormat + facingDirection(player);
+		debugArrayTxt[11] = subtitleFormat + "Light at player's head: " + bodyFormat + lightLevel(player);
+		debugArrayTxt[12] = subtitleFormat + "Biome: " + bodyFormat + biomeFinder(player);
+		debugArrayTxt[13] = subtitleFormat + "Moon phase: " + bodyFormat + moonCycle();
+		debugArrayTxt[14] = subtitleFormat + "Time of day: " + bodyFormat + "\n        Tick: " + getTheTime("tick") + "\n        Minecraft: " + getTheTime("minecraft") + "\n        12hr: " + getTheTime("12hr") + "\n        24hr: " + getTheTime("24hr");
+		debugArrayTxt[15] = subtitleFormat + "World life in ticks: " + bodyFormat + "\n        " + worldlife("tick");
+		debugArrayTxt[16] = subtitleFormat + "World day: " + bodyFormat + worldlife("day");
 		
 	//construct the body
 		let indentSize = "    ";
@@ -288,10 +290,11 @@ function debugDisplay(player){
 			debugBodyTxt = debugBodyTxt + indentNextLine + debugArrayTxt[i];
 		}
 		
+		let displayText = titleFormat + debugTxt + nextLine + debugBodyTxt
 	//display ui
 		let debugForm = new ActionFormData()
 		.title(player.name)
-		.body(debugTxt + nextLine + debugBodyTxt)
+		.body(displayText)
 		.button("Close")
 		.show(player);
 }
