@@ -428,7 +428,6 @@ function changedDimension(event){
 			addToScore("stats_enteredDimension_","Overworld",player)
 			getSomeWhere(getDim, player);
 			break;
-			
 	}
 }
 function entityDied(event){
@@ -474,8 +473,8 @@ function initSpawn(event){
 	
 	if(!player.hasTag("firstSpawn")){//verify the player hasn't spawned previously
 		//console.warn("I've initialized");
-		scoreSet("tracking_location_","initialPointX", player, player.location.x);//record player initial location x
-		scoreSet("tracking_location_","initialPointZ", player, player.location.z);//record player initial location z
+		scoreSet("tracking_player_","initialPointX", player, player.location.x);//record player initial location x
+		scoreSet("tracking_player_","initialPointZ", player, player.location.z);//record player initial location z
 		player.addTag("firstSpawn");//add tag to record that player has already spawned initially
 	}
 }
@@ -508,12 +507,8 @@ function itemRelease(event){
 	
 	switch(itemName){
 		case "bow" :
-<<<<<<< Updated upstream
 			addToScore("stats_itemsReleased_","Bow",player)
-			boolScore("weaponsToolsArmor", "shoot_bool", player, 1);
-=======
 			boolScore("tracking_item_", "shootBool", player, 1);
->>>>>>> Stashed changes
 			system.runTimeout(() => {
 				boolScore("tracking_item_", "shootBool", player, 0);
 			}, 40);
@@ -667,16 +662,16 @@ function useItem(event){
 //stat functions----------------------------------------
 function overworldBlocksTravelled(player){
 	//get value of blocks travelled, or initialize if undefined
-		let blkDist = getSomeScore("stats", "overworld_blocks", player);
+		let blkDist = getSomeScore("stats_overworldBlocksTravelled_", "total", player);
 		
 	//verify the player is in the overworld. calculate distance from last saved checkpoint or initial spawn if distance is 0
 		if(player.dimension.id == "minecraft:overworld"){
-			let x1 = getSomeScore("tracking_location_", "checkpointX", player);
-			let z1 = getSomeScore("tracking_location_", "checkpointZ", player);
+			let x1 = getSomeScore("tracking_player_", "checkpointX", player);
+			let z1 = getSomeScore("tracking_player_", "checkpointZ", player);
 			
 			if(blkDist == 0){//if first time, calculate from initial spawn location
-				x1 = getSomeScore("tracking_location_","initialPointX", player);
-				z1 = getSomeScore("tracking_location_","initialPointZ", player);
+				x1 = getSomeScore("tracking_player_","initialPointX", player);
+				z1 = getSomeScore("tracking_player_","initialPointZ", player);
 			}
 			let x2 = player.location.x;
 			let z2 = player.location.z;
@@ -687,9 +682,9 @@ function overworldBlocksTravelled(player){
 			getSomeWhere("overworld7000", player);
 		}
 	//record the calculated blocks travelled, and set new checkpoints
-		scoreSet("stats","overworld_blocks", player, blkDist);
-		scoreSet("tracking_location_","checkpointX", player, player.location.x);
-		scoreSet("tracking_location_","checkpointZ", player, player.location.z);
+		scoreSet("stats_overworldBlocksTravelled_","total", player, blkDist);
+		scoreSet("tracking_player_","checkpointX", player, player.location.x);
+		scoreSet("tracking_player_","checkpointZ", player, player.location.z);
 	//output blocks travelled
 		//console.warn("I've travelled " + blkDist + " blocks")
 		return blkDist;
@@ -877,7 +872,7 @@ function itemInventory(player){
 					
 					if(slotItem){
 						if(slotItem.typeId == ("minecraft:" + slotArray[i])){
-							boolScore("objectives_tracking_", slotArray[i], player, 1);
+							boolScore("tracking_item_", slotArray[i], player, 1);
 							//console.warn("Taking inventory");
 						}
 					}
@@ -888,10 +883,10 @@ function itemInventory(player){
 	    //[advancement] Suit Up | Protect yourself with a piece of iron armor | Have any type of iron armor in your inventory.
 		if(getSomeScore("objectives_advancement_", "Have any type of iron armor", player) == 0){
 			switch(true){
-				case (getSomeScore("objectives_tracking_", "iron_helmet", player) == 1) ://*fall through*
-				case (getSomeScore("objectives_tracking_", "iron_chestplate", player) == 1) ://*fall through*
-				case (getSomeScore("objectives_tracking_", "iron_leggings", player) == 1) ://*fall through*
-				case (getSomeScore("objectives_tracking_", "iron_boots", player) == 1) :
+				case (getSomeScore("tracking_item_", "iron_helmet", player) == 1) ://*fall through*
+				case (getSomeScore("tracking_item_", "iron_chestplate", player) == 1) ://*fall through*
+				case (getSomeScore("tracking_item_", "iron_leggings", player) == 1) ://*fall through*
+				case (getSomeScore("tracking_item_", "iron_boots", player) == 1) :
 					boolScore("objectives_advancement_", "Have any type of iron armor", player, 1);
 					break;
 			}
