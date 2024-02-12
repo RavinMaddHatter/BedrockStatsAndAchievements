@@ -821,7 +821,7 @@ function itemInventory(player){
 		//[advancement] You Need a Mint | Collect Dragon's Breath in a Glass Bottle | Have a bottle of dragon's breath in your inventory.
 	//in work--------------------
 	//done--------------------
-		let slotArray = [];
+		const slotArray = [];
 		slotArray[0] = "crafting_table";	//[achievement] Benchmaking | Craft a workbench with four blocks of wooden planks. | Pick up a crafting table from the inventory's crafting field output or a crafting table output.
 								//[advancement] Minecraft | The heart and story of the game | Have a crafting table in your inventory.
 		slotArray[1] = "stone_pickaxe";	//[achievement] Getting an Upgrade | Construct a better pickaxe. | Pick up a stone pickaxe from a crafting table output.
@@ -862,25 +862,43 @@ function itemInventory(player){
 								//[advancement] Into Fire | Relieve a Blaze of its rod | Have a blaze rod in your inventory.
 		slotArray[33] = "dragon_egg";	//[advancement] The Next Generation | Hold the Dragon Egg | Have a dragon egg in your inventory.
 		slotArray[34] = "sniffer_egg";	//[advancement] Smells Interesting | Obtain a Sniffer Egg | Have a sniffer egg in your inventory.
+		const potSlotArray = [];
+			potSlotArray[0] = "angler_pottery_sherd";
+			potSlotArray[1] = "archer_pottery_sherd";
+			potSlotArray[2] = "arms_up_pottery_sherd";
+			potSlotArray[3] = "blade_pottery_sherd";
+			potSlotArray[4] = "brewer_pottery_sherd";
+			potSlotArray[5] = "burn_pottery_sherd";
+			potSlotArray[6] = "danger_pottery_sherd";
+			potSlotArray[7] = "explorer_pottery_sherd";
+			potSlotArray[8] = "friend_pottery_sherd";
+			potSlotArray[9] = "heart_pottery_sherd";
+			potSlotArray[10] = "heartbreak_pottery_sherd";
+			potSlotArray[11] = "howl_pottery_sherd";
+			potSlotArray[12] = "miner_pottery_sherd";
+			potSlotArray[13] = "mourner_pottery_sherd";
+			potSlotArray[14] = "plenty_pottery_sherd";
+			potSlotArray[15] = "prize_pottery_sherd";
+			potSlotArray[16] = "sheaf_pottery_sherd";
+			potSlotArray[17] = "shelter_pottery_sherd";
+			potSlotArray[18] = "skull_pottery_sherd";
+			potSlotArray[19] = "snort_pottery_sherd";
 		let inventoryPlayer = player.getComponent("minecraft:inventory");
-		var i;
-		var j;
-		
-		for(i = 0; i < slotArray.length; i++){
-			if(getSomeScore("itemInventory", slotArray[i], player) == 0){
-				for(j = 0; j < 36; j++){
-					let slotItem = inventoryPlayer.container.getItem(j);
-					
-					if(slotItem){
-						if(slotItem.typeId == ("minecraft:" + slotArray[i])){
-							boolScore("tracking_itemInventory_", slotArray[i], player, 1);
-							//console.warn("Taking inventory");
-						}
+		var index;
+		for (let slot = 0; slot<36;slot++){
+			let itemStack = inventoryPlayer.container.getItem(slot);
+			if (itemStack){
+				const itemName = itemStack.typeId.replace("minecraft:","")
+				if(slotArray.includes(itemName)){
+					boolScore("tracking_itemInventory_", itemName, player, 1);
+				}
+				else{
+					if (potSlotArray.includes(itemName)){
+						boolScore("objectives_advancement_", "Obtain a Pottery Sherd", player, 1);
 					}
 				}
 			}
 		}
-		
 	    //[advancement] Suit Up | Protect yourself with a piece of iron armor | Have any type of iron armor in your inventory.
 		if(getSomeScore("objectives_advancement_", "Have any iron armor", player) == 0){
 			switch(true){
@@ -948,39 +966,6 @@ function itemInventory(player){
 		}
 	    //[advancement] Respecting the Remnants | Brush a Suspicious block to obtain a Pottery Sherd | —
 		if(getSomeScore("objectives_advancement_", "Obtain a Pottery Sherd", player) == 0){
-			let potSlotArray = [];
-			potSlotArray[0] = "angler_pottery_sherd";
-			potSlotArray[1] = "archer_pottery_sherd";
-			potSlotArray[2] = "arms_up_pottery_sherd";
-			potSlotArray[3] = "blade_pottery_sherd";
-			potSlotArray[4] = "brewer_pottery_sherd";
-			potSlotArray[5] = "burn_pottery_sherd";
-			potSlotArray[6] = "danger_pottery_sherd";
-			potSlotArray[7] = "explorer_pottery_sherd";
-			potSlotArray[8] = "friend_pottery_sherd";
-			potSlotArray[9] = "heart_pottery_sherd";
-			potSlotArray[10] = "heartbreak_pottery_sherd";
-			potSlotArray[11] = "howl_pottery_sherd";
-			potSlotArray[12] = "miner_pottery_sherd";
-			potSlotArray[13] = "mourner_pottery_sherd";
-			potSlotArray[14] = "plenty_pottery_sherd";
-			potSlotArray[15] = "prize_pottery_sherd";
-			potSlotArray[16] = "sheaf_pottery_sherd";
-			potSlotArray[17] = "shelter_pottery_sherd";
-			potSlotArray[18] = "skull_pottery_sherd";
-			potSlotArray[19] = "snort_pottery_sherd";
-			
-			for(i = 0; i < potSlotArray.length; i++){
-				for(j = 0; j < 36; j++){
-					let slotItem = inventoryPlayer.container.getItem(j);
-					
-					if(slotItem){
-						if(slotItem.typeId == ("minecraft:" + potSlotArray[i])){
-							boolScore("objectives_advancement_", "Obtain a Pottery Sherd", player, 1);
-						}
-					}
-				}
-			}
 		}
 }
 function entityInteractions(){
@@ -1561,7 +1546,7 @@ function timer10Sec(){
 		let playerArrayList = world.getAllPlayers();//get list of players
 		
 		//console.warn(playerArrayList[0].name);
-		for(var i = 0; i < playerArrayList.length; i++){
+		for(let i = 0; i < playerArrayList.length; i++){
 			//distance data sampling at defined interval
 			overworldBlocksTravelled(playerArrayList[i]);
 			//inventory checks for achievement items
