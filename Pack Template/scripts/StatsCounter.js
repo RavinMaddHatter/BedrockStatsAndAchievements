@@ -104,17 +104,12 @@ function statListBody(player){
 		statArrayTxt[2] = "Total blocks broken: " + getSomeScore("stats_blocksBroken_", "total", player);
 		
 	//construct the body
-		let boolPos = "\u2717";
-		let boolNeg = " ";
 		let indentSize = "    ";
 		let nextLine = '\n';
 		let indentNextLine = nextLine + indentSize;
-		var i;
-		
-	    //stats--------------------
 		let statBodyTxt = "";
 		
-		for(i = 0; i < statArrayTxt.length; i++){
+		for(var i = 0; i < statArrayTxt.length; i++){
 			statBodyTxt = statBodyTxt + indentNextLine + statArrayTxt[i];
 		}
 		
@@ -123,7 +118,7 @@ function statListBody(player){
 			+ statBodyTxt;
 }
 function objectivesStatsDisplay(player){
-	let scorestext= ["Objectives"];
+	let scoresText= ["Objectives"];
 	let scoreboards = world.scoreboard.getObjectives();
 	let tempScore = 0;
 	let achievement = [];
@@ -135,7 +130,7 @@ function objectivesStatsDisplay(player){
 		let type = temp[0];
 		let category = temp[1];
 		let name = temp[2];
-		let boolPos = "\u2717";
+		let boolPos = "\u00A7a" + "\u2717" + "\u00A7r";
 		let boolNeg = " ";
 		
 		switch (type){
@@ -156,12 +151,15 @@ function objectivesStatsDisplay(player){
 				break;
 		}
 	}
+	let titleFormat = "\u00A7d";
+	let subtitleFormat = "\u00A73";
+	let bodyFormat = "\u00A7r";
 	let indentSize = "    ";
 	let nextLine = '\n';
 	let indentNextLine = nextLine + indentSize;
-	let allStats=scorestext.join(nextLine)
-		+ "\n\nAchievements:" + indentNextLine + achievement.join(indentNextLine)
-		+ "\n\nAdvancements:" + indentNextLine + advancement.join(indentNextLine);
+	let allStats=titleFormat + scoresText.join(nextLine)
+		+ subtitleFormat + "\n\nAchievements:" + bodyFormat + indentNextLine + achievement.join(indentNextLine)
+		+ subtitleFormat + "\n\nAdvancements:" + bodyFormat + indentNextLine + advancement.join(indentNextLine);
 	let statsForm = new ActionFormData()
 		.title(player.name)
 		.body(allStats)
