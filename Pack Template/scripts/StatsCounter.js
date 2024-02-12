@@ -474,9 +474,8 @@ function initSpawn(event){
 	
 	if(!player.hasTag("firstSpawn")){//verify the player hasn't spawned previously
 		//console.warn("I've initialized");
-		scoreSet("location","initialPointX", player, player.location.x);//record player initial location x
-		scoreSet("location","initialPointZ", player, player.location.z);//record player initial location z
-		event.player.runCommandAsync("loot give @s loot statStick");//give statStick to player
+		scoreSet("tracking_location_","initialPointX", player, player.location.x);//record player initial location x
+		scoreSet("tracking_location_","initialPointZ", player, player.location.z);//record player initial location z
 		player.addTag("firstSpawn");//add tag to record that player has already spawned initially
 	}
 }
@@ -496,9 +495,9 @@ function itemComplete(event){
 	
 	switch(itemName){
 		case "crossbow" :
-			boolScore("weaponsToolsArmor", "charge_bool", player, 1);
+			boolScore("tracking_item_", "chargeBool", player, 1);
 			system.runTimeout(() => {
-				boolScore("weaponsToolsArmor", "charge_bool", player, 0);
+				boolScore("tracking_item_", "chargeBool", player, 0);
 			}, 200);
 			break;
 	}
@@ -509,10 +508,14 @@ function itemRelease(event){
 	
 	switch(itemName){
 		case "bow" :
+<<<<<<< Updated upstream
 			addToScore("stats_itemsReleased_","Bow",player)
 			boolScore("weaponsToolsArmor", "shoot_bool", player, 1);
+=======
+			boolScore("tracking_item_", "shootBool", player, 1);
+>>>>>>> Stashed changes
 			system.runTimeout(() => {
-				boolScore("weaponsToolsArmor", "shoot_bool", player, 0);
+				boolScore("tracking_item_", "shootBool", player, 0);
 			}, 40);
 			break;
 		case "crossbow":
@@ -615,7 +618,6 @@ function projectileHitBlock(event){
 			}
 		}
 	}
-	
 }
 function targetHit(event){
 	let power = event.redstonePower;
@@ -634,12 +636,12 @@ function targetHit(event){
 		var i;
 		
 		for(i = 0; i < closePlayers.length; i++){
-			if(getSomeScore("weaponsToolsArmor", "shoot_bool", closePlayers[i]) == 1){
+			if(getSomeScore("tracking_item_", "shootBool", closePlayers[i]) == 1){
 				weaponsToolsArmor("target", closePlayers[i]);
 			}
 		}
 		for(i = 0; i < farPlayers.length; i++){
-			if(getSomeScore("weaponsToolsArmor", "shoot_bool", farPlayers[i]) == 1){
+			if(getSomeScore("tracking_item_", "shootBool", farPlayers[i]) == 1){
 				weaponsToolsArmor("targetFrom30", farPlayers[i]);
 			}
 		}
@@ -651,7 +653,7 @@ function useItem(event){
 	
 	switch(itemName){
 		case "crossbow" :
-			if(getSomeScore("weaponsToolsArmor", "charge_bool", player) == 1){
+			if(getSomeScore("tracking_item_", "chargeBool", player) == 1){
 				weaponsToolsArmor(itemName, player);
 			}
 			break;
@@ -669,12 +671,12 @@ function overworldBlocksTravelled(player){
 		
 	//verify the player is in the overworld. calculate distance from last saved checkpoint or initial spawn if distance is 0
 		if(player.dimension.id == "minecraft:overworld"){
-			let x1 = getSomeScore("location", "checkpointX", player);
-			let z1 = getSomeScore("location", "checkpointZ", player);
+			let x1 = getSomeScore("tracking_location_", "checkpointX", player);
+			let z1 = getSomeScore("tracking_location_", "checkpointZ", player);
 			
 			if(blkDist == 0){//if first time, calculate from initial spawn location
-				x1 = getSomeScore("location","initialPointX", player);
-				z1 = getSomeScore("location","initialPointZ", player);
+				x1 = getSomeScore("tracking_location_","initialPointX", player);
+				z1 = getSomeScore("tracking_location_","initialPointZ", player);
 			}
 			let x2 = player.location.x;
 			let z2 = player.location.z;
@@ -686,8 +688,8 @@ function overworldBlocksTravelled(player){
 		}
 	//record the calculated blocks travelled, and set new checkpoints
 		scoreSet("stats","overworld_blocks", player, blkDist);
-		scoreSet("location","checkpointX", player, player.location.x);
-		scoreSet("location","checkpointZ", player, player.location.z);
+		scoreSet("tracking_location_","checkpointX", player, player.location.x);
+		scoreSet("tracking_location_","checkpointZ", player, player.location.z);
 	//output blocks travelled
 		//console.warn("I've travelled " + blkDist + " blocks")
 		return blkDist;
@@ -875,7 +877,7 @@ function itemInventory(player){
 					
 					if(slotItem){
 						if(slotItem.typeId == ("minecraft:" + slotArray[i])){
-							boolScore("itemInventory", slotArray[i], player, 1);
+							boolScore("objectives_advancement_", slotArray[i], player, 1);
 							//console.warn("Taking inventory");
 						}
 					}
