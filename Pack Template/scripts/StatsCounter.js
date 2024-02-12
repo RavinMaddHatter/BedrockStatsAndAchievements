@@ -38,6 +38,12 @@ world.afterEvents.itemUse.subscribe(event=>{
 world.afterEvents.itemReleaseUse.subscribe(event=>{
 	itemRelease(event);
 });
+world.afterEvents.pressurePlatePush.subscribe(event=>{
+	pleatePressed(event);
+});
+world.afterEvents.projectileHitBlock.subscribe(event=>{
+	 projectileHitBlock(event);
+});
 world.afterEvents.leverAction.subscribe(event=>{
 	leverFlipped(event);
 });
@@ -171,16 +177,16 @@ function objectivesStatsDisplay(player){
 function blockStatsDisplay(player){
 	let scorestext= ["These are the scores being tracked"];
 	let scoreboards = world.scoreboard.getObjectives();
-	let tempScore = 0;
 	let blocksBroken = [];
 	let blocksPlaced = [];
 	let entitiesKilled = [];
 	let deaths=[];
+	let redstoneInteractions=[];
 	let totalBlocksBroken = world.scoreboard.getObjective("stats_blocksBroken_total");
 	let totalBlocksPlaced = world.scoreboard.getObjective("stats_blocksPlaced_total");
 	let totalKilled = world.scoreboard.getObjective("stats_entitiesKilled_");
 	let totalDeaths = world.scoreboard.getObjective("stats_Deaths_");
-	console.warn(totalDeaths)
+	let totalRedstoneInteractions = world.scoreboard.getObjective("stats_redstonInteractions_");
 	if (totalBlocksBroken){
 		blocksBroken = ["Total: " +getScoreIfExists(totalBlocksBroken,player)];
 	}
@@ -193,7 +199,11 @@ function blockStatsDisplay(player){
 	if(totalDeaths){
 		deaths = ["Total: " +getScoreIfExists(totalDeaths,player)];
 	}
+	if(totalDeaths){
+		redstoneInteractions = ["Total: " +getScoreIfExists(totalRedstoneInteractions,player)];
+	}
 	for( let i in scoreboards){
+		let tempScore=0;
 		let board = scoreboards[i];
 		let temp = board.displayName.split("_");
 		let type = temp[0];
@@ -224,6 +234,10 @@ function blockStatsDisplay(player){
 							deaths.push(name+ ": " + tempScore.toString());
 						}
 						break;
+					case "redstonInteractions":
+						if (!name.includes("total") && name.length>1){
+							redstoneInteractions.push(name+ ": " + tempScore.toString());
+						}
 				}
 				break;
 		}
@@ -236,6 +250,7 @@ function blockStatsDisplay(player){
 		+ "\nBlocks Placed:" + indentNextLine + blocksPlaced.join(indentNextLine)
 		+ "\nEntities Killed:" + indentNextLine + entitiesKilled.join(indentNextLine)
 		+ "\nDeaths:" + indentNextLine + deaths.join(indentNextLine)
+		+ "\nRedstone Interactions:" + indentNextLine + redstoneInteractions.join(indentNextLine)
 	let statsForm = new ActionFormData()
 		.title(player.name)
 		.body(allStats)
@@ -367,7 +382,24 @@ function blockPlaced(event){
 	addToScore("stats_blocksPlaced_", "total", player);
 }
 function buttonPushed(event){
-	addToScore("Redstone Interactions","Button", event.source)//This is not ideal needs a patch as stone will become cobble
+	if(event.source.typeId=="minecraft:player"){
+		let type = "Stone Buttons"
+		if (event.block.getTags().includes("wood")){
+			type = "Wood Buttons"
+		}
+		addToScore("stats_redstonInteractions_",type, event.source)
+	}
+}function pleatePressed(event){
+	if(event.source.typeId=="minecraft:player"){
+		let type = "Weighted Pressure Plate"
+		if (event.block.getTags().includes("stone")){
+			type = "Stone Pressure Plate"
+		}
+		if (event.block.getTags().includes("wood")){
+			type = "Wood Pressure Plate"
+		}
+		addToScore("stats_redstonInteractions_",type, event.source)
+	}
 }
 function changedDimension(event){
 	let player = event.player;
@@ -454,7 +486,7 @@ function itemRelease(event){
 	}
 }
 function leverFlipped(event){
-	addToScore("Redstone Interactions","Lever", event.player);
+	addToScore("stats_redstonInteractions_","Lever", event.player);
 }
 function loadedEntity(event){
 	let entity = event.entity;
@@ -535,8 +567,21 @@ function statStick(event){
 		statList(player);//initiate ui
 	}
 }
+function projectileHitBlock(event){
+	let shooter = event.source
+	if(shooter){
+		let block = event.getBlockHit().block;
+		if(block.permutation.matches("minecraft:target")){
+			if(shooter.typeId=="minecraft:player"){
+				addToScore("stats_redstonInteractions_","Target Blocks Hit",shooter)
+			}
+		}
+	}
+	
+}
 function targetHit(event){
 	let power = event.redstonePower;
+	
 	
 	if(power == 15){
 		let closePlayers = event.dimension.getPlayers({
@@ -1227,7 +1272,6 @@ function addToScore(category, item, player){
 	let itemId=categoryId+item.replace(" ","");
 	const allBoards = world.scoreboard.getObjectives();
 	const checkCategoryID = obj => obj.displayName === category;
-	console.warn(itemId)
 	if(!allBoards.some(checkCategoryID)){ 
 		world.scoreboard.addObjective(categoryId, category);
 	}
