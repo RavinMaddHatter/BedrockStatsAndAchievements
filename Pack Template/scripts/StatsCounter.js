@@ -69,15 +69,19 @@ function statList(player){
 		.title(player.name)
 		.body(statListBody(player))
 		.button("Close")
+		.button("Scores")
 		.button("Achievements")
 		.button("Advancements");
 		
 		statForm.show(player).then((response) => {
 			switch(response.selection){
 				case 1 :
-					achieveList(player);
+					blockStatsDisplay(player)
 					break;
 				case 2 :
+					achieveList(player);
+					break;
+				case 3 :
 					advanceList(player);
 					break;
 			}
@@ -90,8 +94,8 @@ function statListBody(player){
 		
 		let statArrayTxt = [];
 		statArrayTxt[0] = "Overworld Travel: " + getSomeScore("stats", "overworld_blocks", player) + " blocks";
-		statArrayTxt[1] = "Total blocks placed: " + getSomeScore("stats", "blockPlaced_total", player);
-		statArrayTxt[2] = "Total blocks broken: " + getSomeScore("stats", "blockBroken_total", player);
+		statArrayTxt[1] = "Total blocks placed: " + getSomeScore("stats_blocksPlaced_", "total", player);
+		statArrayTxt[2] = "Total blocks broken: " + getSomeScore("stats_blocksBroken_", "total", player);
 		
 	//construct the body
 		let boolPos = "\u2717";
@@ -300,6 +304,64 @@ function advanceList(player){
 			}
 		});
 }
+function blockStatsDisplay(player){
+	let scorestext= ["These are the scores being tracked"];
+	let scoreboards = world.scoreboard.getObjectives();
+	let tempScore = 0;
+	let totalBlocksBroken = world.scoreboard.getObjective("stats_blocksBroken_total");
+	let totalBlocksPlaced = world.scoreboard.getObjective("stats_blocksPlaced_total");
+	let blocksBroken = ["Total: " + totalBlocksBroken.getScore(player).toString()];
+	let blocksPlaced = ["Total: " + totalBlocksPlaced.getScore(player).toString()];
+	for( let i in scoreboards){
+		let board = scoreboards[i];
+		let temp = board.displayName.split("_");
+		let type = temp[0];
+		let category = temp[1];
+		let name = temp[2];
+		switch (type){
+			case "stats":
+				tempScore=0;
+				switch(category){
+					case "blocksBroken":
+						if (board.hasParticipant(player)){
+							tempScore = board.getScore(player);
+						}
+						if (!name.includes("total") && name.length>1){
+							blocksBroken.push(name+ ": " + tempScore.toString());
+						}
+						break;
+					case "blocksPlaced":
+						
+						if (board.hasParticipant(player)){
+							tempScore = board.getScore(player);
+						}
+						if (!name.includes("total") && name.length>1){
+							blocksPlaced.push(name+ ": " + tempScore.toString());
+						}
+						break;
+				}
+				break;
+		}
+	}
+	let indentSize = "    ";
+	let nextLine = '\n';
+	let indentNextLine = nextLine + indentSize;
+	let allStats=scorestext.join(nextLine)
+		+ "\nBlocks Broken:" + indentNextLine + blocksBroken.join(indentNextLine)
+		+ "\nBlocks Placed:" + indentNextLine + blocksPlaced.join(indentNextLine)
+	let statsForm = new ActionFormData()
+		.title(player.name)
+		.body(allStats)
+		.button("Close")
+		
+		statsForm.show(player).then((response) => {
+			switch(response.selection){
+				case 1 :
+					statList(player);
+					break;
+			}
+		});
+} 
 function advanceListBody(player){
 	//add text
 	    //advancements--------------------
@@ -486,15 +548,16 @@ function advanceListBody(player){
 
 //event functions----------------------------------------
 function preBreak(event){
-	blockBreaks["L"+event.block.x+" "+event.block.y+" "+event.block.z]=event.block.getTags()
+	blockBreaks["L"+event.block.x+" "+event.block.y+" "+event.block.z]=processBlockTags(event.block.getTags())
 }
 function blockBroken(event){
 	let player = event.player;
-	let blockTags = blockBreaks["L"+event.block.x+" "+event.block.y+" "+event.block.z]
+	let blockData = blockBreaks["L"+event.block.x+" "+event.block.y+" "+event.block.z]
 	delete blockBreaks["L"+event.block.x+" "+event.block.y+" "+event.block.z]
-	addToScore("stats", processBlockTags(blockTags), player)
-	
-	addToScore("stats", "blockBroken_total", player);
+	if (blockData!=undefined){
+		addToScore("stats_blocksBroken_", processBlockTags(blockTags), player)
+	}
+	addToScore("stats_blocksBroken_", "total", player);
 }
 function processBlockTags(tags){
 	for(let index in tags) {
@@ -558,8 +621,11 @@ function processBlockTags(tags){
 }
 function blockPlaced(event){
 	let player = event.player;
-	
-	addToScore("stats", "blockPlaced_total", player);
+	let blockData= processBlockTags(event.block.getTags())
+	if (blockData!=undefined){
+		addToScore("stats_blocksPlaced_", blockData, player)
+	}
+	addToScore("stats_blocksPlaced_", "total", player);
 }
 function buttonPushed(event){
 	addToScore("Redstone Interactions","Button", event.source)//This is not ideal needs a patch as stone will become cobble
