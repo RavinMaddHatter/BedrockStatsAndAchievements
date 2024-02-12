@@ -136,7 +136,7 @@ function objectivesStatsDisplay(player){
 		let type = temp[0];
 		let category = temp[1];
 		let name = temp[2];
-		let boolPos = "\u00A7a" + "\u2717" + "\u00A7r";
+		let boolPos = "\u00A7a" + "\u2714" + "\u00A7r";
 		let boolNeg = " ";
 		
 		switch (type){
