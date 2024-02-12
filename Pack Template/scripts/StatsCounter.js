@@ -71,8 +71,7 @@ function statList(player){
 		.body(statListBody(player))
 		.button("Close")
 		.button("Scores")
-		.button("Achievements")
-		.button("Advancements");
+		.button("Objectives");
 		
 		if(debugToggle){
 			statForm.button("Debug");
@@ -80,17 +79,16 @@ function statList(player){
 		
 		statForm.show(player).then((response) => {
 			switch(response.selection){
+				case 0 :
+					break;
 				case 1 :
 					blockStatsDisplay(player)
 					break;
 				case 2 :
-					achieveList(player);
+					objectivesStatsDisplay(player);
 					break;
 				case 3 :
-					advanceList(player);
-					break;
-				case 3 :
-					debugList(player);
+					debugDisplay(player);
 					break;
 			}
 		});
@@ -124,200 +122,51 @@ function statListBody(player){
 		return statTxt
 			+ statBodyTxt;
 }
-function achieveList(player){
-	let achieveForm = new ActionFormData()
-		.title(player.name)
-		.body(achieveListBody(player))
-		.button("Close")
-		.button("Stats");
-		
-		achieveForm.show(player).then((response) => {
-			switch(response.selection){
-				case 1 :
-					statList(player);
-					break;
-			}
-		});
-}
-function achieveListBody(player){
-	//add text
-	    //achievements--------------------
-		let achievementTxt = "Achievements";
-		
-		//blockInteractions
-		let blockInteractionsArrayTxt = [];
-		blockInteractionsArrayTxt[0] = ""
-		
-		//craftAndCook
-		let craftAndCookArrayTxt = [];
-		craftAndCookArrayTxt[0] = ""
-		
-		//eatAndDrink
-		let eatAndDrinkArrayTxt = [];
-		eatAndDrinkArrayTxt[0] = ""
-		
-		//getSomeWhere
-		let getSomeWhereArrayTxt = [];
-		getSomeWhereArrayTxt[0] = "Go to The End: " + getSomeScore("getSomeWhere", "the_end", player);
-		
-		//itemInventory
-		let itemInventoryArrayTxt = [];
-		itemInventoryArrayTxt[0] = "Get a crafting table: " + getSomeScore("itemInventory", "crafting_table", player);
-		itemInventoryArrayTxt[1] = "Get a stone pickaxe: " + getSomeScore("itemInventory", "stone_pickaxe", player);
-		itemInventoryArrayTxt[2] = "Full set of netherite armor: " + getSomeScore("itemInventory", "netherite_armor", player);
-		itemInventoryArrayTxt[3] = "Get an iron ingot: " + getSomeScore("itemInventory", "iron_ingot", player);
-		itemInventoryArrayTxt[4] = "Get a diamond: " + getSomeScore("itemInventory", "diamond", player);
-		itemInventoryArrayTxt[5] = "Catch a fish in a bucket: " + getSomeScore("itemInventory", "fish_bucket", player);
-		itemInventoryArrayTxt[6] = "Get a blaze rod: " + getSomeScore("itemInventory", "blaze_rod", player);
-		
-		//entityInteractions
-		let entityInteractionsArrayTxt = [];
-		entityInteractionsArrayTxt[0] = ""
-		
-		//entityKills
-		let entityKillsArrayTxt = [];
-		entityKillsArrayTxt[0] = ""
-		
-		//redstoneInteractions
-		let redstoneInteractionsArrayTxt = [];
-		redstoneInteractionsArrayTxt[0] = ""
-		
-		//spawnAndBreed
-		let spawnAndBreedArrayTxt = [];
-		spawnAndBreedArrayTxt[0] = "Breed cows or mooshrooms: " + getSomeScore("spawnAndBreed", "cow", player);
-		spawnAndBreedArrayTxt[1] = "Get a mule from breeding: " + getSomeScore("spawnAndBreed", "mule", player);
-		spawnAndBreedArrayTxt[2] = "Breed pandas: " + getSomeScore("spawnAndBreed", "panda", player);
-		spawnAndBreedArrayTxt[3] = "Summon an iron golem: " + getSomeScore("spawnAndBreed", "iron_golem", player);
-		spawnAndBreedArrayTxt[4] = "Summon a wither: " + getSomeScore("spawnAndBreed", "wither", player);
-		spawnAndBreedArrayTxt[5] = "Respawn the dragon: " + getSomeScore("spawnAndBreed", "ender_dragon_bool", player);
-		
-		//statusAndEffects
-		let statusAndEffectsArrayTxt = [];
-		statusAndEffectsArrayTxt[0] = ""
-		
-		//trading
-		let tradingArrayTxt = [];
-		tradingArrayTxt[0] = ""
-				
-		//usingItems
-		let usingItemsArrayTxt = [];
-		usingItemsArrayTxt[0] = ""
-		
-		//weaponsToolsArmor
-		let weaponsToolsArmorArrayTxt = [];
-		weaponsToolsArmorArrayTxt[0] = "Hit a target block bulls eye: " + getSomeScore("weaponsToolsArmor", "target", player);
-		
-		//worldAndBiome
-		let worldAndBiomeArrayTxt = [];
-		worldAndBiomeArrayTxt[0] = ""
-		
-	//construct the body
+function objectivesStatsDisplay(player){
+	let scorestext= ["Objectives"];
+	let scoreboards = world.scoreboard.getObjectives();
+	let tempScore = 0;
+	let achievement = [];
+	let advancement = [];
+	
+	for( let i in scoreboards){
+		let board = scoreboards[i];
+		let temp = board.displayName.split("_");
+		let type = temp[0];
+		let category = temp[1];
+		let name = temp[2];
 		let boolPos = "\u2717";
 		let boolNeg = " ";
-		let indentSize = "    ";
-		let nextLine = '\n';
-		let indentNextLine = nextLine + indentSize;
-		var i;
 		
-	    //achievements--------------------
-		//initialize variables
-		let blockInteractionsBodyTxt = "";
-		let craftAndCookBodyTxt = "";
-		let eatAndDrinkBodyTxt = "";
-		let getSomeWhereBodyTxt = "";
-		let itemInventoryBodyTxt = "";
-		let entityInteractionsBodyTxt = "";
-		let entityKillsBodyTxt = "";
-		let redstoneInteractionsBodyTxt = "";
-		let statusAndEffectsBodyTxt = "";
-		let spawnAndBreedBodyTxt = "";
-		let tradingBodyTxt = "";
-		let usingItemsBodyTxt = "";
-		let weaponsToolsArmorBodyTxt = "";
-		let worldAndBiomeBodyTxt = "";
-		
-		//concatenate text sections
-		for(i = 0; i < blockInteractionsArrayTxt.length; i++){
-			blockInteractionsBodyTxt = blockInteractionsBodyTxt + indentNextLine + (blockInteractionsArrayTxt[i].concat(".,.").replace("0.,.", boolNeg).replace("1.,.", boolPos).replace(".,.", ""));
+		switch (type){
+			case "objectives":
+				tempScore = getScoreIfExists(board,player);
+				switch(category){
+					case "achievement":
+						if (!name.includes("total") && name.length>1){
+							achievement.push(name+ ": " + tempScore.toString().replace("0", boolNeg).replace("1", boolPos));
+						}
+						break;
+					case "advancement":
+						if (!name.includes("total") && name.length>1){
+							advancement.push(name+ ": " + tempScore.toString().replace("0", boolNeg).replace("1", boolPos));
+						}
+						break;
+				}
+				break;
 		}
-		for(i = 0; i < craftAndCookArrayTxt.length; i++){
-			craftAndCookBodyTxt = craftAndCookBodyTxt + indentNextLine + (craftAndCookArrayTxt[i].concat(".,.").replace("0.,.", boolNeg).replace("1.,.", boolPos).replace(".,.", ""));
-		}
-		for(i = 0; i < eatAndDrinkArrayTxt.length; i++){
-			eatAndDrinkBodyTxt = eatAndDrinkBodyTxt + indentNextLine + (eatAndDrinkArrayTxt[i].concat(".,.").replace("0.,.", boolNeg).replace("1.,.", boolPos).replace(".,.", ""));
-		}
-		for(i = 0; i < getSomeWhereArrayTxt.length; i++){
-			getSomeWhereBodyTxt = getSomeWhereBodyTxt + indentNextLine + (getSomeWhereArrayTxt[i].concat(".,.").replace("0.,.", boolNeg).replace("1.,.", boolPos).replace(".,.", ""));
-		}
-		for(i = 0; i < itemInventoryArrayTxt.length; i++){
-			itemInventoryBodyTxt = itemInventoryBodyTxt + indentNextLine + (itemInventoryArrayTxt[i].concat(".,.").replace("0.,.", boolNeg).replace("1.,.", boolPos).replace(".,.", ""));
-		}
-		for(i = 0; i < entityInteractionsArrayTxt.length; i++){
-			entityInteractionsBodyTxt = entityInteractionsBodyTxt + indentNextLine + (entityInteractionsArrayTxt[i].concat(".,.").replace("0.,.", boolNeg).replace("1.,.", boolPos).replace(".,.", ""));
-		}
-		for(i = 0; i < entityKillsArrayTxt.length; i++){
-			entityKillsBodyTxt = entityKillsBodyTxt + indentNextLine + (entityKillsArrayTxt[i].concat(".,.").replace("0.,.", boolNeg).replace("1.,.", boolPos).replace(".,.", ""));
-		}
-		for(i = 0; i < redstoneInteractionsArrayTxt.length; i++){
-			redstoneInteractionsBodyTxt = redstoneInteractionsBodyTxt + indentNextLine + (redstoneInteractionsArrayTxt[i].concat(".,.").replace("0.,.", boolNeg).replace("1.,.", boolPos).replace(".,.", ""));
-		}
-		for(i = 0; i < spawnAndBreedArrayTxt.length; i++){
-			spawnAndBreedBodyTxt = spawnAndBreedBodyTxt + indentNextLine + (spawnAndBreedArrayTxt[i].concat(".,.").replace("0.,.", boolNeg).replace("1.,.", boolPos).replace(".,.", ""));
-		}
-		for(i = 0; i < statusAndEffectsArrayTxt.length; i++){
-			statusAndEffectsBodyTxt = statusAndEffectsBodyTxt + indentNextLine + (statusAndEffectsArrayTxt[i].concat(".,.").replace("0.,.", boolNeg).replace("1.,.", boolPos).replace(".,.", ""));
-		}
-		for(i = 0; i < tradingArrayTxt.length; i++){
-			tradingBodyTxt = tradingBodyTxt + indentNextLine + (tradingArrayTxt[i].concat(".,.").replace("0.,.", boolNeg).replace("1.,.", boolPos).replace(".,.", ""));
-		}
-		for(i = 0; i < usingItemsArrayTxt.length; i++){
-			usingItemsBodyTxt = usingItemsBodyTxt + indentNextLine + (usingItemsArrayTxt[i].concat(".,.").replace("0.,.", boolNeg).replace("1.,.", boolPos).replace(".,.", ""));
-		}
-		for(i = 0; i < weaponsToolsArmorArrayTxt.length; i++){
-			weaponsToolsArmorBodyTxt = weaponsToolsArmorBodyTxt + indentNextLine + (weaponsToolsArmorArrayTxt[i].concat(".,.").replace("0.,.", boolNeg).replace("1.,.", boolPos).replace(".,.", ""));
-		}
-		for(i = 0; i < worldAndBiomeArrayTxt.length; i++){
-			worldAndBiomeBodyTxt = worldAndBiomeBodyTxt + indentNextLine + (worldAndBiomeArrayTxt[i].concat(".,.").replace("0.,.", boolNeg).replace("1.,.", boolPos).replace(".,.", ""));
-		}
-		
-		//display text
-		return achievementTxt
-			+ blockInteractionsBodyTxt
-			+ craftAndCookBodyTxt
-			+ eatAndDrinkBodyTxt
-			+ getSomeWhereBodyTxt
-			+ itemInventoryBodyTxt
-			+ entityInteractionsBodyTxt
-			+ entityKillsBodyTxt
-			+ redstoneInteractionsBodyTxt
-			+ spawnAndBreedBodyTxt
-			+ statusAndEffectsBodyTxt
-			+ tradingBodyTxt
-			+ usingItemsBodyTxt
-			+ weaponsToolsArmorBodyTxt
-			+ worldAndBiomeBodyTxt;
-}
-function advanceList(player){
-	let advanceForm = new ActionFormData()
-		.title(player.name)
-		.body(advanceListBody(player))
-		.button("Close")
-		.button("Stats");
-		
-		advanceForm.show(player).then((response) => {
-			switch(response.selection){
-				case 1 :
-					statList(player);
-					break;
-			}
-		});
-}
-function getScoreIfExists(board, player){
-	let tempScore = 0;
-	if (board.hasParticipant(player)){
-		tempScore =board.getScore(player)
 	}
-	return tempScore
+	let indentSize = "    ";
+	let nextLine = '\n';
+	let indentNextLine = nextLine + indentSize;
+	let allStats=scorestext.join(nextLine)
+		+ "\n\nAchievements:" + indentNextLine + achievement.join(indentNextLine)
+		+ "\n\nAdvancements:" + indentNextLine + advancement.join(indentNextLine);
+	let statsForm = new ActionFormData()
+		.title(player.name)
+		.body(allStats)
+		.button("Close")
+		.show(player);
 }
 function blockStatsDisplay(player){
 	let scorestext= ["These are the scores being tracked"];
@@ -391,217 +240,12 @@ function blockStatsDisplay(player){
 		.title(player.name)
 		.body(allStats)
 		.button("Close")
-		
-		statsForm.show(player).then((response) => {
-			switch(response.selection){
-				case 1 :
-					statList(player);
-					break;
-			}
-		});
-} 
-function advanceListBody(player){
-	//add text
-	    //advancements--------------------
-		let advancementTxt = "Advancements";
-		
-		//blockInteractions
-		let blockInteractionsArrayTxt = [];
-		blockInteractionsArrayTxt[0] = ""
-		
-		//craftAndCook
-		let craftAndCookArrayTxt = [];
-		craftAndCookArrayTxt[0] = ""
-		
-		//eatAndDrink
-		let eatAndDrinkArrayTxt = [];
-		eatAndDrinkArrayTxt[0] = ""
-		
-		//getSomeWhere
-		let getSomeWhereArrayTxt = [];
-		getSomeWhereArrayTxt[0] = "Go to the Nether: " + getSomeScore("getSomeWhere", "nether", player);
-		getSomeWhereArrayTxt[1] = "Go to The End: " + getSomeScore("getSomeWhere", "the_end", player);
-		getSomeWhereArrayTxt[2] = "Enter a Bastion: " + getSomeScore("getSomeWhere", "bastion_remnant", player);
-		getSomeWhereArrayTxt[3] = "Enter a Fortress: " + getSomeScore("getSomeWhere", "nether_fortress", player);
-		getSomeWhereArrayTxt[4] = "Go 7000 blocks in the Overworld: " + getSomeScore("getSomeWhere", "overworld7000", player);
-		
-		//itemInventory
-		let itemInventoryArrayTxt = [];
-		itemInventoryArrayTxt[0] = "Get a crafting table: " + getSomeScore("itemInventory", "crafting_table", player);
-		itemInventoryArrayTxt[1] = "Get a stone pickaxe: " + getSomeScore("itemInventory", "stone_pickaxe", player);
-		itemInventoryArrayTxt[2] = "Get an iron pickaxe: " + getSomeScore("itemInventory", "iron_pickaxe", player);
-		itemInventoryArrayTxt[3] = "Get a netherite hoe: " + getSomeScore("itemInventory", "netherite_hoe", player);
-		itemInventoryArrayTxt[4] = "Get some iron armor: " + getSomeScore("itemInventory", "iron_armor", player);
-		itemInventoryArrayTxt[5] = "Get some diamond armor: " + getSomeScore("itemInventory", "diamond_armor", player);
-		itemInventoryArrayTxt[6] = "Full set of netherite armor: " + getSomeScore("itemInventory", "netherite_armor", player);
-		itemInventoryArrayTxt[7] = "Get a pair of elytra: " + getSomeScore("itemInventory", "elytra", player);
-		itemInventoryArrayTxt[8] = "Get an iron ingot: " + getSomeScore("itemInventory", "iron_ingot", player);
-		itemInventoryArrayTxt[9] = "Get a diamond: " + getSomeScore("itemInventory", "diamond", player);
-		itemInventoryArrayTxt[10] = "Get some ancient debris: " + getSomeScore("itemInventory", "ancient_debris", player);
-		itemInventoryArrayTxt[11] = "Get a bucket of lava: " + getSomeScore("itemInventory", "lava_bucket", player);
-		itemInventoryArrayTxt[12] = "Catch a fish in a bucket: " + getSomeScore("itemInventory", "fish_bucket", player);
-		itemInventoryArrayTxt[13] = "Get a bucket of axolotl: " + getSomeScore("itemInventory", "axolotl_bucket", player);
-		itemInventoryArrayTxt[14] = "Catch a tadpole in a bucket: " + getSomeScore("itemInventory", "tadpole_bucket", player);
-		itemInventoryArrayTxt[15] = "Get cobblestone, blackstone,\n        or cobbled deepslate: " + getSomeScore("itemInventory", "got_cobble", player);
-		itemInventoryArrayTxt[16] = "Get some obsidian: " + getSomeScore("itemInventory", "obsidian", player);
-		itemInventoryArrayTxt[17] = "Get some crying obsidian: " + getSomeScore("itemInventory", "crying_obsidian", player);
-		itemInventoryArrayTxt[18] = "Get a blaze rod: " + getSomeScore("itemInventory", "blaze_rod", player);
-		itemInventoryArrayTxt[19] = "Get a dragon egg: " + getSomeScore("itemInventory", "dragon_egg", player);
-		itemInventoryArrayTxt[20] = "Get a sniffer egg: " + getSomeScore("itemInventory", "sniffer_egg", player);
-		itemInventoryArrayTxt[21] = "Get a pottery sherd: " + getSomeScore("itemInventory", "pottery_sherd", player);
-		
-		//entityInteractions
-		let entityInteractionsArrayTxt = [];
-		entityInteractionsArrayTxt[0] = ""
-		
-		//entityKills
-		let entityKillsArrayTxt = [];
-		entityKillsArrayTxt[0] = ""
-		
-		//redstoneInteractions
-		let redstoneInteractionsArrayTxt = [];
-		redstoneInteractionsArrayTxt[0] = ""
-		
-		//spawnAndBreed
-		let spawnAndBreedArrayTxt = [];
-		spawnAndBreedArrayTxt[0] = "Summon an iron golem: " + getSomeScore("spawnAndBreed", "iron_golem", player);
-		spawnAndBreedArrayTxt[1] = "Summon a wither: " + getSomeScore("spawnAndBreed", "wither", player);
-		spawnAndBreedArrayTxt[2] = "Respawn the dragon: " + getSomeScore("spawnAndBreed", "ender_dragon_bool", player);
-		spawnAndBreedArrayTxt[3] = "Breed 2 animals together: " + getSomeScore("spawnAndBreed", "breed_some", player);
-		spawnAndBreedArrayTxt[4] = "Breed all the animals: " + getSomeScore("spawnAndBreed", "breed_all_bool", player);
-		
-		//statusAndEffects
-		let statusAndEffectsArrayTxt = [];
-		statusAndEffectsArrayTxt[0] = "Get hero of the village: " + getSomeScore("statusAndEffects", "hero_of_the_village", player);
-		statusAndEffectsArrayTxt[1] = "All potion effects at once: " + getSomeScore("statusAndEffects", "potion_effects_bool", player);
-		statusAndEffectsArrayTxt[2] = "All effects at once: " + getSomeScore("statusAndEffects", "all_effects_bool", player);
-		
-		//trading
-		let tradingArrayTxt = [];
-		tradingArrayTxt[0] = ""
-				
-		//usingItems
-		let usingItemsArrayTxt = [];
-		usingItemsArrayTxt[0] = ""
-		
-		//weaponsToolsArmor
-		let weaponsToolsArmorArrayTxt = [];
-		weaponsToolsArmorArrayTxt[0] = "Shoot a Crossbow: " + getSomeScore("weaponsToolsArmor", "crossbow", player);
-		weaponsToolsArmorArrayTxt[1] = "Shoot something with an arrow: " + getSomeScore("weaponsToolsArmor", "arrow", player);
-		weaponsToolsArmorArrayTxt[2] = "Hit a mob with a thrown trident: " + getSomeScore("weaponsToolsArmor", "thrown_trident", player);
-		weaponsToolsArmorArrayTxt[3] = "Hit a bullseye 30 blocks away: " + getSomeScore("weaponsToolsArmor", "targetFrom30", player);
-		weaponsToolsArmorArrayTxt[4] = "Catch a fish: " + getSomeScore("weaponsToolsArmor", "catch_fish", player);
-		
-		//worldAndBiome
-		let worldAndBiomeArrayTxt = [];
-		worldAndBiomeArrayTxt[0] = ""
-		
-	//construct the body
-		let boolPos = "\u2717";
-		let boolNeg = " ";
-		let indentSize = "    ";
-		let nextLine = '\n';
-		let indentNextLine = nextLine + indentSize;
-		var i;
-		
-	    //advancements--------------------
-		//initialize variables
-		let blockInteractionsBodyTxt = "";
-		let craftAndCookBodyTxt = "";
-		let eatAndDrinkBodyTxt = "";
-		let getSomeWhereBodyTxt = "";
-		let itemInventoryBodyTxt = "";
-		let entityInteractionsBodyTxt = "";
-		let entityKillsBodyTxt = "";
-		let redstoneInteractionsBodyTxt = "";
-		let statusAndEffectsBodyTxt = "";
-		let spawnAndBreedBodyTxt = "";
-		let tradingBodyTxt = "";
-		let usingItemsBodyTxt = "";
-		let weaponsToolsArmorBodyTxt = "";
-		let worldAndBiomeBodyTxt = "";
-		
-		//concatenate text sections
-		for(i = 0; i < blockInteractionsArrayTxt.length; i++){
-			blockInteractionsBodyTxt = blockInteractionsBodyTxt + indentNextLine + (blockInteractionsArrayTxt[i].concat(".,.").replace("0.,.", boolNeg).replace("1.,.", boolPos).replace(".,.", ""));
-		}
-		for(i = 0; i < craftAndCookArrayTxt.length; i++){
-			craftAndCookBodyTxt = craftAndCookBodyTxt + indentNextLine + (craftAndCookArrayTxt[i].concat(".,.").replace("0.,.", boolNeg).replace("1.,.", boolPos).replace(".,.", ""));
-		}
-		for(i = 0; i < eatAndDrinkArrayTxt.length; i++){
-			eatAndDrinkBodyTxt = eatAndDrinkBodyTxt + indentNextLine + (eatAndDrinkArrayTxt[i].concat(".,.").replace("0.,.", boolNeg).replace("1.,.", boolPos).replace(".,.", ""));
-		}
-		for(i = 0; i < getSomeWhereArrayTxt.length; i++){
-			getSomeWhereBodyTxt = getSomeWhereBodyTxt + indentNextLine + (getSomeWhereArrayTxt[i].concat(".,.").replace("0.,.", boolNeg).replace("1.,.", boolPos).replace(".,.", ""));
-		}
-		for(i = 0; i < itemInventoryArrayTxt.length; i++){
-			itemInventoryBodyTxt = itemInventoryBodyTxt + indentNextLine + (itemInventoryArrayTxt[i].concat(".,.").replace("0.,.", boolNeg).replace("1.,.", boolPos).replace(".,.", ""));
-		}
-		for(i = 0; i < entityInteractionsArrayTxt.length; i++){
-			entityInteractionsBodyTxt = entityInteractionsBodyTxt + indentNextLine + (entityInteractionsArrayTxt[i].concat(".,.").replace("0.,.", boolNeg).replace("1.,.", boolPos).replace(".,.", ""));
-		}
-		for(i = 0; i < entityKillsArrayTxt.length; i++){
-			entityKillsBodyTxt = entityKillsBodyTxt + indentNextLine + (entityKillsArrayTxt[i].concat(".,.").replace("0.,.", boolNeg).replace("1.,.", boolPos).replace(".,.", ""));
-		}
-		for(i = 0; i < redstoneInteractionsArrayTxt.length; i++){
-			redstoneInteractionsBodyTxt = redstoneInteractionsBodyTxt + indentNextLine + (redstoneInteractionsArrayTxt[i].concat(".,.").replace("0.,.", boolNeg).replace("1.,.", boolPos).replace(".,.", ""));
-		}
-		for(i = 0; i < spawnAndBreedArrayTxt.length; i++){
-			spawnAndBreedBodyTxt = spawnAndBreedBodyTxt + indentNextLine + (spawnAndBreedArrayTxt[i].concat(".,.").replace("0.,.", boolNeg).replace("1.,.", boolPos).replace(".,.", ""));
-		}
-		for(i = 0; i < statusAndEffectsArrayTxt.length; i++){
-			statusAndEffectsBodyTxt = statusAndEffectsBodyTxt + indentNextLine + (statusAndEffectsArrayTxt[i].concat(".,.").replace("0.,.", boolNeg).replace("1.,.", boolPos).replace(".,.", ""));
-		}
-		for(i = 0; i < tradingArrayTxt.length; i++){
-			tradingBodyTxt = tradingBodyTxt + indentNextLine + (tradingArrayTxt[i].concat(".,.").replace("0.,.", boolNeg).replace("1.,.", boolPos).replace(".,.", ""));
-		}
-		for(i = 0; i < usingItemsArrayTxt.length; i++){
-			usingItemsBodyTxt = usingItemsBodyTxt + indentNextLine + (usingItemsArrayTxt[i].concat(".,.").replace("0.,.", boolNeg).replace("1.,.", boolPos).replace(".,.", ""));
-		}
-		for(i = 0; i < weaponsToolsArmorArrayTxt.length; i++){
-			weaponsToolsArmorBodyTxt = weaponsToolsArmorBodyTxt + indentNextLine + (weaponsToolsArmorArrayTxt[i].concat(".,.").replace("0.,.", boolNeg).replace("1.,.", boolPos).replace(".,.", ""));
-		}
-		for(i = 0; i < worldAndBiomeArrayTxt.length; i++){
-			worldAndBiomeBodyTxt = worldAndBiomeBodyTxt + indentNextLine + (worldAndBiomeArrayTxt[i].concat(".,.").replace("0.,.", boolNeg).replace("1.,.", boolPos).replace(".,.", ""));
-		}
-		
-		//display text
-		return advancementTxt
-			+ blockInteractionsBodyTxt
-			+ craftAndCookBodyTxt
-			+ eatAndDrinkBodyTxt
-			+ getSomeWhereBodyTxt
-			+ itemInventoryBodyTxt
-			+ entityInteractionsBodyTxt
-			+ entityKillsBodyTxt
-			+ redstoneInteractionsBodyTxt
-			+ spawnAndBreedBodyTxt
-			+ statusAndEffectsBodyTxt
-			+ tradingBodyTxt
-			+ usingItemsBodyTxt
-			+ weaponsToolsArmorBodyTxt
-			+ worldAndBiomeBodyTxt;
+		.show(player);
 }
-function debugList(player){
-	let debugForm = new ActionFormData()
-		.title(player.name)
-		.body(debugListBody(player))
-		.button("Close")
-		.button("Stats");
-		
-		debugForm.show(player).then((response) => {
-			switch(response.selection){
-				case 1 :
-					statList(player);
-					break;
-			}
-		});
-}
-function debugListBody(player){
+function debugDisplay(player){
 	//add text
 	    //debug--------------------
 		let debugTxt = "Additional game info";
-		
 		let debugArrayTxt = [];
 		debugArrayTxt[0] = "Dimension: " + playerPosition(player, "dimension");
 		debugArrayTxt[1] = "XYZ: " + playerPosition(player, "xyz");
@@ -622,23 +266,21 @@ function debugListBody(player){
 		debugArrayTxt[16] = "World day: " + worldlife("day");
 		
 	//construct the body
-		let boolPos = "\u2717";
-		let boolNeg = " ";
 		let indentSize = "    ";
 		let nextLine = '\n';
 		let indentNextLine = nextLine + indentSize;
-		var i;
-		
-	    //stats--------------------
 		let debugBodyTxt = "";
 		
-		for(i = 0; i < debugArrayTxt.length; i++){
+		for(var i = 0; i < debugArrayTxt.length; i++){
 			debugBodyTxt = debugBodyTxt + indentNextLine + debugArrayTxt[i];
 		}
 		
-		//display text
-		return debugTxt
-			+ debugBodyTxt;
+	//display ui
+		let debugForm = new ActionFormData()
+		.title(player.name)
+		.body(debugTxt + nextLine + debugBodyTxt)
+		.button("Close")
+		.show(player);
 }
 //end ui functions----------------------------------------
 
@@ -1041,30 +683,32 @@ function getSomeWhere(location, player){
 		//[advancement] Remote Getaway | Escape the island | Throw an ender pearl through, fly, or walk into an end gateway.
 		//[advancement] The City at the End of the Game | Go on in, what could happen? | Enter an end city.
 	//in work--------------------
-	//done--------------------
+	//done--------------------	
 		switch(location){
 		    //[advancement] Nether | Bring summer clothes | Enter the Nether dimension.
 			case "nether" :
 				//console.warn("Some things you can't unsee")
-				boolScore("getSomeWhere", "nether", player, 1);
+				boolScore("objectives_advancement_", "Enter the Nether dimension", player, 1);
 				break;
 		    //[achievement] The End? | Enter an End Portal | Enter a stronghold End Portal activated with all twelve eyes of ender.
-		    //[advancement] The End | Or the beginning? | Enter the End dimension.
 		    //[advancement] The End? | Enter the End Portal | Enter the End dimension.
+		    //[advancement] The End | Or the beginning? | Enter the End dimension.
 			case "the_end" :
-				boolScore("getSomeWhere", "the_end", player, 1);
+				boolScore("objectives_achievement_", "Enter an End Portal", player, 1);
+				boolScore("objectives_advancement_", "Enter the End Portal", player, 1);
+				boolScore("objectives_advancement_", "Enter the End dimension", player, 1);
 				break;
 		    //[advancement] Those Were the Days | Enter a Bastion Remnant | —
 			case "bastion_remnant" :
-				boolScore("getSomeWhere", "bastion_remnant", player, 1);
+				boolScore("objectives_advancement_", "Enter a Bastion Remnant", player, 1);
 				break;
 		    //[advancement] A Terrible Fortress | Break your way into a Nether Fortress | Enter a nether fortress.
 			case "nether_fortress" :
-				boolScore("getSomeWhere", "nether_fortress", player, 1);
+				boolScore("objectives_advancement_", "Enter a nether fortress", player, 1);
 				break;
 		    //[advancement] Subspace Bubble | Use the Nether to travel 7 km in the Overworld | Use the Nether to travel between 2 points in the Overworld with a minimum horizontal euclidean distance of 7000 blocks between each other, which is 875 blocks in the Nether.
 			case "overworld7000" :
-				boolScore("getSomeWhere", "overworld7000", player, 1);
+				boolScore("objectives_advancement_", "Travel 7km in the Overworld", player, 1);
 				break;
 		}
 }
@@ -1599,6 +1243,7 @@ function addToScore(category, item, player){
 	itemBoard.addScore(player,1);
 }
 function boolScore(category, item, player, zeroOrone){
+	//[stats/objectives/other]_[category/blocksBroken]_[some string to show to the user]
 	let categoryId = category.replace(" ","");
 	let itemId=categoryId+item.replace(" ","");
 	const allBoards = world.scoreboard.getObjectives();
@@ -1620,6 +1265,13 @@ function boolScore(category, item, player, zeroOrone){
 }
 function calculateDistance(x1, z1, x2, z2) {
 	return Math.floor(Math.hypot(Math.abs(z2 - z1), Math.abs(x2 - x1)));
+}
+function getScoreIfExists(board, player){
+	let tempScore = 0;
+	if (board.hasParticipant(player)){
+		tempScore =board.getScore(player)
+	}
+	return tempScore
 }
 function getSomeScore(category, item, player){
 	let categoryId = category.replace(" ","");
