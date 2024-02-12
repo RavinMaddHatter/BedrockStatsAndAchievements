@@ -877,7 +877,7 @@ function itemInventory(player){
 					
 					if(slotItem){
 						if(slotItem.typeId == ("minecraft:" + slotArray[i])){
-							boolScore("objectives_advancement_", slotArray[i], player, 1);
+							boolScore("objectives_tracking_", slotArray[i], player, 1);
 							//console.warn("Taking inventory");
 						}
 					}
@@ -886,9 +886,14 @@ function itemInventory(player){
 		}
 		
 	    //[advancement] Suit Up | Protect yourself with a piece of iron armor | Have any type of iron armor in your inventory.
-		if(getSomeScore("itemInventory", "iron_armor", player) == 0){
-			if(getSomeScore("itemInventory", "iron_helmet", player) == 1 || (getSomeScore("itemInventory", "iron_chestplate", player) == 1 || (getSomeScore("itemInventory", "iron_leggings", player) == 1 || (getSomeScore("itemInventory", "iron_boots", player) == 1)))){
-				boolScore("itemInventory", "iron_armor", player, 1);
+		if(getSomeScore("objectives_advancement_", "Have any type of iron armor", player) == 0){
+			switch(true){
+				case (getSomeScore("objectives_tracking_", "iron_helmet", player) == 1) ://*fall through*
+				case (getSomeScore("objectives_tracking_", "iron_chestplate", player) == 1) ://*fall through*
+				case (getSomeScore("objectives_tracking_", "iron_leggings", player) == 1) ://*fall through*
+				case (getSomeScore("objectives_tracking_", "iron_boots", player) == 1) :
+					boolScore("objectives_advancement_", "Have any type of iron armor", player, 1);
+					break;
 			}
 		}
 		
