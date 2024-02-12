@@ -473,8 +473,8 @@ function initSpawn(event){
 	
 	if(!player.hasTag("firstSpawn")){//verify the player hasn't spawned previously
 		//console.warn("I've initialized");
-		scoreSet("tracking_player_","initialPointX", player, player.location.x);//record player initial location x
-		scoreSet("tracking_player_","initialPointZ", player, player.location.z);//record player initial location z
+		scoreSet("tracking_initSpawn_","initialPointX", player, player.location.x);//record player initial location x
+		scoreSet("tracking_initSpawn_","initialPointZ", player, player.location.z);//record player initial location z
 		player.addTag("firstSpawn");//add tag to record that player has already spawned initially
 	}
 }
@@ -494,9 +494,9 @@ function itemComplete(event){
 	
 	switch(itemName){
 		case "crossbow" :
-			boolScore("tracking_item_", "chargeBool", player, 1);
+			boolScore("tracking_itemComplete_", "chargeBool", player, 1);
 			system.runTimeout(() => {
-				boolScore("tracking_item_", "chargeBool", player, 0);
+				boolScore("tracking_itemComplete_", "chargeBool", player, 0);
 			}, 200);
 			break;
 	}
@@ -508,9 +508,9 @@ function itemRelease(event){
 	switch(itemName){
 		case "bow" :
 			addToScore("stats_itemsReleased_","Bow",player)
-			boolScore("tracking_item_", "shootBool", player, 1);
+			boolScore("tracking_itemRelease_", "shootBool", player, 1);
 			system.runTimeout(() => {
-				boolScore("tracking_item_", "shootBool", player, 0);
+				boolScore("tracking_itemRelease_", "shootBool", player, 0);
 			}, 40);
 			break;
 		case "crossbow":
@@ -631,12 +631,12 @@ function targetHit(event){
 		var i;
 		
 		for(i = 0; i < closePlayers.length; i++){
-			if(getSomeScore("tracking_item_", "shootBool", closePlayers[i]) == 1){
+			if(getSomeScore("tracking_itemRelease_", "shootBool", closePlayers[i]) == 1){
 				weaponsToolsArmor("target", closePlayers[i]);
 			}
 		}
 		for(i = 0; i < farPlayers.length; i++){
-			if(getSomeScore("tracking_item_", "shootBool", farPlayers[i]) == 1){
+			if(getSomeScore("tracking_itemRelease_", "shootBool", farPlayers[i]) == 1){
 				weaponsToolsArmor("targetFrom30", farPlayers[i]);
 			}
 		}
@@ -648,7 +648,7 @@ function useItem(event){
 	
 	switch(itemName){
 		case "crossbow" :
-			if(getSomeScore("tracking_item_", "chargeBool", player) == 1){
+			if(getSomeScore("tracking_itemComplete_", "chargeBool", player) == 1){
 				weaponsToolsArmor(itemName, player);
 			}
 			break;
@@ -666,12 +666,12 @@ function overworldBlocksTravelled(player){
 		
 	//verify the player is in the overworld. calculate distance from last saved checkpoint or initial spawn if distance is 0
 		if(player.dimension.id == "minecraft:overworld"){
-			let x1 = getSomeScore("tracking_player_", "checkpointX", player);
-			let z1 = getSomeScore("tracking_player_", "checkpointZ", player);
+			let x1 = getSomeScore("tracking_overworldBlocksTravelled_", "checkpointX", player);
+			let z1 = getSomeScore("tracking_overworldBlocksTravelled_", "checkpointZ", player);
 			
 			if(blkDist == 0){//if first time, calculate from initial spawn location
-				x1 = getSomeScore("tracking_player_","initialPointX", player);
-				z1 = getSomeScore("tracking_player_","initialPointZ", player);
+				x1 = getSomeScore("tracking_initSpawn_","initialPointX", player);
+				z1 = getSomeScore("tracking_initSpawn_","initialPointZ", player);
 			}
 			let x2 = player.location.x;
 			let z2 = player.location.z;
@@ -683,8 +683,8 @@ function overworldBlocksTravelled(player){
 		}
 	//record the calculated blocks travelled, and set new checkpoints
 		scoreSet("stats_overworldBlocksTravelled_","total", player, blkDist);
-		scoreSet("tracking_player_","checkpointX", player, player.location.x);
-		scoreSet("tracking_player_","checkpointZ", player, player.location.z);
+		scoreSet("tracking_overworldBlocksTravelled_","checkpointX", player, player.location.x);
+		scoreSet("tracking_overworldBlocksTravelled_","checkpointZ", player, player.location.z);
 	//output blocks travelled
 		//console.warn("I've travelled " + blkDist + " blocks")
 		return blkDist;
@@ -872,7 +872,7 @@ function itemInventory(player){
 					
 					if(slotItem){
 						if(slotItem.typeId == ("minecraft:" + slotArray[i])){
-							boolScore("tracking_item_", slotArray[i], player, 1);
+							boolScore("tracking_itemInventory_", slotArray[i], player, 1);
 							//console.warn("Taking inventory");
 						}
 					}
@@ -881,48 +881,72 @@ function itemInventory(player){
 		}
 		
 	    //[advancement] Suit Up | Protect yourself with a piece of iron armor | Have any type of iron armor in your inventory.
-		if(getSomeScore("objectives_advancement_", "Have any type of iron armor", player) == 0){
+		if(getSomeScore("objectives_advancement_", "Have any iron armor", player) == 0){
 			switch(true){
-				case (getSomeScore("tracking_item_", "iron_helmet", player) == 1) ://*fall through*
-				case (getSomeScore("tracking_item_", "iron_chestplate", player) == 1) ://*fall through*
-				case (getSomeScore("tracking_item_", "iron_leggings", player) == 1) ://*fall through*
-				case (getSomeScore("tracking_item_", "iron_boots", player) == 1) :
-					boolScore("objectives_advancement_", "Have any type of iron armor", player, 1);
+				case (getSomeScore("tracking_itemInventory_", "iron_helmet", player) == 1) ://*fall through*
+				case (getSomeScore("tracking_itemInventory_", "iron_chestplate", player) == 1) ://*fall through*
+				case (getSomeScore("tracking_itemInventory_", "iron_leggings", player) == 1) ://*fall through*
+				case (getSomeScore("tracking_itemInventory_", "iron_boots", player) == 1) :
+					boolScore("objectives_advancement_", "Have any iron armor", player, 1);
 					break;
 			}
 		}
 		
 	    //[advancement] Cover Me with Diamonds | Diamond armor saves lives | Have any type of diamond armor in your inventory.
-		if(getSomeScore("itemInventory", "diamond_armor", player) == 0){
-			if(getSomeScore("itemInventory", "diamond_helmet", player) == 1 || (getSomeScore("itemInventory", "diamond_chestplate", player) == 1 || (getSomeScore("itemInventory", "diamond_leggings", player) == 1 || (getSomeScore("itemInventory", "diamond_boots", player) == 1)))){
-				boolScore("itemInventory", "diamond_armor", player, 1);
+		if(getSomeScore("objectives_advancement_", "Have any diamond armor", player) == 0){
+			switch(true){
+				case (getSomeScore("tracking_itemInventory_", "diamond_helmet", player) == 1) ://*fall through*
+				case (getSomeScore("tracking_itemInventory_", "diamond_chestplate", player) == 1) ://*fall through*
+				case (getSomeScore("tracking_itemInventory_", "diamond_leggings", player) == 1) ://*fall through*
+				case (getSomeScore("tracking_itemInventory_", "diamond_boots", player) == 1) :
+					boolScore("objectives_advancement_", "Have any diamond armor", player, 1);
+					break;
 			}
 		}
 		
 	    //[achievement] Cover me in debris | Wear a full set of Netherite armor | Have a full set of Netherite armor in your inventory.
 	    //[advancement] Cover Me in Debris | Get a full suit of Netherite armor | Have a full set of netherite armor in your inventory.
-		if(getSomeScore("itemInventory", "netherite_armor", player) == 0){
-			if(getSomeScore("itemInventory", "netherite_helmet", player) == 1 && (getSomeScore("itemInventory", "netherite_chestplate", player) == 1 && (getSomeScore("itemInventory", "netherite_leggings", player) == 1 && (getSomeScore("itemInventory", "netherite_boots", player) == 1)))){
-				boolScore("itemInventory", "netherite_armor", player, 1);
+		if((getSomeScore("objectives_achievement_", "Get a full suit of Netherite armor", player) == 0)
+		    || (getSomeScore("objectives_advancement_", "Get a full suit of Netherite armor", player) == 0)){
+			
+			if((getSomeScore("itemInventory", "netherite_helmet", player) == 1)
+			    && (getSomeScore("itemInventory", "netherite_chestplate", player) == 1)
+			    && (getSomeScore("itemInventory", "netherite_leggings", player) == 1)
+			    && (getSomeScore("itemInventory", "netherite_boots", player) == 1)){
+				
+				boolScore("objectives_achievement_", "Get a full suit of Netherite armor", player, 1);
+				boolScore("objectives_advancement_", "Get a full suit of Netherite armor", player, 1);
 			}
 		}
 		
 	    //[achievement] I am a Marine Biologist | Collect a fish in a bucket | Use an empty bucket on any fish mob to collect it.
 	    //[advancement] Tactical Fishing | Catch a Fish... without a Fishing Rod! | Use a water bucket on any fish mob.
-		if(getSomeScore("itemInventory", "fish_bucket", player) == 0){
-			if(getSomeScore("itemInventory", "cod_bucket", player) == 1 || (getSomeScore("itemInventory", "salmon_bucket", player) == 1 || (getSomeScore("itemInventory", "tropical_fish_bucket", player) == 1 || (getSomeScore("itemInventory", "pufferfish_bucket", player) == 1)))){
-				boolScore("itemInventory", "fish_bucket", player, 1);
+		if((getSomeScore("objectives_achievement_", "Get a fish in a bucket", player) == 0)
+		    || (getSomeScore("objectives_advancement_", "Get a fish in a bucket", player) == 0)){
+			
+			switch(true){
+				case (getSomeScore("tracking_itemInventory_", "cod_bucket", player) == 1) ://*fall through*
+				case (getSomeScore("tracking_itemInventory_", "salmon_bucket", player) == 1) ://*fall through*
+				case (getSomeScore("tracking_itemInventory_", "tropical_fish_bucket", player) == 1) ://*fall through*
+				case (getSomeScore("tracking_itemInventory_", "pufferfish_bucket", player) == 1) :
+					boolScore("objectives_achievement_", "Get a fish in a bucket", player, 1);
+					boolScore("objectives_advancement_", "Get a fish in a bucket", player, 1);
+					break;
 			}
 		}
 		
 	    //[advancement] Stone Age | Mine Stone with your new Pickaxe | Have one of these 3 stones in the #stone_tool_materials item tag:, Cobblestone, Blackstone, Cobbled Deepslate, in your inventory.
-		if(getSomeScore("itemInventory", "got_cobble", player) == 0){
-			if(getSomeScore("itemInventory", "cobblestone", player) == 1 || (getSomeScore("itemInventory", "blackstone", player) == 1 || (getSomeScore("itemInventory", "cobbled_deepslate", player) == 1))){
-				boolScore("itemInventory", "got_cobble", player, 1);
+		if(getSomeScore("objectives_advancement_", "Get Cobblestone, Blackstone, or\n        Cobbled Deepslate", player) == 0){
+			switch(true){
+				case (getSomeScore("tracking_itemInventory_", "cobblestone", player) == 1) ://*fall through*
+				case (getSomeScore("tracking_itemInventory_", "blackstone", player) == 1) ://*fall through*
+				case (getSomeScore("tracking_itemInventory_", "cobbled_deepslate", player) == 1) :
+					boolScore("objectives_advancement_", "Get Cobblestone, Blackstone, or\n        Cobbled Deepslate", player, 1);
+					break;
 			}
 		}
 	    //[advancement] Respecting the Remnants | Brush a Suspicious block to obtain a Pottery Sherd | —
-		if(getSomeScore("itemInventory", "pottery_sherd", player) == 0){
+		if(getSomeScore("objectives_advancement_", "Obtain a Pottery Sherd", player) == 0){
 			let potSlotArray = [];
 			potSlotArray[0] = "angler_pottery_sherd";
 			potSlotArray[1] = "archer_pottery_sherd";
@@ -951,7 +975,7 @@ function itemInventory(player){
 					
 					if(slotItem){
 						if(slotItem.typeId == ("minecraft:" + potSlotArray[i])){
-							boolScore("itemInventory", "pottery_sherd", player, 1);
+							boolScore("objectives_advancement_", "Obtain a Pottery Sherd", player, 1);
 						}
 					}
 				}
