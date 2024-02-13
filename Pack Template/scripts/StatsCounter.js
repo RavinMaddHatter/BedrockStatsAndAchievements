@@ -475,7 +475,7 @@ function initSpawn(event){
 		//console.warn("I've initialized");
 		scoreSet("tracking_initSpawn_","initialPointX", player, player.location.x);//record player initial location x
 		scoreSet("tracking_initSpawn_","initialPointZ", player, player.location.z);//record player initial location z
-		initializeObjectives(player)
+		//initializeObjectives(player)
 		player.addTag("firstSpawn");//add tag to record that player has already spawned initially
 	}
 }
