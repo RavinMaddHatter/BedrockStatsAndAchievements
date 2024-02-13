@@ -3,7 +3,7 @@ import {ActionFormData, ActionFormResponse } from "@minecraft/server-ui";
 
 var blockBreaks = {}
 var blocksUsed = {}
-const debugToggle = 1
+const debugToggle = true;
 timer10Sec();
 
 //subscriptions----------------------------------------
@@ -21,17 +21,8 @@ world.afterEvents.entitySpawn.subscribe(event =>{
 });
 world.afterEvents.itemCompleteUse.subscribe(event=>{
 	itemComplete(event);
-	//console.warn("complete use ")
 });
 world.afterEvents.itemUse.subscribe(event=>{
-	//console.warn(event.itemStack.typeId)
-	const comps=event.itemStack.getComponents()
-	//console.warn(comps.length)
-	//console.warn(comps)
-	for(var i=0; i<comps.length;i++){
-		//console.warn(i)
-		//console.warn(comps[i])
-	}
 	statStick(event)
 	useItem(event)
 });
@@ -79,7 +70,7 @@ function statList(player){
 		.button("Scores")
 		.button("Objectives");
 		
-		if(debugToggle){
+		if(player.hasTag("debug")||debugToggle){
 			statForm.button("Debug");
 		}
 		
@@ -822,8 +813,7 @@ function itemInventory(player){
 		//[advancement] You Need a Mint | Collect Dragon's Breath in a Glass Bottle | Have a bottle of dragon's breath in your inventory.
 	//in work--------------------
 	//done--------------------
-	const loseItems = ["crafting_table",	//[achievement] Benchmaking | Craft a workbench with four blocks of wooden planks. | Pick up a crafting table from the inventory's crafting field output or a crafting table output.
-											//[advancement] Minecraft | The heart and story of the game | Have a crafting table in your inventory.
+	const loseItems = ["crafting_table",	
 						"stone_pickaxe",	//[achievement] Getting an Upgrade | Construct a better pickaxe. | Pick up a stone pickaxe from a crafting table output.
 											//[advancement] Getting an Upgrade | Construct a better Pickaxe | Have a stone pickaxe in your inventory.
 						"iron_pickaxe",		//[advancement] Isn't It Iron Pick | Upgrade your Pickaxe | Have an iron pickaxe in your inventory.
@@ -888,6 +878,7 @@ function itemInventory(player){
 	const allNetheriteArmorMask = 0b111100000000;
 	const bucketOfFishMask = 0b111100000000;
 	const stoneTypesMask = 0b11100000000000000;
+	const craftingTable=0b1
 	let inventoryPlayer = player.getComponent("minecraft:inventory");
 	let index=0;
 	let inventorymask = 0;
@@ -917,14 +908,14 @@ function itemInventory(player){
 	if((allIronArmorMask & armorMask) == allIronArmorMask){
 		if(getSomeScore("objectives_advancement_", "Have any iron armor", player) == 0){
 			boolScore("objectives_advancement_", "Have any iron armor", player, 1);
-			achievmentUnlock("Have any iron armor")
+			achievmentUnlock(player,"Have any iron armor")
 		}
 	}
     //[advancement] Cover Me with Diamonds | Diamond armor saves lives | Have any type of diamond armor in your inventory.
 	if((allDiamondArmorMask & armorMask)==allDiamondArmorMask){
 		if(getSomeScore("objectives_advancement_", "Have any diamond armor", player) == 0){
 			boolScore("objectives_advancement_", "Have any diamond armor", player, 1);
-			achievmentUnlock("Have any diamond armor")
+			achievmentUnlock(player,"Have any diamond armor")
 		}
 	}
 	
@@ -935,7 +926,7 @@ function itemInventory(player){
 			|| (getSomeScore("objectives_advancement_", "Get a full suit of Netherite armor", player) == 0)){
 			boolScore("objectives_achievement_", "Get a full Netherite\n        armor set", player, 1);
 			boolScore("objectives_advancement_", "Get a full suit of Netherite armor", player, 1);
-			achievmentUnlock("Get a full suit of Netherite armor")
+			achievmentUnlock(player,"Get a full suit of Netherite armor")
 		}
 	}
 	
@@ -946,7 +937,7 @@ function itemInventory(player){
 			|| (getSomeScore("objectives_advancement_", "Get a fish in a bucket", player) == 0)){
 			boolScore("objectives_achievement_", "Get a bucket of fish", player, 1);
 			boolScore("objectives_advancement_", "Get a fish in a bucket", player, 1);
-			achievmentUnlock("Get a full suit of Netherite armor")
+			achievmentUnlock(player,"Tactical Fishing")
 		}
 	}
 	
@@ -954,14 +945,21 @@ function itemInventory(player){
 	if((stoneTypesMask & inventorymask)>0){
 		if(getSomeScore("objectives_advancement_", "Get Cobblestone, Blackstone, or\n        Cobbled Deepslate", player) == 0){
 			boolScore("objectives_advancement_", "Get Cobblestone, Blackstone, or\n        Cobbled Deepslate", player, 1);
-			achievmentUnlock("Get Cobblestone, Blackstone, or Cobbled Deepslate")
+			achievmentUnlock(player, "Stone Age")
 		}
 	}
 	//[advancement] Respecting the Remnants | Brush a Suspicious block to obtain a Pottery Sherd | —
 	if(sherdArray>0){
 		if(getSomeScore("objectives_advancement_", "Obtain a Pottery Sherd", player) == 0){
-			achievmentUnlock("Obtain a Pottery Sherd")
+			achievmentUnlock(player, "Respecting the Remnants")
 		}
+	}
+	//[achievement] Benchmaking | Craft a workbench with four blocks of wooden planks. | Pick up a crafting table from the inventory's crafting field output or a crafting table output.
+	//[advancement] Minecraft | The heart and story of the game | Have a crafting table in your inventory.
+	if((craftingTable&inventorymask)==craftingTable){
+		setAchivement("Benchmaking")
+		setAdvancement("Minecraft")
+		achievmentUnlock(player, "Minecraft")
 	}
 }
 function entityInteractions(){
@@ -1059,7 +1057,7 @@ function spawnAndBreed(entity, player){
 					if(getSomeScore("spawnAndBreed", "ender_dragon_score", player) > 1){
 						//console.warn("It's a rare, magical creature. We should kill it");
 						boolScore("spawnAndBreed", "ender_dragon_bool", player, 1);
-						achievmentUnlock("The End... Again... ")
+						achievmentUnlock(player, "The End... Again... ")
 					}
 				}
 				break;
@@ -1170,7 +1168,8 @@ function statusAndEffects(player){
 	if((allPotionsMask & effectMask)==allPotionsMask){
 		if(getSomeScore("statusAndEffects", "allPotionsMask", player) == 0){
 			boolScore("statusAndEffects", "potion_effects_bool", player, 1);
-			achievmentUnlock("A Furious Cocktail")
+			setAdvancement("A Furious Cocktail")
+			achievmentUnlock(player,"A Furious Cocktail")
 		}
 	}
 	
@@ -1179,14 +1178,16 @@ function statusAndEffects(player){
 	if((allPotionsMask & effectMask)==allPotionsMask){
 		if(getSomeScore("statusAndEffects", "all_effects_bool", player) == 0){
 			boolScore("statusAndEffects", "all_effects_bool", player, 1);
-			achievmentUnlock("How Did We Get Here?")
+			setAdvancement("How Did We Get Here?")
+			achievmentUnlock(player,"How Did We Get Here?")
 		}
 	}
 	if((heroMask & effectMask)==heroMask){
 		//[advancement] Hero of the Village | Successfully defend a village from a raid | Kill at least one raid mob during a raid and wait until it ends in victory.
 		if(getSomeScore("statusAndEffects", "hero_of_the_village", player) == 0){
 			boolScore("statusAndEffects", "hero_of_the_village", player, 1);
-			achievmentUnlock("Hero of the Village ")
+			setAdvancement("Hero of the Village")
+			achievmentUnlock(player,"Hero of the Village")
 		}
 	}
 }
@@ -1231,22 +1232,34 @@ function weaponsToolsArmor(subject, player){
 	//done--------------------
 		switch(subject){
 		    //[advancement] Ol' Betsy | Shoot a Crossbow | —
-			case "crossbow" ://*fall through*
+			case "crossbow" :
+				boolScore("weaponsToolsArmor", subject, player, 1);
+				achievmentUnlock(player,"Ol' Betsy")
+				break;
 		    //[advancement] Take Aim | Shoot something with an Arrow | Using a bow or a crossbow, shoot an entity with an arrow, tipped arrow, or spectral arrow.
-			case "arrow" ://*fall through*
+			case "arrow" :
+				boolScore("weaponsToolsArmor", subject, player, 1);
+				achievmentUnlock(player,"Take Aim")
+				break;
 		    //[advancement] A Throwaway Joke | Throw a Trident at something. Note: Throwing away your only weapon is not a good idea. | Hit a mob with a thrown trident.
-			case "thrown_trident" ://*fall through*
+			case "thrown_trident" :
+				boolScore("weaponsToolsArmor", subject, player, 1);
+				achievmentUnlock(player,"A Throwaway Joke")
+				break;
 		    //[achievement] Bullseye | Hit the bullseye of a Target block | —
-			case "target" ://*fall through*
+			case "target" :
+				boolScore("weaponsToolsArmor", subject, player, 1);
+				achievmentUnlock(player,"Bullseye")
+				break;
 		    //[advancement] Bullseye | Hit the bullseye of a Target block from at least 30 meters away | Be at least 30 blocks away horizontally when the center of a target is shot with a projectile by the player.
 			case "targetFrom30" :
-				//console.warn("Here goes nothing");
 				boolScore("weaponsToolsArmor", subject, player, 1);
+				achievmentUnlock(player,"Bullseye from 30m")
 				break;
 		    //[advancement] Fishy Business | Catch a fish | Use a fishing rod to catch any of these fishes:, Cod, Salmon, Tropical Fish, Pufferfish
 			case "fishing_rod" :
 				if(getSomeScore("weaponsToolsArmor", "catch_fish", player) == 0){
-					let fishArray = [];
+					const fishArray = [];
 					fishArray[0] = "cod";
 					fishArray[1] = "salmon";
 					fishArray[2] = "pufferfish";
@@ -1281,6 +1294,7 @@ function weaponsToolsArmor(subject, player){
 									if(slotItemName == ("minecraft:" + fishArray[i])){
 										if(getSomeScore("weaponsToolsArmor", fishArray[i], player) < slotItemAmount){
 											boolScore("weaponsToolsArmor", "catch_fish", player, 1);
+											achievmentUnlock(player,"Fishy Business")
 										}else{
 											scoreSet("weaponsToolsArmor", fishArray[i], player, 0);
 										}
@@ -1386,7 +1400,12 @@ function getSomeScore(category, item, player){
 	//return categoryBoard.getScore(player);
 	return itemBoard.getScore(player);
 }
-
+function setAchivement(name){
+	//needs to be implemented
+}
+function setAdvancement(name){
+	//needs to be implemented
+}
 function initializeObjectives(player){
 	let categoryId;
 	var i;
@@ -1656,8 +1675,10 @@ function initializeObjectives(player){
 			world.scoreboard.getObjective(itemId).setScore(player, 0);
 		}
 }
-function achievmentUnlock(data){
-	console.warn(data)//Needs to be implemented 
+function achievmentUnlock(player,data){
+	let display=player.onScreenDisplay
+	display.setActionBar("\u00A7cAchievment Unlocked: \u00A7e"+data)
+	player.playSound("random.levelup")
 }
 function scoreSet(category, item, player, score){
 	let categoryId = category.replace(" ","");
