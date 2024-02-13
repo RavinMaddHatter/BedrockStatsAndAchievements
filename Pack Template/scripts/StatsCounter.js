@@ -935,7 +935,7 @@ function itemInventory(player){
 	
     //[achievement] I am a Marine Biologist | Collect a fish in a bucket | Use an empty bucket on any fish mob to collect it.
     //[advancement] Tactical Fishing | Catch a Fish... without a Fishing Rod! | Use a water bucket on any fish mob.
-	if(( 0b111100000000 | armorMask)>0){
+	if(( 0b111100000000 & inventorymask)>0){
 		if((getSomeScore("objectives_achievement_", "Get a bucket of fish", player) == 0)
 			|| (getSomeScore("objectives_advancement_", "Get a fish in a bucket", player) == 0)){
 			boolScore("objectives_achievement_", "Get a bucket of fish", player, 1);
@@ -945,7 +945,7 @@ function itemInventory(player){
 	}
 	
 	//[advancement] Stone Age | Mine Stone with your new Pickaxe | Have one of these 3 stones in the #stone_tool_materials item tag:, Cobblestone, Blackstone, Cobbled Deepslate, in your inventory.
-	if((0b11100000000000000)>0){
+	if((0b11100000000000000 & inventorymask)>0){
 		if(getSomeScore("objectives_advancement_", "Get Cobblestone, Blackstone, or\n        Cobbled Deepslate", player) == 0){
 			boolScore("objectives_advancement_", "Get Cobblestone, Blackstone, or\n        Cobbled Deepslate", player, 1);
 			achievmentUnlock("Get Cobblestone, Blackstone, or Cobbled Deepslate")
