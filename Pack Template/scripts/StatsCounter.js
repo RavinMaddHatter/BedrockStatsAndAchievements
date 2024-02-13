@@ -1059,6 +1059,7 @@ function spawnAndBreed(entity, player){
 					if(getSomeScore("spawnAndBreed", "ender_dragon_score", player) > 1){
 						//console.warn("It's a rare, magical creature. We should kill it");
 						boolScore("spawnAndBreed", "ender_dragon_bool", player, 1);
+						achievmentUnlock("The End... Again... ")
 					}
 				}
 				break;
@@ -1150,15 +1151,15 @@ function statusAndEffects(player){
 						"wither"];
 	const allPotionsMask = 0b0000000000001111111111111
 	const allEffectsMask = 0b1111111111111111111111111
-	const heroMask = 0b1<<20
-	console.warn(effectArray[20])
+	const heroMask = 0b1<<19
 	let effectPlayer = player.getEffects();
 	let effectMask = 0;
 	let index = 0;
+	
 	//create a mask for effects
 	if(getSomeScore("statusAndEffects", "potion_effects_bool", player) == 0){
 		for(var i = 0; i < effectPlayer.length; i++){
-			let effect = effectPlayer[i]
+			let effect = effectPlayer[i].typeId
 			if(effectArray.includes(effect)){
 				index = effectArray.indexOf(effect)
 				effectMask = effectMask | (1<<index)
@@ -1166,23 +1167,26 @@ function statusAndEffects(player){
 		}
 	}
     //[advancement] A Furious Cocktail | Have every potion effect applied at the same time | Have all of these 13 status effects applied to the player at the same time:, Fire Resistance, Invisibility, Jump Boost, Night Vision, Poison, Regeneration, Resistance, Slow Falling, Slowness, Speed, Strength, Water Breathing, Weakness, The source of the effects is irrelevant for the purposes of this advancement. Other status effects may be applied to the player, but are ignored for this advancement.
-	if((allPotionsMask & effectMask)=allPotionsMask){
+	if((allPotionsMask & effectMask)==allPotionsMask){
 		if(getSomeScore("statusAndEffects", "allPotionsMask", player) == 0){
 			boolScore("statusAndEffects", "potion_effects_bool", player, 1);
+			achievmentUnlock("A Furious Cocktail")
 		}
 	}
 	
 	
     //[advancement] How Did We Get Here? | Have every effect applied at the same time | Have all of these 27 status effects applied to the player at the same time:, Absorption, Bad Omen, Blindness, Conduit Power, Darkness, Dolphin's Grace, Fire Resistance, Glowing, Haste, Hero of the Village, Hunger, Invisibility, Jump Boost, Levitation, Mining Fatigue, Nausea, Night Vision, Poison, Regeneration, Resistance, Slow Falling, Slowness, Speed, Strength, Water Breathing, Weakness, Wither, The source of the effects is irrelevant for the purposes of this advancement. Other status effects may be applied to the player, but are ignored for this advancement.
-	if((allPotionsMask & effectMask)=allPotionsMask){
+	if((allPotionsMask & effectMask)==allPotionsMask){
 		if(getSomeScore("statusAndEffects", "all_effects_bool", player) == 0){
 			boolScore("statusAndEffects", "all_effects_bool", player, 1);
+			achievmentUnlock("How Did We Get Here?")
 		}
 	}
-	if((heroMask & effectMask)=heroMask){
+	if((heroMask & effectMask)==heroMask){
 		//[advancement] Hero of the Village | Successfully defend a village from a raid | Kill at least one raid mob during a raid and wait until it ends in victory.
 		if(getSomeScore("statusAndEffects", "hero_of_the_village", player) == 0){
 			boolScore("statusAndEffects", "hero_of_the_village", player, 1);
+			achievmentUnlock("Hero of the Village ")
 		}
 	}
 }
@@ -1694,7 +1698,7 @@ function timer10Sec(){
 
 //debug functions----------------------------------------
 function biomeFinder(player){
-	let biomeArray = [];
+	const biomeArray = [];
 	biomeArray[0] = "biome_id";
 	biomeArray[1] = "the_end";
 	biomeArray[2] = "river";
@@ -1904,10 +1908,10 @@ function playerPosition(player, option){
 	
 	switch(option){
 		case "xyz" :
-			playerPosTxt =  "\n        " + playerPosX + ",\n        " + playerPosY + ",\n        " + playerPosZ;
+			playerPosTxt =  " " + playerPosX.toFixed(2) + ", " + playerPosY.toFixed(2) + ", " + playerPosZ.toFixed(2);
 			break;
 		case "block" :
-			playerPosTxt =  "\n        " + Math.floor(playerPosX) + ",\n        " + Math.floor(playerPosY) + ",\n        " + Math.floor(playerPosZ);
+			playerPosTxt =  " " + Math.floor(playerPosX) + ", " + Math.floor(playerPosY) + " " + Math.floor(playerPosZ);
 			break;
 		case "chunk" :
 			playerPosTxt = Math.floor(playerPosX / 16) + ", " + Math.floor(playerPosY / 16) + ", " + Math.floor(playerPosZ / 16);
@@ -1965,7 +1969,7 @@ function worldSpawn(){
 	let spawnX = world.getDefaultSpawnLocation().x;
 	let spawnY = world.getDefaultSpawnLocation().y;
 	let spawnZ = world.getDefaultSpawnLocation().z;
-	let spawnTxt = "\n        " + spawnX + ",\n        " + spawnY + ",\n        " + spawnZ;
+	let spawnTxt = " " + spawnX + ", " + spawnY + ", " + spawnZ;
 	
 	//console.warn(spawnTxt);
 	return spawnTxt;
