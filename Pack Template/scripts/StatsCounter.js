@@ -847,7 +847,7 @@ function itemInventory(player){
 						"blaze_rod",	//[achievement] Into Fire | Relieve a Blaze of its rod. | Pick up a blaze rod from the ground.
 										//[advancement] Into Fire | Relieve a Blaze of its rod | Have a blaze rod in your inventory.
 						"dragon_egg",	//[advancement] The Next Generation | Hold the Dragon Egg | Have a dragon egg in your inventory.
-						"sniffer_egg"]	//[advancement] Smells Interesting | Obtain a Sniffer Egg | Have a sniffer egg in your inventory.
+						"sniffer_egg"];	//[advancement] Smells Interesting | Obtain a Sniffer Egg | Have a sniffer egg in your inventory.
 	const armorTypes = ["iron_helmet",
 					"iron_chestplate",
 					"iron_leggings",
@@ -860,8 +860,8 @@ function itemInventory(player){
 					"netherite_chestplate",
 					"netherite_leggings",
 					"netherite_boots",
-					"elytra"			//[advancement] Sky's the Limit | Find Elytra | Have a pair of elytra in your inventory.
-					];
+					"elytra"];			//[advancement] Sky's the Limit | Find Elytra | Have a pair of elytra in your inventory.
+					
 	const sherdArray = ["angler_pottery_sherd",
 						"archer_pottery_sherd",
 						"arms_up_pottery_sherd",
@@ -899,7 +899,7 @@ function itemInventory(player){
 			else if (sherdArray.includes(itemName)){
 				index = sherdArray.indexOf(itemName)
 				sherdMask = sherdMask | (0b1<<index)
-					//boolScore("objectives_advancement_", "Obtain a Pottery Sherd", player, 1);
+				//boolScore("objectives_advancement_", "Obtain a Pottery Sherd", player, 1);
 			}
 			else if(armorTypes.includes(itemName)){
 				index = armorTypes.indexOf(itemName)
@@ -915,7 +915,7 @@ function itemInventory(player){
 		}
 	}
     //[advancement] Cover Me with Diamonds | Diamond armor saves lives | Have any type of diamond armor in your inventory.
-	if((0b11110000&armorMask)==0b11110000){
+	if((0b11110000 & armorMask)==0b11110000){
 		if(getSomeScore("objectives_advancement_", "Have any diamond armor", player) == 0){
 			boolScore("objectives_advancement_", "Have any diamond armor", player, 1);
 			achievmentUnlock("Have any diamond armor")
@@ -1117,75 +1117,70 @@ function statusAndEffects(player){
 		//[advancement] The Healing Power of Friendship! | Team up with an axolotl and win a fight | Have the Regeneration effect applied from assisting an axolotl or it killing a mob.
 	//in work--------------------
 	//done--------------------
-		let effectArray = [];
-		effectArray[0] = "fire_resistance";
-		effectArray[1] = "invisibility";
-		effectArray[2] = "jump_boost";
-		effectArray[3] = "night_vision";
-		effectArray[4] = "poison";
-		effectArray[5] = "regeneration";
-		effectArray[6] = "resistance";
-		effectArray[7] = "slow_falling";
-		effectArray[8] = "slowness";
-		effectArray[9] = "speed";
-		effectArray[10] = "strength";
-		effectArray[11] = "water_breathing";
-		effectArray[12] = "weakness";
-		effectArray[13] = "absorption";
-		effectArray[14] = "bad_omen";
-		effectArray[15] = "blindness";
-		effectArray[16] = "conduit_power";
-		effectArray[17] = "darkness";
-		//effectArray[] = "dolphins_grace" [Java Edition only];
-		//effectArray[] = "glowing" [Java Edition only];
-		effectArray[18] = "haste";
-		effectArray[19] = "hero_of_the_village";
-		effectArray[20] = "hunger";
-		effectArray[21] = "levitation";
-		effectArray[22] = "mining_fatigue";
-		effectArray[23] = "nausea";
-		effectArray[24] = "wither";
-		let effectPlayer = player.getEffects();
-		
-	    //[advancement] A Furious Cocktail | Have every potion effect applied at the same time | Have all of these 13 status effects applied to the player at the same time:, Fire Resistance, Invisibility, Jump Boost, Night Vision, Poison, Regeneration, Resistance, Slow Falling, Slowness, Speed, Strength, Water Breathing, Weakness, The source of the effects is irrelevant for the purposes of this advancement. Other status effects may be applied to the player, but are ignored for this advancement.
-		if(getSomeScore("statusAndEffects", "potion_effects_bool", player) == 0){
-			for(var i = 0; i < effectPlayer.length; i++){
-				for(var j = 0; j < 13; j++){
-					if(effectPlayer[i].typeId == effectArray[j]){
-						addToScore("statusAndEffects", "potion_effects_score", player);
-						//console.warn("Very effective");
-					}
-				}
-			}
-			if(getSomeScore("statusAndEffects", "potion_effects_score", player) == 13){
-				boolScore("statusAndEffects", "potion_effects_bool", player, 1);
-			}else{
-				scoreSet("statusAndEffects", "potion_effects_score", player, 0);
+	const effectArray = ["fire_resistance",//potion
+						"invisibility",//potion
+						"jump_boost",//potion
+						"night_vision",//potion
+						"poison",//potion
+						"regeneration",//potion
+						"resistance",//potion
+						"slow_falling",//potion
+						"slowness",//potion
+						"speed",//potion
+						"strength",//potion
+						"water_breathing",//potion
+						"weakness",//potion
+						"absorption",
+						"bad_omen",
+						"blindness",
+						"conduit_power",
+						"darkness",
+						"haste",
+						"hero_of_the_village",
+						"hunger",
+						"levitation",
+						"mining_fatigue",
+						"nausea",
+						"wither"];
+	const allPotionsMask = 0b0000000000001111111111111
+	const allEffectsMask = 0b1111111111111111111111111
+	const heroMask = 0b1<<20
+	console.warn(effectArray[20])
+	let effectPlayer = player.getEffects();
+	let effectMask = 0;
+	let index = 0;
+	//create a mask for effects
+	if(getSomeScore("statusAndEffects", "potion_effects_bool", player) == 0){
+		for(var i = 0; i < effectPlayer.length; i++){
+			let effect = effectPlayer[i]
+			if(effectArray.includes(effect)){
+				index = effectArray.indexOf(effect)
+				effectMask = effectMask | (1<<index)
 			}
 		}
-		
-	    //[advancement] How Did We Get Here? | Have every effect applied at the same time | Have all of these 27 status effects applied to the player at the same time:, Absorption, Bad Omen, Blindness, Conduit Power, Darkness, Dolphin's Grace, Fire Resistance, Glowing, Haste, Hero of the Village, Hunger, Invisibility, Jump Boost, Levitation, Mining Fatigue, Nausea, Night Vision, Poison, Regeneration, Resistance, Slow Falling, Slowness, Speed, Strength, Water Breathing, Weakness, Wither, The source of the effects is irrelevant for the purposes of this advancement. Other status effects may be applied to the player, but are ignored for this advancement.
+	}
+    //[advancement] A Furious Cocktail | Have every potion effect applied at the same time | Have all of these 13 status effects applied to the player at the same time:, Fire Resistance, Invisibility, Jump Boost, Night Vision, Poison, Regeneration, Resistance, Slow Falling, Slowness, Speed, Strength, Water Breathing, Weakness, The source of the effects is irrelevant for the purposes of this advancement. Other status effects may be applied to the player, but are ignored for this advancement.
+	if((allPotionsMask & effectMask)=allPotionsMask){
+		if(getSomeScore("statusAndEffects", "allPotionsMask", player) == 0){
+			boolScore("statusAndEffects", "potion_effects_bool", player, 1);
+		}
+	}
+	
+	
+    //[advancement] How Did We Get Here? | Have every effect applied at the same time | Have all of these 27 status effects applied to the player at the same time:, Absorption, Bad Omen, Blindness, Conduit Power, Darkness, Dolphin's Grace, Fire Resistance, Glowing, Haste, Hero of the Village, Hunger, Invisibility, Jump Boost, Levitation, Mining Fatigue, Nausea, Night Vision, Poison, Regeneration, Resistance, Slow Falling, Slowness, Speed, Strength, Water Breathing, Weakness, Wither, The source of the effects is irrelevant for the purposes of this advancement. Other status effects may be applied to the player, but are ignored for this advancement.
+	if((allPotionsMask & effectMask)=allPotionsMask){
 		if(getSomeScore("statusAndEffects", "all_effects_bool", player) == 0){
-			for(var i = 0; i < effectPlayer.length; i++){
-				for(var j = 0; j < effectArray.length; j++){
-					if(effectPlayer[i].typeId == effectArray[j]){
-						addToScore("statusAndEffects", "all_effects_score", player);
-					}
-					//[advancement] Hero of the Village | Successfully defend a village from a raid | Kill at least one raid mob during a raid and wait until it ends in victory.
-					if(getSomeScore("statusAndEffects", "hero_of_the_village", player) == 0){
-						if(effectPlayer[i].typeId == "hero_of_the_village"){
-							boolScore("statusAndEffects", "hero_of_the_village", player, 1);
-						}
-					}
-				}
-			}
-			if(getSomeScore("statusAndEffects", "all_effects_score", player) == 25){
-				boolScore("statusAndEffects", "all_effects_bool", player, 1);
-			}else{
-				scoreSet("statusAndEffects", "all_effects_score", player, 0);
-			}
+			boolScore("statusAndEffects", "all_effects_bool", player, 1);
 		}
+	}
+	if((heroMask & effectMask)=heroMask){
+		//[advancement] Hero of the Village | Successfully defend a village from a raid | Kill at least one raid mob during a raid and wait until it ends in victory.
+		if(getSomeScore("statusAndEffects", "hero_of_the_village", player) == 0){
+			boolScore("statusAndEffects", "hero_of_the_village", player, 1);
+		}
+	}
 }
+
 function trading(){
 	//to-do--------------------
 		//[achievement] Buy Low, Sell High | Trade for the best possible price. | Buy something for 1 emerald, or when the Hero of the Village effect is applied.
