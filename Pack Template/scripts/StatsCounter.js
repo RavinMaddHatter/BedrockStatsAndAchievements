@@ -883,6 +883,11 @@ function itemInventory(player){
 						"shelter_pottery_sherd",
 						"skull_pottery_sherd",
 						"snort_pottery_sherd"];
+	const allIronArmorMask = 0b1111;
+	const allDiamondArmorMask = 0b11110000;
+	const allNetheriteArmorMask = 0b111100000000;
+	const bucketOfFishMask = 0b111100000000;
+	const stoneTypesMask = 0b11100000000000000;
 	let inventoryPlayer = player.getComponent("minecraft:inventory");
 	let index=0;
 	let inventorymask = 0;
@@ -909,14 +914,14 @@ function itemInventory(player){
 		}
 	}
     //[advancement] Suit Up | Protect yourself with a piece of iron armor | Have any type of iron armor in your inventory.
-	if((0b1111 & armorMask)==0b1111){
+	if((allIronArmorMask & armorMask) == allIronArmorMask){
 		if(getSomeScore("objectives_advancement_", "Have any iron armor", player) == 0){
 			boolScore("objectives_advancement_", "Have any iron armor", player, 1);
 			achievmentUnlock("Have any iron armor")
 		}
 	}
     //[advancement] Cover Me with Diamonds | Diamond armor saves lives | Have any type of diamond armor in your inventory.
-	if((0b11110000 & armorMask)==0b11110000){
+	if((allDiamondArmorMask & armorMask)==allDiamondArmorMask){
 		if(getSomeScore("objectives_advancement_", "Have any diamond armor", player) == 0){
 			boolScore("objectives_advancement_", "Have any diamond armor", player, 1);
 			achievmentUnlock("Have any diamond armor")
@@ -925,7 +930,7 @@ function itemInventory(player){
 	
     //[achievement] Cover me in debris | Wear a full set of Netherite armor | Have a full set of Netherite armor in your inventory.
     //[advancement] Cover Me in Debris | Get a full suit of Netherite armor | Have a full set of netherite armor in your inventory.
-	if((0b111100000000 & armorMask)==0b111100000000){
+	if((allNetheriteArmorMask & armorMask)==allNetheriteArmorMask){
 		if((getSomeScore("objectives_achievement_", "Get a full Netherite\n        armor set", player) == 0)
 			|| (getSomeScore("objectives_advancement_", "Get a full suit of Netherite armor", player) == 0)){
 			boolScore("objectives_achievement_", "Get a full Netherite\n        armor set", player, 1);
@@ -936,7 +941,7 @@ function itemInventory(player){
 	
     //[achievement] I am a Marine Biologist | Collect a fish in a bucket | Use an empty bucket on any fish mob to collect it.
     //[advancement] Tactical Fishing | Catch a Fish... without a Fishing Rod! | Use a water bucket on any fish mob.
-	if(( 0b111100000000 & inventorymask)>0){
+	if(( bucketOfFishMask & inventorymask)>0){
 		if((getSomeScore("objectives_achievement_", "Get a bucket of fish", player) == 0)
 			|| (getSomeScore("objectives_advancement_", "Get a fish in a bucket", player) == 0)){
 			boolScore("objectives_achievement_", "Get a bucket of fish", player, 1);
@@ -946,7 +951,7 @@ function itemInventory(player){
 	}
 	
 	//[advancement] Stone Age | Mine Stone with your new Pickaxe | Have one of these 3 stones in the #stone_tool_materials item tag:, Cobblestone, Blackstone, Cobbled Deepslate, in your inventory.
-	if((0b11100000000000000 & inventorymask)>0){
+	if((stoneTypesMask & inventorymask)>0){
 		if(getSomeScore("objectives_advancement_", "Get Cobblestone, Blackstone, or\n        Cobbled Deepslate", player) == 0){
 			boolScore("objectives_advancement_", "Get Cobblestone, Blackstone, or\n        Cobbled Deepslate", player, 1);
 			achievmentUnlock("Get Cobblestone, Blackstone, or Cobbled Deepslate")
