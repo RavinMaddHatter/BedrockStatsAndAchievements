@@ -821,152 +821,142 @@ function itemInventory(player){
 		//[advancement] You Need a Mint | Collect Dragon's Breath in a Glass Bottle | Have a bottle of dragon's breath in your inventory.
 	//in work--------------------
 	//done--------------------
-		const slotArray = [];
-		slotArray[0] = "crafting_table";	//[achievement] Benchmaking | Craft a workbench with four blocks of wooden planks. | Pick up a crafting table from the inventory's crafting field output or a crafting table output.
-								//[advancement] Minecraft | The heart and story of the game | Have a crafting table in your inventory.
-		slotArray[1] = "stone_pickaxe";	//[achievement] Getting an Upgrade | Construct a better pickaxe. | Pick up a stone pickaxe from a crafting table output.
-								//[advancement] Getting an Upgrade | Construct a better Pickaxe | Have a stone pickaxe in your inventory.
-		slotArray[2] = "iron_pickaxe";	//[advancement] Isn't It Iron Pick | Upgrade your Pickaxe | Have an iron pickaxe in your inventory.
-		slotArray[3] = "netherite_hoe";	//[advancement] Serious Dedication | Use a Netherite Ingot to upgrade a Hoe, and then reevaluate your life choices | Have a netherite hoe in your inventory.
-		slotArray[4] = "iron_helmet";
-		slotArray[5] = "iron_chestplate";
-		slotArray[6] = "iron_leggings";
-		slotArray[7] = "iron_boots";
-		slotArray[8] = "diamond_helmet";
-		slotArray[9] = "diamond_chestplate";
-		slotArray[10] = "diamond_leggings";
-		slotArray[11] = "diamond_boots";
-		slotArray[12] = "netherite_helmet";
-		slotArray[13] = "netherite_chestplate";
-		slotArray[14] = "netherite_leggings";
-		slotArray[15] = "netherite_boots";
-		slotArray[16] = "elytra";	//[advancement] Sky's the Limit | Find Elytra | Have a pair of elytra in your inventory.
-		slotArray[17] = "iron_ingot";	//[achievement] Acquire Hardware | Smelt an iron ingot | Pick up an iron ingot from a furnace output.
-								//[advancement] Acquire Hardware | Smelt an Iron Ingot | Have an iron ingot in your inventory.
-		slotArray[18] = "diamond";	//[achievement] DIAMONDS! | Acquire diamonds with your iron tools. | Pick up a diamond from the ground.
-								//[advancement] Diamonds! | Acquire diamonds | Have a diamond in your inventory.
-		slotArray[19] = "ancient_debris";	//[advancement] Hidden in the Depths | Obtain Ancient Debris | Have an ancient debris in your inventory.
-		slotArray[20] = "lava_bucket";	//[advancement] Hot Stuff | Fill a Bucket with lava | Have a lava bucket in your inventory.
-		slotArray[21] = "cod_bucket";
-		slotArray[22] = "salmon_bucket";
-		slotArray[23] = "tropical_fish_bucket";
-		slotArray[24] = "pufferfish_bucket";
-		slotArray[25] = "axolotl_bucket";	//[advancement] The Cutest Predator | Catch an Axolotl in a Bucket | Use a water bucket on an axolotl.
-		slotArray[26] = "tadpole_bucket";	//[advancement] Bukkit Bukkit | Catch a Tadpole in a Bucket | —
-		slotArray[27] = "cobblestone";
-		slotArray[28] = "blackstone";
-		slotArray[29] = "cobbled_deepslate";
-		slotArray[30] = "obsidian";	//[advancement] Ice Bucket Challenge | Obtain a block of Obsidian | Have a block of obsidian in your inventory.
-		slotArray[31] = "crying_obsidian";	//[advancement] Who is Cutting Onions? | Obtain Crying Obsidian | Have a block of crying obsidian in your inventory.
-		slotArray[32] = "blaze_rod";	//[achievement] Into Fire | Relieve a Blaze of its rod. | Pick up a blaze rod from the ground.
-								//[advancement] Into Fire | Relieve a Blaze of its rod | Have a blaze rod in your inventory.
-		slotArray[33] = "dragon_egg";	//[advancement] The Next Generation | Hold the Dragon Egg | Have a dragon egg in your inventory.
-		slotArray[34] = "sniffer_egg";	//[advancement] Smells Interesting | Obtain a Sniffer Egg | Have a sniffer egg in your inventory.
-		const potSlotArray = [];
-			potSlotArray[0] = "angler_pottery_sherd";
-			potSlotArray[1] = "archer_pottery_sherd";
-			potSlotArray[2] = "arms_up_pottery_sherd";
-			potSlotArray[3] = "blade_pottery_sherd";
-			potSlotArray[4] = "brewer_pottery_sherd";
-			potSlotArray[5] = "burn_pottery_sherd";
-			potSlotArray[6] = "danger_pottery_sherd";
-			potSlotArray[7] = "explorer_pottery_sherd";
-			potSlotArray[8] = "friend_pottery_sherd";
-			potSlotArray[9] = "heart_pottery_sherd";
-			potSlotArray[10] = "heartbreak_pottery_sherd";
-			potSlotArray[11] = "howl_pottery_sherd";
-			potSlotArray[12] = "miner_pottery_sherd";
-			potSlotArray[13] = "mourner_pottery_sherd";
-			potSlotArray[14] = "plenty_pottery_sherd";
-			potSlotArray[15] = "prize_pottery_sherd";
-			potSlotArray[16] = "sheaf_pottery_sherd";
-			potSlotArray[17] = "shelter_pottery_sherd";
-			potSlotArray[18] = "skull_pottery_sherd";
-			potSlotArray[19] = "snort_pottery_sherd";
-		let inventoryPlayer = player.getComponent("minecraft:inventory");
-		var index;
-		for (let slot = 0; slot<36;slot++){
-			let itemStack = inventoryPlayer.container.getItem(slot);
-			if (itemStack){
-				const itemName = itemStack.typeId.replace("minecraft:","")
-				if(slotArray.includes(itemName)){
-					boolScore("tracking_itemInventory_", itemName, player, 1);
-				}
-				else{
-					if (potSlotArray.includes(itemName)){
-						boolScore("objectives_advancement_", "Obtain a Pottery Sherd", player, 1);
-					}
-				}
+	const loseItems = ["crafting_table",	//[achievement] Benchmaking | Craft a workbench with four blocks of wooden planks. | Pick up a crafting table from the inventory's crafting field output or a crafting table output.
+											//[advancement] Minecraft | The heart and story of the game | Have a crafting table in your inventory.
+						"stone_pickaxe",	//[achievement] Getting an Upgrade | Construct a better pickaxe. | Pick up a stone pickaxe from a crafting table output.
+											//[advancement] Getting an Upgrade | Construct a better Pickaxe | Have a stone pickaxe in your inventory.
+						"iron_pickaxe",		//[advancement] Isn't It Iron Pick | Upgrade your Pickaxe | Have an iron pickaxe in your inventory.
+						"netherite_hoe",	//[advancement] Serious Dedication | Use a Netherite Ingot to upgrade a Hoe, and then reevaluate your life choices | Have a netherite hoe in your inventory.
+						"iron_ingot",		//[achievement] Acquire Hardware | Smelt an iron ingot | Pick up an iron ingot from a furnace output.
+											//[advancement] Acquire Hardware | Smelt an Iron Ingot | Have an iron ingot in your inventory.
+						"diamond",			//[achievement] DIAMONDS! | Acquire diamonds with your iron tools. | Pick up a diamond from the ground.
+											//[advancement] Diamonds! | Acquire diamonds | Have a diamond in your inventory.
+						"ancient_debris",	//[advancement] Hidden in the Depths | Obtain Ancient Debris | Have an ancient debris in your inventory.
+						"lava_bucket",		//[advancement] Hot Stuff | Fill a Bucket with lava | Have a lava bucket in your inventory.
+						"cod_bucket",
+						"salmon_bucket",
+						"tropical_fish_bucket",
+						"pufferfish_bucket",
+						"axolotl_bucket",	//[advancement] The Cutest Predator | Catch an Axolotl in a Bucket | Use a water bucket on an axolotl.
+						"tadpole_bucket",	//[advancement] Bukkit Bukkit | Catch a Tadpole in a Bucket | —
+						"cobblestone",
+						"blackstone",
+						"cobbled_deepslate",
+						"obsidian",	//[advancement] Ice Bucket Challenge | Obtain a block of Obsidian | Have a block of obsidian in your inventory.
+						"crying_obsidian",	//[advancement] Who is Cutting Onions? | Obtain Crying Obsidian | Have a block of crying obsidian in your inventory.
+						"blaze_rod",	//[achievement] Into Fire | Relieve a Blaze of its rod. | Pick up a blaze rod from the ground.
+										//[advancement] Into Fire | Relieve a Blaze of its rod | Have a blaze rod in your inventory.
+						"dragon_egg",	//[advancement] The Next Generation | Hold the Dragon Egg | Have a dragon egg in your inventory.
+						"sniffer_egg"]	//[advancement] Smells Interesting | Obtain a Sniffer Egg | Have a sniffer egg in your inventory.
+	const armorTypes = ["iron_helmet",
+					"iron_chestplate",
+					"iron_leggings",
+					"iron_boots",
+					"diamond_helmet",
+					"diamond_chestplate",
+					"diamond_leggings",
+					"diamond_boots",
+					"netherite_helmet",
+					"netherite_chestplate",
+					"netherite_leggings",
+					"netherite_boots",
+					"elytra"			//[advancement] Sky's the Limit | Find Elytra | Have a pair of elytra in your inventory.
+					];
+	const sherdArray = ["angler_pottery_sherd",
+						"archer_pottery_sherd",
+						"arms_up_pottery_sherd",
+						"blade_pottery_sherd",
+						"brewer_pottery_sherd",
+						"burn_pottery_sherd",
+						"danger_pottery_sherd",
+						"explorer_pottery_sherd",
+						"friend_pottery_sherd",
+						"heart_pottery_sherd",
+						"heartbreak_pottery_sherd",
+						"howl_pottery_sherd",
+						"miner_pottery_sherd",
+						"mourner_pottery_sherd",
+						"plenty_pottery_sherd",
+						"prize_pottery_sherd",
+						"sheaf_pottery_sherd",
+						"shelter_pottery_sherd",
+						"skull_pottery_sherd",
+						"snort_pottery_sherd"];
+	let inventoryPlayer = player.getComponent("minecraft:inventory");
+	let index=0;
+	let inventorymask = 0;
+	let armorMask = 0;
+	let sherdMask = 0;
+	for (let slot = 0; slot<36;slot++){
+		let itemStack = inventoryPlayer.container.getItem(slot);
+		if (itemStack){
+			const itemName = itemStack.typeId.replace("minecraft:","")
+			if(loseItems.includes(itemName)){
+				index = loseItems.indexOf(itemName)
+				inventorymask = inventorymask | (0b1<<index)
+				//boolScore("tracking_itemInventory_", itemName, player, 1);
+			}
+			else if (sherdArray.includes(itemName)){
+				index = sherdArray.indexOf(itemName)
+				sherdMask = sherdMask | (0b1<<index)
+					//boolScore("objectives_advancement_", "Obtain a Pottery Sherd", player, 1);
+			}
+			else if(armorTypes.includes(itemName)){
+				index = armorTypes.indexOf(itemName)
+				armorMask = armorMask | (0b1<<index)
 			}
 		}
-	    //[advancement] Suit Up | Protect yourself with a piece of iron armor | Have any type of iron armor in your inventory.
+	}
+    //[advancement] Suit Up | Protect yourself with a piece of iron armor | Have any type of iron armor in your inventory.
+	if((0b1111 & armorMask)==0b1111){
 		if(getSomeScore("objectives_advancement_", "Have any iron armor", player) == 0){
-			switch(true){
-				case (getSomeScore("tracking_itemInventory_", "iron_helmet", player) == 1) ://*fall through*
-				case (getSomeScore("tracking_itemInventory_", "iron_chestplate", player) == 1) ://*fall through*
-				case (getSomeScore("tracking_itemInventory_", "iron_leggings", player) == 1) ://*fall through*
-				case (getSomeScore("tracking_itemInventory_", "iron_boots", player) == 1) :
-					boolScore("objectives_advancement_", "Have any iron armor", player, 1);
-					break;
-			}
+			boolScore("objectives_advancement_", "Have any iron armor", player, 1);
+			achievmentUnlock("Have any iron armor")
 		}
-		
-	    //[advancement] Cover Me with Diamonds | Diamond armor saves lives | Have any type of diamond armor in your inventory.
+	}
+    //[advancement] Cover Me with Diamonds | Diamond armor saves lives | Have any type of diamond armor in your inventory.
+	if((0b11110000&armorMask)==0b11110000){
 		if(getSomeScore("objectives_advancement_", "Have any diamond armor", player) == 0){
-			switch(true){
-				case (getSomeScore("tracking_itemInventory_", "diamond_helmet", player) == 1) ://*fall through*
-				case (getSomeScore("tracking_itemInventory_", "diamond_chestplate", player) == 1) ://*fall through*
-				case (getSomeScore("tracking_itemInventory_", "diamond_leggings", player) == 1) ://*fall through*
-				case (getSomeScore("tracking_itemInventory_", "diamond_boots", player) == 1) :
-					boolScore("objectives_advancement_", "Have any diamond armor", player, 1);
-					break;
-			}
+			boolScore("objectives_advancement_", "Have any diamond armor", player, 1);
+			achievmentUnlock("Have any diamond armor")
 		}
-		
-	    //[achievement] Cover me in debris | Wear a full set of Netherite armor | Have a full set of Netherite armor in your inventory.
-	    //[advancement] Cover Me in Debris | Get a full suit of Netherite armor | Have a full set of netherite armor in your inventory.
+	}
+	
+    //[achievement] Cover me in debris | Wear a full set of Netherite armor | Have a full set of Netherite armor in your inventory.
+    //[advancement] Cover Me in Debris | Get a full suit of Netherite armor | Have a full set of netherite armor in your inventory.
+	if((0b111100000000 & armorMask)==0b111100000000){
 		if((getSomeScore("objectives_achievement_", "Get a full Netherite\n        armor set", player) == 0)
-		    || (getSomeScore("objectives_advancement_", "Get a full suit of Netherite armor", player) == 0)){
-			
-			if((getSomeScore("itemInventory", "netherite_helmet", player) == 1)
-			    && (getSomeScore("itemInventory", "netherite_chestplate", player) == 1)
-			    && (getSomeScore("itemInventory", "netherite_leggings", player) == 1)
-			    && (getSomeScore("itemInventory", "netherite_boots", player) == 1)){
-				
-				boolScore("objectives_achievement_", "Get a full Netherite\n        armor set", player, 1);
-				boolScore("objectives_advancement_", "Get a full suit of Netherite armor", player, 1);
-			}
+			|| (getSomeScore("objectives_advancement_", "Get a full suit of Netherite armor", player) == 0)){
+			boolScore("objectives_achievement_", "Get a full Netherite\n        armor set", player, 1);
+			boolScore("objectives_advancement_", "Get a full suit of Netherite armor", player, 1);
+			achievmentUnlock("Get a full suit of Netherite armor")
 		}
-		
-	    //[achievement] I am a Marine Biologist | Collect a fish in a bucket | Use an empty bucket on any fish mob to collect it.
-	    //[advancement] Tactical Fishing | Catch a Fish... without a Fishing Rod! | Use a water bucket on any fish mob.
+	}
+	
+    //[achievement] I am a Marine Biologist | Collect a fish in a bucket | Use an empty bucket on any fish mob to collect it.
+    //[advancement] Tactical Fishing | Catch a Fish... without a Fishing Rod! | Use a water bucket on any fish mob.
+	if(( 0b111100000000 | armorMask)>0){
 		if((getSomeScore("objectives_achievement_", "Get a bucket of fish", player) == 0)
-		    || (getSomeScore("objectives_advancement_", "Get a fish in a bucket", player) == 0)){
-			
-			switch(true){
-				case (getSomeScore("tracking_itemInventory_", "cod_bucket", player) == 1) ://*fall through*
-				case (getSomeScore("tracking_itemInventory_", "salmon_bucket", player) == 1) ://*fall through*
-				case (getSomeScore("tracking_itemInventory_", "tropical_fish_bucket", player) == 1) ://*fall through*
-				case (getSomeScore("tracking_itemInventory_", "pufferfish_bucket", player) == 1) :
-					boolScore("objectives_achievement_", "Get a bucket of fish", player, 1);
-					boolScore("objectives_advancement_", "Get a fish in a bucket", player, 1);
-					break;
-			}
+			|| (getSomeScore("objectives_advancement_", "Get a fish in a bucket", player) == 0)){
+			boolScore("objectives_achievement_", "Get a bucket of fish", player, 1);
+			boolScore("objectives_advancement_", "Get a fish in a bucket", player, 1);
+			achievmentUnlock("Get a full suit of Netherite armor")
 		}
-		
-	    //[advancement] Stone Age | Mine Stone with your new Pickaxe | Have one of these 3 stones in the #stone_tool_materials item tag:, Cobblestone, Blackstone, Cobbled Deepslate, in your inventory.
+	}
+	
+	//[advancement] Stone Age | Mine Stone with your new Pickaxe | Have one of these 3 stones in the #stone_tool_materials item tag:, Cobblestone, Blackstone, Cobbled Deepslate, in your inventory.
+	if((0b11100000000000000)>0){
 		if(getSomeScore("objectives_advancement_", "Get Cobblestone, Blackstone, or\n        Cobbled Deepslate", player) == 0){
-			switch(true){
-				case (getSomeScore("tracking_itemInventory_", "cobblestone", player) == 1) ://*fall through*
-				case (getSomeScore("tracking_itemInventory_", "blackstone", player) == 1) ://*fall through*
-				case (getSomeScore("tracking_itemInventory_", "cobbled_deepslate", player) == 1) :
-					boolScore("objectives_advancement_", "Get Cobblestone, Blackstone, or\n        Cobbled Deepslate", player, 1);
-					break;
-			}
+			boolScore("objectives_advancement_", "Get Cobblestone, Blackstone, or\n        Cobbled Deepslate", player, 1);
+			achievmentUnlock("Get Cobblestone, Blackstone, or Cobbled Deepslate")
 		}
-	    //[advancement] Respecting the Remnants | Brush a Suspicious block to obtain a Pottery Sherd | —
+	}
+	//[advancement] Respecting the Remnants | Brush a Suspicious block to obtain a Pottery Sherd | —
+	if(sherdArray>0){
 		if(getSomeScore("objectives_advancement_", "Obtain a Pottery Sherd", player) == 0){
+			achievmentUnlock("Obtain a Pottery Sherd")
 		}
+	}
 }
 function entityInteractions(){
 	//to-do--------------------
@@ -1391,6 +1381,7 @@ function getSomeScore(category, item, player){
 	//return categoryBoard.getScore(player);
 	return itemBoard.getScore(player);
 }
+
 function initializeObjectives(player){
 	//achievements--------------------
 		const achievementArray = []
@@ -1631,6 +1622,9 @@ function initializeObjectives(player){
 		advancementArray[107] = "Get Dragon's Breath in a Bottle";
 		advancementArray[108] = "Have an Allay deliver items to you";
 		advancementArray[109] = "Cure a Zombie Villager";
+}
+function achievmentUnlock(data){
+	console.warn(data)//Needs to be implemented 
 }
 function scoreSet(category, item, player, score){
 	let categoryId = category.replace(" ","");
