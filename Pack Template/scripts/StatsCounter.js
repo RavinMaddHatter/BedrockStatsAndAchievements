@@ -138,6 +138,7 @@ function objectivesStatsDisplay(player){
 		let name = temp[2];
 		let boolPos = "\u00A7a" + "\u2714" + "\u00A7r";
 		let boolNeg = " ";
+		let lineWrap = 28;
 		
 		switch (type){
 			case "objectives":
@@ -160,7 +161,7 @@ function objectivesStatsDisplay(player){
 	let titleFormat = "\u00A7d";
 	let subtitleFormat = "\u00A73";
 	let bodyFormat = "\u00A7r";
-	let indentSize = "    ";
+	let indentSize = "  ";
 	let nextLine = '\n';
 	let indentNextLine = nextLine + indentSize;
 	let allStats=titleFormat + scoresText.join(nextLine)
@@ -475,7 +476,7 @@ function initSpawn(event){
 		//console.warn("I've initialized");
 		scoreSet("tracking_initSpawn_","initialPointX", player, player.location.x);//record player initial location x
 		scoreSet("tracking_initSpawn_","initialPointZ", player, player.location.z);//record player initial location z
-		//initializeObjectives(player)
+		initializeObjectives(player)
 		player.addTag("firstSpawn");//add tag to record that player has already spawned initially
 	}
 }
@@ -1383,8 +1384,10 @@ function getSomeScore(category, item, player){
 }
 
 function initializeObjectives(player){
+	let categoryId;
+	var i;
 	//achievements--------------------
-		const achievementArray = []
+		const achievementArray = [];
 		achievementArray[0] = "Teleport 100m from an Ender Pearl throw";
 		achievementArray[1] = "Activate a Conduit";
 		achievementArray[2] = "Apply Spire, Snout, Rib, Ward, Silence, Vex, Tide, and Wayfinder smithing templates";
@@ -1510,8 +1513,21 @@ function initializeObjectives(player){
 		achievementArray[122] = "Visit all ocean biomes";
 		achievementArray[123] = "Wax and de-wax all Copper Blocks";
 		achievementArray[124] = "With Elytra fly through a 1x1 gap faster than 40m/s";
+		
+		categoryId = "objectives_achievement_";
+		if(!world.scoreboard.getObjective(categoryId)){
+			world.scoreboard.addObjective(categoryId, categoryId);
+		}
+		for(i = 0; i < achievementArray.length; i++){
+			let idName = achievementArray[i];
+			let  itemId = categoryId + idName.replace(" ","");
+			if(!world.scoreboard.getObjective(itemId)){
+				world.scoreboard.addObjective(itemId, categoryId+" "+idName);
+			}
+			world.scoreboard.getObjective(itemId).setScore(player, 0);
+		}
 	//advancements--------------------
-		const advancementArray = []
+		const advancementArray = [];
 		advancementArray[0] = "Eat everything that is edible";
 		advancementArray[1] = "Tame all Cat variants";
 		advancementArray[2] = "Have every potion effect applied at the same time";
@@ -1622,6 +1638,19 @@ function initializeObjectives(player){
 		advancementArray[107] = "Get Dragon's Breath in a Bottle";
 		advancementArray[108] = "Have an Allay deliver items to you";
 		advancementArray[109] = "Cure a Zombie Villager";
+		
+		categoryId = "objectives_advancement_";
+		if(!world.scoreboard.getObjective(categoryId)){
+			world.scoreboard.addObjective(categoryId, categoryId);
+		}
+		for(i = 0; i < advancementArray.length; i++){
+			let idName = advancementArray[i];
+			let  itemId = categoryId + idName.replace(" ","");
+			if(!world.scoreboard.getObjective(itemId)){
+				world.scoreboard.addObjective(itemId, categoryId+" "+idName);
+			}
+			world.scoreboard.getObjective(itemId).setScore(player, 0);
+		}
 }
 function achievmentUnlock(data){
 	console.warn(data)//Needs to be implemented 
