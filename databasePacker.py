@@ -16,5 +16,5 @@ def convertToJson(ws):
         dataStructure[name]={"displayName":displayname,"description":description}
     return dataStructure
 with open("textObjects.js","w+") as file:
-    file.write("const advancements = "+json.dumps(convertToJson(advancements),indent=2))
-    file.write("const achievements = "+json.dumps(convertToJson(achievments),indent=2))
+    file.write("export const achievements = " + json.dumps(convertToJson(achievments),indent=2) + ";\n")
+    file.write("export const advancements = " + json.dumps(convertToJson(advancements),indent=2) + ";\n")
