@@ -1417,7 +1417,7 @@ function initializeObjectives(player){
 		}
 		for (let [obj, name] of Object.entries(achievements)) {//[obj, name, key, value]
 			let idName = name.displayName;
-			let itemId = categoryId + idName.replace(" ", "");
+			let itemId = categoryId + obj;
 			if(!world.scoreboard.getObjective(itemId)){
 				world.scoreboard.addObjective(itemId, categoryId+" "+idName);
 			}
@@ -1433,7 +1433,7 @@ function initializeObjectives(player){
 		}
 		for (let [obj, name] of Object.entries(advancements)) {//[obj, name, key, value]
 			let idName = name.displayName;
-			let itemId = categoryId + idName.replace(" ", "");
+			let itemId = categoryId + obj;
 			if(!world.scoreboard.getObjective(itemId)){
 				world.scoreboard.addObjective(itemId, categoryId+" "+idName);
 			}
