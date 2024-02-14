@@ -16,13 +16,12 @@ def convertToJson(ws):
         globalIndex = row[3].value
         displayname=row[0].value
         description=row[1].value
-        if not(category in dataStructure.keys()):
-            dataStructure[category]={}
-        dataStructure[category][name]={"displayName": displayname,
-                                       "description": description,
-                                       "globalIndex": globalIndex,
-                                       "container": container,
-                                       "containerIndex": containerIndex}
+        dataStructure[name]={"displayName": displayname,
+                            "description": description,
+                            "globalIndex": globalIndex,
+                            "category": category,
+                            "container": container,
+                            "containerIndex": containerIndex}
     return dataStructure
 with open("Pack Template\\scripts\\textObjects.js","w+") as file:
     file.write("export const achievements = " + json.dumps(convertToJson(achievments),indent=2) + ";\n")
