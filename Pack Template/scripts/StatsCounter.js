@@ -1,6 +1,7 @@
 import { world, system } from '@minecraft/server';
 import {ActionFormData, ActionFormResponse } from "@minecraft/server-ui";
 import { achievements, advancements } from "textObjects";
+import {achievementHandler} from "achievementHandler"
 
 var blockBreaks = {}
 var blocksUsed = {}
