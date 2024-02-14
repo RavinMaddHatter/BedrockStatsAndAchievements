@@ -1,7 +1,7 @@
 import openpyxl
 import json
 
-excelworkbook= openpyxl.load_workbook('lookupData\\achievements.xlsx')
+excelworkbook= openpyxl.load_workbook('lookupData\\objectives-en.xlsx')
 
 advancements = excelworkbook["Advancements"]
 achievments = excelworkbook["Achievements"]
