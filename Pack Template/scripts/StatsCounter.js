@@ -912,6 +912,7 @@ function itemInventory(player){
 		if((allIronArmorMask & armorMask) == allIronArmorMask){
 			if(!achievmentTracker.checkAchievment("IronMan",player)){
 				achievmentTracker.setAchivement("IronMan",player)
+			}
 		}
 	}
     //[advancement] Cover Me with Diamonds | Diamond armor saves lives | Have any type of diamond armor in your inventory.
