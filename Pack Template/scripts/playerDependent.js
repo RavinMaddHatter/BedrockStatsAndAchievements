@@ -87,14 +87,28 @@ export function biomeFinder(player){
 	biomeArray[84] = "birch_forest_mutated";
 	biomeArray[85] = "birch_forest_hills";
 	biomeArray[86] = "redwood_taiga_hills_mutated";
-	let variantPlayer = player.getComponent("minecraft:variant").value;
-	let biomeId = biomeArray[variantPlayer];
+	
+	let variantPlayer = player.getComponent("minecraft:variant");
+	let biomeId;
+	
+	if(variantPlayer){
+		biomeId = biomeArray[variantPlayer.value];
+	}else{
+		biomeId = "NA";
+	}
 	
 	return biomeId;
 }
 
 export function lightLevel(player){
-	let markVariantPlayer = player.getComponent("minecraft:mark_variant").value;
+	let markVariantPlayer = player.getComponent("minecraft:mark_variant");
+	let lightId;
 	
-	return markVariantPlayer;
+	if(markVariantPlayer){
+		lightId = markVariantPlayer.value;
+	}else{
+		lightId = "NA";
+	}
+	
+	return lightId;
 }
