@@ -7,6 +7,7 @@ var blockBreaks = {}
 var blocksUsed = {}
 const debugToggle = true;
 timer10Sec();
+timer1Min();
 var achievementTracker = new achievementHandler(achievements)
 var advancementTracker = new achievementHandler(advancements)
 
@@ -100,12 +101,13 @@ function statListBody(player){
 		let statTxt = "Stats";
 		
 		let statArrayTxt = [];
-		statArrayTxt[0] = "Overworld Travel: " + getScoreIfExists("stats", "overworld_blocks", player) + " blocks";
-		statArrayTxt[1] = "Total blocks placed: " + getScoreIfExists("stats_blocksPlaced_", "total", player);
-		statArrayTxt[2] = "Total blocks broken: " + getScoreIfExists("stats_blocksBroken_", "total", player);
+		statArrayTxt[0] = "Overworld Travel: " + player.getDynamicProperty("blockRun") + " blocks";
+		statArrayTxt[1] = "Total blocks placed: " + getScoreIfExists(world.scoreboard.getObjective("stats_blocksPlaced_total"),player);
+		statArrayTxt[2] = "Total blocks broken: " + getScoreIfExists(world.scoreboard.getObjective("stats_blocksBroken_total"),player);
+		statArrayTxt[3] = "Minecraft days played: " + (player.getDynamicProperty("playTimeD") === undefined ? 0 : player.getDynamicProperty("playTimeD"));
 		
 	//construct the body
-		let indentSize = "    ";
+		let indentSize = "";
 		let nextLine = '\n';
 		let indentNextLine = nextLine + indentSize;
 		let statBodyTxt = "";
@@ -424,8 +426,9 @@ function initSpawn(event){
 	let player = event.player;
 	
 	if(!player.getDynamicProperty("1spawn") == 1){//verify the player hasn't spawned previously	
-		player.setDynamicProperty("initialX",Math.floor(player.location.x));//record player initial location x
-		player.setDynamicProperty("initialZ",Math.floor(player.location.z));//record player initial location z
+		player.setDynamicProperty("initialX", Math.floor(player.location.x));//record player initial location x
+		player.setDynamicProperty("initialZ", Math.floor(player.location.z));//record player initial location z
+		player.setDynamicProperty("blockRun", 0);//record player initial location z
 		player.setDynamicProperty("1spawn", 1);//add tag to record that player has already spawned initially
 	}
 }
@@ -1297,11 +1300,11 @@ function spawnAndBreed(entity, player){
 					achievementTracker.setachievement("TheParrotsandtheBats",player);//[advancement] The Parrots and the Bats | Breed two animals together | Breed a pair of any of these 25 mobs:, Axolotl, Bee, Camel, Cat, Chicken, Cow, Donkey, Fox, Frog, Goat, Hoglin, Horse, Llama, Mooshroom, Mule, Ocelot, Panda, Pig, Rabbit, Sheep, Sniffer, Strider, Trader Llama, Turtle, Wolf, A mule must be the result of breeding a horse and a donkey for this advancement as they are not breedable together. Other breedable mobs are ignored for this advancement.
 				}
 			    //[advancement] Two by Two | Breed all the animals! | Breed a pair of each of these 24 mobs:, Axolotl, Bee, Camel, Cat, Chicken, Cow, Donkey, Fox, Frog, Goat, Hoglin, Horse, Llama, Mooshroom, Mule, Ocelot, Panda, Pig, Rabbit, Sheep, Sniffer, Strider, Turtle, Wolf, A trader llama does not count as a llama, and a mule must be the result of breeding a horse and a donkey for this advancement as they are not breedable together. Other breedable mobs can be bred, but are ignored for this advancement.
-				if(getScoreIfExists("spawnAndBreed", "breed_all_bool", player) == 0){
-					if(getScoreIfExists("spawnAndBreed", entity, player) == 0){
-						addToScore("spawnAndBreed", "breed_all_score", player);
+				if(getScoreIfExists(world.scoreboard.getObjective("spawnAndBreedbreed_all_bool"), player) == 0){
+					if(getScoreIfExists(world.scoreboard.getObjective("spawnAndBreed" + entity), player) == 0){
+						addToScore("spawnAndBreedbreed_all_score", player);
 						//boolScore("spawnAndBreed", entity, player, 1);
-						if(getScoreIfExists("spawnAndBreed", "breed_all_score", player) == 24){
+						if(getScoreIfExists(world.scoreboard.getObjective("spawnAndBreedbreed_all_score"), player) == 24){
 							//boolScore("spawnAndBreed", "breed_all_bool", player, 1);
 						}
 					}
@@ -1359,7 +1362,7 @@ function statusAndEffects(player){
 	let index = 0;
 	
 	//create a mask for effects
-	if(getScoreIfExists("statusAndEffects", "potion_effects_bool", player) == 0){
+	if(getScoreIfExists(world.scoreboard.getObjective("statusAndEffectspotion_effects_bool"), player) == 0){
 		for(var i = 0; i < effectPlayer.length; i++){
 			let effect = effectPlayer[i].typeId
 			if(effectArray.includes(effect)){
@@ -1455,7 +1458,7 @@ function weaponsToolsArmor(subject, player){
 				break;
 		    //[advancement] Fishy Business | Catch a fish | Use a fishing rod to catch any of these fishes:, Cod, Salmon, Tropical Fish, Pufferfish
 			case "fishing_rod" :
-				if(getScoreIfExists("weaponsToolsArmor", "catch_fish", player) == 0){
+				if(getScoreIfExists(world.scoreboard.getObjective("weaponsToolsArmorcatch_fish"), player) == 0){
 					const fishArray = [];
 					fishArray[0] = "cod";
 					fishArray[1] = "salmon";
@@ -1489,7 +1492,7 @@ function weaponsToolsArmor(subject, player){
 									let slotItemAmount = slotItem.amount;
 									
 									if(slotItemName == ("minecraft:" + fishArray[i])){
-										if(getScoreIfExists("weaponsToolsArmor", fishArray[i], player) < slotItemAmount){
+										if(getScoreIfExists(world.scoreboard.getObjective("weaponsToolsArmor" + fishArray[i]), player) < slotItemAmount){
 											//boolScore("weaponsToolsArmor", "catch_fish", player, 1);
 											achievementUnlock(player,"Fishy Business")
 										}else{
@@ -1645,13 +1648,15 @@ function timer10Sec(){
 }
 function timer1Day(){
 	let timeVal = world.getTimeOfDay();
+	console.warn(timeVal);
 	
 	if(timeVal == 6000){
 		let playerArrayList = world.getAllPlayers();
 		
 		for(let i = 0; i < playerArrayList.length; i++){
 			let dayCount = playerArrayList[i].getDynamicProperty("playTimeD");
-			playerArrayList[i].setDynamicProperty("playTimeD", (!dayCount ? 0 : dayCount) + 1);
+			playerArrayList[i].setDynamicProperty("playTimeD", (dayCount === undefined ? 0 : dayCount) + 1);
+			console.warn(dayCount);
 		}
 	}
 }
@@ -1661,8 +1666,8 @@ function timer1Min(){
 		
 		for(let i = 0; i < playerArrayList.length; i++){
 			let minCount = playerArrayList[i].getDynamicProperty("playTimeM");
-			playerArrayList[i].setDynamicProperty("playTimeM", (!minCount ? 0 : minCount) + 1);
-			//console.warn(minTime);
+			playerArrayList[i].setDynamicProperty("playTimeM", (minCount === undefined ? 0 : minCount) + 1);
+			//console.warn(minCount);
 		}
 	}, 1200);
 }
