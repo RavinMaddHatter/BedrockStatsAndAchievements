@@ -415,22 +415,22 @@ function changedDimension(event){
 		case "nether":
 			addToScore("stats_enteredDimension_","Nether",player)
 			if(!advancementTracker.checkAchievment("TheEnd",player)){
-				achievmentTracker.setAchivement("IntoTheNether",player)
-				advancementTracker.setAchivement("IntoTheNether",player)
+				achievmentTracker.setAchievment("IntoTheNether",player)
+				advancementTracker.setAchievment("IntoTheNether",player)
 			}
 			break;
 		case "the_end":
 			addToScore("stats_enteredDimension_","The End",player)
 			if(!advancementTracker.checkAchievment("TheEnd",player)){
-				achievmentTracker.setAchivement("TheEnd",player)
-				advancementTracker.setAchivement("TheEnd",player)
-				advancementTracker.setAchivement("TheEnd2",player)
+				achievmentTracker.setAchievment("TheEnd",player)
+				advancementTracker.setAchievment("TheEnd",player)
+				advancementTracker.setAchievment("TheEnd2",player)
 			}
 			break;
 		case "overworld":
 			addToScore("stats_enteredDimension_","Overworld",player)
 			if(advancementTracker.checkAchievment("TheEnd",player)){
-				achievmentTracker.setAchivement("ExitTheEnd",player)
+				achievmentTracker.setAchievment("ExitTheEnd",player)
 			}
 			break;
 	}
@@ -809,38 +809,33 @@ function itemInventory(player){
 		//[achievement] Rainbow Collection | Gather all 16 colors of wool. | All the colors of wool do not have to be in the inventory at the same time, but must have been picked up by the player at least once.
 	//in work--------------------
 	//done--------------------
-	const loseItems = ["crafting_table",		
-						"netherite_hoe",	
-						"iron_ingot",		//[achievement] Acquire Hardware | Smelt an iron ingot | Pick up an iron ingot from a furnace output.
-											//[advancement] Acquire Hardware | Smelt an Iron Ingot | Have an iron ingot in your inventory.
-						"diamond",			//[achievement] DIAMONDS! | Acquire diamonds with your iron tools. | Pick up a diamond from the ground.
-											//[advancement] Diamonds! | Acquire diamonds | Have a diamond in your inventory.
-						"ancient_debris",	//[advancement] Hidden in the Depths | Obtain Ancient Debris | Have an ancient debris in your inventory.
-						"lava_bucket",		//[advancement] Hot Stuff | Fill a Bucket with lava | Have a lava bucket in your inventory.
+	const loseItems = ["crafting_table",
+						"iron_ingot",		
+						"diamond",			
+						"ancient_debris",	
+						"lava_bucket",		
 						"cod_bucket",
 						"salmon_bucket",
 						"tropical_fish_bucket",
 						"pufferfish_bucket",
-						"axolotl_bucket",	//[advancement] The Cutest Predator | Catch an Axolotl in a Bucket | Use a water bucket on an axolotl.
-						"tadpole_bucket",	//[advancement] Bukkit Bukkit | Catch a Tadpole in a Bucket | —
+						"axolotl_bucket",	
+						"tadpole_bucket",	
 						"cobblestone",
 						"blackstone",
 						"cobbled_deepslate",
-						"obsidian",			//[advancement] Ice Bucket Challenge | Obtain a block of Obsidian | Have a block of obsidian in your inventory.
-						"crying_obsidian",	//[advancement] Who is Cutting Onions? | Obtain Crying Obsidian | Have a block of crying obsidian in your inventory.
-						"blaze_rod",		//[achievement] Into Fire | Relieve a Blaze of its rod. | Pick up a blaze rod from the ground.
-											//[advancement] Into Fire | Relieve a Blaze of its rod | Have a blaze rod in your inventory.
-						"dragon_egg",		//[advancement] The Next Generation | Hold the Dragon Egg | Have a dragon egg in your inventory.
-						"sniffer_egg",		//[advancement] Smells Interesting | Obtain a Sniffer Egg | Have a sniffer egg in your inventory.
-						"dragon_breath",	//[advancement] You Need a Mint | Collect Dragon's Breath in a Glass Bottle | Have a bottle of dragon's breath in your inventory.
-											//[achievement] You Need a Mint | Collect dragons breath in a glass bottle | Have a dragon's breath bottle in your inventory
-						"bread", 			//[achievement] Bake Bread | Turn wheat into bread. | Pick up bread from a crafting table output.
-						"furnace", 		 	//[achievement] Hot Topic | Construct a furnace out of eight cobblestone blocks. | Pick up a furnace from a crafting table output.
-						"enchanting_table",	//[achievement] Enchanter | Construct an Enchantment Table. | Pick up an enchantment table from a crafting table output.
-						"bookshelf",		//[achievement] Librarian | Build some bookshelves to improve your enchantment table. | Pick up a bookshelf from a crafting table output.
-						"cake",				//[achievement] The Lie | Bake a cake using: wheat, sugar, milk, and eggs. | Pick up a cake from a crafting table output.
-						"leather",			//[achievement] Cow Tipper | Harvest some leather. | Pick up leather from the ground.
-						"dispenser"]		//[achievement] Dispense with This | Construct a Dispenser. | —
+						"obsidian",			
+						"crying_obsidian",	
+						"blaze_rod",		
+						"dragon_egg",		
+						"sniffer_egg",		
+						"dragon_breath",	
+						"bread", 			
+						"furnace", 		 	
+						"enchanting_table",	
+						"bookshelf",		
+						"cake",				
+						"leather",			
+						"dispenser"]		
 	const toolsTypes = ["wooden_pickaxe",
 					"wooden_sword",
 					"wooden_shovel",
@@ -906,10 +901,6 @@ function itemInventory(player){
 						"shelter_pottery_sherd",
 						"skull_pottery_sherd",
 						"snort_pottery_sherd"];
-
-	const bucketOfFishMask = 0b1111000000;
-	const stoneTypesMask = 0b111000000000000;
-	const craftingTable =0b1
 	let inventoryPlayer = player.getComponent("minecraft:inventory");
 	let index=0;
 	let inventorymask = 0;
@@ -947,34 +938,190 @@ function itemInventory(player){
 	if(toolMask>0){
 		checkToolAchievments(player,toolMask);
 	}
-	
-    //[achievement] I am a Marine Biologist | Collect a fish in a bucket | Use an empty bucket on any fish mob to collect it.
-    //[advancement] Tactical Fishing | Catch a Fish... without a Fishing Rod! | Use a water bucket on any fish mob.
-	if(( bucketOfFishMask & inventorymask)>0){
-		if(!advancementTracker.checkAchievment("TacticalFishing",player)){
-			advancementTracker.setAchivement("TacticalFishing",player)
-			achievmentTracker.setAchivement("IamaMarineBiologist",player)
-		}
+	if(inventorymask>0){
+		checkLooseItemAchievments(player,inventorymask)
 	}
-	
-	//[advancement] Stone Age | Mine Stone with your new Pickaxe | Have one of these 3 stones in the #stone_tool_materials item tag:, Cobblestone, Blackstone, Cobbled Deepslate, in your inventory.
-	if((stoneTypesMask & inventorymask)>0){
-		if(!advancementTracker.checkAchievment("StoneAge",player)){
-			advancementTracker.setAchivement("StoneAge",player)
-		}
-	}
+    
 	//[advancement] Respecting the Remnants | Brush a Suspicious block to obtain a Pottery Sherd | —
 	if(sherdArray>0){
 		if(!advancementTracker.checkAchievment("RespectingtheRemnants",player)){
-			advancementTracker.setAchivement("RespectingtheRemnants",player)
+			advancementTracker.setAchievment("RespectingtheRemnants",player)
 		}
 	}
-	//[achievement] Benchmaking | Craft a workbench with four blocks of wooden planks. | Pick up a crafting table from the inventory's crafting field output or a crafting table output.
-	//[advancement] Minecraft | The heart and story of the game | Have a crafting table in your inventory.
-	if((craftingTable&inventorymask)==craftingTable){
-		if(!advancementTracker.checkAchievment("Minecraft",player)){
-			advancementTracker.setAchivement("Minecraft",player)
-			achievmentTracker.setAchivement("Benchmaking",player)
+	
+}
+function checkLooseItemAchievments(player,inventorymask){
+	const craftingTable =	 0b1
+	const ironIngotMask =	 0b10
+	const diamondMask = 	 0b100
+	const ancientDebrisMask =0b1000
+	const lavaMask=			 0b10000
+	const bucketOfFishMask = 0b111100000;
+	const axolotlMask = 	 0b1000000000;
+	const tadpoleMask = 	 0b10000000000;
+	const halfMask = 		 0b1111111111111
+	const stoneTypesMask = 	 0b11100000000000;
+	const obsidianMask = 	 0b100000000000000;
+	const cryingMask =	 	 0b1000000000000000;
+	const blazeMask =	 	 0b10000000000000000;
+	const dragonEggMask = 	 0b100000000000000000;
+	const snifferEggMask = 	 0b1000000000000000000;
+	const dragonBreadthMask =0b10000000000000000000;
+	const breadMask =		 0b100000000000000000000;
+	const furnaceMask =		 0b1000000000000000000000;
+	const tableMask =		 0b10000000000000000000000;
+	const bookshelfMask =	 0b100000000000000000000000;
+	const cakeMask =		 0b1000000000000000000000000;
+	const leatherMask =		 0b10000000000000000000000000;
+	const dispenserMask =	 0b100000000000000000000000000;
+	const otherhalfMask = 	 0b111111111111100000000000000;
+	if((halfMask&inventorymask)>0){
+		//[achievement] Benchmaking | Craft a workbench with four blocks of wooden planks. | Pick up a crafting table from the inventory's crafting field output or a crafting table output.
+		//[advancement] Minecraft | The heart and story of the game | Have a crafting table in your inventory.
+		if((craftingTable&inventorymask)==craftingTable){
+			if(!advancementTracker.checkAchievment("Minecraft",player)){
+				advancementTracker.setAchievment("Minecraft",player)
+				achievmentTracker.setAchievment("Benchmaking",player)
+			}
+		}
+		//[achievement] Acquire Hardware | Smelt an iron ingot | Pick up an iron ingot from a furnace output.
+		//[advancement] Acquire Hardware | Smelt an Iron Ingot | Have an iron ingot in your inventory.
+		if((ironIngotMask&inventorymask)==ironIngotMask){
+			if(!advancementTracker.checkAchievment("AcquireHardware",player)){
+				advancementTracker.setAchievment("AcquireHardware",player)
+				achievmentTracker.setAchievment("AcquireHardware",player)
+			}
+		}
+		//[achievement] DIAMONDS! | Acquire diamonds with your iron tools. | Pick up a diamond from the ground.
+		//[advancement] Diamonds! | Acquire diamonds | Have a diamond in your inventory.
+		if((diamondMask&inventorymask)==diamondMask){
+			if(!advancementTracker.checkAchievment("Diamonds",player)){
+				advancementTracker.setAchievment("Diamonds",player)
+				achievmentTracker.setAchievment("DIAMONDS",player)
+			}
+		}
+		//[advancement] Hidden in the Depths | Obtain Ancient Debris | Have an ancient debris in your inventory.
+		if((ancientDebrisMask&inventorymask)==ancientDebrisMask){
+			if(!advancementTracker.checkAchievment("HiddenintheDepths",player)){
+				advancementTracker.setAchievment("HiddenintheDepths",player)
+			}
+		}
+		//[advancement] Hot Stuff | Fill a Bucket with lava | Have a lava bucket in your inventory.
+		if((lavaMask&inventorymask)==lavaMask){
+			if(!advancementTracker.checkAchievment("HotStuff",player)){
+				advancementTracker.setAchievment("HotStuff",player)
+			}
+		}
+		//[advancement] The Cutest Predator | Catch an Axolotl in a Bucket | Use a water bucket on an axolotl.
+		if((axolotlMask&inventorymask)==axolotlMask){
+			if(!advancementTracker.checkAchievment("TheCutestPredator",player)){
+				advancementTracker.setAchievment("TheCutestPredator",player)
+			}
+		}
+		//[advancement] Bukkit Bukkit | Catch a Tadpole in a Bucket | —
+		if((tadpoleMask&inventorymask)==tadpoleMask){
+			if(!advancementTracker.checkAchievment("TheCutestPredator",player)){
+				advancementTracker.setAchievment("TheCutestPredator",player)
+			}
+		}
+		//[achievement] I am a Marine Biologist | Collect a fish in a bucket | Use an empty bucket on any fish mob to collect it.
+		//[advancement] Tactical Fishing | Catch a Fish... without a Fishing Rod! | Use a water bucket on any fish mob.
+		if(( bucketOfFishMask & inventorymask)>0){
+			if(!advancementTracker.checkAchievment("TacticalFishing",player)){
+				advancementTracker.setAchievment("TacticalFishing",player)
+				achievmentTracker.setAchievment("IamaMarineBiologist",player)
+			}
+		}
+	}
+	if((otherhalfMask&inventorymask)>0){
+		//[advancement] Stone Age | Mine Stone with your new Pickaxe | Have one of these 3 stones in the #stone_tool_materials item tag:, Cobblestone, Blackstone, Cobbled Deepslate, in your inventory.
+		if((stoneTypesMask & inventorymask)>0){
+			if(!advancementTracker.checkAchievment("StoneAge",player)){
+				advancementTracker.setAchievment("StoneAge",player)
+			}
+		}
+		//[advancement] Ice Bucket Challenge | Obtain a block of Obsidian | Have a block of obsidian in your inventory.
+		if((obsidianMask&inventorymask)==obsidianMask){
+			if(!advancementTracker.checkAchievment("IceBucketChallenge",player)){
+				advancementTracker.setAchievment("IceBucketChallenge",player)
+			}
+		}
+		//[advancement] Who is Cutting Onions? | Obtain Crying Obsidian | Have a block of crying obsidian in your inventory.
+		if((cryingMask&inventorymask)==cryingMask){
+			if(!advancementTracker.checkAchievment("WhoisCuttingOnions",player)){
+				advancementTracker.setAchievment("WhoisCuttingOnions",player)
+			}
+		}
+		//[achievement] Into Fire | Relieve a Blaze of its rod. | Pick up a blaze rod from the ground.
+		//[advancement] Into Fire | Relieve a Blaze of its rod | Have a blaze rod in your inventory.
+		if((blazeMask&inventorymask)==blazeMask){
+			if(!advancementTracker.checkAchievment("IntoFire",player)){
+				advancementTracker.setAchievment("IntoFire",player)
+				achievmentTracker.setAchievment("IntoFire",player)
+			}
+		}
+		//[advancement] The Next Generation | Hold the Dragon Egg | Have a dragon egg in your inventory.
+		if((dragonEggMask&inventorymask)==dragonEggMask){
+			if(!advancementTracker.checkAchievment("TheNextGeneration",player)){
+				advancementTracker.setAchievment("TheNextGeneration",player)
+			}
+		}
+		//[advancement] Smells Interesting | Obtain a Sniffer Egg | Have a sniffer egg in your inventory.
+		if((snifferEggMask&inventorymask)==snifferEggMask){
+			if(!advancementTracker.checkAchievment("SmellsInteresting",player)){
+				advancementTracker.setAchievment("SmellsInteresting",player)
+			}
+		}
+		//[advancement] You Need a Mint | Collect Dragon's Breath in a Glass Bottle | Have a bottle of dragon's breath in your inventory.
+		//[achievement] You Need a Mint | Collect dragons breath in a glass bottle | Have a dragon's breath bottle in your inventory
+		if((dragonBreadthMask&inventorymask)==dragonBreadthMask){
+			if(!advancementTracker.checkAchievment("YouNeedaMint",player)){
+				console.warn("here?")
+				advancementTracker.setAchievment("YouNeedaMint",player)
+				achievmentTracker.setAchievment("YouNeedaMint",player)
+			}
+		}
+		//[achievement] Bake Bread | Turn wheat into bread. | Pick up bread from a crafting table output.
+		if((breadMask&inventorymask)==breadMask){
+			if(!achievmentTracker.checkAchievment("BakeBread",player)){
+				achievmentTracker.setAchievment("BakeBread",player)
+			}
+		}
+		//[achievement] Hot Topic | Construct a furnace out of eight cobblestone blocks. | Pick up a furnace from a crafting table output.
+		if((furnaceMask&inventorymask)==furnaceMask){
+			if(!achievmentTracker.checkAchievment("HotTopic",player)){
+				achievmentTracker.setAchievment("HotTopic",player)
+			}
+		}
+		//[achievement] Enchanter | Construct an Enchantment Table. | Pick up an enchantment table from a crafting table output.
+		if((tableMask&inventorymask)==tableMask){
+			if(!achievmentTracker.checkAchievment("Enchanter",player)){
+				achievmentTracker.setAchievment("Enchanter",player)
+			}
+		}
+		//[achievement] Librarian | Build some bookshelves to improve your enchantment table. | Pick up a bookshelf from a crafting table output.
+		if((bookshelfMask&inventorymask)==bookshelfMask){
+			if(!achievmentTracker.checkAchievment("Librarian",player)){
+				achievmentTracker.setAchievment("Librarian",player)
+			}
+		}
+		//[achievement] The Lie | Bake a cake using: wheat, sugar, milk, and eggs. | Pick up a cake from a crafting table output.
+		if((cakeMask&inventorymask)==cakeMask){
+			if(!achievmentTracker.checkAchievment("TheLie",player)){
+				achievmentTracker.setAchievment("TheLie",player)
+			}
+		}
+		//[achievement] Cow Tipper | Harvest some leather. | Pick up leather from the ground.
+		if((leatherMask&inventorymask)==leatherMask){
+			if(!achievmentTracker.checkAchievment("CowTipper",player)){
+				achievmentTracker.setAchievment("CowTipper",player)
+			}
+		}
+		//[achievement] Dispense with This | Construct a Dispenser. | —
+		if((dispenserMask&inventorymask)==dispenserMask){
+			if(!achievmentTracker.checkAchievment("DispensewithThis",player)){
+				achievmentTracker.setAchievment("DispensewithThis",player)
+			}
 		}
 	}
 }
@@ -999,33 +1146,33 @@ function checkToolAchievments(player,toolMask){
 		//[achievement] Time to Mine! | Use planks and sticks to make a pickaxe. | Pick up any type of pickaxe from a crafting table output.
 		if((woodPickType&toolMask)==woodPickType){
 			if(!achievmentTracker.checkAchievment("TimetoMine",player)){
-				achievmentTracker.setAchivement("TimetoMine",player)
+				achievmentTracker.setAchievment("TimetoMine",player)
 			}
 		}
 		//[achievement] Getting an Upgrade | Construct a better pickaxe. | Pick up a stone pickaxe from a crafting table output.
 		//[advancement] Getting an Upgrade | Construct a better Pickaxe | Have a stone pickaxe in your inventory.
 		if((stonePickType&toolMask)==stonePickType){
 			if(!advancementTracker.checkAchievment("GettinganUpgrade",player)){
-				advancementTracker.setAchivement("GettinganUpgrade",player)
-				achievmentTracker.setAchivement("GettinganUpgrade",player)
+				advancementTracker.setAchievment("GettinganUpgrade",player)
+				achievmentTracker.setAchievment("GettinganUpgrade",player)
 			}
 		}
 
 		//[advancement] Isn't It Iron Pick | Upgrade your Pickaxe | Have an iron pickaxe in your inventory.
 		if((ironPickType&toolMask)==ironPickType){
 			if(!advancementTracker.checkAchievment("IsntItIronPick",player)){
-				advancementTracker.setAchivement("IsntItIronPick",player)
+				advancementTracker.setAchievment("IsntItIronPick",player)
 			}
 		}	
 		//[achievement] MOAR Tools | Construct one type of each tool. | Construct one pickaxe, one shovel, one axe, and one hoe with the same material.
-		let toolsOfOneType = (toolMask*allWood)==allWood
-		toolsOfOneType = toolsOfOneType || (toolMask*allstone)==allstone
-		toolsOfOneType = toolsOfOneType || (toolMask*alliron)==alliron
-		toolsOfOneType = toolsOfOneType || (toolMask*alldiamond)==alldiamond
-		toolsOfOneType = toolsOfOneType || (toolMask*allnetherite)==allnetherite
+		let toolsOfOneType = (toolMask&allWood)==allWood
+		toolsOfOneType = toolsOfOneType || (toolMask&allstone)==allstone
+		toolsOfOneType = toolsOfOneType || (toolMask&alliron)==alliron
+		toolsOfOneType = toolsOfOneType || (toolMask&alldiamond)==alldiamond
+		toolsOfOneType = toolsOfOneType || (toolMask&allnetherite)==allnetherite
 		if(toolsOfOneType){
 			if(!achievmentTracker.checkAchievment("MOARTools",player)){
-				achievmentTracker.setAchivement("MOARTools",player)
+				achievmentTracker.setAchievment("MOARTools",player)
 			}
 		}
 	}
@@ -1033,20 +1180,20 @@ function checkToolAchievments(player,toolMask){
 		//[achievement] Time to Farm! | Make a Hoe. | Pick up any type of hoe from a crafting table output.
 		if((woodHoe&toolMask)==woodHoe){
 			if(!achievmentTracker.checkAchievment("TimetoFarm",player)){
-				achievmentTracker.setAchivement("TimetoFarm",player)
+				achievmentTracker.setAchievment("TimetoFarm",player)
 			}
 		}
 		// [advancement] Serious Dedication | Have a netherite hoe in your inventory.
 		if((netheriteHoe&toolMask)==netheriteHoe){
 			if(!advancementTracker.checkAchievment("SeriousDedication",player)){
-				advancementTracker.setAchivement("SeriousDedication",player)
+				advancementTracker.setAchievment("SeriousDedication",player)
 			}
 		}
 	}
 	//[achievement] Time to Strike! | Use planks and sticks to make a sword. | Pick up any type of sword from a crafting table output.
 	if((woodSword&toolMask)==woodSword){
 			if(!achievmentTracker.checkAchievment("TimetoStrike",player)){
-				achievmentTracker.setAchivement("TimetoStrike",player)
+				achievmentTracker.setAchievment("TimetoStrike",player)
 			}
 		}
 }
@@ -1058,19 +1205,19 @@ function checkArmorAchievments(player,armorMask){
 	//[advancement] Suit Up | Protect yourself with a piece of iron armor | Have any type of iron armor in your inventory.
 	if((allIronArmorMask & armorMask)>0){
 		if(!advancementTracker.checkAchievment("SuitUp",player)){
-			advancementTracker.setAchivement("SuitUp",player)
+			advancementTracker.setAchievment("SuitUp",player)
 		}
 		//[achievement] Iron Man | Wear a full suit of Iron Armor. | —
 		if((allIronArmorMask & armorMask) == allIronArmorMask){
 			if(!achievmentTracker.checkAchievment("IronMan",player)){
-				achievmentTracker.setAchivement("IronMan",player)
+				achievmentTracker.setAchievment("IronMan",player)
 			}
 		}
 	}
     //[advancement] Cover Me with Diamonds | Diamond armor saves lives | Have any type of diamond armor in your inventory.
 	if((allDiamondArmorMask & armorMask)>0){
 		if(!advancementTracker.checkAchievment("SuitUp",player)){
-			advancementTracker.setAchivement("SuitUp",player)
+			advancementTracker.setAchievment("SuitUp",player)
 		}
 	}
 	
@@ -1079,15 +1226,15 @@ function checkArmorAchievments(player,armorMask){
     //[advancement] Cover Me in Debris | Get a full suit of Netherite armor | Have a full set of netherite armor in your inventory.
 	if((allNetheriteArmorMask & armorMask)==allNetheriteArmorMask){
 		if(!advancementTracker.checkAchievment("Covermeindebris",player)){
-			advancementTracker.setAchivement("Covermeindebris",player)
-			achievmentTracker.setAchivement("Covermeindebris",player)
+			advancementTracker.setAchievment("Covermeindebris",player)
+			achievmentTracker.setAchievment("Covermeindebris",player)
 		}
 	}
 	
 	//[advancement] Sky's the Limit | Find Elytra | Have a pair of elytra in your inventory.
 	if((elytraMask & armorMask)==elytraMask){
 		if(!advancementTracker.checkAchievment("SkystheLimit",player)){
-			advancementTracker.setAchivement("SkystheLimit",player)
+			advancementTracker.setAchievment("SkystheLimit",player)
 		}
 	}
 	
@@ -1176,8 +1323,8 @@ function spawnAndBreed(entity, player){
 		    //[advancement] Hired Help | Summon an Iron Golem to help defend a village | Summon an iron golem.
 			case "iron_golem" :
 				if(!advancementTracker.checkAchievment("HiredHelp",player)){
-					advancementTracker.setAchivement("HiredHelp",player)
-					achievmentTracker.setAchivement("BodyGuard",player)
+					advancementTracker.setAchievment("HiredHelp",player)
+					achievmentTracker.setAchievment("BodyGuard",player)
 				}
 
 				break;
@@ -1185,8 +1332,8 @@ function spawnAndBreed(entity, player){
 		    //[advancement] Withering Heights | Summon the Wither | Be within a 100.9×100.9×103.5 cuboid centered on the wither when it is spawned.
 			case "wither" :
 				if(!advancementTracker.checkAchievment("WitheringHeights",player)){
-					advancementTracker.setAchivement("WitheringHeights",player)
-					achievmentTracker.setAchivement("TheBeginning",player)
+					advancementTracker.setAchievment("WitheringHeights",player)
+					achievmentTracker.setAchievment("TheBeginning",player)
 				}
 				break;
 		    //[achievement] The End... Again... | Respawn the Enderdragon [sic] | —
@@ -1205,24 +1352,24 @@ function spawnAndBreed(entity, player){
 		    //[advancement] Two by Two | Breed all the animals! | Breed a pair of each of these 24 mobs:, Axolotl, Bee, Camel, Cat, Chicken, Cow, Donkey, Fox, Frog, Goat, Hoglin, Horse, Llama, Mooshroom, Mule, Ocelot, Panda, Pig, Rabbit, Sheep, Sniffer, Strider, Turtle, Wolf, A trader llama does not count as a llama, and a mule must be the result of breeding a horse and a donkey for this advancement as they are not breedable together. Other breedable mobs can be bred, but are ignored for this advancement.
 			case "cow" :	//[achievement] Repopulation | Breed two cows with wheat. | Breed two cows or two mooshrooms.
 				if(!achievmentTracker.checkAchievment("Repopulation",player)){
-					advancementTracker.setAchivement("Repopulation",player)
+					advancementTracker.setAchievment("Repopulation",player)
 					if(!achievmentTracker.checkAchievment("TheParrotsandtheBats",player)){
-						achievmentTracker.setAchivement("TheParrotsandtheBats",player)
+						achievmentTracker.setAchievment("TheParrotsandtheBats",player)
 					}
 				}
 			case "mule" :	//[achievement] Artificial Selection | Breed a mule from a horse and a donkey. | —
 				if(!achievmentTracker.checkAchievment("ArtificialSelection",player)){
-					advancementTracker.setAchivement("ArtificialSelection",player)
+					advancementTracker.setAchievment("ArtificialSelection",player)
 					if(!achievmentTracker.checkAchievment("TheParrotsandtheBats",player)){
-						achievmentTracker.setAchivement("TheParrotsandtheBats",player)
+						achievmentTracker.setAchievment("TheParrotsandtheBats",player)
 					}
 				}
 				break;
 			case "panda" :	//[achievement] Zoologist | Breed two pandas with bamboo. | —
 				if(!achievmentTracker.checkAchievment("Zoologist",player)){
-					advancementTracker.setAchivement("Zoologist",player)
+					advancementTracker.setAchievment("Zoologist",player)
 					if(!achievmentTracker.checkAchievment("TheParrotsandtheBats",player)){
-						achievmentTracker.setAchivement("TheParrotsandtheBats",player)
+						achievmentTracker.setAchievment("TheParrotsandtheBats",player)
 					}
 				}
 				break;
@@ -1248,7 +1395,7 @@ function spawnAndBreed(entity, player){
 			case "turtle" ://*fall through*
 			case "wolf" :
 				if(!achievmentTracker.checkAchievment("TheParrotsandtheBats",player)){
-					achievmentTracker.setAchivement("TheParrotsandtheBats",player)
+					achievmentTracker.setAchievment("TheParrotsandtheBats",player)
 				}
 				if(getSomeScore("spawnAndBreed", "breed_all_bool", player) == 0){
 					if(getSomeScore("spawnAndBreed", entity, player) == 0){
@@ -1262,7 +1409,7 @@ function spawnAndBreed(entity, player){
 				break;
 			case "trader_llama" :
 				if(!achievmentTracker.checkAchievment("TheParrotsandtheBats",player)){
-						achievmentTracker.setAchivement("TheParrotsandtheBats",player)
+						achievmentTracker.setAchievment("TheParrotsandtheBats",player)
 				}
 				break;
 		}
@@ -1326,7 +1473,7 @@ function statusAndEffects(player){
     //[advancement] A Furious Cocktail | Have every potion effect applied at the same time | Have all of these 13 status effects applied to the player at the same time:, Fire Resistance, Invisibility, Jump Boost, Night Vision, Poison, Regeneration, Resistance, Slow Falling, Slowness, Speed, Strength, Water Breathing, Weakness, The source of the effects is irrelevant for the purposes of this advancement. Other status effects may be applied to the player, but are ignored for this advancement.
 	if((allPotionsMask & effectMask)==allPotionsMask){
 		if(!advancementTracker.checkAchievment("AFuriousCocktail",player)){
-			advancementTracker.setAchivement("AFuriousCocktail",player)
+			advancementTracker.setAchievment("AFuriousCocktail",player)
 		}
 	}
 	
@@ -1334,14 +1481,14 @@ function statusAndEffects(player){
     //[advancement] How Did We Get Here? | Have every effect applied at the same time | Have all of these 27 status effects applied to the player at the same time:, Absorption, Bad Omen, Blindness, Conduit Power, Darkness, Dolphin's Grace, Fire Resistance, Glowing, Haste, Hero of the Village, Hunger, Invisibility, Jump Boost, Levitation, Mining Fatigue, Nausea, Night Vision, Poison, Regeneration, Resistance, Slow Falling, Slowness, Speed, Strength, Water Breathing, Weakness, Wither, The source of the effects is irrelevant for the purposes of this advancement. Other status effects may be applied to the player, but are ignored for this advancement.
 	if((allPotionsMask & effectMask)==allPotionsMask){
 		if(!advancementTracker.checkAchievment("HowDidWeGetHere",player)){
-			advancementTracker.setAchivement("HowDidWeGetHere",player)
+			advancementTracker.setAchievment("HowDidWeGetHere",player)
 		}
 		
 	}
 	if((heroMask & effectMask)==heroMask){
 		//[advancement] Hero of the Village | Successfully defend a village from a raid | Kill at least one raid mob during a raid and wait until it ends in victory.
 		if(!advancementTracker.checkAchievment("HerooftheVillage"),player){
-			advancementTracker.setAchivement("HerooftheVillage",player)
+			advancementTracker.setAchievment("HerooftheVillage",player)
 		}
 	}
 }
@@ -1389,32 +1536,32 @@ function weaponsToolsArmor(subject, player){
 		    //[advancement] Ol' Betsy | Shoot a Crossbow | —
 			case "crossbow" :
 				if(!advancementTracker.checkAchievment("OlBetsy"),player){
-					advancementTracker.setAchivement("OlBetsy",player)
+					advancementTracker.setAchievment("OlBetsy",player)
 				}
 				break;
 		    //[advancement] Take Aim | Shoot something with an Arrow | Using a bow or a crossbow, shoot an entity with an arrow, tipped arrow, or spectral arrow.
 			case "arrow" :
 				if(!advancementTracker.checkAchievment("TakeAim"),player){
-					advancementTracker.setAchivement("TakeAim",player)
+					advancementTracker.setAchievment("TakeAim",player)
 				}
 				break;
 		    //[advancement] A Throwaway Joke | Throw a Trident at something. Note: Throwing away your only weapon is not a good idea. | Hit a mob with a thrown trident.
 			case "thrown_trident" :
 				if(!advancementTracker.checkAchievment("AThrowawayJoke"),player){
-					advancementTracker.setAchivement("AThrowawayJoke",player)
+					advancementTracker.setAchievment("AThrowawayJoke",player)
 				}
 				break;
 		    //[achievement] Bullseye | Hit the bullseye of a Target block | —
 			case "target" :
 				if(!achievmentTracker.checkAchievment("Bullseye"),player){
-					achievmentTracker.setAchivement("Bullseye",player)
-					advancementTracker.setAchivement("Bullseye",player)
+					achievmentTracker.setAchievment("Bullseye",player)
+					advancementTracker.setAchievment("Bullseye",player)
 				}
 				break;
 		    //[advancement] Bullseye | Hit the bullseye of a Target block from at least 30 meters away | Be at least 30 blocks away horizontally when the center of a target is shot with a projectile by the player.
 			case "targetFrom30" :
 				if(!advancementTracker.checkAchievment("Bullseye"),player){
-					advancementTracker.setAchivement("Bullseye",player)
+					advancementTracker.setAchievment("Bullseye",player)
 				}
 				break;
 		    //[advancement] Fishy Business | Catch a fish | Use a fishing rod to catch any of these fishes:, Cod, Salmon, Tropical Fish, Pufferfish
@@ -1562,7 +1709,7 @@ function getSomeScore(category, item, player){
 	//return categoryBoard.getScore(player);
 	return itemBoard.getScore(player);
 }
-function setAchivement(name){
+function setAchievment(name){
 	//needs to be implemented
 }
 function setAdvancement(name){
