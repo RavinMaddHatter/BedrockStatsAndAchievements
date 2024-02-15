@@ -785,32 +785,33 @@ function getSomeWhere(location, player){
 				break;
 		}
 }
+
 function itemInventory(player){
 	//to-do--------------------
-		//[achievement] Bake Bread | Turn wheat into bread. | Pick up bread from a crafting table output.
-		//[achievement] Careful restoration | Make a Decorated Pot out of 4 Pottery Sherds | —
-		//[achievement] Chestful of Cobblestone | Mine 1,728 Cobblestone and place it in a chest. | A player must mine 1,728 cobblestone and place 1,728 cobblestone, or 27 stacks, in a chest. The cobblestone placed in the chest does not have to be the same cobblestone that was mined.
-		//[achievement] Cow Tipper | Harvest some leather. | Pick up leather from the ground.
-		//[achievement] Dispense with This | Construct a Dispenser. | —
+		//Required data values
+		//[advancement] Spooky Scary Skeleton | Obtain a Wither Skeleton's skull | Have a wither skeleton skull in your inventory.
 		//[achievement] Dry Spell | Dry a sponge in a furnace | —
-		//[achievement] Enchanter | Construct an Enchantment Table. | Pick up an enchantment table from a crafting table output.
+		
+		//[achievement] Chestful of Cobblestone | Mine 1,728 Cobblestone and place it in a chest. | A player must mine 1,728 cobblestone and place 1,728 cobblestone, or 27 stacks, in a chest. The cobblestone placed in the chest does not have to be the same cobblestone that was mined.
+		
+		//[achievement] Taking Inventory | Open your inventory. | —
+		
+		//mabye should move
 		//[achievement] Getting Wood | Punch a tree until a block of wood pops out. | Pick up a log from the ground.
-		//[achievement] Hot Topic | Construct a furnace out of eight cobblestone blocks. | Pick up a furnace from a crafting table output.
-		//[achievement] Iron Man | Wear a full suit of Iron Armor. | —
-		//[achievement] Librarian | Build some bookshelves to improve your enchantment table. | Pick up a bookshelf from a crafting table output.
+		
 		//[achievement] MOAR Tools | Construct one type of each tool. | Construct one pickaxe, one shovel, one axe, and one hoe with the same material.
 		//[achievement] Rainbow Collection | Gather all 16 colors of wool. | All the colors of wool do not have to be in the inventory at the same time, but must have been picked up by the player at least once.
-		//[achievement] Taking Inventory | Open your inventory. | —
-		//[achievement] The Lie | Bake a cake using: wheat, sugar, milk, and eggs. | Pick up a cake from a crafting table output.
+		
+
 		//[achievement] Time to Farm! | Make a Hoe. | Pick up any type of hoe from a crafting table output.
 		//[achievement] Time to Mine! | Use planks and sticks to make a pickaxe. | Pick up any type of pickaxe from a crafting table output.
 		//[achievement] Time to Strike! | Use planks and sticks to make a sword. | Pick up any type of sword from a crafting table output.
-		//[achievement] With our powers combined! | Have all 3 froglights in your inventory | Acquire at least one of each pearlescent, verdant, and ochre froglights in your inventory at the same time.
-		//[achievement] You Need a Mint | Collect dragons breath in a glass bottle | Have a dragon's breath bottle in your inventory
+
 		//[advancement] Careful Restoration | Make a Decorated Pot out of 4 Pottery Sherds | —
-		//[advancement] Spooky Scary Skeleton | Obtain a Wither Skeleton's skull | Have a wither skeleton skull in your inventory.
+		//[achievement] Careful restoration | Make a Decorated Pot out of 4 Pottery Sherds | —
+		
 		//[advancement] With Our Powers Combined! | Have all Froglights in your inventory | Have a Pearlescent, Ochre, and Verdant Froglight in your inventory.
-		//[advancement] You Need a Mint | Collect Dragon's Breath in a Glass Bottle | Have a bottle of dragon's breath in your inventory.
+		//[achievement] With our powers combined! | Have all 3 froglights in your inventory | Acquire at least one of each pearlescent, verdant, and ochre froglights in your inventory at the same time.		
 	//in work--------------------
 	//done--------------------
 	const loseItems = ["crafting_table",	
@@ -833,12 +834,53 @@ function itemInventory(player){
 						"cobblestone",
 						"blackstone",
 						"cobbled_deepslate",
-						"obsidian",	//[advancement] Ice Bucket Challenge | Obtain a block of Obsidian | Have a block of obsidian in your inventory.
+						"obsidian",			//[advancement] Ice Bucket Challenge | Obtain a block of Obsidian | Have a block of obsidian in your inventory.
 						"crying_obsidian",	//[advancement] Who is Cutting Onions? | Obtain Crying Obsidian | Have a block of crying obsidian in your inventory.
-						"blaze_rod",	//[achievement] Into Fire | Relieve a Blaze of its rod. | Pick up a blaze rod from the ground.
-										//[advancement] Into Fire | Relieve a Blaze of its rod | Have a blaze rod in your inventory.
-						"dragon_egg",	//[advancement] The Next Generation | Hold the Dragon Egg | Have a dragon egg in your inventory.
-						"sniffer_egg"];	//[advancement] Smells Interesting | Obtain a Sniffer Egg | Have a sniffer egg in your inventory.
+						"blaze_rod",		//[achievement] Into Fire | Relieve a Blaze of its rod. | Pick up a blaze rod from the ground.
+											//[advancement] Into Fire | Relieve a Blaze of its rod | Have a blaze rod in your inventory.
+						"dragon_egg",		//[advancement] The Next Generation | Hold the Dragon Egg | Have a dragon egg in your inventory.
+						"sniffer_egg",		//[advancement] Smells Interesting | Obtain a Sniffer Egg | Have a sniffer egg in your inventory.
+						"dragon_breath",	//[advancement] You Need a Mint | Collect Dragon's Breath in a Glass Bottle | Have a bottle of dragon's breath in your inventory.
+											//[achievement] You Need a Mint | Collect dragons breath in a glass bottle | Have a dragon's breath bottle in your inventory
+						"bread", 			//[achievement] Bake Bread | Turn wheat into bread. | Pick up bread from a crafting table output.
+						"furnace", 		 	//[achievement] Hot Topic | Construct a furnace out of eight cobblestone blocks. | Pick up a furnace from a crafting table output.
+						"enchanting_table",	//[achievement] Enchanter | Construct an Enchantment Table. | Pick up an enchantment table from a crafting table output.
+						"bookshelf",		//[achievement] Librarian | Build some bookshelves to improve your enchantment table. | Pick up a bookshelf from a crafting table output.
+						"cake",				//[achievement] The Lie | Bake a cake using: wheat, sugar, milk, and eggs. | Pick up a cake from a crafting table output.
+						"leather",			//[achievement] Cow Tipper | Harvest some leather. | Pick up leather from the ground.
+						"dispenser"]//[achievement] Dispense with This | Construct a Dispenser. | —
+	const toolsTypes = ["wooden_pickaxe",
+					"wooden_sword",
+					"wooden_shovel",
+					"wooden_axe",
+					"wooden_hoe",
+					"stone_pickaxe",
+					"stone_sword",
+					"stone_shovel",
+					"stone_axe",
+					"stone_hoe",
+					"iron_pickaxe",
+					"iron_sword",
+					"iron_shovel",
+					"iron_axe",
+					"iron_hoe",
+					"golden_pickaxe",
+					"golden_sword",
+					"golden_shovel",
+					"golden_axe",
+					"golden_hoe",
+					"diamond_pickaxe",
+					"diamond_sword",
+					"diamond_shovel",
+					"diamond_axe",
+					"diamond_hoe",
+					"netherite_pickaxe",				
+					"netherite_sword",				
+					"netherite_shovel",				
+					"netherite_axe",				
+					"netherite_hoe"]				
+						
+	console.warn(toolsTypes.length)		
 	const armorTypes = ["iron_helmet",
 					"iron_chestplate",
 					"iron_leggings",
@@ -878,7 +920,12 @@ function itemInventory(player){
 	const allNetheriteArmorMask = 0b111100000000;
 	const bucketOfFishMask = 0b111100000000;
 	const stoneTypesMask = 0b11100000000000000;
-	const craftingTable=0b1
+	const hoeAnyType=0b100001000010000100001000010000
+	const axeAnyType=0b010000100001000010000100001000
+	const shovelAnyType=0b001000010000100001000010000100
+	const swordAnyType=0b000100001000010000100001000010
+	const pickAnyType=0b00010000100001000010000100001
+	const craftingTable =0b1
 	let inventoryPlayer = player.getComponent("minecraft:inventory");
 	let index=0;
 	let inventorymask = 0;
@@ -892,6 +939,7 @@ function itemInventory(player){
 				index = loseItems.indexOf(itemName)
 				inventorymask = inventorymask | (0b1<<index)
 				//boolScore("tracking_itemInventory_", itemName, player, 1);
+				
 			}
 			else if (sherdArray.includes(itemName)){
 				index = sherdArray.indexOf(itemName)
@@ -909,9 +957,11 @@ function itemInventory(player){
 		if(!advancementTracker.checkAchievment("SuitUp",player)){
 			advancementTracker.setAchivement("SuitUp",player)
 		}
+		//[achievement] Iron Man | Wear a full suit of Iron Armor. | —
 		if((allIronArmorMask & armorMask) == allIronArmorMask){
 			if(!achievmentTracker.checkAchievment("IronMan",player)){
 				achievmentTracker.setAchivement("IronMan",player)
+			}
 		}
 	}
     //[advancement] Cover Me with Diamonds | Diamond armor saves lives | Have any type of diamond armor in your inventory.
@@ -961,6 +1011,7 @@ function itemInventory(player){
 		}
 	}
 }
+
 function entityInteractions(){
 	//to-do--------------------
 		//[achievement] Birthday song | Have an Allay drop a cake at a noteblock | Tame an allay by giving it a cake while having dropped cake items and play a noteblock nearby.
@@ -1034,6 +1085,7 @@ function redstoneInteractions(){
 	//in work--------------------
 	//done--------------------
 }
+
 function spawnAndBreed(entity, player){
 	//to-do--------------------
 	//in work--------------------
@@ -1134,6 +1186,7 @@ function spawnAndBreed(entity, player){
 				break;
 		}
 }
+
 function statusAndEffects(player){
 	//to-do--------------------
 		//[achievement] Great View From Up Here | Levitate up 50 blocks from the attacks of a Shulker | —
@@ -1236,6 +1289,7 @@ function usingItems(item){
 	//in work--------------------
 	//done--------------------
 }
+
 function weaponsToolsArmor(subject, player){
 	//to-do--------------------
 		//[achievement] Do a Barrel Roll! | Use Riptide to give yourself a boost | Obtain a trident enchanted with Riptide and launch yourself any distance with it.
@@ -1333,6 +1387,7 @@ function weaponsToolsArmor(subject, player){
 				break;
 		}
 }
+
 function worldAndBiome(){
 	//to-do--------------------
 		//[achievement] Adventuring Time | Discover 17 biomes. | Visit any 17 biomes. Does not have to be in a single world.
