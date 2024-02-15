@@ -476,12 +476,10 @@ function getArrowType(arrow){
 function initSpawn(event){
 	let player = event.player;
 	
-	if(!player.hasTag("firstSpawn")){//verify the player hasn't spawned previously
-		//console.warn("I've initialized");
-		scoreSet("tracking_initSpawn_","initialPointX", player, player.location.x);//record player initial location x
-		scoreSet("tracking_initSpawn_","initialPointZ", player, player.location.z);//record player initial location z
-		initializeObjectives(player)
-		player.addTag("firstSpawn");//add tag to record that player has already spawned initially
+	if(!player.getDynamicProperty("1spawn") == "true"){//verify the player hasn't spawned previously	
+		player.setDynamicProperty("initialX",Math.floor(player.location.x));//record player initial location x
+		player.setDynamicProperty("initialZ",Math.floor(player.location.z));//record player initial location z
+		player.setDynamicProperty("1spawn", "true");//add tag to record that player has already spawned initially
 	}
 }
 function itemComplete(event){
@@ -500,9 +498,9 @@ function itemComplete(event){
 	
 	switch(itemName){
 		case "crossbow" :
-			boolScore("tracking_itemComplete_", "chargeBool", player, 1);
+			//boolScore("tracking_itemComplete_", "chargeBool", player, 1);
 			system.runTimeout(() => {
-				boolScore("tracking_itemComplete_", "chargeBool", player, 0);
+				//boolScore("tracking_itemComplete_", "chargeBool", player, 0);
 			}, 200);
 			break;
 	}
@@ -514,9 +512,9 @@ function itemRelease(event){
 	switch(itemName){
 		case "bow" :
 			addToScore("stats_itemsReleased_","Bow",player)
-			boolScore("tracking_itemRelease_", "shootBool", player, 1);
+			//boolScore("tracking_itemRelease_", "shootBool", player, 1);
 			system.runTimeout(() => {
-				boolScore("tracking_itemRelease_", "shootBool", player, 0);
+				//boolScore("tracking_itemRelease_", "shootBool", player, 0);
 			}, 40);
 			break;
 		case "crossbow":
@@ -668,19 +666,21 @@ function useItem(event){
 //stat functions----------------------------------------
 function overworldBlocksTravelled(player){
 	//get value of blocks travelled, or initialize if undefined
-		let blkDist = getSomeScore("stats_overworldBlocksTravelled_", "total", player);
+		let blkDist = player.getDynamicProperty("blockRun");
+		let x2;
+		let z2;
 		
 	//verify the player is in the overworld. calculate distance from last saved checkpoint or initial spawn if distance is 0
 		if(player.dimension.id == "minecraft:overworld"){
-			let x1 = getSomeScore("tracking_overworldBlocksTravelled_", "checkpointX", player);
-			let z1 = getSomeScore("tracking_overworldBlocksTravelled_", "checkpointZ", player);
+			let x1 = player.getDynamicProperty("blockRunX");
+			let z1 = player.getDynamicProperty("blockRunZ");
 			
 			if(blkDist == 0){//if first time, calculate from initial spawn location
-				x1 = getSomeScore("tracking_initSpawn_","initialPointX", player);
-				z1 = getSomeScore("tracking_initSpawn_","initialPointZ", player);
+				x1 = player.getDynamicProperty("initialX");
+				z1 = player.getDynamicProperty("initialZ");
 			}
-			let x2 = player.location.x;
-			let z2 = player.location.z;
+			x2 = Math.floor(player.location.x);
+			z2 = Math.floor(player.location.z);
 			blkDist = blkDist + calculateDistance(x1, z1, x2, z2);
 		}
 	//check if blocks travelled are more than 7000, then trigger achievement
@@ -688,11 +688,10 @@ function overworldBlocksTravelled(player){
 			getSomeWhere("overworld7000", player);
 		}
 	//record the calculated blocks travelled, and set new checkpoints
-		scoreSet("stats_overworldBlocksTravelled_","total", player, blkDist);
-		scoreSet("tracking_overworldBlocksTravelled_","checkpointX", player, player.location.x);
-		scoreSet("tracking_overworldBlocksTravelled_","checkpointZ", player, player.location.z);
+		player.setDynamicProperty("blockRun", blkDist);
+		player.setDynamicProperty("blockRunX", x2);
+		player.setDynamicProperty("blockRunZ", z2);
 	//output blocks travelled
-		//console.warn("I've travelled " + blkDist + " blocks")
 		return blkDist;
 }
 //end stat functions----------------------------------------
@@ -773,15 +772,15 @@ function getSomeWhere(location, player){
 		switch(location){
 		    //[advancement] Those Were the Days | Enter a Bastion Remnant | —
 			case "bastion_remnant" :
-				boolScore("objectives_advancement_", "Enter a Bastion Remnant", player, 1);
+				//boolScore("objectives_advancement_", "Enter a Bastion Remnant", player, 1);
 				break;
 		    //[advancement] A Terrible Fortress | Break your way into a Nether Fortress | Enter a nether fortress.
 			case "nether_fortress" :
-				boolScore("objectives_advancement_", "Enter a nether fortress", player, 1);
+				//boolScore("objectives_advancement_", "Enter a nether fortress", player, 1);
 				break;
 		    //[advancement] Subspace Bubble | Use the Nether to travel 7 km in the Overworld | Use the Nether to travel between 2 points in the Overworld with a minimum horizontal euclidean distance of 7000 blocks between each other, which is 875 blocks in the Nether.
 			case "overworld7000" :
-				boolScore("objectives_advancement_", "Travel 7km in the Overworld", player, 1);
+				//boolScore("objectives_advancement_", "Travel 7km in the Overworld", player, 1);
 				break;
 		}
 }
@@ -1064,7 +1063,7 @@ function spawnAndBreed(entity, player){
 					addToScore("spawnAndBreed", "ender_dragon_score", player);
 					if(getSomeScore("spawnAndBreed", "ender_dragon_score", player) > 1){
 						//console.warn("It's a rare, magical creature. We should kill it");
-						boolScore("spawnAndBreed", "ender_dragon_bool", player, 1);
+						//boolScore("spawnAndBreed", "ender_dragon_bool", player, 1);
 						achievmentUnlock(player, "The End... Again... ")
 					}
 				}
@@ -1121,9 +1120,9 @@ function spawnAndBreed(entity, player){
 				if(getSomeScore("spawnAndBreed", "breed_all_bool", player) == 0){
 					if(getSomeScore("spawnAndBreed", entity, player) == 0){
 						addToScore("spawnAndBreed", "breed_all_score", player);
-						boolScore("spawnAndBreed", entity, player, 1);
+						//boolScore("spawnAndBreed", entity, player, 1);
 						if(getSomeScore("spawnAndBreed", "breed_all_score", player) == 24){
-							boolScore("spawnAndBreed", "breed_all_bool", player, 1);
+							//boolScore("spawnAndBreed", "breed_all_bool", player, 1);
 						}
 					}
 				}
@@ -1320,7 +1319,7 @@ function weaponsToolsArmor(subject, player){
 									
 									if(slotItemName == ("minecraft:" + fishArray[i])){
 										if(getSomeScore("weaponsToolsArmor", fishArray[i], player) < slotItemAmount){
-											boolScore("weaponsToolsArmor", "catch_fish", player, 1);
+											//boolScore("weaponsToolsArmor", "catch_fish", player, 1);
 											achievmentUnlock(player,"Fishy Business")
 										}else{
 											scoreSet("weaponsToolsArmor", fishArray[i], player, 0);
