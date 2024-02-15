@@ -5,7 +5,6 @@ export const achievements = {
     "globalIndex": 1,
     "category": "Story",
     "container": "Story1",
-    "sortOrder": "Story1",
     "implemented": true,
     "containerIndex": 0
   },
@@ -15,7 +14,6 @@ export const achievements = {
     "globalIndex": 2,
     "category": "Story",
     "container": "Story1",
-    "sortOrder": "Story1",
     "implemented": true,
     "containerIndex": 1
   },
@@ -25,7 +23,6 @@ export const achievements = {
     "globalIndex": 3,
     "category": "Story",
     "container": "Story1",
-    "sortOrder": "Story1",
     "implemented": true,
     "containerIndex": 2
   },
@@ -35,7 +32,6 @@ export const achievements = {
     "globalIndex": 4,
     "category": "Story",
     "container": "Story1",
-    "sortOrder": "Story1",
     "implemented": true,
     "containerIndex": 3
   },
@@ -45,7 +41,6 @@ export const achievements = {
     "globalIndex": 5,
     "category": "Story",
     "container": "Story1",
-    "sortOrder": "Story1",
     "implemented": true,
     "containerIndex": 4
   },
@@ -55,7 +50,6 @@ export const achievements = {
     "globalIndex": 6,
     "category": "Story",
     "container": "Story1",
-    "sortOrder": "Story1",
     "implemented": true,
     "containerIndex": 5
   },
@@ -65,7 +59,6 @@ export const achievements = {
     "globalIndex": 7,
     "category": "Husbandry",
     "container": "Husbandry1",
-    "sortOrder": "Husbandry1",
     "implemented": true,
     "containerIndex": 0
   },
@@ -75,7 +68,6 @@ export const achievements = {
     "globalIndex": 8,
     "category": "Husbandry",
     "container": "Husbandry1",
-    "sortOrder": "Husbandry1",
     "implemented": true,
     "containerIndex": 1
   },
@@ -85,7 +77,6 @@ export const achievements = {
     "globalIndex": 9,
     "category": "Husbandry",
     "container": "Husbandry1",
-    "sortOrder": "Husbandry1",
     "implemented": true,
     "containerIndex": 2
   },
@@ -95,7 +86,6 @@ export const achievements = {
     "globalIndex": 10,
     "category": "story",
     "container": "Story1",
-    "sortOrder": "Story1",
     "implemented": true,
     "containerIndex": 6
   },
@@ -105,7 +95,6 @@ export const achievements = {
     "globalIndex": 11,
     "category": "Husbandry",
     "container": "Husbandry1",
-    "sortOrder": "Husbandry1",
     "implemented": true,
     "containerIndex": 3
   },
@@ -115,7 +104,6 @@ export const achievements = {
     "globalIndex": 12,
     "category": "Adventure",
     "container": "Adventure1",
-    "sortOrder": "Adventure1",
     "implemented": true,
     "containerIndex": 0
   },
@@ -125,7 +113,6 @@ export const achievements = {
     "globalIndex": 13,
     "category": "Story",
     "container": "Story1",
-    "sortOrder": "Story1",
     "implemented": true,
     "containerIndex": 7
   },
@@ -135,7 +122,6 @@ export const achievements = {
     "globalIndex": 14,
     "category": "Adventure",
     "container": "Adventure1",
-    "sortOrder": "Adventure1",
     "implemented": true,
     "containerIndex": 1
   },
@@ -145,7 +131,6 @@ export const achievements = {
     "globalIndex": 15,
     "category": "Husbandry",
     "container": "Husbandry1",
-    "sortOrder": "Husbandry1",
     "implemented": true,
     "containerIndex": 4
   },
@@ -155,7 +140,6 @@ export const achievements = {
     "globalIndex": 16,
     "category": "Adventure",
     "container": "Adventure1",
-    "sortOrder": "Adventure1",
     "implemented": true,
     "containerIndex": 2
   },
@@ -165,7 +149,6 @@ export const achievements = {
     "globalIndex": 17,
     "category": "Adventure",
     "container": "Adventure1",
-    "sortOrder": "Adventure1",
     "implemented": true,
     "containerIndex": 3
   },
@@ -175,7 +158,6 @@ export const achievements = {
     "globalIndex": 18,
     "category": "Story",
     "container": "Story1",
-    "sortOrder": "Story1",
     "implemented": true,
     "containerIndex": 8
   },
@@ -185,7 +167,6 @@ export const achievements = {
     "globalIndex": 19,
     "category": "Nether",
     "container": "Nether1",
-    "sortOrder": "Nether1",
     "implemented": true,
     "containerIndex": 0
   },
@@ -195,7 +176,6 @@ export const achievements = {
     "globalIndex": 20,
     "category": "Nether",
     "container": "Nether1",
-    "sortOrder": "Nether1",
     "implemented": true,
     "containerIndex": 1
   },
@@ -205,7 +185,6 @@ export const achievements = {
     "globalIndex": 21,
     "category": "Nether",
     "container": "Nether1",
-    "sortOrder": "Nether1",
     "implemented": true,
     "containerIndex": 2
   },
@@ -215,7 +194,6 @@ export const achievements = {
     "globalIndex": 22,
     "category": "Nether",
     "container": "Nether1",
-    "sortOrder": "Nether1",
     "implemented": true,
     "containerIndex": 3
   },
@@ -225,7 +203,6 @@ export const achievements = {
     "globalIndex": 24,
     "category": "The_End",
     "container": "The_End1",
-    "sortOrder": "The_End1",
     "implemented": true,
     "containerIndex": 1
   },
@@ -235,7 +212,6 @@ export const achievements = {
     "globalIndex": 25,
     "category": "Story",
     "container": "Story1",
-    "sortOrder": "Story1",
     "implemented": true,
     "containerIndex": 9
   },
@@ -245,7 +221,6 @@ export const achievements = {
     "globalIndex": 26,
     "category": "Adventure",
     "container": "Adventure1",
-    "sortOrder": "Adventure1",
     "implemented": true,
     "containerIndex": 4
   },
@@ -255,7 +230,6 @@ export const achievements = {
     "globalIndex": 27,
     "category": "Adventure",
     "container": "Adventure1",
-    "sortOrder": "Adventure1",
     "implemented": true,
     "containerIndex": 5
   },
@@ -265,7 +239,6 @@ export const achievements = {
     "globalIndex": 28,
     "category": "Adventure",
     "container": "Adventure1",
-    "sortOrder": "Adventure1",
     "implemented": true,
     "containerIndex": 6
   },
@@ -275,7 +248,6 @@ export const achievements = {
     "globalIndex": 30,
     "category": "Nether",
     "container": "Nether1",
-    "sortOrder": "Nether1",
     "implemented": true,
     "containerIndex": 5
   },
@@ -285,7 +257,6 @@ export const achievements = {
     "globalIndex": 31,
     "category": "Nether",
     "container": "Nether1",
-    "sortOrder": "Nether1",
     "implemented": true,
     "containerIndex": 6
   },
@@ -295,7 +266,6 @@ export const achievements = {
     "globalIndex": 32,
     "category": "Husbandry",
     "container": "Husbandry1",
-    "sortOrder": "Husbandry1",
     "implemented": true,
     "containerIndex": 6
   },
@@ -305,7 +275,6 @@ export const achievements = {
     "globalIndex": 33,
     "category": "Story",
     "container": "Story1",
-    "sortOrder": "Story1",
     "implemented": true,
     "containerIndex": 10
   },
@@ -315,7 +284,6 @@ export const achievements = {
     "globalIndex": 34,
     "category": "Story",
     "container": "Story1",
-    "sortOrder": "Story1",
     "implemented": true,
     "containerIndex": 11
   },
@@ -325,7 +293,6 @@ export const achievements = {
     "globalIndex": 35,
     "category": "Story",
     "container": "Story1",
-    "sortOrder": "Story1",
     "implemented": true,
     "containerIndex": 12
   },
@@ -335,7 +302,6 @@ export const achievements = {
     "globalIndex": 36,
     "category": "Story",
     "container": "Story1",
-    "sortOrder": "Story1",
     "implemented": true,
     "containerIndex": 13
   },
@@ -345,7 +311,6 @@ export const achievements = {
     "globalIndex": 37,
     "category": "Husbandry",
     "container": "Husbandry1",
-    "sortOrder": "Husbandry1",
     "implemented": true,
     "containerIndex": 5
   },
@@ -355,7 +320,6 @@ export const achievements = {
     "globalIndex": 38,
     "category": "Husbandry",
     "container": "Husbandry1",
-    "sortOrder": "Husbandry1",
     "implemented": true,
     "containerIndex": 7
   },
@@ -365,7 +329,6 @@ export const achievements = {
     "globalIndex": 39,
     "category": "Adventure",
     "container": "Adventure1",
-    "sortOrder": "Adventure1",
     "implemented": true,
     "containerIndex": 7
   },
@@ -375,7 +338,6 @@ export const achievements = {
     "globalIndex": 40,
     "category": "Story",
     "container": "Story1",
-    "sortOrder": "Story1",
     "implemented": true,
     "containerIndex": 14
   },
@@ -385,7 +347,6 @@ export const achievements = {
     "globalIndex": 41,
     "category": "Story",
     "container": "Story1",
-    "sortOrder": "Story1",
     "implemented": true,
     "containerIndex": 15
   },
@@ -395,7 +356,6 @@ export const achievements = {
     "globalIndex": 42,
     "category": "Story",
     "container": "Story1",
-    "sortOrder": "Story1",
     "implemented": true,
     "containerIndex": 16
   },
@@ -405,7 +365,6 @@ export const achievements = {
     "globalIndex": 43,
     "category": "Adventure",
     "container": "Adventure1",
-    "sortOrder": "Adventure1",
     "implemented": true,
     "containerIndex": 8
   },
@@ -415,7 +374,6 @@ export const achievements = {
     "globalIndex": 44,
     "category": "Husbandry",
     "container": "Husbandry1",
-    "sortOrder": "Husbandry1",
     "implemented": true,
     "containerIndex": 8
   },
@@ -425,7 +383,6 @@ export const achievements = {
     "globalIndex": 45,
     "category": "Husbandry",
     "container": "Husbandry1",
-    "sortOrder": "Husbandry1",
     "implemented": true,
     "containerIndex": 9
   },
@@ -435,7 +392,6 @@ export const achievements = {
     "globalIndex": 46,
     "category": "Adventure",
     "container": "Adventure1",
-    "sortOrder": "Adventure1",
     "implemented": true,
     "containerIndex": 9
   },
@@ -445,7 +401,6 @@ export const achievements = {
     "globalIndex": 47,
     "category": "Story",
     "container": "Story1",
-    "sortOrder": "Story1",
     "implemented": true,
     "containerIndex": 17
   },
@@ -455,7 +410,6 @@ export const achievements = {
     "globalIndex": 48,
     "category": "Story",
     "container": "Story1",
-    "sortOrder": "Story1",
     "implemented": true,
     "containerIndex": 18
   },
@@ -465,7 +419,6 @@ export const achievements = {
     "globalIndex": 49,
     "category": "Husbandry",
     "container": "Husbandry1",
-    "sortOrder": "Husbandry1",
     "implemented": true,
     "containerIndex": 10
   },
@@ -475,7 +428,6 @@ export const achievements = {
     "globalIndex": 50,
     "category": "Story",
     "container": "Story1",
-    "sortOrder": "Story1",
     "implemented": true,
     "containerIndex": 19
   },
@@ -485,7 +437,6 @@ export const achievements = {
     "globalIndex": 51,
     "category": "Husbandry",
     "container": "Husbandry1",
-    "sortOrder": "Husbandry1",
     "implemented": true,
     "containerIndex": 11
   },
@@ -495,7 +446,6 @@ export const achievements = {
     "globalIndex": 52,
     "category": "Husbandry",
     "container": "Husbandry1",
-    "sortOrder": "Husbandry1",
     "implemented": true,
     "containerIndex": 12
   },
@@ -505,7 +455,6 @@ export const achievements = {
     "globalIndex": 53,
     "category": "Adventure",
     "container": "Adventure1",
-    "sortOrder": "Adventure1",
     "implemented": true,
     "containerIndex": 10
   },
@@ -515,7 +464,6 @@ export const achievements = {
     "globalIndex": 54,
     "category": "Story",
     "container": "Story1",
-    "sortOrder": "Story1",
     "implemented": true,
     "containerIndex": 20
   },
@@ -525,7 +473,6 @@ export const achievements = {
     "globalIndex": 55,
     "category": "Adventure",
     "container": "Adventure1",
-    "sortOrder": "Adventure1",
     "implemented": true,
     "containerIndex": 11
   },
@@ -535,7 +482,6 @@ export const achievements = {
     "globalIndex": 56,
     "category": "Adventure",
     "container": "Adventure1",
-    "sortOrder": "Adventure1",
     "implemented": true,
     "containerIndex": 12
   },
@@ -545,7 +491,6 @@ export const achievements = {
     "globalIndex": 57,
     "category": "Story",
     "container": "Story1",
-    "sortOrder": "Story1",
     "implemented": true,
     "containerIndex": 21
   },
@@ -555,7 +500,6 @@ export const achievements = {
     "globalIndex": 58,
     "category": "Story",
     "container": "Story1",
-    "sortOrder": "Story1",
     "implemented": true,
     "containerIndex": 22
   },
@@ -565,7 +509,6 @@ export const achievements = {
     "globalIndex": 59,
     "category": "Story",
     "container": "Story1",
-    "sortOrder": "Story1",
     "implemented": true,
     "containerIndex": 23
   },
@@ -575,7 +518,6 @@ export const achievements = {
     "globalIndex": 60,
     "category": "Adventure",
     "container": "Adventure1",
-    "sortOrder": "Adventure1",
     "implemented": true,
     "containerIndex": 13
   },
@@ -585,7 +527,6 @@ export const achievements = {
     "globalIndex": 61,
     "category": "Story",
     "container": "Story1",
-    "sortOrder": "Story1",
     "implemented": true,
     "containerIndex": 24
   },
@@ -595,7 +536,6 @@ export const achievements = {
     "globalIndex": 62,
     "category": "Husbandry",
     "container": "Husbandry1",
-    "sortOrder": "Husbandry1",
     "implemented": true,
     "containerIndex": 13
   },
@@ -605,7 +545,6 @@ export const achievements = {
     "globalIndex": 63,
     "category": "Husbandry",
     "container": "Husbandry1",
-    "sortOrder": "Husbandry1",
     "implemented": true,
     "containerIndex": 14
   },
@@ -615,7 +554,6 @@ export const achievements = {
     "globalIndex": 64,
     "category": "Adventure",
     "container": "Adventure1",
-    "sortOrder": "Adventure1",
     "implemented": true,
     "containerIndex": 14
   },
@@ -625,7 +563,6 @@ export const achievements = {
     "globalIndex": 65,
     "category": "Husbandry",
     "container": "Husbandry1",
-    "sortOrder": "Husbandry1",
     "implemented": true,
     "containerIndex": 15
   },
@@ -635,7 +572,6 @@ export const achievements = {
     "globalIndex": 66,
     "category": "Adventure",
     "container": "Adventure1",
-    "sortOrder": "Adventure1",
     "implemented": true,
     "containerIndex": 15
   },
@@ -645,7 +581,6 @@ export const achievements = {
     "globalIndex": 67,
     "category": "Story",
     "container": "Story1",
-    "sortOrder": "Story1",
     "implemented": true,
     "containerIndex": 25
   },
@@ -655,7 +590,6 @@ export const achievements = {
     "globalIndex": 68,
     "category": "Story",
     "container": "Story1",
-    "sortOrder": "Story1",
     "implemented": true,
     "containerIndex": 26
   },
@@ -665,7 +599,6 @@ export const achievements = {
     "globalIndex": 69,
     "category": "The_End",
     "container": "The_End1",
-    "sortOrder": "The_End1",
     "implemented": true,
     "containerIndex": 2
   },
@@ -675,7 +608,6 @@ export const achievements = {
     "globalIndex": 70,
     "category": "Nether",
     "container": "Nether1",
-    "sortOrder": "Nether1",
     "implemented": true,
     "containerIndex": 7
   },
@@ -685,7 +617,6 @@ export const achievements = {
     "globalIndex": 71,
     "category": "The_End",
     "container": "The_End1",
-    "sortOrder": "The_End1",
     "implemented": true,
     "containerIndex": 3
   },
@@ -695,7 +626,6 @@ export const achievements = {
     "globalIndex": 72,
     "category": "The_End",
     "container": "The_End1",
-    "sortOrder": "The_End1",
     "implemented": true,
     "containerIndex": 4
   },
@@ -705,7 +635,6 @@ export const achievements = {
     "globalIndex": 73,
     "category": "The_End",
     "container": "The_End1",
-    "sortOrder": "The_End1",
     "implemented": true,
     "containerIndex": 5
   },
@@ -715,7 +644,6 @@ export const achievements = {
     "globalIndex": 74,
     "category": "Adventure",
     "container": "Adventure1",
-    "sortOrder": "Adventure1",
     "implemented": true,
     "containerIndex": 16
   },
@@ -725,7 +653,6 @@ export const achievements = {
     "globalIndex": 75,
     "category": "The_End",
     "container": "The_End1",
-    "sortOrder": "The_End1",
     "implemented": true,
     "containerIndex": 6
   },
@@ -735,7 +662,6 @@ export const achievements = {
     "globalIndex": 76,
     "category": "Adventure",
     "container": "Adventure1",
-    "sortOrder": "Adventure1",
     "implemented": true,
     "containerIndex": 17
   },
@@ -745,7 +671,6 @@ export const achievements = {
     "globalIndex": 77,
     "category": "Adventure",
     "container": "Adventure1",
-    "sortOrder": "Adventure1",
     "implemented": true,
     "containerIndex": 18
   },
@@ -755,7 +680,6 @@ export const achievements = {
     "globalIndex": 78,
     "category": "Adventure",
     "container": "Adventure1",
-    "sortOrder": "Adventure1",
     "implemented": true,
     "containerIndex": 19
   },
@@ -765,7 +689,6 @@ export const achievements = {
     "globalIndex": 79,
     "category": "Husbandry",
     "container": "Husbandry1",
-    "sortOrder": "Husbandry1",
     "implemented": true,
     "containerIndex": 16
   },
@@ -775,7 +698,6 @@ export const achievements = {
     "globalIndex": 80,
     "category": "Adventure",
     "container": "Adventure1",
-    "sortOrder": "Adventure1",
     "implemented": true,
     "containerIndex": 20
   },
@@ -785,7 +707,6 @@ export const achievements = {
     "globalIndex": 81,
     "category": "Adventure",
     "container": "Adventure1",
-    "sortOrder": "Adventure1",
     "implemented": true,
     "containerIndex": 21
   },
@@ -795,7 +716,6 @@ export const achievements = {
     "globalIndex": 82,
     "category": "Adventure",
     "container": "Adventure1",
-    "sortOrder": "Adventure1",
     "implemented": true,
     "containerIndex": 22
   },
@@ -805,7 +725,6 @@ export const achievements = {
     "globalIndex": 83,
     "category": "Adventure",
     "container": "Adventure1",
-    "sortOrder": "Adventure1",
     "implemented": true,
     "containerIndex": 23
   },
@@ -815,7 +734,6 @@ export const achievements = {
     "globalIndex": 84,
     "category": "Husbandry",
     "container": "Husbandry1",
-    "sortOrder": "Husbandry1",
     "implemented": true,
     "containerIndex": 17
   },
@@ -825,7 +743,6 @@ export const achievements = {
     "globalIndex": 85,
     "category": "Adventure",
     "container": "Adventure1",
-    "sortOrder": "Adventure1",
     "implemented": true,
     "containerIndex": 24
   },
@@ -835,7 +752,6 @@ export const achievements = {
     "globalIndex": 86,
     "category": "Adventure",
     "container": "Adventure1",
-    "sortOrder": "Adventure1",
     "implemented": true,
     "containerIndex": 25
   },
@@ -845,7 +761,6 @@ export const achievements = {
     "globalIndex": 87,
     "category": "Story",
     "container": "Story1",
-    "sortOrder": "Story1",
     "implemented": true,
     "containerIndex": 27
   },
@@ -855,7 +770,6 @@ export const achievements = {
     "globalIndex": 88,
     "category": "Adventure",
     "container": "Adventure1",
-    "sortOrder": "Adventure1",
     "implemented": true,
     "containerIndex": 26
   },
@@ -865,7 +779,6 @@ export const achievements = {
     "globalIndex": 89,
     "category": "Story",
     "container": "Story1",
-    "sortOrder": "Story1",
     "implemented": true,
     "containerIndex": 28
   },
@@ -875,7 +788,6 @@ export const achievements = {
     "globalIndex": 90,
     "category": "Adventure",
     "container": "Adventure1",
-    "sortOrder": "Adventure1",
     "implemented": true,
     "containerIndex": 27
   },
@@ -885,7 +797,6 @@ export const achievements = {
     "globalIndex": 91,
     "category": "Story",
     "container": "Story1",
-    "sortOrder": "Story1",
     "implemented": true,
     "containerIndex": 29
   },
@@ -895,7 +806,6 @@ export const achievements = {
     "globalIndex": 92,
     "category": "Story",
     "container": "Story1",
-    "sortOrder": "Story1",
     "implemented": true,
     "containerIndex": 30
   },
@@ -905,7 +815,6 @@ export const achievements = {
     "globalIndex": 93,
     "category": "Husbandry",
     "container": "Husbandry1",
-    "sortOrder": "Husbandry1",
     "implemented": true,
     "containerIndex": 18
   },
@@ -915,7 +824,6 @@ export const achievements = {
     "globalIndex": 94,
     "category": "Husbandry",
     "container": "Husbandry1",
-    "sortOrder": "Husbandry1",
     "implemented": true,
     "containerIndex": 19
   },
@@ -925,7 +833,6 @@ export const achievements = {
     "globalIndex": 95,
     "category": "Story",
     "container": "Story1",
-    "sortOrder": "Story1",
     "implemented": true,
     "containerIndex": 31
   },
@@ -935,7 +842,6 @@ export const achievements = {
     "globalIndex": 96,
     "category": "Husbandry",
     "container": "Husbandry1",
-    "sortOrder": "Husbandry1",
     "implemented": true,
     "containerIndex": 20
   },
@@ -945,7 +851,6 @@ export const achievements = {
     "globalIndex": 97,
     "category": "Adventure",
     "container": "Adventure1",
-    "sortOrder": "Adventure1",
     "implemented": true,
     "containerIndex": 28
   },
@@ -954,8 +859,7 @@ export const achievements = {
     "description": "Trade for the best possible price.",
     "globalIndex": 98,
     "category": "Story",
-    "container": "Story1",
-    "sortOrder": "Story1",
+    "container": "Story2",
     "implemented": true,
     "containerIndex": 0
   },
@@ -965,7 +869,6 @@ export const achievements = {
     "globalIndex": 99,
     "category": "Story",
     "container": "Story2",
-    "sortOrder": "Story2",
     "implemented": true,
     "containerIndex": 1
   },
@@ -975,7 +878,6 @@ export const achievements = {
     "globalIndex": 100,
     "category": "Adventure",
     "container": "Adventure1",
-    "sortOrder": "Adventure1",
     "implemented": true,
     "containerIndex": 29
   },
@@ -985,7 +887,6 @@ export const achievements = {
     "globalIndex": 101,
     "category": "Story",
     "container": "Story2",
-    "sortOrder": "Story2",
     "implemented": true,
     "containerIndex": 2
   },
@@ -995,7 +896,6 @@ export const achievements = {
     "globalIndex": 102,
     "category": "Adventure",
     "container": "Adventure1",
-    "sortOrder": "Adventure1",
     "implemented": true,
     "containerIndex": 30
   },
@@ -1005,7 +905,6 @@ export const achievements = {
     "globalIndex": 103,
     "category": "Story",
     "container": "Story2",
-    "sortOrder": "Story2",
     "implemented": true,
     "containerIndex": 3
   },
@@ -1015,7 +914,6 @@ export const achievements = {
     "globalIndex": 104,
     "category": "Story",
     "container": "Story2",
-    "sortOrder": "Story2",
     "implemented": true,
     "containerIndex": 4
   },
@@ -1025,7 +923,6 @@ export const achievements = {
     "globalIndex": 105,
     "category": "Husbandry",
     "container": "Husbandry1",
-    "sortOrder": "Husbandry1",
     "implemented": true,
     "containerIndex": 21
   },
@@ -1035,7 +932,6 @@ export const achievements = {
     "globalIndex": 106,
     "category": "Husbandry",
     "container": "Husbandry1",
-    "sortOrder": "Husbandry1",
     "implemented": true,
     "containerIndex": 22
   },
@@ -1045,7 +941,6 @@ export const achievements = {
     "globalIndex": 107,
     "category": "Story",
     "container": "Story2",
-    "sortOrder": "Story2",
     "implemented": true,
     "containerIndex": 5
   },
@@ -1055,7 +950,6 @@ export const achievements = {
     "globalIndex": 108,
     "category": "Story",
     "container": "Story2",
-    "sortOrder": "Story2",
     "implemented": true,
     "containerIndex": 6
   },
@@ -1065,7 +959,6 @@ export const achievements = {
     "globalIndex": 109,
     "category": "Nether",
     "container": "Nether1",
-    "sortOrder": "Nether1",
     "implemented": true,
     "containerIndex": 8
   },
@@ -1075,7 +968,6 @@ export const achievements = {
     "globalIndex": 110,
     "category": "Nether",
     "container": "Nether1",
-    "sortOrder": "Nether1",
     "implemented": true,
     "containerIndex": 9
   },
@@ -1085,7 +977,6 @@ export const achievements = {
     "globalIndex": 111,
     "category": "Nether",
     "container": "Nether1",
-    "sortOrder": "Nether1",
     "implemented": true,
     "containerIndex": 10
   },
@@ -1095,7 +986,6 @@ export const achievements = {
     "globalIndex": 112,
     "category": "Adventure",
     "container": "Adventure1",
-    "sortOrder": "Adventure1",
     "implemented": true,
     "containerIndex": 31
   },
@@ -1105,7 +995,6 @@ export const achievements = {
     "globalIndex": 113,
     "category": "Story",
     "container": "Story2",
-    "sortOrder": "Story2",
     "implemented": true,
     "containerIndex": 7
   },
@@ -1115,7 +1004,6 @@ export const achievements = {
     "globalIndex": 114,
     "category": "Husbandry",
     "container": "Husbandry1",
-    "sortOrder": "Husbandry1",
     "implemented": true,
     "containerIndex": 23
   },
@@ -1125,7 +1013,6 @@ export const achievements = {
     "globalIndex": 115,
     "category": "Story",
     "container": "Story2",
-    "sortOrder": "Story2",
     "implemented": true,
     "containerIndex": 8
   },
@@ -1135,7 +1022,6 @@ export const achievements = {
     "globalIndex": 116,
     "category": "Story",
     "container": "Story2",
-    "sortOrder": "Story2",
     "implemented": true,
     "containerIndex": 9
   },
@@ -1145,7 +1031,6 @@ export const achievements = {
     "globalIndex": 117,
     "category": "Story",
     "container": "Story2",
-    "sortOrder": "Story2",
     "implemented": true,
     "containerIndex": 10
   },
@@ -1155,7 +1040,6 @@ export const achievements = {
     "globalIndex": 118,
     "category": "Nether",
     "container": "Nether1",
-    "sortOrder": "Nether1",
     "implemented": true,
     "containerIndex": 11
   },
@@ -1165,7 +1049,6 @@ export const achievements = {
     "globalIndex": 119,
     "category": "Story",
     "container": "Story2",
-    "sortOrder": "Story2",
     "implemented": true,
     "containerIndex": 11
   },
@@ -1175,7 +1058,6 @@ export const achievements = {
     "globalIndex": 120,
     "category": "Husbandry",
     "container": "Husbandry1",
-    "sortOrder": "Husbandry1",
     "implemented": true,
     "containerIndex": 24
   },
@@ -1185,7 +1067,6 @@ export const achievements = {
     "globalIndex": 121,
     "category": "Nether",
     "container": "Nether1",
-    "sortOrder": "Nether1",
     "implemented": true,
     "containerIndex": 12
   },
@@ -1195,7 +1076,6 @@ export const achievements = {
     "globalIndex": 122,
     "category": "Story",
     "container": "Story2",
-    "sortOrder": "Story2",
     "implemented": true,
     "containerIndex": 12
   },
@@ -1205,7 +1085,6 @@ export const achievements = {
     "globalIndex": 123,
     "category": "Story",
     "container": "Story2",
-    "sortOrder": "Story2",
     "implemented": true,
     "containerIndex": 13
   },
@@ -1215,7 +1094,6 @@ export const achievements = {
     "globalIndex": 124,
     "category": "Story",
     "container": "Story2",
-    "sortOrder": "Story2",
     "implemented": true,
     "containerIndex": 14
   },
@@ -1225,7 +1103,6 @@ export const achievements = {
     "globalIndex": 125,
     "category": "Story",
     "container": "Story2",
-    "sortOrder": "Story2",
     "implemented": true,
     "containerIndex": 15
   }
@@ -1237,7 +1114,6 @@ export const advancements = {
     "globalIndex": 1,
     "category": "Story",
     "container": "advstory1",
-    "sortOrder": "advstory1",
     "implemented": true,
     "containerIndex": 0
   },
@@ -1247,7 +1123,6 @@ export const advancements = {
     "globalIndex": 2,
     "category": "Story",
     "container": "advstory1",
-    "sortOrder": "advstory1",
     "implemented": true,
     "containerIndex": 1
   },
@@ -1257,7 +1132,6 @@ export const advancements = {
     "globalIndex": 3,
     "category": "Story",
     "container": "advstory1",
-    "sortOrder": "advstory1",
     "implemented": true,
     "containerIndex": 2
   },
@@ -1267,7 +1141,6 @@ export const advancements = {
     "globalIndex": 4,
     "category": "Story",
     "container": "advstory1",
-    "sortOrder": "advstory1",
     "implemented": true,
     "containerIndex": 3
   },
@@ -1277,7 +1150,6 @@ export const advancements = {
     "globalIndex": 5,
     "category": "Story",
     "container": "advstory1",
-    "sortOrder": "advstory1",
     "implemented": true,
     "containerIndex": 4
   },
@@ -1287,7 +1159,6 @@ export const advancements = {
     "globalIndex": 6,
     "category": "Story",
     "container": "advstory1",
-    "sortOrder": "advstory1",
     "implemented": true,
     "containerIndex": 5
   },
@@ -1297,7 +1168,6 @@ export const advancements = {
     "globalIndex": 7,
     "category": "Story",
     "container": "advstory1",
-    "sortOrder": "advstory1",
     "implemented": true,
     "containerIndex": 6
   },
@@ -1307,7 +1177,6 @@ export const advancements = {
     "globalIndex": 8,
     "category": "Story",
     "container": "advstory1",
-    "sortOrder": "advstory1",
     "implemented": true,
     "containerIndex": 7
   },
@@ -1317,7 +1186,6 @@ export const advancements = {
     "globalIndex": 9,
     "category": "Story",
     "container": "advstory1",
-    "sortOrder": "advstory1",
     "implemented": true,
     "containerIndex": 8
   },
@@ -1327,7 +1195,6 @@ export const advancements = {
     "globalIndex": 10,
     "category": "Story",
     "container": "advstory1",
-    "sortOrder": "advstory1",
     "implemented": true,
     "containerIndex": 9
   },
@@ -1337,7 +1204,6 @@ export const advancements = {
     "globalIndex": 11,
     "category": "Story",
     "container": "advstory1",
-    "sortOrder": "advstory1",
     "implemented": true,
     "containerIndex": 10
   },
@@ -1347,7 +1213,6 @@ export const advancements = {
     "globalIndex": 12,
     "category": "Story",
     "container": "advstory1",
-    "sortOrder": "advstory1",
     "implemented": true,
     "containerIndex": 11
   },
@@ -1357,7 +1222,6 @@ export const advancements = {
     "globalIndex": 13,
     "category": "Story",
     "container": "advstory1",
-    "sortOrder": "advstory1",
     "implemented": true,
     "containerIndex": 12
   },
@@ -1367,7 +1231,6 @@ export const advancements = {
     "globalIndex": 14,
     "category": "Story",
     "container": "advstory1",
-    "sortOrder": "advstory1",
     "implemented": true,
     "containerIndex": 13
   },
@@ -1377,7 +1240,6 @@ export const advancements = {
     "globalIndex": 15,
     "category": "Story",
     "container": "advstory1",
-    "sortOrder": "advstory1",
     "implemented": true,
     "containerIndex": 14
   },
@@ -1387,7 +1249,6 @@ export const advancements = {
     "globalIndex": 41,
     "category": "The_End",
     "container": "advThe_End1",
-    "sortOrder": "advThe_End1",
     "implemented": true,
     "containerIndex": 0
   },
@@ -1397,7 +1258,6 @@ export const advancements = {
     "globalIndex": 17,
     "category": "Nether",
     "container": "advNether1",
-    "sortOrder": "advNether1",
     "implemented": true,
     "containerIndex": 0
   },
@@ -1407,7 +1267,6 @@ export const advancements = {
     "globalIndex": 18,
     "category": "Nether",
     "container": "advNether1",
-    "sortOrder": "advNether1",
     "implemented": true,
     "containerIndex": 1
   },
@@ -1417,7 +1276,6 @@ export const advancements = {
     "globalIndex": 19,
     "category": "Nether",
     "container": "advNether1",
-    "sortOrder": "advNether1",
     "implemented": true,
     "containerIndex": 2
   },
@@ -1427,7 +1285,6 @@ export const advancements = {
     "globalIndex": 20,
     "category": "Nether",
     "container": "advNether1",
-    "sortOrder": "advNether1",
     "implemented": true,
     "containerIndex": 3
   },
@@ -1437,7 +1294,6 @@ export const advancements = {
     "globalIndex": 21,
     "category": "Nether",
     "container": "advNether1",
-    "sortOrder": "advNether1",
     "implemented": true,
     "containerIndex": 4
   },
@@ -1447,7 +1303,6 @@ export const advancements = {
     "globalIndex": 22,
     "category": "Nether",
     "container": "advNether1",
-    "sortOrder": "advNether1",
     "implemented": true,
     "containerIndex": 5
   },
@@ -1457,7 +1312,6 @@ export const advancements = {
     "globalIndex": 23,
     "category": "Nether",
     "container": "advNether1",
-    "sortOrder": "advNether1",
     "implemented": true,
     "containerIndex": 6
   },
@@ -1467,7 +1321,6 @@ export const advancements = {
     "globalIndex": 24,
     "category": "Nether",
     "container": "advNether1",
-    "sortOrder": "advNether1",
     "implemented": true,
     "containerIndex": 7
   },
@@ -1477,7 +1330,6 @@ export const advancements = {
     "globalIndex": 25,
     "category": "Nether",
     "container": "advNether1",
-    "sortOrder": "advNether1",
     "implemented": true,
     "containerIndex": 8
   },
@@ -1487,7 +1339,6 @@ export const advancements = {
     "globalIndex": 26,
     "category": "Nether",
     "container": "advNether1",
-    "sortOrder": "advNether1",
     "implemented": true,
     "containerIndex": 9
   },
@@ -1497,7 +1348,6 @@ export const advancements = {
     "globalIndex": 27,
     "category": "Nether",
     "container": "advNether1",
-    "sortOrder": "advNether1",
     "implemented": true,
     "containerIndex": 10
   },
@@ -1507,7 +1357,6 @@ export const advancements = {
     "globalIndex": 28,
     "category": "Nether",
     "container": "advNether1",
-    "sortOrder": "advNether1",
     "implemented": true,
     "containerIndex": 11
   },
@@ -1517,7 +1366,6 @@ export const advancements = {
     "globalIndex": 29,
     "category": "Nether",
     "container": "advNether1",
-    "sortOrder": "advNether1",
     "implemented": true,
     "containerIndex": 12
   },
@@ -1527,7 +1375,6 @@ export const advancements = {
     "globalIndex": 30,
     "category": "Nether",
     "container": "advNether1",
-    "sortOrder": "advNether1",
     "implemented": true,
     "containerIndex": 13
   },
@@ -1537,7 +1384,6 @@ export const advancements = {
     "globalIndex": 31,
     "category": "Nether",
     "container": "advNether1",
-    "sortOrder": "advNether1",
     "implemented": true,
     "containerIndex": 14
   },
@@ -1547,7 +1393,6 @@ export const advancements = {
     "globalIndex": 32,
     "category": "Nether",
     "container": "advNether1",
-    "sortOrder": "advNether1",
     "implemented": true,
     "containerIndex": 15
   },
@@ -1557,7 +1402,6 @@ export const advancements = {
     "globalIndex": 33,
     "category": "Nether",
     "container": "advNether1",
-    "sortOrder": "advNether1",
     "implemented": true,
     "containerIndex": 16
   },
@@ -1567,7 +1411,6 @@ export const advancements = {
     "globalIndex": 34,
     "category": "Nether",
     "container": "advNether1",
-    "sortOrder": "advNether1",
     "implemented": true,
     "containerIndex": 17
   },
@@ -1577,7 +1420,6 @@ export const advancements = {
     "globalIndex": 35,
     "category": "Nether",
     "container": "advNether1",
-    "sortOrder": "advNether1",
     "implemented": true,
     "containerIndex": 18
   },
@@ -1587,7 +1429,6 @@ export const advancements = {
     "globalIndex": 36,
     "category": "Nether",
     "container": "advNether1",
-    "sortOrder": "advNether1",
     "implemented": true,
     "containerIndex": 19
   },
@@ -1597,7 +1438,6 @@ export const advancements = {
     "globalIndex": 37,
     "category": "Nether",
     "container": "advNether1",
-    "sortOrder": "advNether1",
     "implemented": true,
     "containerIndex": 20
   },
@@ -1607,7 +1447,6 @@ export const advancements = {
     "globalIndex": 38,
     "category": "Nether",
     "container": "advNether1",
-    "sortOrder": "advNether1",
     "implemented": true,
     "containerIndex": 21
   },
@@ -1617,7 +1456,6 @@ export const advancements = {
     "globalIndex": 39,
     "category": "Nether",
     "container": "advNether1",
-    "sortOrder": "advNether1",
     "implemented": true,
     "containerIndex": 22
   },
@@ -1627,7 +1465,6 @@ export const advancements = {
     "globalIndex": 40,
     "category": "Nether",
     "container": "advNether1",
-    "sortOrder": "advNether1",
     "implemented": true,
     "containerIndex": 23
   },
@@ -1637,7 +1474,6 @@ export const advancements = {
     "globalIndex": 42,
     "category": "The_End",
     "container": "advThe_End1",
-    "sortOrder": "advThe_End1",
     "implemented": true,
     "containerIndex": 1
   },
@@ -1647,7 +1483,6 @@ export const advancements = {
     "globalIndex": 43,
     "category": "The_End",
     "container": "advThe_End1",
-    "sortOrder": "advThe_End1",
     "implemented": true,
     "containerIndex": 2
   },
@@ -1657,7 +1492,6 @@ export const advancements = {
     "globalIndex": 44,
     "category": "The_End",
     "container": "advThe_End1",
-    "sortOrder": "advThe_End1",
     "implemented": true,
     "containerIndex": 3
   },
@@ -1667,7 +1501,6 @@ export const advancements = {
     "globalIndex": 45,
     "category": "The_End",
     "container": "advThe_End1",
-    "sortOrder": "advThe_End1",
     "implemented": true,
     "containerIndex": 4
   },
@@ -1677,7 +1510,6 @@ export const advancements = {
     "globalIndex": 46,
     "category": "The_End",
     "container": "advThe_End1",
-    "sortOrder": "advThe_End1",
     "implemented": true,
     "containerIndex": 5
   },
@@ -1687,7 +1519,6 @@ export const advancements = {
     "globalIndex": 47,
     "category": "The_End",
     "container": "advThe_End1",
-    "sortOrder": "advThe_End1",
     "implemented": true,
     "containerIndex": 6
   },
@@ -1697,7 +1528,6 @@ export const advancements = {
     "globalIndex": 48,
     "category": "The_End",
     "container": "advThe_End1",
-    "sortOrder": "advThe_End1",
     "implemented": true,
     "containerIndex": 7
   },
@@ -1707,7 +1537,6 @@ export const advancements = {
     "globalIndex": 49,
     "category": "The_End",
     "container": "advThe_End1",
-    "sortOrder": "advThe_End1",
     "implemented": true,
     "containerIndex": 8
   },
@@ -1717,7 +1546,6 @@ export const advancements = {
     "globalIndex": 50,
     "category": "Adventure",
     "container": "advAdventure1",
-    "sortOrder": "advAdventure1",
     "implemented": true,
     "containerIndex": 0
   },
@@ -1727,7 +1555,6 @@ export const advancements = {
     "globalIndex": 51,
     "category": "Adventure",
     "container": "advAdventure1",
-    "sortOrder": "advAdventure1",
     "implemented": true,
     "containerIndex": 1
   },
@@ -1737,7 +1564,6 @@ export const advancements = {
     "globalIndex": 52,
     "category": "Adventure",
     "container": "advAdventure1",
-    "sortOrder": "advAdventure1",
     "implemented": true,
     "containerIndex": 2
   },
@@ -1747,7 +1573,6 @@ export const advancements = {
     "globalIndex": 53,
     "category": "Adventure",
     "container": "advAdventure1",
-    "sortOrder": "advAdventure1",
     "implemented": true,
     "containerIndex": 3
   },
@@ -1757,7 +1582,6 @@ export const advancements = {
     "globalIndex": 54,
     "category": "Adventure",
     "container": "advAdventure1",
-    "sortOrder": "advAdventure1",
     "implemented": true,
     "containerIndex": 4
   },
@@ -1767,7 +1591,6 @@ export const advancements = {
     "globalIndex": 55,
     "category": "Adventure",
     "container": "advAdventure1",
-    "sortOrder": "advAdventure1",
     "implemented": true,
     "containerIndex": 5
   },
@@ -1777,7 +1600,6 @@ export const advancements = {
     "globalIndex": 56,
     "category": "Adventure",
     "container": "advAdventure1",
-    "sortOrder": "advAdventure1",
     "implemented": true,
     "containerIndex": 6
   },
@@ -1787,7 +1609,6 @@ export const advancements = {
     "globalIndex": 57,
     "category": "Adventure",
     "container": "advAdventure1",
-    "sortOrder": "advAdventure1",
     "implemented": true,
     "containerIndex": 7
   },
@@ -1797,7 +1618,6 @@ export const advancements = {
     "globalIndex": 58,
     "category": "Adventure",
     "container": "advAdventure1",
-    "sortOrder": "advAdventure1",
     "implemented": true,
     "containerIndex": 8
   },
@@ -1807,7 +1627,6 @@ export const advancements = {
     "globalIndex": 59,
     "category": "Adventure",
     "container": "advAdventure1",
-    "sortOrder": "advAdventure1",
     "implemented": true,
     "containerIndex": 9
   },
@@ -1817,7 +1636,6 @@ export const advancements = {
     "globalIndex": 60,
     "category": "Adventure",
     "container": "advAdventure1",
-    "sortOrder": "advAdventure1",
     "implemented": true,
     "containerIndex": 10
   },
@@ -1827,7 +1645,6 @@ export const advancements = {
     "globalIndex": 61,
     "category": "Adventure",
     "container": "advAdventure1",
-    "sortOrder": "advAdventure1",
     "implemented": true,
     "containerIndex": 11
   },
@@ -1837,7 +1654,6 @@ export const advancements = {
     "globalIndex": 62,
     "category": "Adventure",
     "container": "advAdventure1",
-    "sortOrder": "advAdventure1",
     "implemented": true,
     "containerIndex": 12
   },
@@ -1847,7 +1663,6 @@ export const advancements = {
     "globalIndex": 63,
     "category": "Adventure",
     "container": "advAdventure1",
-    "sortOrder": "advAdventure1",
     "implemented": true,
     "containerIndex": 13
   },
@@ -1857,7 +1672,6 @@ export const advancements = {
     "globalIndex": 64,
     "category": "Adventure",
     "container": "advAdventure1",
-    "sortOrder": "advAdventure1",
     "implemented": true,
     "containerIndex": 14
   },
@@ -1867,7 +1681,6 @@ export const advancements = {
     "globalIndex": 65,
     "category": "Adventure",
     "container": "advAdventure1",
-    "sortOrder": "advAdventure1",
     "implemented": true,
     "containerIndex": 15
   },
@@ -1877,7 +1690,6 @@ export const advancements = {
     "globalIndex": 66,
     "category": "Adventure",
     "container": "advAdventure1",
-    "sortOrder": "advAdventure1",
     "implemented": true,
     "containerIndex": 16
   },
@@ -1887,7 +1699,6 @@ export const advancements = {
     "globalIndex": 67,
     "category": "Adventure",
     "container": "advAdventure1",
-    "sortOrder": "advAdventure1",
     "implemented": true,
     "containerIndex": 17
   },
@@ -1897,7 +1708,6 @@ export const advancements = {
     "globalIndex": 68,
     "category": "Adventure",
     "container": "advAdventure1",
-    "sortOrder": "advAdventure1",
     "implemented": true,
     "containerIndex": 18
   },
@@ -1907,7 +1717,6 @@ export const advancements = {
     "globalIndex": 69,
     "category": "Adventure",
     "container": "advAdventure1",
-    "sortOrder": "advAdventure1",
     "implemented": true,
     "containerIndex": 19
   },
@@ -1917,7 +1726,6 @@ export const advancements = {
     "globalIndex": 70,
     "category": "Adventure",
     "container": "advAdventure1",
-    "sortOrder": "advAdventure1",
     "implemented": true,
     "containerIndex": 20
   },
@@ -1927,7 +1735,6 @@ export const advancements = {
     "globalIndex": 71,
     "category": "Adventure",
     "container": "advAdventure1",
-    "sortOrder": "advAdventure1",
     "implemented": true,
     "containerIndex": 21
   },
@@ -1937,7 +1744,6 @@ export const advancements = {
     "globalIndex": 72,
     "category": "Adventure",
     "container": "advAdventure1",
-    "sortOrder": "advAdventure1",
     "implemented": true,
     "containerIndex": 22
   },
@@ -1947,7 +1753,6 @@ export const advancements = {
     "globalIndex": 73,
     "category": "Adventure",
     "container": "advAdventure1",
-    "sortOrder": "advAdventure1",
     "implemented": true,
     "containerIndex": 23
   },
@@ -1957,7 +1762,6 @@ export const advancements = {
     "globalIndex": 74,
     "category": "Adventure",
     "container": "advAdventure1",
-    "sortOrder": "advAdventure1",
     "implemented": true,
     "containerIndex": 24
   },
@@ -1967,7 +1771,6 @@ export const advancements = {
     "globalIndex": 75,
     "category": "Adventure",
     "container": "advAdventure1",
-    "sortOrder": "advAdventure1",
     "implemented": true,
     "containerIndex": 25
   },
@@ -1977,7 +1780,6 @@ export const advancements = {
     "globalIndex": 76,
     "category": "Adventure",
     "container": "advAdventure1",
-    "sortOrder": "advAdventure1",
     "implemented": true,
     "containerIndex": 26
   },
@@ -1987,7 +1789,6 @@ export const advancements = {
     "globalIndex": 77,
     "category": "Adventure",
     "container": "advAdventure1",
-    "sortOrder": "advAdventure1",
     "implemented": true,
     "containerIndex": 27
   },
@@ -1997,7 +1798,6 @@ export const advancements = {
     "globalIndex": 78,
     "category": "Adventure",
     "container": "advAdventure1",
-    "sortOrder": "advAdventure1",
     "implemented": true,
     "containerIndex": 28
   },
@@ -2007,7 +1807,6 @@ export const advancements = {
     "globalIndex": 79,
     "category": "Adventure",
     "container": "advAdventure1",
-    "sortOrder": "advAdventure1",
     "implemented": true,
     "containerIndex": 29
   },
@@ -2017,7 +1816,6 @@ export const advancements = {
     "globalIndex": 80,
     "category": "Adventure",
     "container": "advAdventure1",
-    "sortOrder": "advAdventure1",
     "implemented": true,
     "containerIndex": 30
   },
@@ -2027,7 +1825,6 @@ export const advancements = {
     "globalIndex": 81,
     "category": "Adventure",
     "container": "advAdventure1",
-    "sortOrder": "advAdventure1",
     "implemented": true,
     "containerIndex": 31
   },
@@ -2037,7 +1834,6 @@ export const advancements = {
     "globalIndex": 82,
     "category": "Adventure",
     "container": "advAdeventure2",
-    "sortOrder": "advAdeventure2",
     "implemented": true,
     "containerIndex": 0
   },
@@ -2047,7 +1843,6 @@ export const advancements = {
     "globalIndex": 83,
     "category": "Adventure",
     "container": "advAdeventure2",
-    "sortOrder": "advAdeventure2",
     "implemented": true,
     "containerIndex": 1
   },
@@ -2057,7 +1852,6 @@ export const advancements = {
     "globalIndex": 84,
     "category": "Adventure",
     "container": "advAdeventure2",
-    "sortOrder": "advAdeventure2",
     "implemented": true,
     "containerIndex": 2
   },
@@ -2067,7 +1861,6 @@ export const advancements = {
     "globalIndex": 85,
     "category": "Husbandry",
     "container": "advHusbandry1",
-    "sortOrder": "advHusbandry1",
     "implemented": true,
     "containerIndex": 0
   },
@@ -2077,7 +1870,6 @@ export const advancements = {
     "globalIndex": 86,
     "category": "Husbandry",
     "container": "advHusbandry1",
-    "sortOrder": "advHusbandry1",
     "implemented": true,
     "containerIndex": 1
   },
@@ -2087,7 +1879,6 @@ export const advancements = {
     "globalIndex": 87,
     "category": "Husbandry",
     "container": "advHusbandry1",
-    "sortOrder": "advHusbandry1",
     "implemented": true,
     "containerIndex": 2
   },
@@ -2097,7 +1888,6 @@ export const advancements = {
     "globalIndex": 88,
     "category": "Husbandry",
     "container": "advHusbandry1",
-    "sortOrder": "advHusbandry1",
     "implemented": true,
     "containerIndex": 3
   },
@@ -2107,7 +1897,6 @@ export const advancements = {
     "globalIndex": 89,
     "category": "Husbandry",
     "container": "advHusbandry1",
-    "sortOrder": "advHusbandry1",
     "implemented": true,
     "containerIndex": 4
   },
@@ -2117,7 +1906,6 @@ export const advancements = {
     "globalIndex": 90,
     "category": "Husbandry",
     "container": "advHusbandry1",
-    "sortOrder": "advHusbandry1",
     "implemented": true,
     "containerIndex": 5
   },
@@ -2127,7 +1915,6 @@ export const advancements = {
     "globalIndex": 91,
     "category": "Husbandry",
     "container": "advHusbandry1",
-    "sortOrder": "advHusbandry1",
     "implemented": true,
     "containerIndex": 6
   },
@@ -2137,7 +1924,6 @@ export const advancements = {
     "globalIndex": 92,
     "category": "Husbandry",
     "container": "advHusbandry1",
-    "sortOrder": "advHusbandry1",
     "implemented": true,
     "containerIndex": 7
   },
@@ -2147,7 +1933,6 @@ export const advancements = {
     "globalIndex": 93,
     "category": "Husbandry",
     "container": "advHusbandry1",
-    "sortOrder": "advHusbandry1",
     "implemented": true,
     "containerIndex": 8
   },
@@ -2157,7 +1942,6 @@ export const advancements = {
     "globalIndex": 94,
     "category": "Husbandry",
     "container": "advHusbandry1",
-    "sortOrder": "advHusbandry1",
     "implemented": true,
     "containerIndex": 9
   },
@@ -2167,7 +1951,6 @@ export const advancements = {
     "globalIndex": 95,
     "category": "Husbandry",
     "container": "advHusbandry1",
-    "sortOrder": "advHusbandry1",
     "implemented": true,
     "containerIndex": 10
   },
@@ -2177,7 +1960,6 @@ export const advancements = {
     "globalIndex": 96,
     "category": "Husbandry",
     "container": "advHusbandry1",
-    "sortOrder": "advHusbandry1",
     "implemented": true,
     "containerIndex": 11
   },
@@ -2187,7 +1969,6 @@ export const advancements = {
     "globalIndex": 97,
     "category": "Husbandry",
     "container": "advHusbandry1",
-    "sortOrder": "advHusbandry1",
     "implemented": true,
     "containerIndex": 12
   },
@@ -2197,7 +1978,6 @@ export const advancements = {
     "globalIndex": 98,
     "category": "Husbandry",
     "container": "advHusbandry1",
-    "sortOrder": "advHusbandry1",
     "implemented": true,
     "containerIndex": 13
   },
@@ -2207,7 +1987,6 @@ export const advancements = {
     "globalIndex": 99,
     "category": "Husbandry",
     "container": "advHusbandry1",
-    "sortOrder": "advHusbandry1",
     "implemented": true,
     "containerIndex": 14
   },
@@ -2217,7 +1996,6 @@ export const advancements = {
     "globalIndex": 100,
     "category": "Husbandry",
     "container": "advHusbandry1",
-    "sortOrder": "advHusbandry1",
     "implemented": true,
     "containerIndex": 15
   },
@@ -2227,7 +2005,6 @@ export const advancements = {
     "globalIndex": 101,
     "category": "Husbandry",
     "container": "advHusbandry1",
-    "sortOrder": "advHusbandry1",
     "implemented": true,
     "containerIndex": 16
   },
@@ -2237,7 +2014,6 @@ export const advancements = {
     "globalIndex": 102,
     "category": "Husbandry",
     "container": "advHusbandry1",
-    "sortOrder": "advHusbandry1",
     "implemented": true,
     "containerIndex": 17
   },
@@ -2247,7 +2023,6 @@ export const advancements = {
     "globalIndex": 103,
     "category": "Husbandry",
     "container": "advHusbandry1",
-    "sortOrder": "advHusbandry1",
     "implemented": true,
     "containerIndex": 18
   },
@@ -2257,7 +2032,6 @@ export const advancements = {
     "globalIndex": 104,
     "category": "Husbandry",
     "container": "advHusbandry1",
-    "sortOrder": "advHusbandry1",
     "implemented": true,
     "containerIndex": 19
   },
@@ -2267,7 +2041,6 @@ export const advancements = {
     "globalIndex": 105,
     "category": "Husbandry",
     "container": "advHusbandry1",
-    "sortOrder": "advHusbandry1",
     "implemented": true,
     "containerIndex": 20
   },
@@ -2277,7 +2050,6 @@ export const advancements = {
     "globalIndex": 106,
     "category": "Husbandry",
     "container": "advHusbandry1",
-    "sortOrder": "advHusbandry1",
     "implemented": true,
     "containerIndex": 21
   },
@@ -2287,7 +2059,6 @@ export const advancements = {
     "globalIndex": 107,
     "category": "Husbandry",
     "container": "advHusbandry1",
-    "sortOrder": "advHusbandry1",
     "implemented": true,
     "containerIndex": 22
   },
@@ -2297,7 +2068,6 @@ export const advancements = {
     "globalIndex": 108,
     "category": "Husbandry",
     "container": "advHusbandry1",
-    "sortOrder": "advHusbandry1",
     "implemented": true,
     "containerIndex": 23
   },
@@ -2307,7 +2077,6 @@ export const advancements = {
     "globalIndex": 109,
     "category": "Husbandry",
     "container": "advHusbandry1",
-    "sortOrder": "advHusbandry1",
     "implemented": true,
     "containerIndex": 24
   },
@@ -2317,7 +2086,6 @@ export const advancements = {
     "globalIndex": 110,
     "category": "Husbandry",
     "container": "advHusbandry1",
-    "sortOrder": "advHusbandry1",
     "implemented": true,
     "containerIndex": 25
   }

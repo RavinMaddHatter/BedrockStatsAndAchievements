@@ -24,7 +24,6 @@ def convertToJson(ws,playerJson=True):
                                 "globalIndex": globalIndex,
                                 "category": category,
                                 "container": container,
-                                "sortOrder": container,
                                 "implemented": implemented,
                                 "containerIndex": int(containerIndex)-1}
     return dataStructure
