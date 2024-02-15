@@ -3,7 +3,7 @@ export class achievementHandler{
 		this.achievments=achievmentObject;
 		this.dynamicProperties=[]
 		for (const [key, value] of Object.entries(this.achievments)) {
-			if(!this.dynamicProperties.includes(value.container){
+			if(!this.dynamicProperties.includes(value.container)){
 				this.dynamicProperties.push(value.container)
 			}
 		}
