@@ -13,15 +13,17 @@ def convertToJson(ws):
         category = row[4].value
         container = row[5].value
         containerIndex = row[6].value
+        print(containerIndex)
         globalIndex = row[3].value
         displayname=row[0].value
         description=row[1].value
+        print(displayname)
         dataStructure[name]={"displayName": displayname,
                             "description": description,
                             "globalIndex": globalIndex,
                             "category": category,
                             "container": container,
-                            "containerIndex": containerIndex}
+                            "containerIndex": int(containerIndex)-1}
     return dataStructure
 with open("Pack Template\\scripts\\textObjects.js","w+") as file:
     file.write("export const achievements = " + json.dumps(convertToJson(achievments),indent=2) + ";\n")

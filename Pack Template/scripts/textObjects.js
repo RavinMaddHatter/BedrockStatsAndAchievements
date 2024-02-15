@@ -5,7 +5,7 @@ export const achievements = {
     "globalIndex": 1,
     "category": "Story",
     "container": "Story1",
-    "containerIndex": 1
+    "containerIndex": 0
   },
   "GettingWood": {
     "displayName": "Getting Wood",
@@ -13,7 +13,7 @@ export const achievements = {
     "globalIndex": 2,
     "category": "Story",
     "container": "Story1",
-    "containerIndex": 2
+    "containerIndex": 1
   },
   "Benchmaking": {
     "displayName": "Benchmaking",
@@ -21,7 +21,7 @@ export const achievements = {
     "globalIndex": 3,
     "category": "Story",
     "container": "Story1",
-    "containerIndex": 3
+    "containerIndex": 2
   },
   "TimetoMine": {
     "displayName": "Time to Mine!",
@@ -29,7 +29,7 @@ export const achievements = {
     "globalIndex": 4,
     "category": "Story",
     "container": "Story1",
-    "containerIndex": 4
+    "containerIndex": 3
   },
   "HotTopic": {
     "displayName": "Hot Topic",
@@ -37,7 +37,7 @@ export const achievements = {
     "globalIndex": 5,
     "category": "Story",
     "container": "Story1",
-    "containerIndex": 5
+    "containerIndex": 4
   },
   "AcquireHardware": {
     "displayName": "Acquire Hardware",
@@ -45,7 +45,7 @@ export const achievements = {
     "globalIndex": 6,
     "category": "Story",
     "container": "Story1",
-    "containerIndex": 6
+    "containerIndex": 5
   },
   "TimetoFarm": {
     "displayName": "Time to Farm!",
@@ -53,7 +53,7 @@ export const achievements = {
     "globalIndex": 7,
     "category": "Husbandry",
     "container": "Husbandry1",
-    "containerIndex": 1
+    "containerIndex": 0
   },
   "BakeBread": {
     "displayName": "Bake Bread",
@@ -61,7 +61,7 @@ export const achievements = {
     "globalIndex": 8,
     "category": "Husbandry",
     "container": "Husbandry1",
-    "containerIndex": 2
+    "containerIndex": 1
   },
   "TheLie": {
     "displayName": "The Lie",
@@ -69,7 +69,7 @@ export const achievements = {
     "globalIndex": 9,
     "category": "Husbandry",
     "container": "Husbandry1",
-    "containerIndex": 3
+    "containerIndex": 2
   },
   "GettinganUpgrade": {
     "displayName": "Getting an Upgrade",
@@ -77,7 +77,7 @@ export const achievements = {
     "globalIndex": 10,
     "category": "story",
     "container": "Story1",
-    "containerIndex": 7
+    "containerIndex": 6
   },
   "DeliciousFish": {
     "displayName": "Delicious Fish",
@@ -85,7 +85,7 @@ export const achievements = {
     "globalIndex": 11,
     "category": "Husbandry",
     "container": "Husbandry1",
-    "containerIndex": 4
+    "containerIndex": 3
   },
   "OnARail": {
     "displayName": "On A Rail",
@@ -93,7 +93,7 @@ export const achievements = {
     "globalIndex": 12,
     "category": "Adventure",
     "container": "Adventure1",
-    "containerIndex": 1
+    "containerIndex": 0
   },
   "TimetoStrike": {
     "displayName": "Time to Strike!",
@@ -101,7 +101,7 @@ export const achievements = {
     "globalIndex": 13,
     "category": "Story",
     "container": "Story1",
-    "containerIndex": 8
+    "containerIndex": 7
   },
   "MonsterHunter": {
     "displayName": "Monster Hunter",
@@ -109,7 +109,7 @@ export const achievements = {
     "globalIndex": 14,
     "category": "Adventure",
     "container": "Adventure1",
-    "containerIndex": 2
+    "containerIndex": 1
   },
   "CowTipper": {
     "displayName": "Cow Tipper",
@@ -117,7 +117,7 @@ export const achievements = {
     "globalIndex": 15,
     "category": "Husbandry",
     "container": "Husbandry1",
-    "containerIndex": 5
+    "containerIndex": 4
   },
   "WhenPigsFly": {
     "displayName": "When Pigs Fly",
@@ -125,7 +125,7 @@ export const achievements = {
     "globalIndex": 16,
     "category": "Adventure",
     "container": "Adventure1",
-    "containerIndex": 3
+    "containerIndex": 2
   },
   "SniperDuel": {
     "displayName": "Sniper Duel",
@@ -133,7 +133,7 @@ export const achievements = {
     "globalIndex": 17,
     "category": "Adventure",
     "container": "Adventure1",
-    "containerIndex": 4
+    "containerIndex": 3
   },
   "DIAMONDS": {
     "displayName": "DIAMONDS!",
@@ -141,7 +141,7 @@ export const achievements = {
     "globalIndex": 18,
     "category": "Story",
     "container": "Story1",
-    "containerIndex": 9
+    "containerIndex": 8
   },
   "IntoTheNether": {
     "displayName": "Into The Nether",
@@ -149,7 +149,7 @@ export const achievements = {
     "globalIndex": 19,
     "category": "Nether",
     "container": "Nether1",
-    "containerIndex": 1
+    "containerIndex": 0
   },
   "ReturntoSender": {
     "displayName": "Return to Sender",
@@ -157,7 +157,7 @@ export const achievements = {
     "globalIndex": 20,
     "category": "Nether",
     "container": "Nether1",
-    "containerIndex": 2
+    "containerIndex": 1
   },
   "IntoFire": {
     "displayName": "Into Fire",
@@ -165,7 +165,7 @@ export const achievements = {
     "globalIndex": 21,
     "category": "Nether",
     "container": "Nether1",
-    "containerIndex": 3
+    "containerIndex": 2
   },
   "LocalBrewery": {
     "displayName": "Local Brewery",
@@ -173,7 +173,7 @@ export const achievements = {
     "globalIndex": 22,
     "category": "Nether",
     "container": "Nether1",
-    "containerIndex": 4
+    "containerIndex": 3
   },
   "TheEnd": {
     "displayName": "The End",
@@ -181,7 +181,7 @@ export const achievements = {
     "globalIndex": 24,
     "category": "The_End",
     "container": "The_End1",
-    "containerIndex": 2
+    "containerIndex": 1
   },
   "Enchanter": {
     "displayName": "Enchanter",
@@ -189,7 +189,7 @@ export const achievements = {
     "globalIndex": 25,
     "category": "Story",
     "container": "Story1",
-    "containerIndex": 10
+    "containerIndex": 9
   },
   "Overkill": {
     "displayName": "Overkill",
@@ -197,7 +197,7 @@ export const achievements = {
     "globalIndex": 26,
     "category": "Adventure",
     "container": "Adventure1",
-    "containerIndex": 5
+    "containerIndex": 4
   },
   "Librarian": {
     "displayName": "Librarian",
@@ -205,7 +205,7 @@ export const achievements = {
     "globalIndex": 27,
     "category": "Adventure",
     "container": "Adventure1",
-    "containerIndex": 6
+    "containerIndex": 5
   },
   "AdventuringTime": {
     "displayName": "Adventuring Time",
@@ -213,7 +213,7 @@ export const achievements = {
     "globalIndex": 28,
     "category": "Adventure",
     "container": "Adventure1",
-    "containerIndex": 7
+    "containerIndex": 6
   },
   "TheBeginning": {
     "displayName": "The Beginning.",
@@ -221,7 +221,7 @@ export const achievements = {
     "globalIndex": 30,
     "category": "Nether",
     "container": "Nether1",
-    "containerIndex": 9
+    "containerIndex": 5
   },
   "TheBeaconator": {
     "displayName": "The Beaconator",
@@ -229,7 +229,7 @@ export const achievements = {
     "globalIndex": 31,
     "category": "Nether",
     "container": "Nether1",
-    "containerIndex": 10
+    "containerIndex": 6
   },
   "Repopulation": {
     "displayName": "Repopulation",
@@ -237,7 +237,7 @@ export const achievements = {
     "globalIndex": 32,
     "category": "Husbandry",
     "container": "Husbandry1",
-    "containerIndex": 4
+    "containerIndex": 6
   },
   "Diamondstoyou": {
     "displayName": "Diamonds to you!",
@@ -245,7 +245,7 @@ export const achievements = {
     "globalIndex": 33,
     "category": "Story",
     "container": "Story1",
-    "containerIndex": 11
+    "containerIndex": 10
   },
   "Overpowered": {
     "displayName": "Overpowered",
@@ -253,7 +253,7 @@ export const achievements = {
     "globalIndex": 34,
     "category": "Story",
     "container": "Story1",
-    "containerIndex": 12
+    "containerIndex": 11
   },
   "MOARTools": {
     "displayName": "MOAR Tools",
@@ -261,7 +261,7 @@ export const achievements = {
     "globalIndex": 35,
     "category": "Story",
     "container": "Story1",
-    "containerIndex": 13
+    "containerIndex": 12
   },
   "DispensewithThis": {
     "displayName": "Dispense with This",
@@ -269,7 +269,7 @@ export const achievements = {
     "globalIndex": 36,
     "category": "Story",
     "container": "Story1",
-    "containerIndex": 14
+    "containerIndex": 13
   },
   "LeaderofthePack": {
     "displayName": "Leader of the Pack",
@@ -285,7 +285,7 @@ export const achievements = {
     "globalIndex": 38,
     "category": "Husbandry",
     "container": "Husbandry1",
-    "containerIndex": 6
+    "containerIndex": 7
   },
   "PassingtheTime": {
     "displayName": "Passing the Time",
@@ -293,7 +293,7 @@ export const achievements = {
     "globalIndex": 39,
     "category": "Adventure",
     "container": "Adventure1",
-    "containerIndex": 8
+    "containerIndex": 7
   },
   "TheHaggler": {
     "displayName": "The Haggler",
@@ -301,7 +301,7 @@ export const achievements = {
     "globalIndex": 40,
     "category": "Story",
     "container": "Story1",
-    "containerIndex": 15
+    "containerIndex": 14
   },
   "PotPlanter": {
     "displayName": "Pot Planter",
@@ -309,7 +309,7 @@ export const achievements = {
     "globalIndex": 41,
     "category": "Story",
     "container": "Story1",
-    "containerIndex": 16
+    "containerIndex": 15
   },
   "ItsaSign": {
     "displayName": "It's a Sign!",
@@ -317,7 +317,7 @@ export const achievements = {
     "globalIndex": 42,
     "category": "Story",
     "container": "Story1",
-    "containerIndex": 17
+    "containerIndex": 16
   },
   "IronBelly": {
     "displayName": "Iron Belly",
@@ -325,7 +325,7 @@ export const achievements = {
     "globalIndex": 43,
     "category": "Adventure",
     "container": "Adventure1",
-    "containerIndex": 9
+    "containerIndex": 8
   },
   "HaveaShearfulDay": {
     "displayName": "Have a Shearful Day",
@@ -333,7 +333,7 @@ export const achievements = {
     "globalIndex": 44,
     "category": "Husbandry",
     "container": "Husbandry1",
-    "containerIndex": 6
+    "containerIndex": 8
   },
   "RainbowCollection": {
     "displayName": "Rainbow Collection",
@@ -341,7 +341,7 @@ export const achievements = {
     "globalIndex": 45,
     "category": "Husbandry",
     "container": "Husbandry1",
-    "containerIndex": 7
+    "containerIndex": 9
   },
   "StayinFrosty": {
     "displayName": "Stayin' Frosty",
@@ -349,7 +349,7 @@ export const achievements = {
     "globalIndex": 46,
     "category": "Adventure",
     "container": "Adventure1",
-    "containerIndex": 10
+    "containerIndex": 9
   },
   "ChestfulofCobblestone": {
     "displayName": "Chestful of Cobblestone",
@@ -357,7 +357,7 @@ export const achievements = {
     "globalIndex": 47,
     "category": "Story",
     "container": "Story1",
-    "containerIndex": 18
+    "containerIndex": 17
   },
   "RenewableEnergy": {
     "displayName": "Renewable Energy",
@@ -365,7 +365,7 @@ export const achievements = {
     "globalIndex": 48,
     "category": "Story",
     "container": "Story1",
-    "containerIndex": 19
+    "containerIndex": 18
   },
   "BodyGuard": {
     "displayName": "Body Guard",
@@ -373,7 +373,7 @@ export const achievements = {
     "globalIndex": 49,
     "category": "Husbandry",
     "container": "Husbandry1",
-    "containerIndex": 8
+    "containerIndex": 10
   },
   "IronMan": {
     "displayName": "Iron Man",
@@ -381,7 +381,7 @@ export const achievements = {
     "globalIndex": 50,
     "category": "Story",
     "container": "Story1",
-    "containerIndex": 20
+    "containerIndex": 19
   },
   "ZombieDoctor": {
     "displayName": "Zombie Doctor",
@@ -389,7 +389,7 @@ export const achievements = {
     "globalIndex": 51,
     "category": "Husbandry",
     "container": "Husbandry1",
-    "containerIndex": 9
+    "containerIndex": 11
   },
   "LionHunter": {
     "displayName": "Lion Hunter",
@@ -397,7 +397,7 @@ export const achievements = {
     "globalIndex": 52,
     "category": "Husbandry",
     "container": "Husbandry1",
-    "containerIndex": 10
+    "containerIndex": 12
   },
   "Archer": {
     "displayName": "Archer",
@@ -405,7 +405,7 @@ export const achievements = {
     "globalIndex": 53,
     "category": "Adventure",
     "container": "Adventure1",
-    "containerIndex": 11
+    "containerIndex": 10
   },
   "TieDyeOutfit": {
     "displayName": "Tie Dye Outfit",
@@ -413,7 +413,7 @@ export const achievements = {
     "globalIndex": 54,
     "category": "Story",
     "container": "Story1",
-    "containerIndex": 21
+    "containerIndex": 20
   },
   "Trampoline": {
     "displayName": "Trampoline",
@@ -421,7 +421,7 @@ export const achievements = {
     "globalIndex": 55,
     "category": "Adventure",
     "container": "Adventure1",
-    "containerIndex": 12
+    "containerIndex": 11
   },
   "Camouflage": {
     "displayName": "Camouflage",
@@ -429,7 +429,7 @@ export const achievements = {
     "globalIndex": 56,
     "category": "Adventure",
     "container": "Adventure1",
-    "containerIndex": 13
+    "containerIndex": 12
   },
   "MapRoom": {
     "displayName": "Map Room",
@@ -437,7 +437,7 @@ export const achievements = {
     "globalIndex": 57,
     "category": "Story",
     "container": "Story1",
-    "containerIndex": 22
+    "containerIndex": 21
   },
   "FreightStation": {
     "displayName": "Freight Station",
@@ -445,7 +445,7 @@ export const achievements = {
     "globalIndex": 58,
     "category": "Story",
     "container": "Story1",
-    "containerIndex": 23
+    "containerIndex": 22
   },
   "SmeltEverything": {
     "displayName": "Smelt Everything!",
@@ -453,7 +453,7 @@ export const achievements = {
     "globalIndex": 59,
     "category": "Story",
     "container": "Story1",
-    "containerIndex": 24
+    "containerIndex": 23
   },
   "TasteofYourOwnMedicine": {
     "displayName": "Taste of Your Own Medicine",
@@ -461,7 +461,7 @@ export const achievements = {
     "globalIndex": 60,
     "category": "Adventure",
     "container": "Adventure1",
-    "containerIndex": 14
+    "containerIndex": 13
   },
   "Inception": {
     "displayName": "Inception",
@@ -477,7 +477,7 @@ export const achievements = {
     "globalIndex": 62,
     "category": "Husbandry",
     "container": "Husbandry1",
-    "containerIndex": 11
+    "containerIndex": 13
   },
   "ArtificialSelection": {
     "displayName": "Artificial Selection",
@@ -485,7 +485,7 @@ export const achievements = {
     "globalIndex": 63,
     "category": "Husbandry",
     "container": "Husbandry1",
-    "containerIndex": 12
+    "containerIndex": 14
   },
   "FreeDiver": {
     "displayName": "Free Diver",
@@ -493,7 +493,7 @@ export const achievements = {
     "globalIndex": 64,
     "category": "Adventure",
     "container": "Adventure1",
-    "containerIndex": 15
+    "containerIndex": 14
   },
   "RabbitSeason": {
     "displayName": "Rabbit Season",
@@ -501,7 +501,7 @@ export const achievements = {
     "globalIndex": 65,
     "category": "Husbandry",
     "container": "Husbandry1",
-    "containerIndex": 13
+    "containerIndex": 15
   },
   "TheDeepEnd": {
     "displayName": "The Deep End",
@@ -509,7 +509,7 @@ export const achievements = {
     "globalIndex": 66,
     "category": "Adventure",
     "container": "Adventure1",
-    "containerIndex": 16
+    "containerIndex": 15
   },
   "DrySpell": {
     "displayName": "Dry Spell",
@@ -533,7 +533,7 @@ export const achievements = {
     "globalIndex": 69,
     "category": "The_End",
     "container": "The_End1",
-    "containerIndex": 3
+    "containerIndex": 2
   },
   "BeamMeUp": {
     "displayName": "Beam Me Up",
@@ -541,7 +541,7 @@ export const achievements = {
     "globalIndex": 70,
     "category": "Nether",
     "container": "Nether1",
-    "containerIndex": 11
+    "containerIndex": 7
   },
   "TheEndAgain": {
     "displayName": "The End... Again...",
@@ -549,7 +549,7 @@ export const achievements = {
     "globalIndex": 71,
     "category": "The_End",
     "container": "The_End1",
-    "containerIndex": 4
+    "containerIndex": 3
   },
   "GreatViewFromUpHere": {
     "displayName": "Great View From Up Here",
@@ -557,7 +557,7 @@ export const achievements = {
     "globalIndex": 72,
     "category": "The_End",
     "container": "The_End1",
-    "containerIndex": 5
+    "containerIndex": 4
   },
   "SuperSonic": {
     "displayName": "Super Sonic",
@@ -565,7 +565,7 @@ export const achievements = {
     "globalIndex": 73,
     "category": "The_End",
     "container": "The_End1",
-    "containerIndex": 6
+    "containerIndex": 5
   },
   "TreasureHunter": {
     "displayName": "Treasure Hunter",
@@ -573,7 +573,7 @@ export const achievements = {
     "globalIndex": 74,
     "category": "Adventure",
     "container": "Adventure1",
-    "containerIndex": 17
+    "containerIndex": 16
   },
   "OrganizationalWizard": {
     "displayName": "Organizational Wizard",
@@ -581,7 +581,7 @@ export const achievements = {
     "globalIndex": 75,
     "category": "The_End",
     "container": "The_End1",
-    "containerIndex": 7
+    "containerIndex": 6
   },
   "CheatingDeath": {
     "displayName": "Cheating Death",
@@ -589,7 +589,7 @@ export const achievements = {
     "globalIndex": 76,
     "category": "Adventure",
     "container": "Adventure1",
-    "containerIndex": 18
+    "containerIndex": 17
   },
   "FeelingIll": {
     "displayName": "Feeling Ill",
@@ -597,7 +597,7 @@ export const achievements = {
     "globalIndex": 77,
     "category": "Adventure",
     "container": "Adventure1",
-    "containerIndex": 19
+    "containerIndex": 18
   },
   "LetItGo": {
     "displayName": "Let It Go!",
@@ -605,7 +605,7 @@ export const achievements = {
     "globalIndex": 78,
     "category": "Adventure",
     "container": "Adventure1",
-    "containerIndex": 20
+    "containerIndex": 19
   },
   "SoIGotThatGoingforMe": {
     "displayName": "So I Got That Going for Me",
@@ -613,7 +613,7 @@ export const achievements = {
     "globalIndex": 79,
     "category": "Husbandry",
     "container": "Husbandry1",
-    "containerIndex": 14
+    "containerIndex": 16
   },
   "Atlantis": {
     "displayName": "Atlantis?",
@@ -621,7 +621,7 @@ export const achievements = {
     "globalIndex": 80,
     "category": "Adventure",
     "container": "Adventure1",
-    "containerIndex": 21
+    "containerIndex": 20
   },
   "Sailthe7Seas": {
     "displayName": "Sail the 7 Seas",
@@ -629,7 +629,7 @@ export const achievements = {
     "globalIndex": 81,
     "category": "Adventure",
     "container": "Adventure1",
-    "containerIndex": 22
+    "containerIndex": 21
   },
   "Castaway": {
     "displayName": "Castaway",
@@ -637,7 +637,7 @@ export const achievements = {
     "globalIndex": 82,
     "category": "Adventure",
     "container": "Adventure1",
-    "containerIndex": 23
+    "containerIndex": 22
   },
   "Ahoy": {
     "displayName": "Ahoy!",
@@ -645,7 +645,7 @@ export const achievements = {
     "globalIndex": 83,
     "category": "Adventure",
     "container": "Adventure1",
-    "containerIndex": 24
+    "containerIndex": 23
   },
   "IamaMarineBiologist": {
     "displayName": "I am a Marine Biologist",
@@ -653,7 +653,7 @@ export const achievements = {
     "globalIndex": 84,
     "category": "Husbandry",
     "container": "Husbandry1",
-    "containerIndex": 15
+    "containerIndex": 17
   },
   "MeGold": {
     "displayName": "Me Gold!",
@@ -661,7 +661,7 @@ export const achievements = {
     "globalIndex": 85,
     "category": "Adventure",
     "container": "Adventure1",
-    "containerIndex": 25
+    "containerIndex": 24
   },
   "SleepwiththeFishes": {
     "displayName": "Sleep with the Fishes",
@@ -725,7 +725,7 @@ export const achievements = {
     "globalIndex": 93,
     "category": "Husbandry",
     "container": "Husbandry1",
-    "containerIndex": 15
+    "containerIndex": 18
   },
   "Zoologist": {
     "displayName": "Zoologist",
@@ -733,7 +733,7 @@ export const achievements = {
     "globalIndex": 94,
     "category": "Husbandry",
     "container": "Husbandry1",
-    "containerIndex": 16
+    "containerIndex": 19
   },
   "FruitontheLoom": {
     "displayName": "Fruit on the Loom",
@@ -749,7 +749,7 @@ export const achievements = {
     "globalIndex": 96,
     "category": "Husbandry",
     "container": "Husbandry1",
-    "containerIndex": 17
+    "containerIndex": 20
   },
   "KilltheBeast": {
     "displayName": "Kill the Beast!",
@@ -764,8 +764,8 @@ export const achievements = {
     "description": "Trade for the best possible price.",
     "globalIndex": 98,
     "category": "Story",
-    "container": "Story1",
-    "containerIndex": 32
+    "container": "Story2",
+    "containerIndex": 0
   },
   "Disenchanted": {
     "displayName": "Disenchanted",
@@ -821,7 +821,7 @@ export const achievements = {
     "globalIndex": 105,
     "category": "Husbandry",
     "container": "Husbandry1",
-    "containerIndex": 18
+    "containerIndex": 21
   },
   "TotalBeelocation": {
     "displayName": "Total Beelocation",
@@ -829,7 +829,7 @@ export const achievements = {
     "globalIndex": 106,
     "category": "Husbandry",
     "container": "Husbandry1",
-    "containerIndex": 19
+    "containerIndex": 22
   },
   "StickySituation": {
     "displayName": "Sticky Situation",
@@ -853,7 +853,7 @@ export const achievements = {
     "globalIndex": 109,
     "category": "Nether",
     "container": "Nether1",
-    "containerIndex": 6
+    "containerIndex": 8
   },
   "Oooh,shiny": {
     "displayName": "Oooh, shiny!",
@@ -861,7 +861,7 @@ export const achievements = {
     "globalIndex": 110,
     "category": "Nether",
     "container": "Nether1",
-    "containerIndex": 7
+    "containerIndex": 9
   },
   "Hottouristdestination": {
     "displayName": "Hot tourist destination",
@@ -869,7 +869,7 @@ export const achievements = {
     "globalIndex": 111,
     "category": "Nether",
     "container": "Nether1",
-    "containerIndex": 8
+    "containerIndex": 10
   },
   "WhateverFloatsYourGoat": {
     "displayName": "Whatever Floats Your Goat",
@@ -893,7 +893,7 @@ export const achievements = {
     "globalIndex": 114,
     "category": "Husbandry",
     "container": "Husbandry1",
-    "containerIndex": 20
+    "containerIndex": 23
   },
   "Caves&Cliffs": {
     "displayName": "Caves & Cliffs",
@@ -925,7 +925,7 @@ export const achievements = {
     "globalIndex": 118,
     "category": "Nether",
     "container": "Nether1",
-    "containerIndex": 9
+    "containerIndex": 11
   },
   "Itspreads": {
     "displayName": "It spreads",
@@ -941,7 +941,7 @@ export const achievements = {
     "globalIndex": 120,
     "category": "Husbandry",
     "container": "Husbandry1",
-    "containerIndex": 21
+    "containerIndex": 24
   },
   "Withourpowerscombined": {
     "displayName": "With our powers combined!",
@@ -949,7 +949,7 @@ export const achievements = {
     "globalIndex": 121,
     "category": "Nether",
     "container": "Nether1",
-    "containerIndex": 10
+    "containerIndex": 12
   },
   "Sneak100": {
     "displayName": "Sneak 100",
@@ -991,7 +991,7 @@ export const advancements = {
     "globalIndex": 1,
     "category": "Story",
     "container": "story1",
-    "containerIndex": 1
+    "containerIndex": 0
   },
   "StoneAge": {
     "displayName": "Stone Age",
@@ -999,7 +999,7 @@ export const advancements = {
     "globalIndex": 2,
     "category": "Story",
     "container": "story1",
-    "containerIndex": 2
+    "containerIndex": 1
   },
   "GettinganUpgrade": {
     "displayName": "Getting an Upgrade",
@@ -1007,7 +1007,7 @@ export const advancements = {
     "globalIndex": 3,
     "category": "Story",
     "container": "story1",
-    "containerIndex": 3
+    "containerIndex": 2
   },
   "AcquireHardware": {
     "displayName": "Acquire Hardware",
@@ -1015,7 +1015,7 @@ export const advancements = {
     "globalIndex": 4,
     "category": "Story",
     "container": "story1",
-    "containerIndex": 4
+    "containerIndex": 3
   },
   "SuitUp": {
     "displayName": "Suit Up",
@@ -1023,7 +1023,7 @@ export const advancements = {
     "globalIndex": 5,
     "category": "Story",
     "container": "story1",
-    "containerIndex": 5
+    "containerIndex": 4
   },
   "HotStuff": {
     "displayName": "Hot Stuff",
@@ -1031,7 +1031,7 @@ export const advancements = {
     "globalIndex": 6,
     "category": "Story",
     "container": "story1",
-    "containerIndex": 6
+    "containerIndex": 5
   },
   "IsntItIronPick": {
     "displayName": "Isn't It Iron Pick",
@@ -1039,7 +1039,7 @@ export const advancements = {
     "globalIndex": 7,
     "category": "Story",
     "container": "story1",
-    "containerIndex": 7
+    "containerIndex": 6
   },
   "NotToday,ThankYou": {
     "displayName": "Not Today, Thank You",
@@ -1047,7 +1047,7 @@ export const advancements = {
     "globalIndex": 8,
     "category": "Story",
     "container": "story1",
-    "containerIndex": 8
+    "containerIndex": 7
   },
   "IceBucketChallenge": {
     "displayName": "Ice Bucket Challenge",
@@ -1055,7 +1055,7 @@ export const advancements = {
     "globalIndex": 9,
     "category": "Story",
     "container": "story1",
-    "containerIndex": 9
+    "containerIndex": 8
   },
   "Diamonds": {
     "displayName": "Diamonds!",
@@ -1063,7 +1063,7 @@ export const advancements = {
     "globalIndex": 10,
     "category": "Story",
     "container": "story1",
-    "containerIndex": 10
+    "containerIndex": 9
   },
   "WeNeedtoGoDeeper": {
     "displayName": "We Need to Go Deeper",
@@ -1071,7 +1071,7 @@ export const advancements = {
     "globalIndex": 11,
     "category": "Story",
     "container": "story1",
-    "containerIndex": 11
+    "containerIndex": 10
   },
   "CoverMewithDiamonds": {
     "displayName": "Cover Me with Diamonds",
@@ -1079,7 +1079,7 @@ export const advancements = {
     "globalIndex": 12,
     "category": "Story",
     "container": "story1",
-    "containerIndex": 12
+    "containerIndex": 11
   },
   "Enchanter": {
     "displayName": "Enchanter",
@@ -1087,7 +1087,7 @@ export const advancements = {
     "globalIndex": 13,
     "category": "Story",
     "container": "story1",
-    "containerIndex": 13
+    "containerIndex": 12
   },
   "ZombieDoctor": {
     "displayName": "Zombie Doctor",
@@ -1095,7 +1095,7 @@ export const advancements = {
     "globalIndex": 14,
     "category": "Story",
     "container": "story1",
-    "containerIndex": 14
+    "containerIndex": 13
   },
   "EyeSpy": {
     "displayName": "Eye Spy",
@@ -1103,7 +1103,7 @@ export const advancements = {
     "globalIndex": 15,
     "category": "Story",
     "container": "story1",
-    "containerIndex": 15
+    "containerIndex": 14
   },
   "TheEnd": {
     "displayName": "The End",
@@ -1111,7 +1111,7 @@ export const advancements = {
     "globalIndex": 41,
     "category": "The_End",
     "container": "The_End1",
-    "containerIndex": "=1"
+    "containerIndex": 0
   },
   "Nether": {
     "displayName": "Nether",
@@ -1119,7 +1119,7 @@ export const advancements = {
     "globalIndex": 17,
     "category": "Nether",
     "container": "Nether1",
-    "containerIndex": 1
+    "containerIndex": 0
   },
   "ReturntoSender": {
     "displayName": "Return to Sender",
@@ -1127,7 +1127,7 @@ export const advancements = {
     "globalIndex": 18,
     "category": "Nether",
     "container": "Nether1",
-    "containerIndex": 2
+    "containerIndex": 1
   },
   "ThoseWeretheDays": {
     "displayName": "Those Were the Days",
@@ -1135,7 +1135,7 @@ export const advancements = {
     "globalIndex": 19,
     "category": "Nether",
     "container": "Nether1",
-    "containerIndex": 3
+    "containerIndex": 2
   },
   "HiddenintheDepths": {
     "displayName": "Hidden in the Depths",
@@ -1143,7 +1143,7 @@ export const advancements = {
     "globalIndex": 20,
     "category": "Nether",
     "container": "Nether1",
-    "containerIndex": 4
+    "containerIndex": 3
   },
   "SubspaceBubble": {
     "displayName": "Subspace Bubble",
@@ -1151,7 +1151,7 @@ export const advancements = {
     "globalIndex": 21,
     "category": "Nether",
     "container": "Nether1",
-    "containerIndex": 5
+    "containerIndex": 4
   },
   "ATerribleFortress": {
     "displayName": "A Terrible Fortress",
@@ -1159,7 +1159,7 @@ export const advancements = {
     "globalIndex": 22,
     "category": "Nether",
     "container": "Nether1",
-    "containerIndex": 6
+    "containerIndex": 5
   },
   "WhoisCuttingOnions": {
     "displayName": "Who is Cutting Onions?",
@@ -1167,7 +1167,7 @@ export const advancements = {
     "globalIndex": 23,
     "category": "Nether",
     "container": "Nether1",
-    "containerIndex": 7
+    "containerIndex": 6
   },
   "OhShiny": {
     "displayName": "Oh Shiny",
@@ -1175,7 +1175,7 @@ export const advancements = {
     "globalIndex": 24,
     "category": "Nether",
     "container": "Nether1",
-    "containerIndex": 8
+    "containerIndex": 7
   },
   "ThisBoatHasLegs": {
     "displayName": "This Boat Has Legs",
@@ -1183,7 +1183,7 @@ export const advancements = {
     "globalIndex": 25,
     "category": "Nether",
     "container": "Nether1",
-    "containerIndex": 9
+    "containerIndex": 8
   },
   "UneasyAlliance": {
     "displayName": "Uneasy Alliance",
@@ -1191,7 +1191,7 @@ export const advancements = {
     "globalIndex": 26,
     "category": "Nether",
     "container": "Nether1",
-    "containerIndex": 10
+    "containerIndex": 9
   },
   "WarPigs": {
     "displayName": "War Pigs",
@@ -1199,7 +1199,7 @@ export const advancements = {
     "globalIndex": 27,
     "category": "Nether",
     "container": "Nether1",
-    "containerIndex": 11
+    "containerIndex": 10
   },
   "CountryLode,TakeMeHome": {
     "displayName": "Country Lode, Take Me Home",
@@ -1207,7 +1207,7 @@ export const advancements = {
     "globalIndex": 28,
     "category": "Nether",
     "container": "Nether1",
-    "containerIndex": 12
+    "containerIndex": 11
   },
   "CoverMeinDebris": {
     "displayName": "Cover Me in Debris",
@@ -1215,7 +1215,7 @@ export const advancements = {
     "globalIndex": 29,
     "category": "Nether",
     "container": "Nether1",
-    "containerIndex": 13
+    "containerIndex": 12
   },
   "SpookyScarySkeleton": {
     "displayName": "Spooky Scary Skeleton",
@@ -1223,7 +1223,7 @@ export const advancements = {
     "globalIndex": 30,
     "category": "Nether",
     "container": "Nether1",
-    "containerIndex": 14
+    "containerIndex": 13
   },
   "IntoFire": {
     "displayName": "Into Fire",
@@ -1231,7 +1231,7 @@ export const advancements = {
     "globalIndex": 31,
     "category": "Nether",
     "container": "Nether1",
-    "containerIndex": 15
+    "containerIndex": 14
   },
   "NotQuite\"Nine\"Lives": {
     "displayName": "Not Quite \"Nine\" Lives",
@@ -1239,7 +1239,7 @@ export const advancements = {
     "globalIndex": 32,
     "category": "Nether",
     "container": "Nether1",
-    "containerIndex": 16
+    "containerIndex": 15
   },
   "FeelsLikeHome": {
     "displayName": "Feels Like Home",
@@ -1247,7 +1247,7 @@ export const advancements = {
     "globalIndex": 33,
     "category": "Nether",
     "container": "Nether1",
-    "containerIndex": 17
+    "containerIndex": 16
   },
   "HotTouristDestinations": {
     "displayName": "Hot Tourist Destinations",
@@ -1255,7 +1255,7 @@ export const advancements = {
     "globalIndex": 34,
     "category": "Nether",
     "container": "Nether1",
-    "containerIndex": 18
+    "containerIndex": 17
   },
   "WitheringHeights": {
     "displayName": "Withering Heights",
@@ -1263,7 +1263,7 @@ export const advancements = {
     "globalIndex": 35,
     "category": "Nether",
     "container": "Nether1",
-    "containerIndex": 19
+    "containerIndex": 18
   },
   "LocalBrewery": {
     "displayName": "Local Brewery",
@@ -1271,7 +1271,7 @@ export const advancements = {
     "globalIndex": 36,
     "category": "Nether",
     "container": "Nether1",
-    "containerIndex": 20
+    "containerIndex": 19
   },
   "BringHometheBeacon": {
     "displayName": "Bring Home the Beacon",
@@ -1279,7 +1279,7 @@ export const advancements = {
     "globalIndex": 37,
     "category": "Nether",
     "container": "Nether1",
-    "containerIndex": 21
+    "containerIndex": 20
   },
   "AFuriousCocktail": {
     "displayName": "A Furious Cocktail",
@@ -1287,7 +1287,7 @@ export const advancements = {
     "globalIndex": 38,
     "category": "Nether",
     "container": "Nether1",
-    "containerIndex": 22
+    "containerIndex": 21
   },
   "Beaconator": {
     "displayName": "Beaconator",
@@ -1295,7 +1295,7 @@ export const advancements = {
     "globalIndex": 39,
     "category": "Nether",
     "container": "Nether1",
-    "containerIndex": 23
+    "containerIndex": 22
   },
   "HowDidWeGetHere": {
     "displayName": "How Did We Get Here?",
@@ -1303,7 +1303,7 @@ export const advancements = {
     "globalIndex": 40,
     "category": "Nether",
     "container": "Nether1",
-    "containerIndex": 24
+    "containerIndex": 23
   },
   "FreetheEnd": {
     "displayName": "Free the End",
@@ -1311,7 +1311,7 @@ export const advancements = {
     "globalIndex": 42,
     "category": "The_End",
     "container": "The_End1",
-    "containerIndex": 2
+    "containerIndex": 1
   },
   "TheNextGeneration": {
     "displayName": "The Next Generation",
@@ -1319,7 +1319,7 @@ export const advancements = {
     "globalIndex": 43,
     "category": "The_End",
     "container": "The_End1",
-    "containerIndex": 3
+    "containerIndex": 2
   },
   "RemoteGetaway": {
     "displayName": "Remote Getaway",
@@ -1327,7 +1327,7 @@ export const advancements = {
     "globalIndex": 44,
     "category": "The_End",
     "container": "The_End1",
-    "containerIndex": 4
+    "containerIndex": 3
   },
   "TheEndAgain": {
     "displayName": "The End... Again...",
@@ -1335,7 +1335,7 @@ export const advancements = {
     "globalIndex": 45,
     "category": "The_End",
     "container": "The_End1",
-    "containerIndex": 5
+    "containerIndex": 4
   },
   "YouNeedaMint": {
     "displayName": "You Need a Mint",
@@ -1343,7 +1343,7 @@ export const advancements = {
     "globalIndex": 46,
     "category": "The_End",
     "container": "The_End1",
-    "containerIndex": "=1"
+    "containerIndex": 5
   },
   "TheCityattheEndoftheGame": {
     "displayName": "The City at the End of the Game",
@@ -1375,7 +1375,7 @@ export const advancements = {
     "globalIndex": 50,
     "category": "Adventure",
     "container": "Adventure1",
-    "containerIndex": "=1"
+    "containerIndex": 0
   },
   "VoluntaryExile": {
     "displayName": "Voluntary Exile",
@@ -1383,7 +1383,7 @@ export const advancements = {
     "globalIndex": 51,
     "category": "Adventure",
     "container": "Adventure1",
-    "containerIndex": 2
+    "containerIndex": 1
   },
   "IsItaBird": {
     "displayName": "Is It a Bird?",
@@ -1391,7 +1391,7 @@ export const advancements = {
     "globalIndex": 52,
     "category": "Adventure",
     "container": "Adventure1",
-    "containerIndex": 3
+    "containerIndex": 2
   },
   "MonsterHunter": {
     "displayName": "Monster Hunter",
@@ -1399,7 +1399,7 @@ export const advancements = {
     "globalIndex": 53,
     "category": "Adventure",
     "container": "Adventure1",
-    "containerIndex": 4
+    "containerIndex": 3
   },
   "ThePowerofBooks": {
     "displayName": "The Power of Books",
@@ -1407,7 +1407,7 @@ export const advancements = {
     "globalIndex": 54,
     "category": "Adventure",
     "container": "Adventure1",
-    "containerIndex": 5
+    "containerIndex": 4
   },
   "WhataDeal": {
     "displayName": "What a Deal!",
@@ -1415,7 +1415,7 @@ export const advancements = {
     "globalIndex": 55,
     "category": "Adventure",
     "container": "Adventure1",
-    "containerIndex": 6
+    "containerIndex": 5
   },
   "CraftingaNewLook": {
     "displayName": "Crafting a New Look",
@@ -1423,7 +1423,7 @@ export const advancements = {
     "globalIndex": 56,
     "category": "Adventure",
     "container": "Adventure1",
-    "containerIndex": 7
+    "containerIndex": 6
   },
   "StickySituation": {
     "displayName": "Sticky Situation",
@@ -1431,7 +1431,7 @@ export const advancements = {
     "globalIndex": 57,
     "category": "Adventure",
     "container": "Adventure1",
-    "containerIndex": 8
+    "containerIndex": 7
   },
   "OlBetsy": {
     "displayName": "Ol' Betsy",
@@ -1439,7 +1439,7 @@ export const advancements = {
     "globalIndex": 58,
     "category": "Adventure",
     "container": "Adventure1",
-    "containerIndex": 9
+    "containerIndex": 8
   },
   "SurgeProtector": {
     "displayName": "Surge Protector",
@@ -1447,7 +1447,7 @@ export const advancements = {
     "globalIndex": 59,
     "category": "Adventure",
     "container": "Adventure1",
-    "containerIndex": 10
+    "containerIndex": 9
   },
   "Caves&Cliffs": {
     "displayName": "Caves & Cliffs",
@@ -1455,7 +1455,7 @@ export const advancements = {
     "globalIndex": 60,
     "category": "Adventure",
     "container": "Adventure1",
-    "containerIndex": 11
+    "containerIndex": 10
   },
   "RespectingtheRemnants": {
     "displayName": "Respecting the Remnants",
@@ -1463,7 +1463,7 @@ export const advancements = {
     "globalIndex": 61,
     "category": "Adventure",
     "container": "Adventure1",
-    "containerIndex": 12
+    "containerIndex": 11
   },
   "Sneak100": {
     "displayName": "Sneak 100",
@@ -1471,7 +1471,7 @@ export const advancements = {
     "globalIndex": 62,
     "category": "Adventure",
     "container": "Adventure1",
-    "containerIndex": 13
+    "containerIndex": 12
   },
   "SweetDreams": {
     "displayName": "Sweet Dreams",
@@ -1479,7 +1479,7 @@ export const advancements = {
     "globalIndex": 63,
     "category": "Adventure",
     "container": "Adventure1",
-    "containerIndex": 14
+    "containerIndex": 13
   },
   "HerooftheVillage": {
     "displayName": "Hero of the Village",
@@ -1487,7 +1487,7 @@ export const advancements = {
     "globalIndex": 64,
     "category": "Adventure",
     "container": "Adventure1",
-    "containerIndex": 15
+    "containerIndex": 14
   },
   "IsItaBalloon": {
     "displayName": "Is It a Balloon?",
@@ -1495,7 +1495,7 @@ export const advancements = {
     "globalIndex": 65,
     "category": "Adventure",
     "container": "Adventure1",
-    "containerIndex": 16
+    "containerIndex": 15
   },
   "AThrowawayJoke": {
     "displayName": "A Throwaway Joke",
@@ -1503,7 +1503,7 @@ export const advancements = {
     "globalIndex": 66,
     "category": "Adventure",
     "container": "Adventure1",
-    "containerIndex": 17
+    "containerIndex": 16
   },
   "ItSpreads": {
     "displayName": "It Spreads",
@@ -1511,7 +1511,7 @@ export const advancements = {
     "globalIndex": 67,
     "category": "Adventure",
     "container": "Adventure1",
-    "containerIndex": 18
+    "containerIndex": 17
   },
   "TakeAim": {
     "displayName": "Take Aim",
@@ -1519,7 +1519,7 @@ export const advancements = {
     "globalIndex": 68,
     "category": "Adventure",
     "container": "Adventure1",
-    "containerIndex": 19
+    "containerIndex": 18
   },
   "MonstersHunted": {
     "displayName": "Monsters Hunted",
@@ -1527,7 +1527,7 @@ export const advancements = {
     "globalIndex": 69,
     "category": "Adventure",
     "container": "Adventure1",
-    "containerIndex": 20
+    "containerIndex": 19
   },
   "Postmortal": {
     "displayName": "Postmortal",
@@ -1535,7 +1535,7 @@ export const advancements = {
     "globalIndex": 70,
     "category": "Adventure",
     "container": "Adventure1",
-    "containerIndex": 21
+    "containerIndex": 20
   },
   "HiredHelp": {
     "displayName": "Hired Help",
@@ -1543,7 +1543,7 @@ export const advancements = {
     "globalIndex": 71,
     "category": "Adventure",
     "container": "Adventure1",
-    "containerIndex": 22
+    "containerIndex": 21
   },
   "StarTrader": {
     "displayName": "Star Trader",
@@ -1551,7 +1551,7 @@ export const advancements = {
     "globalIndex": 72,
     "category": "Adventure",
     "container": "Adventure1",
-    "containerIndex": 23
+    "containerIndex": 22
   },
   "SmithingwithStyle": {
     "displayName": "Smithing with Style",
@@ -1559,7 +1559,7 @@ export const advancements = {
     "globalIndex": 73,
     "category": "Adventure",
     "container": "Adventure1",
-    "containerIndex": 24
+    "containerIndex": 23
   },
   "TwoBirds,OneArrow": {
     "displayName": "Two Birds, One Arrow",
@@ -1567,7 +1567,7 @@ export const advancements = {
     "globalIndex": 74,
     "category": "Adventure",
     "container": "Adventure1",
-    "containerIndex": 25
+    "containerIndex": 24
   },
   "WhosthePillagerNow": {
     "displayName": "Who's the Pillager Now?",
@@ -1575,7 +1575,7 @@ export const advancements = {
     "globalIndex": 75,
     "category": "Adventure",
     "container": "Adventure1",
-    "containerIndex": 26
+    "containerIndex": 25
   },
   "Arbalistic": {
     "displayName": "Arbalistic",
@@ -1583,7 +1583,7 @@ export const advancements = {
     "globalIndex": 76,
     "category": "Adventure",
     "container": "Adventure1",
-    "containerIndex": 27
+    "containerIndex": 26
   },
   "CarefulRestoration": {
     "displayName": "Careful Restoration",
@@ -1591,7 +1591,7 @@ export const advancements = {
     "globalIndex": 77,
     "category": "Adventure",
     "container": "Adventure1",
-    "containerIndex": 28
+    "containerIndex": 27
   },
   "AdventuringTime": {
     "displayName": "Adventuring Time",
@@ -1599,7 +1599,7 @@ export const advancements = {
     "globalIndex": 78,
     "category": "Adventure",
     "container": "Adventure1",
-    "containerIndex": 29
+    "containerIndex": 28
   },
   "SoundofMusic": {
     "displayName": "Sound of Music",
@@ -1607,7 +1607,7 @@ export const advancements = {
     "globalIndex": 79,
     "category": "Adventure",
     "container": "Adventure1",
-    "containerIndex": 30
+    "containerIndex": 29
   },
   "LightasaRabbit": {
     "displayName": "Light as a Rabbit",
@@ -1615,7 +1615,7 @@ export const advancements = {
     "globalIndex": 80,
     "category": "Adventure",
     "container": "Adventure1",
-    "containerIndex": 31
+    "containerIndex": 30
   },
   "IsItaPlane": {
     "displayName": "Is It a Plane?",
@@ -1623,7 +1623,7 @@ export const advancements = {
     "globalIndex": 81,
     "category": "Adventure",
     "container": "Adventure1",
-    "containerIndex": 32
+    "containerIndex": 31
   },
   "VeryVeryFrightening": {
     "displayName": "Very Very Frightening",
@@ -1631,7 +1631,7 @@ export const advancements = {
     "globalIndex": 82,
     "category": "Adventure",
     "container": "Adeventure2",
-    "containerIndex": 1
+    "containerIndex": 0
   },
   "SniperDuel": {
     "displayName": "Sniper Duel",
@@ -1639,7 +1639,7 @@ export const advancements = {
     "globalIndex": 83,
     "category": "Adventure",
     "container": "Adeventure2",
-    "containerIndex": 2
+    "containerIndex": 1
   },
   "Bullseye": {
     "displayName": "Bullseye",
@@ -1647,7 +1647,7 @@ export const advancements = {
     "globalIndex": 84,
     "category": "Adventure",
     "container": "Adeventure2",
-    "containerIndex": 3
+    "containerIndex": 2
   },
   "Husbandry": {
     "displayName": "Husbandry",
@@ -1655,7 +1655,7 @@ export const advancements = {
     "globalIndex": 85,
     "category": "Husbandry",
     "container": "Husbandry1",
-    "containerIndex": 1
+    "containerIndex": 0
   },
   "BeeOurGuest": {
     "displayName": "Bee Our Guest",
@@ -1663,7 +1663,7 @@ export const advancements = {
     "globalIndex": 86,
     "category": "Husbandry",
     "container": "Husbandry1",
-    "containerIndex": 2
+    "containerIndex": 1
   },
   "TheParrotsandtheBats": {
     "displayName": "The Parrots and the Bats",
@@ -1671,7 +1671,7 @@ export const advancements = {
     "globalIndex": 87,
     "category": "Husbandry",
     "container": "Husbandry1",
-    "containerIndex": 3
+    "containerIndex": 2
   },
   "YouveGotaFriendinMe": {
     "displayName": "You've Got a Friend in Me",
@@ -1679,7 +1679,7 @@ export const advancements = {
     "globalIndex": 88,
     "category": "Husbandry",
     "container": "Husbandry1",
-    "containerIndex": 4
+    "containerIndex": 3
   },
   "WhateverFloatsYourGoat": {
     "displayName": "Whatever Floats Your Goat!",
@@ -1687,7 +1687,7 @@ export const advancements = {
     "globalIndex": 89,
     "category": "Husbandry",
     "container": "Husbandry1",
-    "containerIndex": 5
+    "containerIndex": 4
   },
   "BestFriendsForever": {
     "displayName": "Best Friends Forever",
@@ -1695,7 +1695,7 @@ export const advancements = {
     "globalIndex": 90,
     "category": "Husbandry",
     "container": "Husbandry1",
-    "containerIndex": 6
+    "containerIndex": 5
   },
   "GlowandBehold": {
     "displayName": "Glow and Behold!",
@@ -1703,7 +1703,7 @@ export const advancements = {
     "globalIndex": 91,
     "category": "Husbandry",
     "container": "Husbandry1",
-    "containerIndex": 7
+    "containerIndex": 6
   },
   "FishyBusiness": {
     "displayName": "Fishy Business",
@@ -1711,7 +1711,7 @@ export const advancements = {
     "globalIndex": 92,
     "category": "Husbandry",
     "container": "Husbandry1",
-    "containerIndex": 8
+    "containerIndex": 7
   },
   "TotalBeelocation": {
     "displayName": "Total Beelocation",
@@ -1719,7 +1719,7 @@ export const advancements = {
     "globalIndex": 93,
     "category": "Husbandry",
     "container": "Husbandry1",
-    "containerIndex": 9
+    "containerIndex": 8
   },
   "BukkitBukkit": {
     "displayName": "Bukkit Bukkit",
@@ -1727,7 +1727,7 @@ export const advancements = {
     "globalIndex": 94,
     "category": "Husbandry",
     "container": "Husbandry1",
-    "containerIndex": 10
+    "containerIndex": 9
   },
   "SmellsInteresting": {
     "displayName": "Smells Interesting",
@@ -1735,7 +1735,7 @@ export const advancements = {
     "globalIndex": 95,
     "category": "Husbandry",
     "container": "Husbandry1",
-    "containerIndex": 11
+    "containerIndex": 10
   },
   "ASeedyPlace": {
     "displayName": "A Seedy Place",
@@ -1743,7 +1743,7 @@ export const advancements = {
     "globalIndex": 96,
     "category": "Husbandry",
     "container": "Husbandry1",
-    "containerIndex": 12
+    "containerIndex": 11
   },
   "WaxOn": {
     "displayName": "Wax On",
@@ -1751,7 +1751,7 @@ export const advancements = {
     "globalIndex": 97,
     "category": "Husbandry",
     "container": "Husbandry1",
-    "containerIndex": 13
+    "containerIndex": 12
   },
   "TwobyTwo": {
     "displayName": "Two by Two",
@@ -1759,7 +1759,7 @@ export const advancements = {
     "globalIndex": 98,
     "category": "Husbandry",
     "container": "Husbandry1",
-    "containerIndex": 14
+    "containerIndex": 13
   },
   "BirthdaySong": {
     "displayName": "Birthday Song",
@@ -1767,7 +1767,7 @@ export const advancements = {
     "globalIndex": 99,
     "category": "Husbandry",
     "container": "Husbandry1",
-    "containerIndex": 15
+    "containerIndex": 14
   },
   "ACompleteCatalogue": {
     "displayName": "A Complete Catalogue",
@@ -1775,7 +1775,7 @@ export const advancements = {
     "globalIndex": 100,
     "category": "Husbandry",
     "container": "Husbandry1",
-    "containerIndex": 16
+    "containerIndex": 15
   },
   "TacticalFishing": {
     "displayName": "Tactical Fishing",
@@ -1783,7 +1783,7 @@ export const advancements = {
     "globalIndex": 101,
     "category": "Husbandry",
     "container": "Husbandry1",
-    "containerIndex": 17
+    "containerIndex": 16
   },
   "WhentheSquadHopsintoTown": {
     "displayName": "When the Squad Hops into Town",
@@ -1791,7 +1791,7 @@ export const advancements = {
     "globalIndex": 102,
     "category": "Husbandry",
     "container": "Husbandry1",
-    "containerIndex": 18
+    "containerIndex": 17
   },
   "LittleSniffs": {
     "displayName": "Little Sniffs",
@@ -1799,7 +1799,7 @@ export const advancements = {
     "globalIndex": 103,
     "category": "Husbandry",
     "container": "Husbandry1",
-    "containerIndex": 19
+    "containerIndex": 18
   },
   "ABalancedDiet": {
     "displayName": "A Balanced Diet",
@@ -1807,7 +1807,7 @@ export const advancements = {
     "globalIndex": 104,
     "category": "Husbandry",
     "container": "Husbandry1",
-    "containerIndex": 20
+    "containerIndex": 19
   },
   "SeriousDedication": {
     "displayName": "Serious Dedication",
@@ -1815,7 +1815,7 @@ export const advancements = {
     "globalIndex": 105,
     "category": "Husbandry",
     "container": "Husbandry1",
-    "containerIndex": 21
+    "containerIndex": 20
   },
   "WaxOff": {
     "displayName": "Wax Off",
@@ -1823,7 +1823,7 @@ export const advancements = {
     "globalIndex": 106,
     "category": "Husbandry",
     "container": "Husbandry1",
-    "containerIndex": 22
+    "containerIndex": 21
   },
   "TheCutestPredator": {
     "displayName": "The Cutest Predator",
@@ -1831,7 +1831,7 @@ export const advancements = {
     "globalIndex": 107,
     "category": "Husbandry",
     "container": "Husbandry1",
-    "containerIndex": 23
+    "containerIndex": 22
   },
   "WithOurPowersCombined": {
     "displayName": "With Our Powers Combined!",
@@ -1839,7 +1839,7 @@ export const advancements = {
     "globalIndex": 108,
     "category": "Husbandry",
     "container": "Husbandry1",
-    "containerIndex": 24
+    "containerIndex": 23
   },
   "PlantingthePast": {
     "displayName": "Planting the Past",
@@ -1847,7 +1847,7 @@ export const advancements = {
     "globalIndex": 109,
     "category": "Husbandry",
     "container": "Husbandry1",
-    "containerIndex": 25
+    "containerIndex": 24
   },
   "TheHealingPowerofFriendship": {
     "displayName": "The Healing Power of Friendship!",
@@ -1855,6 +1855,6 @@ export const advancements = {
     "globalIndex": 110,
     "category": "Husbandry",
     "container": "Husbandry1",
-    "containerIndex": 26
+    "containerIndex": 25
   }
 };
