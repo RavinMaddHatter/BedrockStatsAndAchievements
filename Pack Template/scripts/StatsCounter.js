@@ -1372,27 +1372,6 @@ function addToScore(category, item, player){
 	categoryBoard.addScore(player,1);
 	itemBoard.addScore(player,1);
 }
-function boolScore(category, item, player, zeroOrone){
-	//[stats/objectives/other]_[category/blocksBroken]_[some string to show to the user]
-	let categoryId = category.replace(" ","");
-	let itemId=categoryId+item.replace(" ","");
-	const allBoards = world.scoreboard.getObjectives();
-	const checkCategoryID = obj => obj.displayName === category;
-	
-	if(!allBoards.some(checkCategoryID)){ 
-		world.scoreboard.addObjective(categoryId, category);
-	}
-	const checkItemID = obj => obj.displayName === category+" "+item;
-	
-	if(!allBoards.some(checkItemID)){ 
-		world.scoreboard.addObjective(itemId, category+" "+item);
-	}
-	let categoryBoard = world.scoreboard.getObjective(categoryId);
-	let itemBoard = world.scoreboard.getObjective(itemId);
-	
-	//categoryBoard.setScore(player, zeroOrone);
-	itemBoard.setScore(player, zeroOrone);
-}
 function calculateDistance(x1, z1, x2, z2) {
 	return Math.floor(Math.hypot(Math.abs(z2 - z1), Math.abs(x2 - x1)));
 }
@@ -1405,93 +1384,16 @@ function getScoreIfExists(board, player){
 	}
 	return tempScore
 }
-function getSomeScore(category, item, player){
-	let categoryId = category.replace(" ","");
-	let itemId=categoryId+item.replace(" ","");
-	const allBoards = world.scoreboard.getObjectives();
-	const checkCategoryID = obj => obj.displayName === category;
-	
-	if(!allBoards.some(checkCategoryID)){ 
-		world.scoreboard.addObjective(categoryId, category);
-		world.scoreboard.getObjective(categoryId).setScore(player,0);
-	}
-	const checkItemID = obj => obj.displayName === category+" "+item;
-	
-	if(!allBoards.some(checkItemID)){ 
-		world.scoreboard.addObjective(itemId, category+" "+item);
-		world.scoreboard.getObjective(itemId).setScore(player,0);
-	}
-	let categoryBoard = world.scoreboard.getObjective(categoryId);
-	let itemBoard = world.scoreboard.getObjective(itemId);
-	
-	//return categoryBoard.getScore(player);
-	return itemBoard.getScore(player);
-}
 function setAchivement(name){
 	//needs to be implemented
 }
 function setAdvancement(name){
 	//needs to be implemented
 }
-function initializeObjectives(player){
-	let categoryId;
-	//achievements--------------------
-		categoryId = "objectives_achievement_";
-		
-		if(!world.scoreboard.getObjective(categoryId)){
-			world.scoreboard.addObjective(categoryId, categoryId);
-		}
-		for (let [obj, name] of Object.entries(achievements)) {//[obj, name, key, value]
-			let idName = name.displayName;
-			let itemId = categoryId + obj;
-			if(!world.scoreboard.getObjective(itemId)){
-				world.scoreboard.addObjective(itemId, categoryId+" "+idName);
-			}
-			if(!world.scoreboard.getObjective(itemId).getScore(player)){
-				world.scoreboard.getObjective(itemId).setScore(player, 0);
-			}
-		}
-	//advancements--------------------
-		categoryId = "objectives_advancement_";
-		
-		if(!world.scoreboard.getObjective(categoryId)){
-			world.scoreboard.addObjective(categoryId, categoryId);
-		}
-		for (let [obj, name] of Object.entries(advancements)) {//[obj, name, key, value]
-			let idName = name.displayName;
-			let itemId = categoryId + obj;
-			if(!world.scoreboard.getObjective(itemId)){
-				world.scoreboard.addObjective(itemId, categoryId+" "+idName);
-			}
-			if(!world.scoreboard.getObjective(itemId).getScore(player)){
-				world.scoreboard.getObjective(itemId).setScore(player, 0);
-			}
-		}
-}
 function achievmentUnlock(player,data){
 	let display=player.onScreenDisplay
 	display.setActionBar("\u00A7cAchievment Unlocked: \u00A7e"+data)
 	player.playSound("random.levelup")
-}
-function scoreSet(category, item, player, score){
-	let categoryId = category.replace(" ","");
-	let itemId=categoryId+item.replace(" ","");
-	const allBoards = world.scoreboard.getObjectives();
-	const checkCategoryID = obj => obj.displayName === category;
-	
-	if(!allBoards.some(checkCategoryID)){ 
-		world.scoreboard.addObjective(categoryId, category);
-	}
-	const checkItemID = obj => obj.displayName === category+" "+item;
-	
-	if(!allBoards.some(checkItemID)){ 
-		world.scoreboard.addObjective(itemId, category+" "+item);
-	}
-	let categoryBoard = world.scoreboard.getObjective(categoryId);
-	let itemBoard = world.scoreboard.getObjective(itemId);
-	
-	//categoryBoard.setScore(player, score);
-	itemBoard.setScore(player, score);
 }
 function timer10Sec(){
 	system.runInterval(() => {
