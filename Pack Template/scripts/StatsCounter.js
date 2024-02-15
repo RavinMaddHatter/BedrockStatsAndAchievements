@@ -379,6 +379,8 @@ function changedDimension(event){
 function entityDied(event){
 	const victim = event.deadEntity
 	const cause = event.damageSource
+	let victimName= victim.typeId.replace("minecraft:","")
+	
 	if(event.damageSource.damagingEntity){
 		const killer = event.damageSource.damagingEntity
 		if(killer.typeId == "minecraft:player"){
@@ -388,8 +390,13 @@ function entityDied(event){
 			
 		}
 	}
-	if(victim.typeId == "minecraft:player"){
-		addToScore("stats_Deaths_",event.damageSource.cause, victim)
+	switch(victimName){
+		case "player" :
+			addToScore("stats_Deaths_",event.damageSource.cause, victim);
+			break;
+		case "ender_dragon" :
+			world.setDynamicProperty("dragonKill", 1);
+			break;
 	}
 }
 function hitByProjectile(event){
@@ -1236,14 +1243,10 @@ function spawnAndBreed(entity, player){
 					advancementTracker.setachievement("WitheringHeights",player);//[advancement] Withering Heights | Summon the Wither | Be within a 100.9×100.9×103.5 cuboid centered on the wither when it is spawned.
 				}
 				break;
-		    //[achievement] The End... Again... | Respawn the Enderdragon | —
-		    //[advancement] The End... Again... | Respawn the Ender Dragon | Be within a 192 block radius from the coordinates (0.0, 128, 0.0) when an ender dragon is summoned using end crystals.
 			case "ender_dragon" :
-				if(getSomeScore("spawnAndBreed", "ender_dragon_bool", player) == 0){
-					addToScore("spawnAndBreed", "ender_dragon_score", player);
-					if(getSomeScore("spawnAndBreed", "ender_dragon_score", player) > 1){
-						achievementUnlock(player, "The End... Again... ")
-					}
+				if(world.getDynamicProperty("dragonKill") == 1){
+					achievementTracker.setachievement("TheEndAgain",player);//[achievement] The End... Again... | Respawn the Enderdragon | —
+					advancementTracker.setachievement("TheEndAgain",player);//[advancement] The End... Again... | Respawn the Ender Dragon | Be within a 192 block radius from the coordinates (0.0, 128, 0.0) when an ender dragon is summoned using end crystals.
 				}
 				break;
 			case "cow" :
