@@ -3,35 +3,40 @@ import {ActionFormData, ActionFormResponse } from "@minecraft/server-ui";
 import { achievements, advancements } from "textObjects";
 import {achievementHandler} from "achievementHandler"
 
-var achievments1=achievements.keys()
-var achievments2=achievements.keys()
+var achievments1=Object.keys(achievements)
+var achievments2=Object.keys(achievements)
+achievments1.sort( () => .5 - Math.random() );
+achievments2.sort( () => .5 - Math.random() );
 var achievmentTracker1= new achievementHandler(achievements)
 
-system.runInterval(loopObjects,40)
-
+var loopHandle = system.runInterval(loopObjects,1)
+var player = world.getPlayers()[0];
+player.clearDynamicProperties()
 function loopObjects(){
-	let player = mc.world.getPlayers()[0];
+	
 	if(achievments1.length>0){
 		const handle=achievments1.pop()
-		console.warn(handle)
-		console.warn(getAchievmentName(handle))
-		const achievmentStats=achievementHandler.checkAchievment(handle,player)
-		console.warn(achievmentStats)
+		const achievmentStats=achievmentTracker1.checkAchievment(handle,player)
 		
 		if(achievmentStats){
+			console.warn(handle)
+			console.warn(getAchievmentName(handle))
+			console.warn(achievmentStats)
 			console.warn("FAILED")
 		}
-		achievementHandler.setAchievment(handle,player)
+		achievmentTracker1.setAchievment(handle,player)
 		
 	}else if (achievments2.length>0){
 		const handle=achievments2.pop()
-		const achievmentStats=achievementHandler.checkAchievment(handle,player)
-		console.warn(achievmentStats)
+		const achievmentStats=achievmentTracker1.checkAchievment(handle,player)
+		
 		if(!achievmentStats){
 			console.warn("FAILED")
+			console.warn(achievmentStats)
 		}
 		
 	}else{
 		console.warn("completed")
+		system.clearRun(loopHandle)
 	}
 }
