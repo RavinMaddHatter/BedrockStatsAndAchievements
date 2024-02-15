@@ -100,9 +100,9 @@ function statListBody(player){
 		let statTxt = "Stats";
 		
 		let statArrayTxt = [];
-		statArrayTxt[0] = "Overworld Travel: " + getSomeScore("stats", "overworld_blocks", player) + " blocks";
-		statArrayTxt[1] = "Total blocks placed: " + getSomeScore("stats_blocksPlaced_", "total", player);
-		statArrayTxt[2] = "Total blocks broken: " + getSomeScore("stats_blocksBroken_", "total", player);
+		statArrayTxt[0] = "Overworld Travel: " + getScoreIfExists("stats", "overworld_blocks", player) + " blocks";
+		statArrayTxt[1] = "Total blocks placed: " + getScoreIfExists("stats_blocksPlaced_", "total", player);
+		statArrayTxt[2] = "Total blocks broken: " + getScoreIfExists("stats_blocksBroken_", "total", player);
 		
 	//construct the body
 		let indentSize = "    ";
@@ -1297,11 +1297,11 @@ function spawnAndBreed(entity, player){
 					achievementTracker.setachievement("TheParrotsandtheBats",player);//[advancement] The Parrots and the Bats | Breed two animals together | Breed a pair of any of these 25 mobs:, Axolotl, Bee, Camel, Cat, Chicken, Cow, Donkey, Fox, Frog, Goat, Hoglin, Horse, Llama, Mooshroom, Mule, Ocelot, Panda, Pig, Rabbit, Sheep, Sniffer, Strider, Trader Llama, Turtle, Wolf, A mule must be the result of breeding a horse and a donkey for this advancement as they are not breedable together. Other breedable mobs are ignored for this advancement.
 				}
 			    //[advancement] Two by Two | Breed all the animals! | Breed a pair of each of these 24 mobs:, Axolotl, Bee, Camel, Cat, Chicken, Cow, Donkey, Fox, Frog, Goat, Hoglin, Horse, Llama, Mooshroom, Mule, Ocelot, Panda, Pig, Rabbit, Sheep, Sniffer, Strider, Turtle, Wolf, A trader llama does not count as a llama, and a mule must be the result of breeding a horse and a donkey for this advancement as they are not breedable together. Other breedable mobs can be bred, but are ignored for this advancement.
-				if(getSomeScore("spawnAndBreed", "breed_all_bool", player) == 0){
-					if(getSomeScore("spawnAndBreed", entity, player) == 0){
+				if(getScoreIfExists("spawnAndBreed", "breed_all_bool", player) == 0){
+					if(getScoreIfExists("spawnAndBreed", entity, player) == 0){
 						addToScore("spawnAndBreed", "breed_all_score", player);
 						//boolScore("spawnAndBreed", entity, player, 1);
-						if(getSomeScore("spawnAndBreed", "breed_all_score", player) == 24){
+						if(getScoreIfExists("spawnAndBreed", "breed_all_score", player) == 24){
 							//boolScore("spawnAndBreed", "breed_all_bool", player, 1);
 						}
 					}
@@ -1359,7 +1359,7 @@ function statusAndEffects(player){
 	let index = 0;
 	
 	//create a mask for effects
-	if(getSomeScore("statusAndEffects", "potion_effects_bool", player) == 0){
+	if(getScoreIfExists("statusAndEffects", "potion_effects_bool", player) == 0){
 		for(var i = 0; i < effectPlayer.length; i++){
 			let effect = effectPlayer[i].typeId
 			if(effectArray.includes(effect)){
@@ -1428,39 +1428,34 @@ function weaponsToolsArmor(subject, player){
 		//[advancement] Very Very Frightening | Strike a Villager with lightning | Hit a villager with lightning created by a trident with the Channeling enchantment.
 	//done--------------------
 		switch(subject){
-		    //[advancement] Ol' Betsy | Shoot a Crossbow | —
 			case "crossbow" :
 				if(!advancementTracker.checkachievement("OlBetsy"),player){
-					advancementTracker.setachievement("OlBetsy",player)
+					advancementTracker.setachievement("OlBetsy",player);//[advancement] Ol' Betsy | Shoot a Crossbow | —
 				}
 				break;
-		    //[advancement] Take Aim | Shoot something with an Arrow | Using a bow or a crossbow, shoot an entity with an arrow, tipped arrow, or spectral arrow.
 			case "arrow" :
 				if(!advancementTracker.checkachievement("TakeAim"),player){
-					advancementTracker.setachievement("TakeAim",player)
+					advancementTracker.setachievement("TakeAim",player);//[advancement] Take Aim | Shoot something with an Arrow | Using a bow or a crossbow, shoot an entity with an arrow, tipped arrow, or spectral arrow.
 				}
 				break;
-		    //[advancement] A Throwaway Joke | Throw a Trident at something. Note: Throwing away your only weapon is not a good idea. | Hit a mob with a thrown trident.
 			case "thrown_trident" :
 				if(!advancementTracker.checkachievement("AThrowawayJoke"),player){
-					advancementTracker.setachievement("AThrowawayJoke",player)
+					advancementTracker.setachievement("AThrowawayJoke",player);//[advancement] A Throwaway Joke | Throw a Trident at something. Note: Throwing away your only weapon is not a good idea. | Hit a mob with a thrown trident.
 				}
 				break;
-		    //[achievement] Bullseye | Hit the bullseye of a Target block | —
 			case "target" :
 				if(!achievementTracker.checkachievement("Bullseye"),player){
-					achievementTracker.setachievement("Bullseye",player)
+					achievementTracker.setachievement("Bullseye",player);//[achievement] Bullseye | Hit the bullseye of a Target block | —
 				}
 				break;
-		    //[advancement] Bullseye | Hit the bullseye of a Target block from at least 30 meters away | Be at least 30 blocks away horizontally when the center of a target is shot with a projectile by the player.
 			case "targetFrom30" :
 				if(!advancementTracker.checkachievement("Bullseye"),player){
-					advancementTracker.setachievement("Bullseye",player)
+					advancementTracker.setachievement("Bullseye",player); //[advancement] Bullseye | Hit the bullseye of a Target block from at least 30 meters away | Be at least 30 blocks away horizontally when the center of a target is shot with a projectile by the player.
 				}
 				break;
 		    //[advancement] Fishy Business | Catch a fish | Use a fishing rod to catch any of these fishes:, Cod, Salmon, Tropical Fish, Pufferfish
 			case "fishing_rod" :
-				if(getSomeScore("weaponsToolsArmor", "catch_fish", player) == 0){
+				if(getScoreIfExists("weaponsToolsArmor", "catch_fish", player) == 0){
 					const fishArray = [];
 					fishArray[0] = "cod";
 					fishArray[1] = "salmon";
@@ -1479,7 +1474,7 @@ function weaponsToolsArmor(subject, player){
 								let slotItemAmount = slotItem.amount;
 								
 								if(slotItemName == ("minecraft:" + fishArray[i])){
-									scoreSet("weaponsToolsArmor", fishArray[i], player, slotItemAmount);
+									//scoreSet("weaponsToolsArmor", fishArray[i], player, slotItemAmount);
 								}
 							}
 						}
@@ -1494,11 +1489,11 @@ function weaponsToolsArmor(subject, player){
 									let slotItemAmount = slotItem.amount;
 									
 									if(slotItemName == ("minecraft:" + fishArray[i])){
-										if(getSomeScore("weaponsToolsArmor", fishArray[i], player) < slotItemAmount){
+										if(getScoreIfExists("weaponsToolsArmor", fishArray[i], player) < slotItemAmount){
 											//boolScore("weaponsToolsArmor", "catch_fish", player, 1);
 											achievementUnlock(player,"Fishy Business")
 										}else{
-											scoreSet("weaponsToolsArmor", fishArray[i], player, 0);
+											//scoreSet("weaponsToolsArmor", fishArray[i], player, 0);
 										}
 									}
 								}
@@ -1547,27 +1542,6 @@ function addToScore(category, item, player){
 	categoryBoard.addScore(player,1);
 	itemBoard.addScore(player,1);
 }
-function boolScore(category, item, player, zeroOrone){
-	//[stats/objectives/other]_[category/blocksBroken]_[some string to show to the user]
-	let categoryId = category.replace(" ","");
-	let itemId=categoryId+item.replace(" ","");
-	const allBoards = world.scoreboard.getObjectives();
-	const checkCategoryID = obj => obj.displayName === category;
-	
-	if(!allBoards.some(checkCategoryID)){ 
-		world.scoreboard.addObjective(categoryId, category);
-	}
-	const checkItemID = obj => obj.displayName === category+" "+item;
-	
-	if(!allBoards.some(checkItemID)){ 
-		world.scoreboard.addObjective(itemId, category+" "+item);
-	}
-	let categoryBoard = world.scoreboard.getObjective(categoryId);
-	let itemBoard = world.scoreboard.getObjective(itemId);
-	
-	//categoryBoard.setScore(player, zeroOrone);
-	itemBoard.setScore(player, zeroOrone);
-}
 function calculateDistance(x1, z1, x2, z2) {
 	return Math.floor(Math.hypot(Math.abs(z2 - z1), Math.abs(x2 - x1)));
 }
@@ -1579,28 +1553,6 @@ function getScoreIfExists(board, player){
 		}
 	}
 	return tempScore
-}
-function getSomeScore(category, item, player){
-	let categoryId = category.replace(" ","");
-	let itemId=categoryId+item.replace(" ","");
-	const allBoards = world.scoreboard.getObjectives();
-	const checkCategoryID = obj => obj.displayName === category;
-	
-	if(!allBoards.some(checkCategoryID)){ 
-		world.scoreboard.addObjective(categoryId, category);
-		world.scoreboard.getObjective(categoryId).setScore(player,0);
-	}
-	const checkItemID = obj => obj.displayName === category+" "+item;
-	
-	if(!allBoards.some(checkItemID)){ 
-		world.scoreboard.addObjective(itemId, category+" "+item);
-		world.scoreboard.getObjective(itemId).setScore(player,0);
-	}
-	let categoryBoard = world.scoreboard.getObjective(categoryId);
-	let itemBoard = world.scoreboard.getObjective(itemId);
-	
-	//return categoryBoard.getScore(player);
-	return itemBoard.getScore(player);
 }
 function processBlockTags(tags){
 	for(let index in tags) {
@@ -1670,64 +1622,12 @@ function setAdvancement(name){
 	//needs to be implemented
 }
 function initializeObjectives(player){
-	let categoryId;
-	//achievements--------------------
-		categoryId = "objectives_achievement_";
-		
-		if(!world.scoreboard.getObjective(categoryId)){
-			world.scoreboard.addObjective(categoryId, categoryId);
-		}
-		for (let [obj, name] of Object.entries(achievements)) {//[obj, name, key, value]
-			let idName = name.displayName;
-			let itemId = categoryId + obj;
-			if(!world.scoreboard.getObjective(itemId)){
-				world.scoreboard.addObjective(itemId, categoryId+" "+idName);
-			}
-			if(!world.scoreboard.getObjective(itemId).getScore(player)){
-				world.scoreboard.getObjective(itemId).setScore(player, 0);
-			}
-		}
-	//advancements--------------------
-		categoryId = "objectives_advancement_";
-		
-		if(!world.scoreboard.getObjective(categoryId)){
-			world.scoreboard.addObjective(categoryId, categoryId);
-		}
-		for (let [obj, name] of Object.entries(advancements)) {//[obj, name, key, value]
-			let idName = name.displayName;
-			let itemId = categoryId + obj;
-			if(!world.scoreboard.getObjective(itemId)){
-				world.scoreboard.addObjective(itemId, categoryId+" "+idName);
-			}
-			if(!world.scoreboard.getObjective(itemId).getScore(player)){
-				world.scoreboard.getObjective(itemId).setScore(player, 0);
-			}
-		}
+
 }
 function achievementUnlock(player,data){
 	let display=player.onScreenDisplay
 	display.setActionBar("\u00A7cachievement Unlocked: \u00A7e"+data)
 	player.playSound("random.levelup")
-}
-function scoreSet(category, item, player, score){
-	let categoryId = category.replace(" ","");
-	let itemId=categoryId+item.replace(" ","");
-	const allBoards = world.scoreboard.getObjectives();
-	const checkCategoryID = obj => obj.displayName === category;
-	
-	if(!allBoards.some(checkCategoryID)){ 
-		world.scoreboard.addObjective(categoryId, category);
-	}
-	const checkItemID = obj => obj.displayName === category+" "+item;
-	
-	if(!allBoards.some(checkItemID)){ 
-		world.scoreboard.addObjective(itemId, category+" "+item);
-	}
-	let categoryBoard = world.scoreboard.getObjective(categoryId);
-	let itemBoard = world.scoreboard.getObjective(itemId);
-	
-	//categoryBoard.setScore(player, score);
-	itemBoard.setScore(player, score);
 }
 function timer10Sec(){
 	system.runInterval(() => {
