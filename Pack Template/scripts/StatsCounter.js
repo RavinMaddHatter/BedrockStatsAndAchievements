@@ -1643,6 +1643,28 @@ function timer10Sec(){
 		}
 	}, 200);
 }
+function timer1Day(){
+	system.runInterval(() => {
+		let playerArrayList = world.getAllPlayers();//get list of players
+		
+		for(let i = 0; i < playerArrayList.length; i++){
+			let minTime = playerArrayList[i].getDynamicProperty("playTimeM");
+			playerArrayList[i].setDynamicProperty("playTimeM", (minTime === undefined ? 0 : minTime) + 1);
+			//console.warn(playerArrayList[i].getDynamicProperty("playTimeM"));
+		}
+	}, 1200);
+}
+function timer1Min(){
+	system.runInterval(() => {
+		let playerArrayList = world.getAllPlayers();//get list of players
+		
+		for(let i = 0; i < playerArrayList.length; i++){
+			let minTime = playerArrayList[i].getDynamicProperty("playTimeM");
+			playerArrayList[i].setDynamicProperty("playTimeM", (minTime === undefined ? 0 : minTime) + 1);
+			//console.warn(playerArrayList[i].getDynamicProperty("playTimeM"));
+		}
+	}, 1200);
+}
 //end helper functions----------------------------------------
 
 //debug functions----------------------------------------
