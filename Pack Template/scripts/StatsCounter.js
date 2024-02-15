@@ -319,67 +319,6 @@ function blockBroken(event){
 	}
 	addToScore("stats_blocksBroken_", "total", player);
 }
-function processBlockTags(tags){
-	for(let index in tags) {
-		const tag = tags[index]
-		switch(tag){
-			case "dirt":
-				if (tags.includes("grass")){
-					if (tags.includes("fertilize_area")){
-						return "Grass"
-					}
-					return "Dirt"
-				}
-				return "Dirt Variants"
-				break;
-			case "stone":
-				return "Stone bits"
-			case "stone_pick_diggable":
-				return "Copper Ore"
-			case "iron_pick_diggable":
-				break;
-			case "diamond_pick_diggable":
-				if(!tags.includes("iron_pick_diggable")){
-					return "Obsidian"
-				}
-				return "Ore Blocks"
-				break;
-			case "wood":
-				let tempTags=tags
-				if (tags.includes("log")){
-					let index = tempTags.indexOf("wood");
-					tempTags.splice(index, 1)
-					index = tempTags.indexOf("log");
-					tempTags.splice(index, 1)
-					return tempTags[0]+" Log"
-				}
-				if ("text_sign" in tags){
-					return "Signs"
-				}
-				return "Wood Bits"
-			case "pumpkin":
-				return "Pumpkins"
-			case "plant":
-				return "2 high Plants or saplings"
-			case "fertilize_area":
-				if(!tags.includes("grass")){
-					return "Flowers"
-				}
-				break;
-			case "minecraft:crop":
-				return "Cropland"
-			case "sand":
-				return "Sand"
-			case "gravel":
-				return "Gravel"
-			case "metal":
-				//cauldron and blocks of smelted iron bars
-				return "Metal Blocks"
-			case "snow":
-				return "Snow Layers"
-		}
-	}
-}
 function blockPlaced(event){
 	let player = event.player;
 	let blockData= processBlockTags(event.block.getTags())
@@ -1697,6 +1636,67 @@ function getSomeScore(category, item, player){
 	
 	//return categoryBoard.getScore(player);
 	return itemBoard.getScore(player);
+}
+function processBlockTags(tags){
+	for(let index in tags) {
+		const tag = tags[index]
+		switch(tag){
+			case "dirt":
+				if (tags.includes("grass")){
+					if (tags.includes("fertilize_area")){
+						return "Grass"
+					}
+					return "Dirt"
+				}
+				return "Dirt Variants"
+				break;
+			case "stone":
+				return "Stone bits"
+			case "stone_pick_diggable":
+				return "Copper Ore"
+			case "iron_pick_diggable":
+				break;
+			case "diamond_pick_diggable":
+				if(!tags.includes("iron_pick_diggable")){
+					return "Obsidian"
+				}
+				return "Ore Blocks"
+				break;
+			case "wood":
+				let tempTags=tags
+				if (tags.includes("log")){
+					let index = tempTags.indexOf("wood");
+					tempTags.splice(index, 1)
+					index = tempTags.indexOf("log");
+					tempTags.splice(index, 1)
+					return tempTags[0]+" Log"
+				}
+				if ("text_sign" in tags){
+					return "Signs"
+				}
+				return "Wood Bits"
+			case "pumpkin":
+				return "Pumpkins"
+			case "plant":
+				return "2 high Plants or saplings"
+			case "fertilize_area":
+				if(!tags.includes("grass")){
+					return "Flowers"
+				}
+				break;
+			case "minecraft:crop":
+				return "Cropland"
+			case "sand":
+				return "Sand"
+			case "gravel":
+				return "Gravel"
+			case "metal":
+				//cauldron and blocks of smelted iron bars
+				return "Metal Blocks"
+			case "snow":
+				return "Snow Layers"
+		}
+	}
 }
 function setAchievment(name){
 	//needs to be implemented
