@@ -476,31 +476,21 @@ function getArrowType(arrow){
 function initSpawn(event){
 	let player = event.player;
 	
-	if(!player.getDynamicProperty("1spawn") == "true"){//verify the player hasn't spawned previously	
+	if(!player.getDynamicProperty("1spawn") == 1){//verify the player hasn't spawned previously	
 		player.setDynamicProperty("initialX",Math.floor(player.location.x));//record player initial location x
 		player.setDynamicProperty("initialZ",Math.floor(player.location.z));//record player initial location z
-		player.setDynamicProperty("1spawn", "true");//add tag to record that player has already spawned initially
+		player.setDynamicProperty("1spawn", 1);//add tag to record that player has already spawned initially
 	}
 }
 function itemComplete(event){
 	let player = event.source;
 	let itemName = event.itemStack.typeId.replace("minecraft:","");
 	
-	//console.warn("item used")
-	const comps=event.itemStack.getComponents()
-	//console.warn(comps.length)
-	//console.warn(comps)
-	for(var i=0; i<comps.length;i++){
-		//console.warn(i)
-		//console.warn(comps[i])
-	}
-	//addToScore("Items Uses",itemName, event.source)//This is not ideal needs a patch as stone will become cobble
-	
 	switch(itemName){
 		case "crossbow" :
-			//boolScore("tracking_itemComplete_", "chargeBool", player, 1);
+			player.setDynamicProperty("chargeCross", 1);
 			system.runTimeout(() => {
-				//boolScore("tracking_itemComplete_", "chargeBool", player, 0);
+				player.setDynamicProperty("chargeCross", 0);
 			}, 200);
 			break;
 	}
@@ -512,9 +502,9 @@ function itemRelease(event){
 	switch(itemName){
 		case "bow" :
 			addToScore("stats_itemsReleased_","Bow",player)
-			//boolScore("tracking_itemRelease_", "shootBool", player, 1);
+			player.setDynamicProperty("shotBow", 1);
 			system.runTimeout(() => {
-				//boolScore("tracking_itemRelease_", "shootBool", player, 0);
+				player.setDynamicProperty("shotBow", 0);
 			}, 40);
 			break;
 		case "crossbow":
@@ -635,12 +625,12 @@ function targetHit(event){
 		var i;
 		
 		for(i = 0; i < closePlayers.length; i++){
-			if(getSomeScore("tracking_itemRelease_", "shootBool", closePlayers[i]) == 1){
+			if(closePlayers[i].getDynamicProperty("shotBow") == 1){
 				weaponsToolsArmor("target", closePlayers[i]);
 			}
 		}
 		for(i = 0; i < farPlayers.length; i++){
-			if(getSomeScore("tracking_itemRelease_", "shootBool", farPlayers[i]) == 1){
+			if(farPlayers[i].getDynamicProperty("shotBow") == 1){
 				weaponsToolsArmor("targetFrom30", farPlayers[i]);
 			}
 		}
@@ -652,7 +642,7 @@ function useItem(event){
 	
 	switch(itemName){
 		case "crossbow" :
-			if(getSomeScore("tracking_itemComplete_", "chargeBool", player) == 1){
+			if(player.getDynamicProperty("chargeCross") == 1){
 				weaponsToolsArmor(itemName, player);
 			}
 			break;
