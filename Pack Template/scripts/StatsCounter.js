@@ -1644,24 +1644,25 @@ function timer10Sec(){
 	}, 200);
 }
 function timer1Day(){
-	system.runInterval(() => {
-		let playerArrayList = world.getAllPlayers();//get list of players
+	let timeVal = world.getTimeOfDay();
+	
+	if(timeVal == 6000){
+		let playerArrayList = world.getAllPlayers();
 		
 		for(let i = 0; i < playerArrayList.length; i++){
-			let minTime = playerArrayList[i].getDynamicProperty("playTimeM");
-			playerArrayList[i].setDynamicProperty("playTimeM", (minTime === undefined ? 0 : minTime) + 1);
-			//console.warn(playerArrayList[i].getDynamicProperty("playTimeM"));
+			let dayCount = playerArrayList[i].getDynamicProperty("playTimeD");
+			playerArrayList[i].setDynamicProperty("playTimeD", (!dayCount ? 0 : dayCount) + 1);
 		}
-	}, 1200);
+	}
 }
 function timer1Min(){
 	system.runInterval(() => {
-		let playerArrayList = world.getAllPlayers();//get list of players
+		let playerArrayList = world.getAllPlayers();
 		
 		for(let i = 0; i < playerArrayList.length; i++){
-			let minTime = playerArrayList[i].getDynamicProperty("playTimeM");
-			playerArrayList[i].setDynamicProperty("playTimeM", (minTime === undefined ? 0 : minTime) + 1);
-			//console.warn(playerArrayList[i].getDynamicProperty("playTimeM"));
+			let minCount = playerArrayList[i].getDynamicProperty("playTimeM");
+			playerArrayList[i].setDynamicProperty("playTimeM", (!minCount ? 0 : minCount) + 1);
+			//console.warn(minTime);
 		}
 	}, 1200);
 }
