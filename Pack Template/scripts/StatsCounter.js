@@ -335,7 +335,8 @@ function buttonPushed(event){
 		}
 		addToScore("stats_redstonInteractions_",type, event.source)
 	}
-}function pleatePressed(event){
+}
+function pleatePressed(event){
 	if(event.source.typeId=="minecraft:player"){
 		let type = "Weighted Pressure Plate"
 		if (event.block.getTags().includes("stone")){
@@ -428,9 +429,6 @@ function itemComplete(event){
 	switch(itemName){
 		case "crossbow" :
 			player.setDynamicProperty("chargeCross", 1);
-			system.runTimeout(() => {
-				player.setDynamicProperty("chargeCross", 0);
-			}, 200);
 			break;
 	}
 }
@@ -447,7 +445,7 @@ function itemRelease(event){
 			}, 40);
 			break;
 		case "crossbow":
-			addToScore("stats_itemsReleased_","Crossbow",player)
+			//addToScore("stats_itemsReleased_","Crossbow",player) //moved to useItem(event)
 			break
 		case "trident":
 			addToScore("stats_itemsReleased_","Trident",player)
@@ -470,7 +468,6 @@ function loadedEntity(event){
 		
 		for(var i = 0; i < closePlayers.length; i++){
 			getSomeWhere("bastion_remnant", closePlayers[i]);
-			//console.warn(closePlayers[i].name);
 		}
 	}
 }
@@ -488,7 +485,6 @@ function spawnedEntity(event){
 			});
 			
 			for(var i = 0; i < closePlayers.length; i++){
-				//console.warn(closePlayers[i].name);
 				getSomeWhere("nether_fortress", closePlayers[i]);
 			}
 			break;
@@ -532,8 +528,7 @@ function statStick(event){
 	let itemTag = event.itemStack.nameTag;
 	
 	if(itemName == "stick" && (itemTag == "statStick")){
-		//console.warn("Not your average stick");
-		statList(player);//initiate ui
+		statList(player);
 	}
 }
 function projectileHitBlock(event){
@@ -583,6 +578,8 @@ function useItem(event){
 		case "crossbow" :
 			if(player.getDynamicProperty("chargeCross") == 1){
 				weaponsToolsArmor(itemName, player);
+				addToScore("stats_itemsReleased_","Crossbow",player);
+				player.setDynamicProperty("chargeCross", 0);
 			}
 			break;
 		case "fishing_rod" :
@@ -1270,8 +1267,6 @@ function spawnAndBreed(entity, player){
 				if(getSomeScore("spawnAndBreed", "ender_dragon_bool", player) == 0){
 					addToScore("spawnAndBreed", "ender_dragon_score", player);
 					if(getSomeScore("spawnAndBreed", "ender_dragon_score", player) > 1){
-						//console.warn("It's a rare, magical creature. We should kill it");
-						//boolScore("spawnAndBreed", "ender_dragon_bool", player, 1);
 						achievmentUnlock(player, "The End... Again... ")
 					}
 				}
@@ -1768,7 +1763,6 @@ function timer10Sec(){
 	system.runInterval(() => {
 		let playerArrayList = world.getAllPlayers();//get list of players
 		
-		//console.warn(playerArrayList[0].name);
 		for(let i = 0; i < playerArrayList.length; i++){
 			//distance data sampling at defined interval
 			overworldBlocksTravelled(playerArrayList[i]);
@@ -1874,7 +1868,6 @@ function biomeFinder(player){
 	let variantPlayer = player.getComponent("minecraft:variant").value;
 	let biomeId = biomeArray[variantPlayer];
 	
-	//console.warn(biomeId);
 	return biomeId;
 }
 function facingDirection(player){
@@ -1908,7 +1901,6 @@ function facingDirection(player){
 			break;
 	}
 	
-	//console.warn(faceTxt);
 	return faceTxt;
 }
 function getTheTime(style){
@@ -1941,13 +1933,11 @@ function getTheTime(style){
 			break;
 	}
 	
-	//console.warn(timeVal);
 	return timeClock;
 }
 function lightLevel(player){
 	let markVariantPlayer = player.getComponent("minecraft:mark_variant").value;
 	
-	//console.warn(markVariantPlayer);
 	return markVariantPlayer;
 }
 function moonCycle(){
@@ -1981,7 +1971,6 @@ function moonCycle(){
 			break;
 	}
 	
-	//console.warn(moonTxt);
 	return moonTxt;
 }
 function playerPosition(player, option){
@@ -2018,7 +2007,6 @@ function playerPosition(player, option){
 			break;
 	}
 	
-	//console.warn(playerPosTxt);
 	return playerPosTxt;
 }
 function playerRespawn(player){
@@ -2029,7 +2017,6 @@ function playerRespawn(player){
 		let spawnZ = player.getSpawnPoint().z;
 		let spawnTxt = "\n        " + spawnDim + ",\n        " + spawnX + ",\n        " + spawnY + ",\n        " + spawnZ;
 		
-		//console.warn(spawnTxt);
 		return spawnTxt;
 	}else{
 		return "not set";
@@ -2047,7 +2034,6 @@ function worldlife(unit){
 			break;
 	}
 	
-	//console.warn(lifeVal);
 	return lifeVal;
 }
 function worldSpawn(){
@@ -2056,7 +2042,6 @@ function worldSpawn(){
 	let spawnZ = world.getDefaultSpawnLocation().z;
 	let spawnTxt = " " + spawnX + ", " + spawnY + ", " + spawnZ;
 	
-	//console.warn(spawnTxt);
 	return spawnTxt;
 }
 //end debug functions----------------------------------------
