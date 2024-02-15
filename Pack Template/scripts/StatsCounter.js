@@ -355,22 +355,23 @@ function changedDimension(event){
 		case "nether":
 			addToScore("stats_enteredDimension_","Nether",player)
 			if(!advancementTracker.checkAchievment("TheEnd",player)){
-				achievmentTracker.setAchievment("IntoTheNether",player)
-				advancementTracker.setAchievment("IntoTheNether",player)
+				achievmentTracker.setAchievment("IntoTheNether",player)//[achievement] Into The Nether | Construct a Nether Portal. | Light a nether portal.
+				advancementTracker.setAchievment("IntoTheNether",player)//[advancement] Nether | Bring summer clothes | Enter the Nether dimension.
+
 			}
 			break;
 		case "the_end":
 			addToScore("stats_enteredDimension_","The End",player)
 			if(!advancementTracker.checkAchievment("TheEnd",player)){
-				achievmentTracker.setAchievment("TheEnd",player)
-				advancementTracker.setAchievment("TheEnd",player)
-				advancementTracker.setAchievment("TheEnd2",player)
+				achievmentTracker.setAchievment("TheEnd",player)//[achievement] The End? | Enter an End Portal | Enter a stronghold End Portal activated with all twelve eyes of ender.
+				advancementTracker.setAchievment("TheEnd",player)//[advancement] The End? | Enter the End Portal | Enter the End dimension.
+				advancementTracker.setAchievment("TheEnd2",player)//[advancement] The End | Or the beginning? | Enter the End dimension.
 			}
 			break;
 		case "overworld":
 			addToScore("stats_enteredDimension_","Overworld",player)
 			if(advancementTracker.checkAchievment("TheEnd",player)){
-				achievmentTracker.setAchievment("ExitTheEnd",player)
+				achievmentTracker.setAchievment("ExitTheEnd",player)//[achievement] The End | Kill the Enderdragon [sic] | Enter the end exit portal.
 			}
 			break;
 	}
@@ -404,7 +405,6 @@ function hitByProjectile(event){
 			case "thrown_trident" :
 				weaponsToolsArmor(projectile, source);
 				addToScore("stats_projectilesHitEnemy_","Trident",source)
-
 				break;
 		}
 	}
@@ -444,9 +444,9 @@ function itemRelease(event){
 				player.setDynamicProperty("shotBow", 0);
 			}, 40);
 			break;
-		case "crossbow":
-			//addToScore("stats_itemsReleased_","Crossbow",player) //moved to useItem(event)
-			break
+		//case "crossbow": //moved to useItem(event)
+			//addToScore("stats_itemsReleased_","Crossbow",player)
+			//break
 		case "trident":
 			addToScore("stats_itemsReleased_","Trident",player)
 			break;
@@ -467,7 +467,7 @@ function loadedEntity(event){
 		});
 		
 		for(var i = 0; i < closePlayers.length; i++){
-			getSomeWhere("bastion_remnant", closePlayers[i]);
+			advancementTracker.setAchievment("ThoseWeretheDays", closePlayers[i]);//[advancement] Those Were the Days | Enter a Bastion Remnant | —
 		}
 	}
 }
@@ -485,7 +485,7 @@ function spawnedEntity(event){
 			});
 			
 			for(var i = 0; i < closePlayers.length; i++){
-				getSomeWhere("nether_fortress", closePlayers[i]);
+				advancementTracker.setAchievment("ATerribleFortress", closePlayers[i]);//[advancement] A Terrible Fortress | Break your way into a Nether Fortress | Enter a nether fortress.
 			}
 			break;
 		}
@@ -611,7 +611,7 @@ function overworldBlocksTravelled(player){
 		}
 	//check if blocks travelled are more than 7000, then trigger achievement
 		if(blkDist > 7000){
-			getSomeWhere("overworld7000", player);
+			advancementTracker.setAchievment("SubspaceBubble", player);//[advancement] Subspace Bubble | Use the Nether to travel 7 km in the Overworld | Use the Nether to travel between 2 points in the Overworld with a minimum horizontal euclidean distance of 7000 blocks between each other, which is 875 blocks in the Nether.
 		}
 	//record the calculated blocks travelled, and set new checkpoints
 		player.setDynamicProperty("blockRun", blkDist);
@@ -650,7 +650,6 @@ function blockInteractions(item,Block){
 		//[advancement] War Pigs | Loot a Chest in a Bastion Remnant | Open a naturally generated, never-before opened chest in a bastion remnant.
 		//[advancement] Wax Off | Scrape Wax off of a Copper block! | Use an axe to revert a waxed copper block.
 		//[advancement] Wax On | Apply Honeycomb to a Copper block! | Use a honeycomb on a copper block.
-	//in work--------------------
 	//done--------------------
 }
 function craftAndCook(){
@@ -667,7 +666,6 @@ function craftAndCook(){
 		//[achievement] Super Fuel | Power a Furnace with Lava | —
 		//[advancement] Local Brewery | Brew a Potion | Pick up an item from a brewing stand potion slot. This does not need to be a potion. Water bottles or even glass bottles can also trigger this advancement.[3]
 		//[advancement] We Need to Go Deeper | Build, light and enter a Nether Portal | Enter the Nether dimension.
-	//in work--------------------
 	//done--------------------
 }
 function eatAndDrink(){
@@ -679,7 +677,6 @@ function eatAndDrink(){
 		//[achievement] Rabbit Season | Cook and Eat Rabbit Meat | —
 		//[advancement] A Balanced Diet | Eat everything that is edible, even if it's not good for you | Eat each of these 40 foods:, Apple, Baked Potato, Beetroot, Beetroot Soup, Bread, Carrot, Chorus Fruit, Cooked Chicken, Cooked Cod, Cooked Mutton, Cooked Porkchop, Cooked Rabbit, Cooked Salmon, Cookie, Dried Kelp, Enchanted Golden Apple, Glow Berries, Golden Apple, Golden Carrot, Honey Bottle, Melon Slice, Mushroom Stew, Poisonous Potato, Potato, Pufferfish, Pumpkin Pie, Rabbit Stew, Raw Beef, Raw Chicken, Raw Cod, Raw Mutton, Raw Porkchop, Raw Rabbit, Raw Salmon, Rotten Flesh, Spider Eye, Steak, Suspicious Stew, Sweet Berries, Tropical Fish, Other foods and consumables can be eaten, but are ignored for this advancement.
 		//[advancement] Husbandry | The world is full of friends and food | Consume anything that can be consumed.
-	//in work--------------------
 	//done--------------------
 }
 function getSomeWhere(location, player){
@@ -693,22 +690,8 @@ function getSomeWhere(location, player){
 		//[advancement] Eye Spy | Follow an Eye of Ender | Enter a stronghold.
 		//[advancement] Remote Getaway | Escape the island | Throw an ender pearl through, fly, or walk into an end gateway.
 		//[advancement] The City at the End of the Game | Go on in, what could happen? | Enter an end city.
-	//in work--------------------
 	//done--------------------	
-		switch(location){
-		    //[advancement] Those Were the Days | Enter a Bastion Remnant | —
-			case "bastion_remnant" :
-				//boolScore("objectives_advancement_", "Enter a Bastion Remnant", player, 1);
-				break;
-		    //[advancement] A Terrible Fortress | Break your way into a Nether Fortress | Enter a nether fortress.
-			case "nether_fortress" :
-				//boolScore("objectives_advancement_", "Enter a nether fortress", player, 1);
-				break;
-		    //[advancement] Subspace Bubble | Use the Nether to travel 7 km in the Overworld | Use the Nether to travel between 2 points in the Overworld with a minimum horizontal euclidean distance of 7000 blocks between each other, which is 875 blocks in the Nether.
-			case "overworld7000" :
-				//boolScore("objectives_advancement_", "Travel 7km in the Overworld", player, 1);
-				break;
-		}
+
 }
 
 function itemInventory(player){
@@ -732,7 +715,6 @@ function itemInventory(player){
 		//[advancement] With Our Powers Combined! | Have all Froglights in your inventory | Have a Pearlescent, Ochre, and Verdant Froglight in your inventory.
 		//[achievement] With our powers combined! | Have all 3 froglights in your inventory | Acquire at least one of each pearlescent, verdant, and ochre froglights in your inventory at the same time.		
 		//[achievement] Rainbow Collection | Gather all 16 colors of wool. | All the colors of wool do not have to be in the inventory at the same time, but must have been picked up by the player at least once.
-	//in work--------------------
 	//done--------------------
 	const loseItems = ["crafting_table",
 						"iron_ingot",		
@@ -1198,7 +1180,6 @@ function entityInteractions(){
 		//[advancement] When the Squad Hops into Town | Get each Frog variant on a Lead | The frogs don't need to be leashed at the same time.[5]
 		//[advancement] You've Got a Friend in Me | Have an Allay deliver items to you | Give an allay an item and then have it return to the player with more of that item.
 		//[advancement] Zombie Doctor | Weaken and then cure a Zombie Villager | Use a golden apple on a zombie villager under the Weakness effect; the advancement is granted when the zombie villager converts into a villager., In multiplayer, only the player that feeds the golden apple gets the advancement.
-	//in work--------------------
 	//done--------------------
 }
 function entityKills(entity){
@@ -1228,20 +1209,17 @@ function entityKills(entity){
 		//[advancement] Uneasy Alliance | Rescue a Ghast from the Nether, bring it safely home to the Overworld... and then kill it | Kill a ghast while the player is in the Overworld.
 		//[advancement] Voluntary Exile | Kill a raid captain. Maybe consider staying away from villages for the time being… | Kill an entity in the #raiders entity tag wearing an ominous banner.
 		//[advancement] Who's the Pillager Now? | Give a Pillager a taste of their own medicine | Kill a pillager with a crossbow.
-	//in work--------------------
 	//done--------------------
 }
 function redstoneInteractions(){
 	//to-do--------------------
 		//[achievement] Inception | Push a piston with a piston, then pull the original piston with that piston. | —
 		//[advancement] The Power of Books | Read the power signal of a Chiseled Bookshelf using a Comparator | Place a comparator on any side of a chiseled bookshelf or the chiseled bookshelf against a comparator to trigger the advancement.
-	//in work--------------------
 	//done--------------------
 }
 
 function spawnAndBreed(entity, player){
 	//to-do--------------------
-	//in work--------------------
 	//done--------------------
 		switch(entity){
 		    //[achievement] Body Guard | Create an Iron Golem | —
@@ -1349,7 +1327,6 @@ function statusAndEffects(player){
 		//[advancement] Bring Home the Beacon | Construct and place a Beacon | Be within a 20×20×14 cuboid centered on a beacon block when it realizes it has become powered.
 		//[advancement] Great View From Up Here | Levitate up 50 blocks from the attacks of a Shulker | Move a distance of 50 blocks vertically with the Levitation effect applied, regardless of direction or whether it is caused by the effect.
 		//[advancement] The Healing Power of Friendship! | Team up with an axolotl and win a fight | Have the Regeneration effect applied from assisting an axolotl or it killing a mob.
-	//in work--------------------
 	//done--------------------
 	const effectArray = ["fire_resistance",//potion
 						"invisibility",//potion
@@ -1424,7 +1401,6 @@ function trading(){
 		//[achievement] The Haggler | Acquire or spend 30 Emeralds by trading with villagers or with wandering trader. [sic] | —
 		//[advancement] Star Trader | Trade with a Villager at the build height limit | Stand on any block that is higher than 318 and trade with a villager or wandering trader.
 		//[advancement] What a Deal! | Successfully trade with a Villager | Take an item from a villager or wandering trader's trading output slot, and put it in your inventory.
-	//in work--------------------
 	//done--------------------
 }
 function usingItems(item){
@@ -1437,7 +1413,6 @@ function usingItems(item){
 		//[advancement] Glow and Behold! | Make the text of any kind of sign glow | Use a glow ink sac on a sign or a hanging sign.
 		//[advancement] Planting the Past | Plant any Sniffer seed | 
 		//[advancement] Postmortal | Use a Totem of Undying to cheat death | Activate a totem of undying by taking fatal damage.
-	//in work--------------------
 	//done--------------------
 }
 
@@ -1453,7 +1428,6 @@ function weaponsToolsArmor(subject, player){
 		//[advancement] Not Today, Thank You | Deflect a projectile with a Shield | Block any projectile with a shield.
 		//[advancement] Smithing with Style | Apply these smithing templates at least once: Spire, Snout, Rib, Ward, Silence, Vex, Tide, Wayfinder | —
 		//[advancement] Very Very Frightening | Strike a Villager with lightning | Hit a villager with lightning created by a trident with the Channeling enchantment.
-	//in work--------------------
 	//done--------------------
 		switch(subject){
 		    //[advancement] Ol' Betsy | Shoot a Crossbow | —
@@ -1478,7 +1452,6 @@ function weaponsToolsArmor(subject, player){
 			case "target" :
 				if(!achievmentTracker.checkAchievment("Bullseye"),player){
 					achievmentTracker.setAchievment("Bullseye",player)
-					advancementTracker.setAchievment("Bullseye",player)
 				}
 				break;
 		    //[advancement] Bullseye | Hit the bullseye of a Target block from at least 30 meters away | Be at least 30 blocks away horizontally when the center of a target is shot with a projectile by the player.
@@ -1552,7 +1525,6 @@ function worldAndBiome(){
 		//[advancement] Adventuring Time | Discover every biome | Visit all of these 53 biomes:, Badlands, Bamboo Jungle, Beach, Birch Forest, Cherry Grove, Cold Ocean, Dark Forest, Deep Cold Ocean, Deep Dark, Deep Frozen Ocean, Deep Lukewarm Ocean, Deep Ocean, Desert, Dripstone Caves, Eroded Badlands, Flower Forest, Forest, Frozen Ocean, Frozen Peaks, Frozen River, Grove, Ice Spikes, Jagged Peaks, Jungle, Lukewarm Ocean, Lush Caves, Mangrove Swamp, Meadow, Mushroom Fields, Ocean, Old Growth Birch Forest, Old Growth Pine Taiga, Old Growth Spruce Taiga, Plains, River, Savanna, Savanna Plateau, Snowy Beach, Snowy Plains, Snowy Slopes, Snowy Taiga, Sparse Jungle, Stony Peaks, Stony Shore, Sunflower Plains, Swamp, Taiga, Warm Ocean, Windswept Forest, Windswept Gravelly Hills, Windswept Hills, Windswept Savanna, Wooded Badlands, The advancement is only for Overworld biomes. Other biomes may also be visited, but are ignored for this advancement.
 		//[advancement] Hot Tourist Destinations | Explore all Nether biomes | Visit all of the 5 following biomes:, Basalt Deltas, Crimson Forest, Nether Wastes, Soul Sand Valley, Warped Forest, The advancement is only for Nether biomes. Other biomes may also be visited, but are ignored for this advancement.
 		//[advancement] Sound of Music | Make the Meadows come alive with the sound of music from a Jukebox | While in a meadow biome, place down a jukebox and use a music disc on it.
-	//in work--------------------
 	//done--------------------
 }
 //end achievement and advancement functions----------------------------------------
