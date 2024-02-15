@@ -784,39 +784,32 @@ function getSomeWhere(location, player){
 				break;
 		}
 }
+
 function itemInventory(player){
 	//to-do--------------------
-		//[achievement] Bake Bread | Turn wheat into bread. | Pick up bread from a crafting table output.
-		//[achievement] Careful restoration | Make a Decorated Pot out of 4 Pottery Sherds | —
-		//[achievement] Chestful of Cobblestone | Mine 1,728 Cobblestone and place it in a chest. | A player must mine 1,728 cobblestone and place 1,728 cobblestone, or 27 stacks, in a chest. The cobblestone placed in the chest does not have to be the same cobblestone that was mined.
-		//[achievement] Cow Tipper | Harvest some leather. | Pick up leather from the ground.
-		//[achievement] Dispense with This | Construct a Dispenser. | —
-		//[achievement] Dry Spell | Dry a sponge in a furnace | —
-		//[achievement] Enchanter | Construct an Enchantment Table. | Pick up an enchantment table from a crafting table output.
-		//[achievement] Getting Wood | Punch a tree until a block of wood pops out. | Pick up a log from the ground.
-		//[achievement] Hot Topic | Construct a furnace out of eight cobblestone blocks. | Pick up a furnace from a crafting table output.
-		//[achievement] Iron Man | Wear a full suit of Iron Armor. | —
-		//[achievement] Librarian | Build some bookshelves to improve your enchantment table. | Pick up a bookshelf from a crafting table output.
-		//[achievement] MOAR Tools | Construct one type of each tool. | Construct one pickaxe, one shovel, one axe, and one hoe with the same material.
-		//[achievement] Rainbow Collection | Gather all 16 colors of wool. | All the colors of wool do not have to be in the inventory at the same time, but must have been picked up by the player at least once.
-		//[achievement] Taking Inventory | Open your inventory. | —
-		//[achievement] The Lie | Bake a cake using: wheat, sugar, milk, and eggs. | Pick up a cake from a crafting table output.
-		//[achievement] Time to Farm! | Make a Hoe. | Pick up any type of hoe from a crafting table output.
-		//[achievement] Time to Mine! | Use planks and sticks to make a pickaxe. | Pick up any type of pickaxe from a crafting table output.
-		//[achievement] Time to Strike! | Use planks and sticks to make a sword. | Pick up any type of sword from a crafting table output.
-		//[achievement] With our powers combined! | Have all 3 froglights in your inventory | Acquire at least one of each pearlescent, verdant, and ochre froglights in your inventory at the same time.
-		//[achievement] You Need a Mint | Collect dragons breath in a glass bottle | Have a dragon's breath bottle in your inventory
-		//[advancement] Careful Restoration | Make a Decorated Pot out of 4 Pottery Sherds | —
+		//Required data values
 		//[advancement] Spooky Scary Skeleton | Obtain a Wither Skeleton's skull | Have a wither skeleton skull in your inventory.
+		//[achievement] Dry Spell | Dry a sponge in a furnace | —
+		//[advancement] Careful Restoration | Make a Decorated Pot out of 4 Pottery Sherds | —
+		//[achievement] Careful restoration | Make a Decorated Pot out of 4 Pottery Sherds | —
+		
+		
+		//mabye should move
+		//maybe in the block breaking?
+		//[achievement] Getting Wood | Punch a tree until a block of wood pops out. | Pick up a log from the ground.
+		//[achievement] Taking Inventory | Open your inventory. | —
+		//Maybe block interactions?
+		//[achievement] Chestful of Cobblestone | Mine 1,728 Cobblestone and place it in a chest. | A player must mine 1,728 cobblestone and place 1,728 cobblestone, or 27 stacks, in a chest. The cobblestone placed in the chest does not have to be the same cobblestone that was mined.
+		
+
+		//needs new mask
 		//[advancement] With Our Powers Combined! | Have all Froglights in your inventory | Have a Pearlescent, Ochre, and Verdant Froglight in your inventory.
-		//[advancement] You Need a Mint | Collect Dragon's Breath in a Glass Bottle | Have a bottle of dragon's breath in your inventory.
+		//[achievement] With our powers combined! | Have all 3 froglights in your inventory | Acquire at least one of each pearlescent, verdant, and ochre froglights in your inventory at the same time.		
+		//[achievement] Rainbow Collection | Gather all 16 colors of wool. | All the colors of wool do not have to be in the inventory at the same time, but must have been picked up by the player at least once.
 	//in work--------------------
 	//done--------------------
-	const loseItems = ["crafting_table",	
-						"stone_pickaxe",	//[achievement] Getting an Upgrade | Construct a better pickaxe. | Pick up a stone pickaxe from a crafting table output.
-											//[advancement] Getting an Upgrade | Construct a better Pickaxe | Have a stone pickaxe in your inventory.
-						"iron_pickaxe",		//[advancement] Isn't It Iron Pick | Upgrade your Pickaxe | Have an iron pickaxe in your inventory.
-						"netherite_hoe",	//[advancement] Serious Dedication | Use a Netherite Ingot to upgrade a Hoe, and then reevaluate your life choices | Have a netherite hoe in your inventory.
+	const loseItems = ["crafting_table",		
+						"netherite_hoe",	
 						"iron_ingot",		//[achievement] Acquire Hardware | Smelt an iron ingot | Pick up an iron ingot from a furnace output.
 											//[advancement] Acquire Hardware | Smelt an Iron Ingot | Have an iron ingot in your inventory.
 						"diamond",			//[achievement] DIAMONDS! | Acquire diamonds with your iron tools. | Pick up a diamond from the ground.
@@ -832,12 +825,52 @@ function itemInventory(player){
 						"cobblestone",
 						"blackstone",
 						"cobbled_deepslate",
-						"obsidian",	//[advancement] Ice Bucket Challenge | Obtain a block of Obsidian | Have a block of obsidian in your inventory.
+						"obsidian",			//[advancement] Ice Bucket Challenge | Obtain a block of Obsidian | Have a block of obsidian in your inventory.
 						"crying_obsidian",	//[advancement] Who is Cutting Onions? | Obtain Crying Obsidian | Have a block of crying obsidian in your inventory.
-						"blaze_rod",	//[achievement] Into Fire | Relieve a Blaze of its rod. | Pick up a blaze rod from the ground.
-										//[advancement] Into Fire | Relieve a Blaze of its rod | Have a blaze rod in your inventory.
-						"dragon_egg",	//[advancement] The Next Generation | Hold the Dragon Egg | Have a dragon egg in your inventory.
-						"sniffer_egg"];	//[advancement] Smells Interesting | Obtain a Sniffer Egg | Have a sniffer egg in your inventory.
+						"blaze_rod",		//[achievement] Into Fire | Relieve a Blaze of its rod. | Pick up a blaze rod from the ground.
+											//[advancement] Into Fire | Relieve a Blaze of its rod | Have a blaze rod in your inventory.
+						"dragon_egg",		//[advancement] The Next Generation | Hold the Dragon Egg | Have a dragon egg in your inventory.
+						"sniffer_egg",		//[advancement] Smells Interesting | Obtain a Sniffer Egg | Have a sniffer egg in your inventory.
+						"dragon_breath",	//[advancement] You Need a Mint | Collect Dragon's Breath in a Glass Bottle | Have a bottle of dragon's breath in your inventory.
+											//[achievement] You Need a Mint | Collect dragons breath in a glass bottle | Have a dragon's breath bottle in your inventory
+						"bread", 			//[achievement] Bake Bread | Turn wheat into bread. | Pick up bread from a crafting table output.
+						"furnace", 		 	//[achievement] Hot Topic | Construct a furnace out of eight cobblestone blocks. | Pick up a furnace from a crafting table output.
+						"enchanting_table",	//[achievement] Enchanter | Construct an Enchantment Table. | Pick up an enchantment table from a crafting table output.
+						"bookshelf",		//[achievement] Librarian | Build some bookshelves to improve your enchantment table. | Pick up a bookshelf from a crafting table output.
+						"cake",				//[achievement] The Lie | Bake a cake using: wheat, sugar, milk, and eggs. | Pick up a cake from a crafting table output.
+						"leather",			//[achievement] Cow Tipper | Harvest some leather. | Pick up leather from the ground.
+						"dispenser"]		//[achievement] Dispense with This | Construct a Dispenser. | —
+	const toolsTypes = ["wooden_pickaxe",
+					"wooden_sword",
+					"wooden_shovel",
+					"wooden_axe",
+					"wooden_hoe",
+					"stone_pickaxe",
+					"stone_sword",
+					"stone_shovel",
+					"stone_axe",
+					"stone_hoe",
+					"iron_pickaxe",
+					"iron_sword",
+					"iron_shovel",
+					"iron_axe",
+					"iron_hoe",
+					"golden_pickaxe",
+					"golden_sword",
+					"golden_shovel",
+					"golden_axe",
+					"golden_hoe",
+					"diamond_pickaxe",
+					"diamond_sword",
+					"diamond_shovel",
+					"diamond_axe",
+					"diamond_hoe",
+					"netherite_pickaxe",				
+					"netherite_sword",				
+					"netherite_shovel",				
+					"netherite_axe",				
+					"netherite_hoe"]				
+						
 	const armorTypes = ["iron_helmet",
 					"iron_chestplate",
 					"iron_leggings",
@@ -850,7 +883,7 @@ function itemInventory(player){
 					"netherite_chestplate",
 					"netherite_leggings",
 					"netherite_boots",
-					"elytra"];			//[advancement] Sky's the Limit | Find Elytra | Have a pair of elytra in your inventory.
+					"elytra"];			
 					
 	const sherdArray = ["angler_pottery_sherd",
 						"archer_pottery_sherd",
@@ -872,17 +905,16 @@ function itemInventory(player){
 						"shelter_pottery_sherd",
 						"skull_pottery_sherd",
 						"snort_pottery_sherd"];
-	const allIronArmorMask = 0b1111;
-	const allDiamondArmorMask = 0b11110000;
-	const allNetheriteArmorMask = 0b111100000000;
-	const bucketOfFishMask = 0b111100000000;
-	const stoneTypesMask = 0b11100000000000000;
-	const craftingTable=0b1
+
+	const bucketOfFishMask = 0b1111000000;
+	const stoneTypesMask = 0b111000000000000;
+	const craftingTable =0b1
 	let inventoryPlayer = player.getComponent("minecraft:inventory");
 	let index=0;
 	let inventorymask = 0;
 	let armorMask = 0;
 	let sherdMask = 0;
+	let toolMask = 0;
 	for (let slot = 0; slot<36;slot++){
 		let itemStack = inventoryPlayer.container.getItem(slot);
 		if (itemStack){
@@ -890,45 +922,29 @@ function itemInventory(player){
 			if(loseItems.includes(itemName)){
 				index = loseItems.indexOf(itemName)
 				inventorymask = inventorymask | (0b1<<index)
-				//boolScore("tracking_itemInventory_", itemName, player, 1);
+				
 			}
 			else if (sherdArray.includes(itemName)){
 				index = sherdArray.indexOf(itemName)
 				sherdMask = sherdMask | (0b1<<index)
-				//boolScore("objectives_advancement_", "Obtain a Pottery Sherd", player, 1);
 			}
 			else if(armorTypes.includes(itemName)){
 				index = armorTypes.indexOf(itemName)
 				armorMask = armorMask | (0b1<<index)
+			}else if(toolsTypes.includes(itemName)){
+				index = toolsTypes.indexOf(itemName)
+				toolMask = toolMask | (0b1<<index)
+				
 			}
 		}
 	}
-    //[advancement] Suit Up | Protect yourself with a piece of iron armor | Have any type of iron armor in your inventory.
-	if((allIronArmorMask & armorMask)>0){
-		if(!advancementTracker.checkAchievment("SuitUp",player)){
-			advancementTracker.setAchivement("SuitUp",player)
-		}
-		if((allIronArmorMask & armorMask) == allIronArmorMask){
-			if(!achievmentTracker.checkAchievment("IronMan",player)){
-				achievmentTracker.setAchivement("IronMan",player)
-			}
-		}
+	//Checks armor based achievements
+	if(armorMask>0){
+		checkArmorAchievments(player,armorMask);
 	}
-    //[advancement] Cover Me with Diamonds | Diamond armor saves lives | Have any type of diamond armor in your inventory.
-	if((allDiamondArmorMask & armorMask)>0){
-		if(!advancementTracker.checkAchievment("SuitUp",player)){
-			advancementTracker.setAchivement("SuitUp",player)
-		}
-	}
-	
-	
-    //[achievement] Cover me in debris | Wear a full set of Netherite armor | Have a full set of Netherite armor in your inventory.
-    //[advancement] Cover Me in Debris | Get a full suit of Netherite armor | Have a full set of netherite armor in your inventory.
-	if((allNetheriteArmorMask & armorMask)==allNetheriteArmorMask){
-		if(!advancementTracker.checkAchievment("Covermeindebris",player)){
-			advancementTracker.setAchivement("Covermeindebris",player)
-			achievmentTracker.setAchivement("Covermeindebris",player)
-		}
+	//check tool based achievements
+	if(toolMask>0){
+		checkToolAchievments(player,toolMask);
 	}
 	
     //[achievement] I am a Marine Biologist | Collect a fish in a bucket | Use an empty bucket on any fish mob to collect it.
@@ -961,6 +977,121 @@ function itemInventory(player){
 		}
 	}
 }
+function checkToolAchievments(player,toolMask){
+	const hoeAnyType=0b100001000010000100001000010000;
+	const axeAnyType=0b010000100001000010000100001000;
+	const shovelAnyType=0b001000010000100001000010000100;
+	const swordAnyType=0b000100001000010000100001000010;
+	const pickAnyType=0b00010000100001000010000100001;
+	const woodPickType = 0b1;
+	const stonePickType = 0b100000;
+	const ironPickType = 0b10000000000;
+	const allWood=0b11111;
+	const allstone=0b1111100000;
+	const alliron=0b111110000000000;
+	const alldiamond=0b11111000000000000000;
+	const allnetherite=0b1111100000000000000000000;
+	const woodHoe=0b10000
+	const woodSword=0b10
+	const netheriteHoe=0b100000000000000000000000000000
+	if((pickAnyType&toolMask)>0){
+		//[achievement] Time to Mine! | Use planks and sticks to make a pickaxe. | Pick up any type of pickaxe from a crafting table output.
+		if((woodPickType&toolMask)==woodPickType){
+			if(!achievmentTracker.checkAchievment("TimetoMine",player)){
+				achievmentTracker.setAchivement("TimetoMine",player)
+			}
+		}
+		//[achievement] Getting an Upgrade | Construct a better pickaxe. | Pick up a stone pickaxe from a crafting table output.
+		//[advancement] Getting an Upgrade | Construct a better Pickaxe | Have a stone pickaxe in your inventory.
+		if((stonePickType&toolMask)==stonePickType){
+			if(!advancementTracker.checkAchievment("GettinganUpgrade",player)){
+				advancementTracker.setAchivement("GettinganUpgrade",player)
+				achievmentTracker.setAchivement("GettinganUpgrade",player)
+			}
+		}
+
+		//[advancement] Isn't It Iron Pick | Upgrade your Pickaxe | Have an iron pickaxe in your inventory.
+		if((ironPickType&toolMask)==ironPickType){
+			if(!advancementTracker.checkAchievment("IsntItIronPick",player)){
+				advancementTracker.setAchivement("IsntItIronPick",player)
+			}
+		}	
+		//[achievement] MOAR Tools | Construct one type of each tool. | Construct one pickaxe, one shovel, one axe, and one hoe with the same material.
+		let toolsOfOneType = (toolMask*allWood)==allWood
+		toolsOfOneType = toolsOfOneType || (toolMask*allstone)==allstone
+		toolsOfOneType = toolsOfOneType || (toolMask*alliron)==alliron
+		toolsOfOneType = toolsOfOneType || (toolMask*alldiamond)==alldiamond
+		toolsOfOneType = toolsOfOneType || (toolMask*allnetherite)==allnetherite
+		if(toolsOfOneType){
+			if(!achievmentTracker.checkAchievment("MOARTools",player)){
+				achievmentTracker.setAchivement("MOARTools",player)
+			}
+		}
+	}
+	if((hoeAnyType&toolMask)>0){
+		//[achievement] Time to Farm! | Make a Hoe. | Pick up any type of hoe from a crafting table output.
+		if((woodHoe&toolMask)==woodHoe){
+			if(!achievmentTracker.checkAchievment("TimetoFarm",player)){
+				achievmentTracker.setAchivement("TimetoFarm",player)
+			}
+		}
+		// [advancement] Serious Dedication | Have a netherite hoe in your inventory.
+		if((netheriteHoe&toolMask)==netheriteHoe){
+			if(!advancementTracker.checkAchievment("SeriousDedication",player)){
+				advancementTracker.setAchivement("SeriousDedication",player)
+			}
+		}
+	}
+	//[achievement] Time to Strike! | Use planks and sticks to make a sword. | Pick up any type of sword from a crafting table output.
+	if((woodSword&toolMask)==woodSword){
+			if(!achievmentTracker.checkAchievment("TimetoStrike",player)){
+				achievmentTracker.setAchivement("TimetoStrike",player)
+			}
+		}
+}
+function checkArmorAchievments(player,armorMask){
+	const allIronArmorMask = 0b1111;
+	const allDiamondArmorMask = 0b11110000;
+	const allNetheriteArmorMask = 0b111100000000;
+	const elytraMask = 0b1000000000000
+	//[advancement] Suit Up | Protect yourself with a piece of iron armor | Have any type of iron armor in your inventory.
+	if((allIronArmorMask & armorMask)>0){
+		if(!advancementTracker.checkAchievment("SuitUp",player)){
+			advancementTracker.setAchivement("SuitUp",player)
+		}
+		//[achievement] Iron Man | Wear a full suit of Iron Armor. | —
+		if((allIronArmorMask & armorMask) == allIronArmorMask){
+			if(!achievmentTracker.checkAchievment("IronMan",player)){
+				achievmentTracker.setAchivement("IronMan",player)
+			}
+		}
+	}
+    //[advancement] Cover Me with Diamonds | Diamond armor saves lives | Have any type of diamond armor in your inventory.
+	if((allDiamondArmorMask & armorMask)>0){
+		if(!advancementTracker.checkAchievment("SuitUp",player)){
+			advancementTracker.setAchivement("SuitUp",player)
+		}
+	}
+	
+	
+    //[achievement] Cover me in debris | Wear a full set of Netherite armor | Have a full set of Netherite armor in your inventory.
+    //[advancement] Cover Me in Debris | Get a full suit of Netherite armor | Have a full set of netherite armor in your inventory.
+	if((allNetheriteArmorMask & armorMask)==allNetheriteArmorMask){
+		if(!advancementTracker.checkAchievment("Covermeindebris",player)){
+			advancementTracker.setAchivement("Covermeindebris",player)
+			achievmentTracker.setAchivement("Covermeindebris",player)
+		}
+	}
+	
+	//[advancement] Sky's the Limit | Find Elytra | Have a pair of elytra in your inventory.
+	if((elytraMask & armorMask)==elytraMask){
+		if(!advancementTracker.checkAchievment("SkystheLimit",player)){
+			advancementTracker.setAchivement("SkystheLimit",player)
+		}
+	}
+	
+}
+
 function entityInteractions(){
 	//to-do--------------------
 		//[achievement] Birthday song | Have an Allay drop a cake at a noteblock | Tame an allay by giving it a cake while having dropped cake items and play a noteblock nearby.
@@ -1034,6 +1165,7 @@ function redstoneInteractions(){
 	//in work--------------------
 	//done--------------------
 }
+
 function spawnAndBreed(entity, player){
 	//to-do--------------------
 	//in work--------------------
@@ -1134,6 +1266,7 @@ function spawnAndBreed(entity, player){
 				break;
 		}
 }
+
 function statusAndEffects(player){
 	//to-do--------------------
 		//[achievement] Great View From Up Here | Levitate up 50 blocks from the attacks of a Shulker | —
@@ -1236,6 +1369,7 @@ function usingItems(item){
 	//in work--------------------
 	//done--------------------
 }
+
 function weaponsToolsArmor(subject, player){
 	//to-do--------------------
 		//[achievement] Do a Barrel Roll! | Use Riptide to give yourself a boost | Obtain a trident enchanted with Riptide and launch yourself any distance with it.
@@ -1333,6 +1467,7 @@ function weaponsToolsArmor(subject, player){
 				break;
 		}
 }
+
 function worldAndBiome(){
 	//to-do--------------------
 		//[achievement] Adventuring Time | Discover 17 biomes. | Visit any 17 biomes. Does not have to be in a single world.
@@ -1371,6 +1506,27 @@ function addToScore(category, item, player){
 	categoryBoard.addScore(player,1);
 	itemBoard.addScore(player,1);
 }
+function boolScore(category, item, player, zeroOrone){
+	//[stats/objectives/other]_[category/blocksBroken]_[some string to show to the user]
+	let categoryId = category.replace(" ","");
+	let itemId=categoryId+item.replace(" ","");
+	const allBoards = world.scoreboard.getObjectives();
+	const checkCategoryID = obj => obj.displayName === category;
+	
+	if(!allBoards.some(checkCategoryID)){ 
+		world.scoreboard.addObjective(categoryId, category);
+	}
+	const checkItemID = obj => obj.displayName === category+" "+item;
+	
+	if(!allBoards.some(checkItemID)){ 
+		world.scoreboard.addObjective(itemId, category+" "+item);
+	}
+	let categoryBoard = world.scoreboard.getObjective(categoryId);
+	let itemBoard = world.scoreboard.getObjective(itemId);
+	
+	//categoryBoard.setScore(player, zeroOrone);
+	itemBoard.setScore(player, zeroOrone);
+}
 function calculateDistance(x1, z1, x2, z2) {
 	return Math.floor(Math.hypot(Math.abs(z2 - z1), Math.abs(x2 - x1)));
 }
@@ -1383,16 +1539,93 @@ function getScoreIfExists(board, player){
 	}
 	return tempScore
 }
+function getSomeScore(category, item, player){
+	let categoryId = category.replace(" ","");
+	let itemId=categoryId+item.replace(" ","");
+	const allBoards = world.scoreboard.getObjectives();
+	const checkCategoryID = obj => obj.displayName === category;
+	
+	if(!allBoards.some(checkCategoryID)){ 
+		world.scoreboard.addObjective(categoryId, category);
+		world.scoreboard.getObjective(categoryId).setScore(player,0);
+	}
+	const checkItemID = obj => obj.displayName === category+" "+item;
+	
+	if(!allBoards.some(checkItemID)){ 
+		world.scoreboard.addObjective(itemId, category+" "+item);
+		world.scoreboard.getObjective(itemId).setScore(player,0);
+	}
+	let categoryBoard = world.scoreboard.getObjective(categoryId);
+	let itemBoard = world.scoreboard.getObjective(itemId);
+	
+	//return categoryBoard.getScore(player);
+	return itemBoard.getScore(player);
+}
 function setAchivement(name){
 	//needs to be implemented
 }
 function setAdvancement(name){
 	//needs to be implemented
 }
+function initializeObjectives(player){
+	let categoryId;
+	//achievements--------------------
+		categoryId = "objectives_achievement_";
+		
+		if(!world.scoreboard.getObjective(categoryId)){
+			world.scoreboard.addObjective(categoryId, categoryId);
+		}
+		for (let [obj, name] of Object.entries(achievements)) {//[obj, name, key, value]
+			let idName = name.displayName;
+			let itemId = categoryId + obj;
+			if(!world.scoreboard.getObjective(itemId)){
+				world.scoreboard.addObjective(itemId, categoryId+" "+idName);
+			}
+			if(!world.scoreboard.getObjective(itemId).getScore(player)){
+				world.scoreboard.getObjective(itemId).setScore(player, 0);
+			}
+		}
+	//advancements--------------------
+		categoryId = "objectives_advancement_";
+		
+		if(!world.scoreboard.getObjective(categoryId)){
+			world.scoreboard.addObjective(categoryId, categoryId);
+		}
+		for (let [obj, name] of Object.entries(advancements)) {//[obj, name, key, value]
+			let idName = name.displayName;
+			let itemId = categoryId + obj;
+			if(!world.scoreboard.getObjective(itemId)){
+				world.scoreboard.addObjective(itemId, categoryId+" "+idName);
+			}
+			if(!world.scoreboard.getObjective(itemId).getScore(player)){
+				world.scoreboard.getObjective(itemId).setScore(player, 0);
+			}
+		}
+}
 function achievmentUnlock(player,data){
 	let display=player.onScreenDisplay
 	display.setActionBar("\u00A7cAchievment Unlocked: \u00A7e"+data)
 	player.playSound("random.levelup")
+}
+function scoreSet(category, item, player, score){
+	let categoryId = category.replace(" ","");
+	let itemId=categoryId+item.replace(" ","");
+	const allBoards = world.scoreboard.getObjectives();
+	const checkCategoryID = obj => obj.displayName === category;
+	
+	if(!allBoards.some(checkCategoryID)){ 
+		world.scoreboard.addObjective(categoryId, category);
+	}
+	const checkItemID = obj => obj.displayName === category+" "+item;
+	
+	if(!allBoards.some(checkItemID)){ 
+		world.scoreboard.addObjective(itemId, category+" "+item);
+	}
+	let categoryBoard = world.scoreboard.getObjective(categoryId);
+	let itemBoard = world.scoreboard.getObjective(itemId);
+	
+	//categoryBoard.setScore(player, score);
+	itemBoard.setScore(player, score);
 }
 function timer10Sec(){
 	system.runInterval(() => {
