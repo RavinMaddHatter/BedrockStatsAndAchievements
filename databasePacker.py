@@ -10,6 +10,7 @@ def convertToJson(ws,playerJson=True):
     dataStructure={}
     for row in ws.iter_rows(min_row=3,max_col=10):
         name = row[6].value.replace(" ","").replace("'","").replace(".","").replace("!","").replace("?","")
+        row[6].value=name
         category = row[3].value
         container = row[4].value
         containerIndex = row[5].value
@@ -30,3 +31,4 @@ def convertToJson(ws,playerJson=True):
 with open("Pack Template\\scripts\\textObjects.js","w+") as file:
     file.write("export const achievements = " + json.dumps(convertToJson(achievments),indent=2) + ";\n")
     file.write("export const advancements = " + json.dumps(convertToJson(advancements),indent=2) + ";\n")
+excelworkbook.save('lookupData\\en.xlsx')

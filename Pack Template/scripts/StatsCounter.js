@@ -7,6 +7,8 @@ var blockBreaks = {}
 var blocksUsed = {}
 const debugToggle = true;
 timer10Sec();
+var achievmentTracker = new achievementHandler(achievements)
+var advancementTracker = new achievementHandler(advancements)
 
 //subscriptions----------------------------------------
 world.afterEvents.buttonPush.subscribe(event =>{ 
@@ -412,15 +414,24 @@ function changedDimension(event){
 	switch(getDim){
 		case "nether":
 			addToScore("stats_enteredDimension_","Nether",player)
-			getSomeWhere(getDim, player);
+			if(!advancementTracker.checkAchievment("TheEnd",player)){
+				achievmentTracker.setAchivement("IntoTheNether",player)
+				advancementTracker.setAchivement("IntoTheNether",player)
+			}
 			break;
 		case "the_end":
 			addToScore("stats_enteredDimension_","The End",player)
-			getSomeWhere(getDim, player);
+			if(!advancementTracker.checkAchievment("TheEnd",player)){
+				achievmentTracker.setAchivement("TheEnd",player)
+				advancementTracker.setAchivement("TheEnd",player)
+				advancementTracker.setAchivement("TheEnd2",player)
+			}
 			break;
 		case "overworld":
 			addToScore("stats_enteredDimension_","Overworld",player)
-			getSomeWhere(getDim, player);
+			if(advancementTracker.checkAchievment("TheEnd",player)){
+				achievmentTracker.setAchivement("ExitTheEnd",player)
+			}
 			break;
 	}
 }
@@ -760,19 +771,6 @@ function getSomeWhere(location, player){
 	//in work--------------------
 	//done--------------------	
 		switch(location){
-		    //[advancement] Nether | Bring summer clothes | Enter the Nether dimension.
-			case "nether" :
-				//console.warn("Some things you can't unsee")
-				boolScore("objectives_advancement_", "Enter the Nether dimension", player, 1);
-				break;
-		    //[achievement] The End? | Enter an End Portal | Enter a stronghold End Portal activated with all twelve eyes of ender.
-		    //[advancement] The End? | Enter the End Portal | Enter the End dimension.
-		    //[advancement] The End | Or the beginning? | Enter the End dimension.
-			case "the_end" :
-				boolScore("objectives_achievement_", "Enter an End Portal", player, 1);
-				boolScore("objectives_advancement_", "Enter the End Portal", player, 1);
-				boolScore("objectives_advancement_", "Enter the End dimension", player, 1);
-				break;
 		    //[advancement] Those Were the Days | Enter a Bastion Remnant | —
 			case "bastion_remnant" :
 				boolScore("objectives_advancement_", "Enter a Bastion Remnant", player, 1);
@@ -907,61 +905,60 @@ function itemInventory(player){
 		}
 	}
     //[advancement] Suit Up | Protect yourself with a piece of iron armor | Have any type of iron armor in your inventory.
-	if((allIronArmorMask & armorMask) == allIronArmorMask){
-		if(getSomeScore("objectives_advancement_", "Have any iron armor", player) == 0){
-			boolScore("objectives_advancement_", "Have any iron armor", player, 1);
-			achievmentUnlock(player,"Have any iron armor")
+	if((allIronArmorMask & armorMask)>0){
+		if(!advancementTracker.checkAchievment("SuitUp",player)){
+			advancementTracker.setAchivement("SuitUp",player)
+		}
+		if((allIronArmorMask & armorMask) == allIronArmorMask){
+			if(!achievmentTracker.checkAchievment("IronMan",player)){
+				achievmentTracker.setAchivement("IronMan",player)
 		}
 	}
     //[advancement] Cover Me with Diamonds | Diamond armor saves lives | Have any type of diamond armor in your inventory.
-	if((allDiamondArmorMask & armorMask)==allDiamondArmorMask){
-		if(getSomeScore("objectives_advancement_", "Have any diamond armor", player) == 0){
-			boolScore("objectives_advancement_", "Have any diamond armor", player, 1);
-			achievmentUnlock(player,"Have any diamond armor")
+	if((allDiamondArmorMask & armorMask)>0){
+		if(!advancementTracker.checkAchievment("SuitUp",player)){
+			advancementTracker.setAchivement("SuitUp",player)
 		}
 	}
+	
 	
     //[achievement] Cover me in debris | Wear a full set of Netherite armor | Have a full set of Netherite armor in your inventory.
     //[advancement] Cover Me in Debris | Get a full suit of Netherite armor | Have a full set of netherite armor in your inventory.
 	if((allNetheriteArmorMask & armorMask)==allNetheriteArmorMask){
-		if((getSomeScore("objectives_achievement_", "Get a full Netherite\n        armor set", player) == 0)
-			|| (getSomeScore("objectives_advancement_", "Get a full suit of Netherite armor", player) == 0)){
-			boolScore("objectives_achievement_", "Get a full Netherite\n        armor set", player, 1);
-			boolScore("objectives_advancement_", "Get a full suit of Netherite armor", player, 1);
-			achievmentUnlock(player,"Get a full suit of Netherite armor")
+		if(!advancementTracker.checkAchievment("Covermeindebris",player)){
+			advancementTracker.setAchivement("Covermeindebris",player)
+			achievmentTracker.setAchivement("Covermeindebris",player)
 		}
 	}
 	
     //[achievement] I am a Marine Biologist | Collect a fish in a bucket | Use an empty bucket on any fish mob to collect it.
     //[advancement] Tactical Fishing | Catch a Fish... without a Fishing Rod! | Use a water bucket on any fish mob.
 	if(( bucketOfFishMask & inventorymask)>0){
-		if((getSomeScore("objectives_achievement_", "Get a bucket of fish", player) == 0)
-			|| (getSomeScore("objectives_advancement_", "Get a fish in a bucket", player) == 0)){
-			boolScore("objectives_achievement_", "Get a bucket of fish", player, 1);
-			boolScore("objectives_advancement_", "Get a fish in a bucket", player, 1);
-			achievmentUnlock(player,"Tactical Fishing")
+		if(!advancementTracker.checkAchievment("TacticalFishing",player)){
+			advancementTracker.setAchivement("TacticalFishing",player)
+			achievmentTracker.setAchivement("IamaMarineBiologist",player)
 		}
 	}
 	
 	//[advancement] Stone Age | Mine Stone with your new Pickaxe | Have one of these 3 stones in the #stone_tool_materials item tag:, Cobblestone, Blackstone, Cobbled Deepslate, in your inventory.
 	if((stoneTypesMask & inventorymask)>0){
-		if(getSomeScore("objectives_advancement_", "Get Cobblestone, Blackstone, or\n        Cobbled Deepslate", player) == 0){
-			boolScore("objectives_advancement_", "Get Cobblestone, Blackstone, or\n        Cobbled Deepslate", player, 1);
-			achievmentUnlock(player, "Stone Age")
+		if(!advancementTracker.checkAchievment("StoneAge",player)){
+			advancementTracker.setAchivement("StoneAge",player)
 		}
 	}
 	//[advancement] Respecting the Remnants | Brush a Suspicious block to obtain a Pottery Sherd | —
 	if(sherdArray>0){
-		if(getSomeScore("objectives_advancement_", "Obtain a Pottery Sherd", player) == 0){
-			achievmentUnlock(player, "Respecting the Remnants")
+		if(!advancementTracker.checkAchievment("RespectingtheRemnants",player)){
+			advancementTracker.setAchivement("RespectingtheRemnants",player)
 		}
 	}
 	//[achievement] Benchmaking | Craft a workbench with four blocks of wooden planks. | Pick up a crafting table from the inventory's crafting field output or a crafting table output.
 	//[advancement] Minecraft | The heart and story of the game | Have a crafting table in your inventory.
 	if((craftingTable&inventorymask)==craftingTable){
-		setAchivement("Benchmaking")
-		setAdvancement("Minecraft")
-		achievmentUnlock(player, "Minecraft")
+		if(!advancementTracker.checkAchievment("Minecraft",player)){
+			advancementTracker.setAchivement("Minecraft",player)
+			achievmentTracker.setAchivement("Benchmaking",player)
+		}
 	}
 }
 function entityInteractions(){
@@ -1044,12 +1041,20 @@ function spawnAndBreed(entity, player){
 		switch(entity){
 		    //[achievement] Body Guard | Create an Iron Golem | —
 		    //[advancement] Hired Help | Summon an Iron Golem to help defend a village | Summon an iron golem.
-			case "iron_golem" ://*fall through*
+			case "iron_golem" :
+				if(!advancementTracker.checkAchievment("HiredHelp",player)){
+					advancementTracker.setAchivement("HiredHelp",player)
+					achievmentTracker.setAchivement("BodyGuard",player)
+				}
+
+				break;
 		    //[achievement] The Beginning? | Spawn the Wither | Be within a 100.9×100.9×103.5 cuboid centered on the Wither when it is spawned.
 		    //[advancement] Withering Heights | Summon the Wither | Be within a 100.9×100.9×103.5 cuboid centered on the wither when it is spawned.
 			case "wither" :
-				//console.warn("I made a friend");
-				boolScore("spawnAndBreed", entity, player, 1);
+				if(!advancementTracker.checkAchievment("WitheringHeights",player)){
+					advancementTracker.setAchivement("WitheringHeights",player)
+					achievmentTracker.setAchivement("TheBeginning",player)
+				}
 				break;
 		    //[achievement] The End... Again... | Respawn the Enderdragon [sic] | —
 		    //[advancement] The End... Again... | Respawn the Ender Dragon | Be within a 192 block radius from the coordinates (0.0, 128, 0.0) when an ender dragon is summoned using end crystals.
@@ -1065,12 +1070,34 @@ function spawnAndBreed(entity, player){
 				break;
 		    //[advancement] The Parrots and the Bats | Breed two animals together | Breed a pair of any of these 25 mobs:, Axolotl, Bee, Camel, Cat, Chicken, Cow, Donkey, Fox, Frog, Goat, Hoglin, Horse, Llama, Mooshroom, Mule, Ocelot, Panda, Pig, Rabbit, Sheep, Sniffer, Strider, Trader Llama, Turtle, Wolf, A mule must be the result of breeding a horse and a donkey for this advancement as they are not breedable together. Other breedable mobs are ignored for this advancement.
 		    //[advancement] Two by Two | Breed all the animals! | Breed a pair of each of these 24 mobs:, Axolotl, Bee, Camel, Cat, Chicken, Cow, Donkey, Fox, Frog, Goat, Hoglin, Horse, Llama, Mooshroom, Mule, Ocelot, Panda, Pig, Rabbit, Sheep, Sniffer, Strider, Turtle, Wolf, A trader llama does not count as a llama, and a mule must be the result of breeding a horse and a donkey for this advancement as they are not breedable together. Other breedable mobs can be bred, but are ignored for this advancement.
+			case "cow" :	//[achievement] Repopulation | Breed two cows with wheat. | Breed two cows or two mooshrooms.
+				if(!achievmentTracker.checkAchievment("Repopulation",player)){
+					advancementTracker.setAchivement("Repopulation",player)
+					if(!achievmentTracker.checkAchievment("TheParrotsandtheBats",player)){
+						achievmentTracker.setAchivement("TheParrotsandtheBats",player)
+					}
+				}
+			case "mule" :	//[achievement] Artificial Selection | Breed a mule from a horse and a donkey. | —
+				if(!achievmentTracker.checkAchievment("ArtificialSelection",player)){
+					advancementTracker.setAchivement("ArtificialSelection",player)
+					if(!achievmentTracker.checkAchievment("TheParrotsandtheBats",player)){
+						achievmentTracker.setAchivement("TheParrotsandtheBats",player)
+					}
+				}
+				break;
+			case "panda" :	//[achievement] Zoologist | Breed two pandas with bamboo. | —
+				if(!achievmentTracker.checkAchievment("Zoologist",player)){
+					advancementTracker.setAchivement("Zoologist",player)
+					if(!achievmentTracker.checkAchievment("TheParrotsandtheBats",player)){
+						achievmentTracker.setAchivement("TheParrotsandtheBats",player)
+					}
+				}
+				break;
 			case "axolotl" ://*fall through*
 			case "bee" ://*fall through*
 			case "camel" ://*fall through*
 			case "cat" ://*fall through*
 			case "chicken" ://*fall through*
-			case "cow" ://*fall through*	//[achievement] Repopulation | Breed two cows with wheat. | Breed two cows or two mooshrooms.
 			case "donkey" ://*fall through*
 			case "fox" ://*fall through*
 			case "frog" ://*fall through*
@@ -1079,9 +1106,7 @@ function spawnAndBreed(entity, player){
 			case "horse" ://*fall through*
 			case "llama" ://*fall through*
 			case "mooshroom" ://*fall through*
-			case "mule" ://*fall through*	//[achievement] Artificial Selection | Breed a mule from a horse and a donkey. | —
 			case "ocelot" ://*fall through*
-			case "panda" ://*fall through*	//[achievement] Zoologist | Breed two pandas with bamboo. | —
 			case "pig" ://*fall through*
 			case "rabbit" ://*fall through*
 			case "sheep" ://*fall through*
@@ -1089,6 +1114,9 @@ function spawnAndBreed(entity, player){
 			case "strider" ://*fall through*
 			case "turtle" ://*fall through*
 			case "wolf" :
+				if(!achievmentTracker.checkAchievment("TheParrotsandtheBats",player)){
+					achievmentTracker.setAchivement("TheParrotsandtheBats",player)
+				}
 				if(getSomeScore("spawnAndBreed", "breed_all_bool", player) == 0){
 					if(getSomeScore("spawnAndBreed", entity, player) == 0){
 						addToScore("spawnAndBreed", "breed_all_score", player);
@@ -1098,15 +1126,10 @@ function spawnAndBreed(entity, player){
 						}
 					}
 				}
-				if(getSomeScore("spawnAndBreed", "breed_some", player) == 0){
-					if(getSomeScore("spawnAndBreed", "breed_all_score", player) > 0){
-						boolScore("spawnAndBreed", "breed_some", player, 1);
-					}
-				}
 				break;
 			case "trader_llama" :
-				if(getSomeScore("spawnAndBreed", "breed_some", player) == 0){
-					boolScore("spawnAndBreed", "breed_some", player, 1);
+				if(!achievmentTracker.checkAchievment("TheParrotsandtheBats",player)){
+						achievmentTracker.setAchivement("TheParrotsandtheBats",player)
 				}
 				break;
 		}
@@ -1168,28 +1191,23 @@ function statusAndEffects(player){
 	}
     //[advancement] A Furious Cocktail | Have every potion effect applied at the same time | Have all of these 13 status effects applied to the player at the same time:, Fire Resistance, Invisibility, Jump Boost, Night Vision, Poison, Regeneration, Resistance, Slow Falling, Slowness, Speed, Strength, Water Breathing, Weakness, The source of the effects is irrelevant for the purposes of this advancement. Other status effects may be applied to the player, but are ignored for this advancement.
 	if((allPotionsMask & effectMask)==allPotionsMask){
-		if(getSomeScore("statusAndEffects", "allPotionsMask", player) == 0){
-			boolScore("statusAndEffects", "potion_effects_bool", player, 1);
-			setAdvancement("A Furious Cocktail")
-			achievmentUnlock(player,"A Furious Cocktail")
+		if(!advancementTracker.checkAchievment("AFuriousCocktail",player)){
+			advancementTracker.setAchivement("AFuriousCocktail",player)
 		}
 	}
 	
 	
     //[advancement] How Did We Get Here? | Have every effect applied at the same time | Have all of these 27 status effects applied to the player at the same time:, Absorption, Bad Omen, Blindness, Conduit Power, Darkness, Dolphin's Grace, Fire Resistance, Glowing, Haste, Hero of the Village, Hunger, Invisibility, Jump Boost, Levitation, Mining Fatigue, Nausea, Night Vision, Poison, Regeneration, Resistance, Slow Falling, Slowness, Speed, Strength, Water Breathing, Weakness, Wither, The source of the effects is irrelevant for the purposes of this advancement. Other status effects may be applied to the player, but are ignored for this advancement.
 	if((allPotionsMask & effectMask)==allPotionsMask){
-		if(getSomeScore("statusAndEffects", "all_effects_bool", player) == 0){
-			boolScore("statusAndEffects", "all_effects_bool", player, 1);
-			setAdvancement("How Did We Get Here?")
-			achievmentUnlock(player,"How Did We Get Here?")
+		if(!advancementTracker.checkAchievment("HowDidWeGetHere",player)){
+			advancementTracker.setAchivement("HowDidWeGetHere",player)
 		}
+		
 	}
 	if((heroMask & effectMask)==heroMask){
 		//[advancement] Hero of the Village | Successfully defend a village from a raid | Kill at least one raid mob during a raid and wait until it ends in victory.
-		if(getSomeScore("statusAndEffects", "hero_of_the_village", player) == 0){
-			boolScore("statusAndEffects", "hero_of_the_village", player, 1);
-			setAdvancement("Hero of the Village")
-			achievmentUnlock(player,"Hero of the Village")
+		if(!advancementTracker.checkAchievment("HerooftheVillage"),player){
+			advancementTracker.setAchivement("HerooftheVillage",player)
 		}
 	}
 }
@@ -1235,28 +1253,34 @@ function weaponsToolsArmor(subject, player){
 		switch(subject){
 		    //[advancement] Ol' Betsy | Shoot a Crossbow | —
 			case "crossbow" :
-				boolScore("weaponsToolsArmor", subject, player, 1);
-				achievmentUnlock(player,"Ol' Betsy")
+				if(!advancementTracker.checkAchievment("OlBetsy"),player){
+					advancementTracker.setAchivement("OlBetsy",player)
+				}
 				break;
 		    //[advancement] Take Aim | Shoot something with an Arrow | Using a bow or a crossbow, shoot an entity with an arrow, tipped arrow, or spectral arrow.
 			case "arrow" :
-				boolScore("weaponsToolsArmor", subject, player, 1);
-				achievmentUnlock(player,"Take Aim")
+				if(!advancementTracker.checkAchievment("TakeAim"),player){
+					advancementTracker.setAchivement("TakeAim",player)
+				}
 				break;
 		    //[advancement] A Throwaway Joke | Throw a Trident at something. Note: Throwing away your only weapon is not a good idea. | Hit a mob with a thrown trident.
 			case "thrown_trident" :
-				boolScore("weaponsToolsArmor", subject, player, 1);
-				achievmentUnlock(player,"A Throwaway Joke")
+				if(!advancementTracker.checkAchievment("AThrowawayJoke"),player){
+					advancementTracker.setAchivement("AThrowawayJoke",player)
+				}
 				break;
 		    //[achievement] Bullseye | Hit the bullseye of a Target block | —
 			case "target" :
-				boolScore("weaponsToolsArmor", subject, player, 1);
-				achievmentUnlock(player,"Bullseye")
+				if(!achievmentTracker.checkAchievment("Bullseye"),player){
+					achievmentTracker.setAchivement("Bullseye",player)
+					advancementTracker.setAchivement("Bullseye",player)
+				}
 				break;
 		    //[advancement] Bullseye | Hit the bullseye of a Target block from at least 30 meters away | Be at least 30 blocks away horizontally when the center of a target is shot with a projectile by the player.
 			case "targetFrom30" :
-				boolScore("weaponsToolsArmor", subject, player, 1);
-				achievmentUnlock(player,"Bullseye from 30m")
+				if(!advancementTracker.checkAchievment("Bullseye"),player){
+					advancementTracker.setAchivement("Bullseye",player)
+				}
 				break;
 		    //[advancement] Fishy Business | Catch a fish | Use a fishing rod to catch any of these fishes:, Cod, Salmon, Tropical Fish, Pufferfish
 			case "fishing_rod" :
