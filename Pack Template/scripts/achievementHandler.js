@@ -1,68 +1,68 @@
 export class achievementHandler{
-	constructor(achievementObject){
-		this.achievements=achievementObject;
+	constructor(achievmentObject){
+		this.achievments=achievmentObject;
 		this.dynamicProperties=[]
-		for (const [key, value] of Object.entries(this.achievements)) {
+		for (const [key, value] of Object.entries(this.achievments)) {
 			if(!this.dynamicProperties.includes(value.container)){
 				this.dynamicProperties.push(value.container)
 			}
 		}
 	}
-	checkAchievement(handle,player){
-		const achievementDefs = this.achievements[handle];
-		const storage = player.getDynamicProperty(achievementDefs.container);
+	checkAchievment(handle,player){
+		const achievmentDefs = this.achievments[handle];
+		const storage = player.getDynamicProperty(achievmentDefs.container);
 		if(storage){
-			const mask = 0b1<<achievementDefs.containerIndex;
+			const mask = 0b1<<achievmentDefs.containerIndex;
 			return (storage&mask) == mask;
 		}
 		else{
-			player.setDynamicProperty(achievementDefs.container,0);
+			player.setDynamicProperty(achievmentDefs.container,0);
 			return false;
 		}
 	}
-	setAchievement(handle,player){
-		const achievementDefs = this.achievements[handle];
-		let storage = player.getDynamicProperty(achievementDefs.container);
-		const mask = 0b1<<achievementDefs.containerIndex;
+	setAchievment(handle,player){
+		const achievmentDefs = this.achievments[handle];
+		let storage = player.getDynamicProperty(achievmentDefs.container);
+		const mask = 0b1<<achievmentDefs.containerIndex;
 		if(storage){
 			storage=storage|mask;
-			player.setDynamicProperty(achievementDefs.container,storage);
+			player.setDynamicProperty(achievmentDefs.container,storage);
 		}else{
-			player.setDynamicProperty(achievementDefs.container,mask);
+			player.setDynamicProperty(achievmentDefs.container,mask);
 		}
-		this.achievementUnlock(player,achievementDefs.displayName+"\n"+achievementDefs.description)
+		this.achievmentUnlock(player,achievmentDefs.displayName+"\n"+achievmentDefs.description)
 	}
-	getAchievementName(handle){
-		return this.achievements[handle].displayName;
+	getAchievmentName(handle){
+		return this.achievments[handle].displayName;
 	}
 	getCategory(handle){
-		return this.achievements[handle].category;
+		return this.achievments[handle].category;
 	}
 	getDefinition(handle){
-		return this.achievements[handle];
+		return this.achievments[handle];
 	}
 	getDisplayString(handle,player){
-		const status = this.checkAchievement(handle,player)
+		const status = this.checkAchievment(handle,player)
 		
 	}
-	getAllAchievementData(handle,player){
+	getAllAchievmentData(handle,player){
 		let playerData={}
 		for (let dynamicProperty of this.dynamicProperties){
 			playerData[dynamicProperty]=player.getDynamicProperty(dynamicProperty)
 		}
-		let achievementData={}
-		for (const [achievementHandle, achievementDef] of Object.entries(this.achievements)) {
-			if (!(achievementDef.category in achievementData)){
-				achievementData[category]={}
+		let achievmentData={}
+		for (const [achievmentHandle, achievementDef] of Object.entries(this.achievments)) {
+			if (!(achievementDef.category in achievmentData)){
+				achievmentData[category]={}
 			}
-			achievementData[category][achievementHandle]=achievementDef
-			achievementData[category][achievementHandle].unlocked=playerData[achievementDef.container]&0b1<<achievementDef.containerIndex > 0
+			achievmentData[category][achievmentHandle]=achievementDef
+			achievmentData[category][achievmentHandle].unlocked=playerData[achievementDef.container]&0b1<<achievementDef.containerIndex > 0
 		}
-		return achievementData
+		return achievmentData
 	}
-	achievementUnlock(player,str){
+	achievmentUnlock(player,str){
 		let display=player.onScreenDisplay
-		display.setActionBar({text:"\u00A7cAchievement Unlocked: \u00A7e"+str})
+		display.setActionBar({text:"\u00A7cAchievment Unlocked: \u00A7e"+str})
 		player.playSound("random.levelup")
 	}
 }
