@@ -1704,7 +1704,7 @@ function timer10Sec(){
 }
 function timer1Day(){
 	let timeVal = world.getTimeOfDay();
-	console.warn(timeVal);
+	//console.warn(timeVal);
 	
 	if(timeVal == 6000){
 		let playerArrayList = world.getAllPlayers();
@@ -1712,7 +1712,7 @@ function timer1Day(){
 		for(let i = 0; i < playerArrayList.length; i++){
 			let dayCount = playerArrayList[i].getDynamicProperty("playTimeD");
 			playerArrayList[i].setDynamicProperty("playTimeD", (dayCount === undefined ? 0 : dayCount) + 1);
-			console.warn(dayCount);
+			//console.warn(dayCount);
 		}
 	}
 }
