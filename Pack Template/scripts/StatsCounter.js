@@ -36,6 +36,9 @@ world.afterEvents.itemUse.subscribe(event=>{
 world.afterEvents.itemReleaseUse.subscribe(event=>{
 	itemRelease(event);
 });
+world.afterEvents.itemStopUseOn.subscribe(event=>{
+	itemStopOn(event);
+});
 world.afterEvents.pressurePlatePush.subscribe(event=>{
 	pleatePressed(event);
 });
@@ -470,6 +473,30 @@ function itemRelease(event){
 				player.setDynamicProperty("forkThrow", 0);
 			}, 30);
 			break;
+	}
+}
+function itemStopOn(event){
+	let player = event.source;
+	let itemName = event.itemStack.typeId.replace("minecraft:","");
+	let blockTag = event.block.getTags();
+	
+	switch(itemName){
+		case "oak_sign" :
+			usingItems(itemName, player);
+			break;
+		case "beetroot_seeds" ://*fall through*
+		case "melon_seeds" ://*fall through*
+		case "pumpkin_seeds" ://*fall through*
+		case "wheat_seeds" ://*fall through*
+		case "pitcher_pod" ://*fall through*
+		case "torchflower_seeds" :
+			if (blockTag.includes("dirt")){
+				usingItems(itemName, player);
+			}
+			break;
+		//case "nether_wart" :
+			//console.warn(blockComponent)
+			//break;
 	}
 }
 function leverFlipped(event){
@@ -1486,17 +1513,39 @@ function trading(){
 		//[advancement] What a Deal! | Successfully trade with a Villager | Take an item from a villager or wandering trader's trading output slot, and put it in your inventory.
 	//done--------------------
 }
-function usingItems(item){
+function usingItems(item, player){
 	//to-do--------------------
 		//[achievement] Beam Me Up | Teleport over 100 meters from a single throw of an Ender Pearl | Throw an ender pearl 100 blocks in any direction
 		//[achievement] Cheating Death | Use the Totem of Undying to cheat death | Have the Totem of Undying in your hand when you die.
-		//[achievement] It's a Sign! | Craft and place an Oak Sign. | —
-		//[achievement] Planting the past | Plant any Sniffer seed | —
-		//[advancement] A Seedy Place | Plant a seed and watch it grow | Plant one of these 7 crops:, Beetroot, Melon, Nether Wart, Pumpkin, Wheat, Torchflower, Pitcher, Other crops and plants can be planted, but are ignored for this advancement.
 		//[advancement] Glow and Behold! | Make the text of any kind of sign glow | Use a glow ink sac on a sign or a hanging sign.
-		//[advancement] Planting the Past | Plant any Sniffer seed | 
 		//[advancement] Postmortal | Use a Totem of Undying to cheat death | Activate a totem of undying by taking fatal damage.
 	//done--------------------
+	switch(item){
+		case "oak_sign" :
+			if(!achievementTracker.checkAchievment("ItsaSign",player)){
+				achievementTracker.setAchievment("ItsaSign",player);//[achievement] It's a Sign! | Craft and place an Oak Sign. | —
+			}
+			break;
+		case "pitcher_pod" ://*fall through*
+		case "torchflower_seeds" :
+			if(!achievementTracker.checkAchievment("Plantingthepast",player)){
+				achievementTracker.setAchievment("Plantingthepast",player);//[achievement] Planting the past | Plant any Sniffer seed | —
+				advancementTracker.setAchievment("PlantingthePast",player);//[advancement] Planting the Past | Plant any Sniffer seed | 
+				if(!advancementTracker.checkAchievment("ASeedyPlace",player)){
+					advancementTracker.setAchievment("ASeedyPlace",player);
+				}
+			}
+			break;
+		case "beetroot_seeds" ://*fall through*
+		case "melon_seeds" ://*fall through*
+		case "nether_wart" ://*fall through*
+		case "pumpkin_seeds" ://*fall through*
+		case "wheat_seeds" :
+			if(!advancementTracker.checkAchievment("ASeedyPlace",player)){
+				advancementTracker.setAchievment("ASeedyPlace",player);//[advancement] A Seedy Place | Plant a seed and watch it grow | Plant one of these 7 crops:, Beetroot, Melon, Nether Wart, Pumpkin, Wheat, Torchflower, Pitcher, Other crops and plants can be planted, but are ignored for this advancement.
+			}
+			break;
+	}
 }
 
 function weaponsToolsArmor(subject, player){
