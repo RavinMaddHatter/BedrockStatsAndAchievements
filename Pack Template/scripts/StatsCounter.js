@@ -497,6 +497,11 @@ function itemStopOn(event){
 		//case "nether_wart" :
 			//console.warn(blockComponent)
 			//break;
+		case "glow_ink_sac" :
+			if (blockTag.includes("text_sign")){
+				usingItems(itemName, player);
+			}
+			break;
 	}
 }
 function leverFlipped(event){
@@ -1517,7 +1522,6 @@ function usingItems(item, player){
 	//to-do--------------------
 		//[achievement] Beam Me Up | Teleport over 100 meters from a single throw of an Ender Pearl | Throw an ender pearl 100 blocks in any direction
 		//[achievement] Cheating Death | Use the Totem of Undying to cheat death | Have the Totem of Undying in your hand when you die.
-		//[advancement] Glow and Behold! | Make the text of any kind of sign glow | Use a glow ink sac on a sign or a hanging sign.
 		//[advancement] Postmortal | Use a Totem of Undying to cheat death | Activate a totem of undying by taking fatal damage.
 	//done--------------------
 	switch(item){
@@ -1543,6 +1547,11 @@ function usingItems(item, player){
 		case "wheat_seeds" :
 			if(!advancementTracker.checkAchievment("ASeedyPlace",player)){
 				advancementTracker.setAchievment("ASeedyPlace",player);//[advancement] A Seedy Place | Plant a seed and watch it grow | Plant one of these 7 crops:, Beetroot, Melon, Nether Wart, Pumpkin, Wheat, Torchflower, Pitcher, Other crops and plants can be planted, but are ignored for this advancement.
+			}
+			break;
+		case "glow_ink_sac" :
+			if(!advancementTracker.checkAchievment("GlowandBehold",player)){
+				advancementTracker.setAchievment("GlowandBehold",player);//[advancement] Glow and Behold! | Make the text of any kind of sign glow | Use a glow ink sac on a sign or a hanging sign.
 			}
 			break;
 	}
