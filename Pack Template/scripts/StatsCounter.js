@@ -455,19 +455,42 @@ function initSpawn(event){
 function itemComplete(event){
 	//to-do--------------------
 		//[achievement] Castaway | Eat nothing but dried kelp for three in-game days | Eat dried kelp once; in the following three in-game days, eat nothing but dried kelp.
-		//[achievement] Iron Belly | Stop starvation using Rotten Flesh. | Eat a piece of rotten flesh while starving (zero hunger points).
-		//[achievement] Overpowered | Eat an Enchanted Apple | Eat an enchanted apple.
-		//[achievement] Pork Chop | Cook and eat a pork chop. | —
-		//[achievement] Rabbit Season | Cook and Eat Rabbit Meat | —
 		//[advancement] A Balanced Diet | Eat everything that is edible, even if it's not good for you | Eat each of these 40 foods:, Apple, Baked Potato, Beetroot, Beetroot Soup, Bread, Carrot, Chorus Fruit, Cooked Chicken, Cooked Cod, Cooked Mutton, Cooked Porkchop, Cooked Rabbit, Cooked Salmon, Cookie, Dried Kelp, Enchanted Golden Apple, Glow Berries, Golden Apple, Golden Carrot, Honey Bottle, Melon Slice, Mushroom Stew, Poisonous Potato, Potato, Pufferfish, Pumpkin Pie, Rabbit Stew, Raw Beef, Raw Chicken, Raw Cod, Raw Mutton, Raw Porkchop, Raw Rabbit, Raw Salmon, Rotten Flesh, Spider Eye, Steak, Suspicious Stew, Sweet Berries, Tropical Fish, Other foods and consumables can be eaten, but are ignored for this advancement.
 		//[advancement] Husbandry | The world is full of friends and food | Consume anything that can be consumed.
 	//done--------------------
 	let player = event.source;
 	let itemName = event.itemStack.typeId.replace("minecraft:","");
-	
+	console.warn(itemName)
 	switch(itemName){
 		case "crossbow" :
 			player.setDynamicProperty("chargeCross", 1);
+			break;
+		//[achievement] Overpowered | Eat an Enchanted Apple | Eat an enchanted apple.
+		case "enchanted_golden_apple":
+			if(!achievementTracker.checkAchievment("Overpowered",player)){
+				achievementTracker.setAchievment("Overpowered",player)
+			}
+			break;
+		//[achievement] Pork Chop | Cook and eat a pork chop. | —
+		case "cooked_porkchop":
+			if(!achievementTracker.checkAchievment("PorkChop",player)){
+				achievementTracker.setAchievment("PorkChop",player)
+			}
+			break;
+		//[achievement] Rabbit Season | Cook and Eat Rabbit Meat | —
+		case "cooked_rabbit":
+			if(!achievementTracker.checkAchievment("RabbitSeason",player)){
+				achievementTracker.setAchievment("RabbitSeason",player)
+			}
+			break;
+		case "rotten_flesh":
+		//[achievement] Iron Belly | Stop starvation using Rotten Flesh. | Eat a piece of rotten flesh while starving (zero hunger points).
+		//Needs a hunger or saturation component check
+			if(false){
+				if(!achievementTracker.checkAchievment("RabbitSeason",player)){
+					achievementTracker.setAchievment("RabbitSeason",player)
+				}
+			}
 			break;
 	}
 }
