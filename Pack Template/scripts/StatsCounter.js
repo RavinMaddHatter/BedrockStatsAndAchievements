@@ -457,17 +457,18 @@ function itemRelease(event){
 	
 	switch(itemName){
 		case "bow" :
-			addToScore("stats_itemsReleased_","Bow",player)
+			addToScore("stats_itemsReleased_","Bow",player);
 			player.setDynamicProperty("shotBow", 1);
 			system.runTimeout(() => {
 				player.setDynamicProperty("shotBow", 0);
-			}, 40);
+			}, 30);
 			break;
-		//case "crossbow": //moved to useItem(event)
-			//addToScore("stats_itemsReleased_","Crossbow",player)
-			//break
 		case "trident":
-			addToScore("stats_itemsReleased_","Trident",player)
+			addToScore("stats_itemsReleased_","Trident",player);
+			player.setDynamicProperty("forkThrow", 1);
+			system.runTimeout(() => {
+				player.setDynamicProperty("forkThrow", 0);
+			}, 30);
 			break;
 	}
 }
@@ -582,12 +583,18 @@ function targetHit(event){
 		var i;
 		
 		for(i = 0; i < closePlayers.length; i++){
-			if(closePlayers[i].getDynamicProperty("shotBow") == 1){
+			if((closePlayers[i].getDynamicProperty("shotBow") == 1)
+			    ||(closePlayers[i].getDynamicProperty("snowThrow") == 1)
+			    ||(closePlayers[i].getDynamicProperty("shotCross") == 1)
+			    ||(closePlayers[i].getDynamicProperty("forkThrow") == 1)){
 				weaponsToolsArmor("target", closePlayers[i]);
 			}
 		}
 		for(i = 0; i < farPlayers.length; i++){
-			if(farPlayers[i].getDynamicProperty("shotBow") == 1){
+			if((farPlayers[i].getDynamicProperty("shotBow") == 1)
+			    ||(farPlayers[i].getDynamicProperty("snowThrow") == 1)
+			    ||(farPlayers[i].getDynamicProperty("shotCross") == 1)
+			    ||(farPlayers[i].getDynamicProperty("forkThrow") == 1)){
 				weaponsToolsArmor("targetFrom30", farPlayers[i]);
 			}
 		}
@@ -602,11 +609,21 @@ function useItem(event){
 			if(player.getDynamicProperty("chargeCross") == 1){
 				weaponsToolsArmor(itemName, player);
 				addToScore("stats_itemsReleased_","Crossbow",player);
+				player.setDynamicProperty("shotCross", 1);
+				system.runTimeout(() => {
+					player.setDynamicProperty("shotCross", 0);
+				}, 30);
 				player.setDynamicProperty("chargeCross", 0);
 			}
 			break;
 		case "fishing_rod" :
 			weaponsToolsArmor(itemName, player);
+			break;
+		case "snowball" :
+			player.setDynamicProperty("snowThrow", 1);
+			system.runTimeout(() => {
+				player.setDynamicProperty("snowThrow", 0);
+			}, 40);
 			break;
 	}
 }
