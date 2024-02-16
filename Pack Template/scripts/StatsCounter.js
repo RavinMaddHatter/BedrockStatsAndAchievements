@@ -101,15 +101,18 @@ function statListBody(player){
 	//add text
 	    //stats--------------------
 		let statTxt = "Stats";
+		let titleFormat = "\u00A7d";
+		let subtitleFormat = "\u00A73";
+		let bodyFormat = "\u00A7r";
 		let totalBlocksPlaced = world.scoreboard.getObjective("stats_blocksPlaced_total");
 		let totalBlocksBroken = world.scoreboard.getObjective("stats_blocksBroken_total");
 		let daysPlayed = player.getDynamicProperty("playTimeD");
 		
 		let statArrayTxt = [];
-		statArrayTxt[0] = "Overworld Travel: " + player.getDynamicProperty("blockRun") + " blocks";
-		statArrayTxt[1] = "Total blocks placed: " + getScoreIfExists(totalBlocksPlaced,player);
-		statArrayTxt[2] = "Total blocks broken: " + getScoreIfExists(totalBlocksBroken,player);
-		statArrayTxt[3] = "Minecraft days played: " + (daysPlayed === undefined ? 0 : daysPlayed);
+		statArrayTxt[0] = subtitleFormat + "Overworld Travel: " + bodyFormat + player.getDynamicProperty("blockRun") + " blocks";
+		statArrayTxt[1] = subtitleFormat + "Total blocks placed: " + bodyFormat + getScoreIfExists(totalBlocksPlaced,player);
+		statArrayTxt[2] = subtitleFormat + "Total blocks broken: " + bodyFormat + getScoreIfExists(totalBlocksBroken,player);
+		statArrayTxt[3] = subtitleFormat + "Minecraft days played: " + bodyFormat + (daysPlayed === undefined ? 0 : daysPlayed);
 		
 	//construct the body
 		let indentSize = "";
@@ -121,9 +124,8 @@ function statListBody(player){
 			statBodyTxt = statBodyTxt + indentNextLine + statArrayTxt[i];
 		}
 		
-		//display text
-		return statTxt
-			+ statBodyTxt;
+		let displayText = titleFormat + statTxt + nextLine + statBodyTxt
+		return displayText
 }
 function objectivesStatsDisplay(player){
 	let scoresText= ["Objectives"];
@@ -163,7 +165,7 @@ function objectivesStatsDisplay(player){
 	let titleFormat = "\u00A7d";
 	let subtitleFormat = "\u00A73";
 	let bodyFormat = "\u00A7r";
-	let indentSize = "  ";
+	let indentSize = "";
 	let nextLine = '\n';
 	let indentNextLine = nextLine + indentSize;
 	let allStats=titleFormat + scoresText.join(nextLine)
@@ -274,6 +276,9 @@ function debugDisplay(player){
 		let titleFormat = "\u00A7d";
 		let subtitleFormat = "\u00A73";
 		let bodyFormat = "\u00A7r";
+		let lightVal = lightLevel(player);
+		let biomeId =  biomeFinder(player);
+		
 		let debugArrayTxt = [];
 		debugArrayTxt[0] = subtitleFormat + "Dimension: " + bodyFormat + playerPosition(player, "dimension");
 		debugArrayTxt[1] = subtitleFormat + "XYZ: " + bodyFormat + playerPosition(player, "xyz");
@@ -286,15 +291,15 @@ function debugDisplay(player){
 		debugArrayTxt[8] = subtitleFormat + "Player spawnpoint: " + bodyFormat + playerRespawn(player);
 		debugArrayTxt[9] = subtitleFormat + "World spawnpoint: " + bodyFormat + worldSpawn();
 		debugArrayTxt[10] = subtitleFormat + "Facing: " + bodyFormat + facingDirection(player);
-		debugArrayTxt[11] = subtitleFormat + "Light at player's head: " + bodyFormat + lightLevel(player);
-		debugArrayTxt[12] = subtitleFormat + "Biome: " + bodyFormat + biomeFinder(player);
-		debugArrayTxt[13] = subtitleFormat + "Moon phase: " + bodyFormat + moonCycle();
-		debugArrayTxt[14] = subtitleFormat + "Time of day: " + bodyFormat + "\n        Tick: " + getTheTime("tick") + "\n        Minecraft: " + getTheTime("minecraft") + "\n        12hr: " + getTheTime("12hr") + "\n        24hr: " + getTheTime("24hr");
-		debugArrayTxt[15] = subtitleFormat + "World life in ticks: " + bodyFormat + "\n        " + worldlife("tick");
-		debugArrayTxt[16] = subtitleFormat + "World day: " + bodyFormat + worldlife("day");
+		debugArrayTxt[11] = subtitleFormat + "Moon phase: " + bodyFormat + moonCycle();
+		debugArrayTxt[12] = subtitleFormat + "Time of day: " + bodyFormat + "\n    \u00A7aTick: \u00A7r" + getTheTime("tick") + "\n    \u00A7aMinecraft: \u00A7r" + getTheTime("minecraft") + "\n    \u00A7a12hr: \u00A7r" + getTheTime("12hr") + "\n    \u00A7a24hr: \u00A7r" + getTheTime("24hr");
+		debugArrayTxt[13] = subtitleFormat + "World life in ticks: " + bodyFormat + "\n        " + worldlife("tick");
+		debugArrayTxt[14] = subtitleFormat + "World day: " + bodyFormat + worldlife("day");
+		debugArrayTxt[15] = (biomeId == "NA" ? "" : subtitleFormat + "Light at player's head: " + bodyFormat + lightVal);
+		debugArrayTxt[16] = (biomeId == "NA" ? "" : subtitleFormat + "Biome: " + bodyFormat + biomeId);
 		
 	//construct the body
-		let indentSize = "    ";
+		let indentSize = "";
 		let nextLine = '\n';
 		let indentNextLine = nextLine + indentSize;
 		let debugBodyTxt = "";
