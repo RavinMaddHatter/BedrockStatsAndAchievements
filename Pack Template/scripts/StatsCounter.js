@@ -9,6 +9,7 @@ var blocksUsed = {}
 const debugToggle = true;
 timer10Sec();
 timer1Min();
+timer1Day();
 var achievementTracker = new achievementHandler(achievements);
 var advancementTracker = new achievementHandler(advancements);
 
@@ -100,12 +101,15 @@ function statListBody(player){
 	//add text
 	    //stats--------------------
 		let statTxt = "Stats";
+		let totalBlocksPlaced = world.scoreboard.getObjective("stats_blocksPlaced_total");
+		let totalBlocksBroken = world.scoreboard.getObjective("stats_blocksBroken_total");
+		let daysPlayed = player.getDynamicProperty("playTimeD");
 		
 		let statArrayTxt = [];
 		statArrayTxt[0] = "Overworld Travel: " + player.getDynamicProperty("blockRun") + " blocks";
-		statArrayTxt[1] = "Total blocks placed: " + getScoreIfExists(world.scoreboard.getObjective("stats_blocksPlaced_total"),player);
-		statArrayTxt[2] = "Total blocks broken: " + getScoreIfExists(world.scoreboard.getObjective("stats_blocksBroken_total"),player);
-		statArrayTxt[3] = "Minecraft days played: " + (player.getDynamicProperty("playTimeD") === undefined ? 0 : player.getDynamicProperty("playTimeD"));
+		statArrayTxt[1] = "Total blocks placed: " + getScoreIfExists(totalBlocksPlaced,player);
+		statArrayTxt[2] = "Total blocks broken: " + getScoreIfExists(totalBlocksBroken,player);
+		statArrayTxt[3] = "Minecraft days played: " + (daysPlayed === undefined ? 0 : daysPlayed);
 		
 	//construct the body
 		let indentSize = "";
@@ -1570,7 +1574,6 @@ function worldAndBiome(){
 		//[achievement] Free Diver | Stay underwater for 2 minutes | Drink a potion of water breathing that can last for 2 minutes or more, then jump into the water or activate a conduit or sneak on a magma block underwater for 2 minutes.
 		//[achievement] Hot tourist destination | Visit all Nether biomes | The achievement can be completed if one visit biomes in different worlds.
 		//[achievement] Map Room | Place 9 fully explored, adjacent map items into 9 item frames in a 3 by 3 square. | The frames have to be on a wall, not the floor.
-		//[achievement] Passing the Time | Play for 100 days. | Play for 100 Minecraft days, which is equivalent to 33 hours in real time.
 		//[achievement] Sail the 7 Seas | Visit all ocean biomes | Visit all ocean biomes except the deep warm ocean/legacy frozen ocean (as they are unused)
 		//[achievement] Sleep with the Fishes | Spend a day underwater. | Spend 20 minutes underwater without any air.
 		//[achievement] Sound of Music | Make the Meadows come alive with the sound of music from a jukebox. | Use a music disc on a jukebox in the Meadow biome.
@@ -1704,17 +1707,21 @@ function timer10Sec(){
 }
 function timer1Day(){
 	let timeVal = world.getTimeOfDay();
-	//console.warn(timeVal);
 	
 	if(timeVal == 6000){
 		let playerArrayList = world.getAllPlayers();
 		
 		for(let i = 0; i < playerArrayList.length; i++){
 			let dayCount = playerArrayList[i].getDynamicProperty("playTimeD");
-			playerArrayList[i].setDynamicProperty("playTimeD", (dayCount === undefined ? 0 : dayCount) + 1);
-			//console.warn(dayCount);
+			
+			playerArrayList[i].setDynamicProperty("playTimeD", (dayCount === undefined ? -1 : dayCount) + 1);
+			if(dayCount == 100){
+				achievementTracker.setAchievment("PassingtheTime", playerArrayList[i]);//[achievement] Passing the Time | Play for 100 days. | Play for 100 Minecraft days, which is equivalent to 33 hours in real time.
+			}
 		}
 	}
+	
+	system.run(timer1Day);
 }
 function timer1Min(){
 	system.runInterval(() => {
@@ -1722,8 +1729,8 @@ function timer1Min(){
 		
 		for(let i = 0; i < playerArrayList.length; i++){
 			let minCount = playerArrayList[i].getDynamicProperty("playTimeM");
+			
 			playerArrayList[i].setDynamicProperty("playTimeM", (minCount === undefined ? 0 : minCount) + 1);
-			//console.warn(minCount);
 		}
 	}, 1200);
 }
