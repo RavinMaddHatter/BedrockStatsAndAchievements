@@ -332,6 +332,12 @@ function blockBroken(event){
 	if (blockData!=undefined){
 		addToScore("stats_blocksBroken_", blockData, player)
 	}
+	//[achievement] Getting Wood | Punch a tree until a block of wood pops out. | Pick up a log from the ground.
+	if(blockData.includes("Log")){
+		if(!achievementTracker.checkAchievment("GettingWood",player)){
+			achievementTracker.setAchievment("GettingWood",player)
+		}
+	}
 	addToScore("stats_blocksBroken_", "total", player);
 }
 function blockPlaced(event){
@@ -447,6 +453,15 @@ function initSpawn(event){
 	}
 }
 function itemComplete(event){
+	//to-do--------------------
+		//[achievement] Castaway | Eat nothing but dried kelp for three in-game days | Eat dried kelp once; in the following three in-game days, eat nothing but dried kelp.
+		//[achievement] Iron Belly | Stop starvation using Rotten Flesh. | Eat a piece of rotten flesh while starving (zero hunger points).
+		//[achievement] Overpowered | Eat an Enchanted Apple | Eat an enchanted apple.
+		//[achievement] Pork Chop | Cook and eat a pork chop. | —
+		//[achievement] Rabbit Season | Cook and Eat Rabbit Meat | —
+		//[advancement] A Balanced Diet | Eat everything that is edible, even if it's not good for you | Eat each of these 40 foods:, Apple, Baked Potato, Beetroot, Beetroot Soup, Bread, Carrot, Chorus Fruit, Cooked Chicken, Cooked Cod, Cooked Mutton, Cooked Porkchop, Cooked Rabbit, Cooked Salmon, Cookie, Dried Kelp, Enchanted Golden Apple, Glow Berries, Golden Apple, Golden Carrot, Honey Bottle, Melon Slice, Mushroom Stew, Poisonous Potato, Potato, Pufferfish, Pumpkin Pie, Rabbit Stew, Raw Beef, Raw Chicken, Raw Cod, Raw Mutton, Raw Porkchop, Raw Rabbit, Raw Salmon, Rotten Flesh, Spider Eye, Steak, Suspicious Stew, Sweet Berries, Tropical Fish, Other foods and consumables can be eaten, but are ignored for this advancement.
+		//[advancement] Husbandry | The world is full of friends and food | Consume anything that can be consumed.
+	//done--------------------
 	let player = event.source;
 	let itemName = event.itemStack.typeId.replace("minecraft:","");
 	
@@ -530,7 +545,6 @@ function loadedEntity(event){
 function spawnedEntity(event){
 	let entity = event.entity;
 	let entityName = entity.typeId.replace("minecraft:","");
-	
 	switch(entityName){
 	    //when fortress mobs spawn, search for nearby players and give them an achievement
 		case "blaze" ://*fall through*
@@ -549,7 +563,7 @@ function spawnedEntity(event){
 		}
 	    //check for player spawned mobs
 		case "iron_golem" ://*fall through*
-		case "wither" :{
+		case "wither" :
 			let playersClosest = entity.dimension.getPlayers({
 				closest: 1,
 				location: {x: entity.location.x, y: entity.location.y, z: entity.location.z}
@@ -557,8 +571,8 @@ function spawnedEntity(event){
 			
 			spawnAndBreed(entityName, playersClosest[0]);
 			break;
-		}
-		case "ender_dragon" :{
+		
+		case "ender_dragon" :
 			let closePlayers = entity.dimension.getPlayers({
 				maxDistance: 192,
 				location: {x: entity.location.x, y: entity.location.y, z: entity.location.z}
@@ -568,7 +582,14 @@ function spawnedEntity(event){
 				spawnAndBreed(entityName, closePlayers[i]);
 			}
 			break;
-		}
+		case "villager_v2":
+				//[achievement] Zombie Doctor | Cure a zombie villager. | Throw a splash potion of weakness at a zombie villager and give it a golden apple (by facing the zombie and pressing the use key with a golden apple in your hand)
+			if(event.cause=="Transformed"){
+				if(!achievementTracker.checkAchievment("ZombieDoctor", closePlayers[i])){
+					achievementTracker.setAchievment("ZombieDoctor", closePlayers[i]);//[advancement] A Terrible Fortress | Break your way into a Nether Fortress | Enter a nether fortress.
+				}
+			}
+		
 	}
 	//check for bred mobs
 	if(event.cause == "Born"){
@@ -705,7 +726,7 @@ function blockInteractions(item,Block){
 		//[achievement] Disenchanted | Use a Grindstone to get experience from an enchanted item. | —
 		//[achievement] Freight Station | Use a Hopper to move an item from a Chest Minecart to a Chest. | —
 		//[achievement] One Pickle, Two Pickle, Sea Pickle, Four | Place four Sea Pickles in a group | —
-		
+		//[achievement] Pot Planter | Craft and place a Flower Pot. | —
 		//[achievement] Me Gold! | Dig up a buried treasure | Open a buried treasure chest
 		//[achievement] Sneak 100 | Sneaking [sic] next to a Sculk Sensor without triggering it | Sneak next to a Sculk Sensor or Warden without triggering or aggravating it.
 		//[achievement] Sound the Alarm! | Ring the bell with a hostile enemy in the village. | —
@@ -726,33 +747,22 @@ function blockInteractions(item,Block){
 		//[advancement] War Pigs | Loot a Chest in a Bastion Remnant | Open a naturally generated, never-before opened chest in a bastion remnant.
 		//[advancement] Wax Off | Scrape Wax off of a Copper block! | Use an axe to revert a waxed copper block.
 		//[advancement] Wax On | Apply Honeycomb to a Copper block! | Use a honeycomb on a copper block.
+		//[achievement] Into The Nether | Construct a Nether Portal. | Light a nether portal.
+		//[advancement] We Need to Go Deeper | Build, light and enter a Nether Portal | Enter the Nether dimension.
+		
 	//done--------------------
 }
 function craftAndCook(){
 	//to-do--------------------
 		//[achievement] Alternative Fuel | Power a furnace with a kelp block | This achievement is awarded only if the dried kelp block is put into the furnace's fuel slot manually, not via redstone components such as hoppers.
-		//[achievement] Delicious Fish | Catch and cook a fish! | Pick up a cooked cod after cooking it in a Furnace, Smoker, Campfire, or Soul Campfire. Doesn't work if the block used is hooked up to a hopper, as the player is not getting the item directly from the output.
-		//[achievement] Fruit on the Loom | Make a banner using an Enchanted Apple Stencil | Make a banner using an enchanted apple.
-		//[achievement] Into The Nether | Construct a Nether Portal. | Light a nether portal.
+		//[achievement] Super Fuel | Power a Furnace with Lava | —		
 		//[achievement] Local Brewery | Brew a potion. | Pick up a potion from a brewing stand potion slot. An already-created potion placed and removed qualifies.
-		//[achievement] Moskstraumen | Activate a Conduit | Place a conduit in a valid prismarine/sea lantern structure to activate it.
-		//[achievement] Pot Planter | Craft and place a Flower Pot. | —
-		//[achievement] Renewable Energy | Smelt wood trunks using charcoal to make more charcoal. | Smelt a wooden log with charcoal as the fuel.
-		//[achievement] Smelt Everything! | Connect 3 Chests to a single Furnace using 3 Hoppers. | Be within the range of three chests connected to a Furnace with 3 Hoppers.
-		//[achievement] Super Fuel | Power a Furnace with Lava | —
 		//[advancement] Local Brewery | Brew a Potion | Pick up an item from a brewing stand potion slot. This does not need to be a potion. Water bottles or even glass bottles can also trigger this advancement.[3]
-		//[advancement] We Need to Go Deeper | Build, light and enter a Nether Portal | Enter the Nether dimension.
-	//done--------------------
-}
-function eatAndDrink(){
-	//to-do--------------------
-		//[achievement] Castaway | Eat nothing but dried kelp for three in-game days | Eat dried kelp once; in the following three in-game days, eat nothing but dried kelp.
-		//[achievement] Iron Belly | Stop starvation using Rotten Flesh. | Eat a piece of rotten flesh while starving (zero hunger points).
-		//[achievement] Overpowered | Eat an Enchanted Apple | Eat an enchanted apple.
-		//[achievement] Pork Chop | Cook and eat a pork chop. | —
-		//[achievement] Rabbit Season | Cook and Eat Rabbit Meat | —
-		//[advancement] A Balanced Diet | Eat everything that is edible, even if it's not good for you | Eat each of these 40 foods:, Apple, Baked Potato, Beetroot, Beetroot Soup, Bread, Carrot, Chorus Fruit, Cooked Chicken, Cooked Cod, Cooked Mutton, Cooked Porkchop, Cooked Rabbit, Cooked Salmon, Cookie, Dried Kelp, Enchanted Golden Apple, Glow Berries, Golden Apple, Golden Carrot, Honey Bottle, Melon Slice, Mushroom Stew, Poisonous Potato, Potato, Pufferfish, Pumpkin Pie, Rabbit Stew, Raw Beef, Raw Chicken, Raw Cod, Raw Mutton, Raw Porkchop, Raw Rabbit, Raw Salmon, Rotten Flesh, Spider Eye, Steak, Suspicious Stew, Sweet Berries, Tropical Fish, Other foods and consumables can be eaten, but are ignored for this advancement.
-		//[advancement] Husbandry | The world is full of friends and food | Consume anything that can be consumed.
+		//maybe move to block place
+		//[achievement] Smelt Everything! | Connect 3 Chests to a single Furnace using 3 Hoppers. | Be within the range of three chests connected to a Furnace with 3 Hoppers.
+		
+		
+		
 	//done--------------------
 }
 function getSomeWhere(location, player){
@@ -778,11 +788,9 @@ function itemInventory(player){
 		//[achievement] Dry Spell | Dry a sponge in a furnace | —
 		//[advancement] Careful Restoration | Make a Decorated Pot out of 4 Pottery Sherds | —
 		//[achievement] Careful restoration | Make a Decorated Pot out of 4 Pottery Sherds | —
-		
+		//[achievement] Fruit on the Loom | Make a banner using an Enchanted Apple Stencil | Make a banner using an enchanted apple.
 		
 		//mabye should move
-		//maybe in the block breaking?
-		//[achievement] Getting Wood | Punch a tree until a block of wood pops out. | Pick up a log from the ground.
 		//i dont know how to do this one
 		//[achievement] Taking Inventory | Open your inventory. | —
 		//Maybe block interactions?
@@ -815,7 +823,8 @@ function itemInventory(player){
 						"cake",				
 						"leather",			
 						"dispenser",		
-						"cooked_cod"]		
+						"cooked_cod",		
+						"charcoal"]		
 	const woolTypes=["black_wool",
 					"blue_wool",
 					"brown_wool",
@@ -832,7 +841,6 @@ function itemInventory(player){
 					"red_wool",
 					"white_wool",
 					"yellow_wool"]
-	const froglights=[]
 	const toolsTypes = ["wooden_pickaxe",
 					"wooden_sword",
 					"wooden_shovel",
@@ -1003,8 +1011,9 @@ function checkLooseItemachievements(player,inventorymask){
 	const cakeMask =		 0b1000000000000000000000000;
 	const leatherMask =		 0b10000000000000000000000000;
 	const dispenserMask =	 0b100000000000000000000000000;
-	const otherhalfMask = 	 0b111111111111100000000000000;
-	const coookedCodMask = 	 0b1111111111111100000000000000;
+	const coookedCodMask = 	 0b1000000000000000000000000000;
+	const charcoalMask = 	 0b10000000000000000000000000000;
+	const otherhalfMask = 	 0b11111111111111100000000000000;
 	if((halfMask&inventorymask)>0){
 		//[achievement] Benchmaking | Craft a workbench with four blocks of wooden planks. | Pick up a crafting table from the inventory's crafting field output or a crafting table output.
 		//[advancement] Minecraft | The heart and story of the game | Have a crafting table in your inventory.
@@ -1158,6 +1167,12 @@ function checkLooseItemachievements(player,inventorymask){
 				achievementTracker.setAchievment("DeliciousFish",player)
 			}
 		}
+		//[achievement] Renewable Energy | Smelt wood trunks using charcoal to make more charcoal. | Smelt a wooden log with charcoal as the fuel.
+		if((charcoalMask&inventorymask)==charcoalMask){
+			if(!achievementTracker.checkAchievment("RenewableEnergy",player)){
+				achievementTracker.setAchievment("RenewableEnergy",player)
+			}
+		}
 	}
 }
 function checkToolachievements(player,toolMask){
@@ -1292,7 +1307,7 @@ function entityInteractions(){
 		//[achievement] Whatever Floats Your Goat | Get in a boat and float with a goat | Use a boat and put a goat inside that boat, then ride it
 		//[achievement] When Pigs Fly | Use a saddle to ride a pig, and then have the pig get hurt from fall damage while riding it. | Be riding a pig (e.g. using a saddle) when it hits the ground with a fall distance greater than 5.
 		//[achievement] Where Have You Been? | Receive a gift from a tamed cat in the morning. | The gift must be picked up from the ground.
-		//[achievement] Zombie Doctor | Cure a zombie villager. | Throw a splash potion of weakness at a zombie villager and give it a golden apple (by facing the zombie and pressing the use key with a golden apple in your hand)
+		
 		//[advancement] A Complete Catalogue | Tame all Cat variants! | Tame each of these 11 cat variants:, Tabby, Tuxedo, Red, Siamese, British Shorthair, Calico, Persian, Ragdoll, White, Jellie, Black
 		//[advancement] Best Friends Forever | Tame an animal | Tame one of these 8 tameable mobs:, Cat, Donkey, Horse, Llama, Mule, Parrot, Trader Llama, Wolf
 		//[advancement] Birthday Song | Have an Allay drop a Cake at a Note Block | Give an allay a cake and then use a note block to make the allay drop the cake at a note block.
@@ -1313,18 +1328,16 @@ function entityInteractions(){
 function entityKills(victim,player,cause){
 	//to-do--------------------
 		//needs component checks
-		//[achievement] I've got a bad feeling about this | Kill a Pillager Captain. | —
-		//[advancement] Voluntary Exile | Kill a raid captain. Maybe consider staying away from villages for the time being… | Kill an entity in the #raiders entity tag wearing an ominous banner.
 		//Needs a more detailed projectile check
 		//[achievement] Return to Sender | Destroy a Ghast with a fireball. | Kill a ghast using a ghast fireball.
 		//[advancement] Return to Sender | Destroy a Ghast with a fireball | Kill a ghast by deflecting a ghast fireball back into it via hitting or shooting a projectile at the fireball.
-		//needs to move up
+		//needs more weapon data
 		//[achievement] The Beginning. | Kill the Wither | Be within a 100.9×100.9×203.5 cuboid centered on the Wither when it drops the nether star.
 		//[achievement] Camouflage | Kill a mob while wearing the same type of mob head. | —
 		//[achievement] It spreads | Kill a mob next to a catalyst | —
+		//[advancement] It Spreads | Kill a mob near a Sculk Catalyst | Kill one of these 70 mobs near a sculk catalyst:, Axolotl, Bee, Blaze, Camel, Cat, Cave Spider, Chicken, Chicken Jockey, Cod, Cow, Creeper, Donkey, Dolphin, Drowned, Elder Guardian, Enderman, Endermite, Evoker, Fox, Frog, Ghast, Goat, Glow Squid, Guardian, Hoglin, Horse, Husk, Llama, Magma Cube, Mooshroom, Ocelot, Panda, Parrot, Phantom, Pig, Piglin, Piglin Brute, Pillager, Polar Bear, Pufferfish, Rabbit, Ravager, Salmon, Sheep, Shulker, Silverfish, Skeleton, Skeleton Horse, Skeleton Horseman, Slime, Sniffer, Stray, Spider, Spider Jockey, Squid, Strider, Trader Llama, Tropical Fish, Turtle, Vex, Vindicator, Warden, Witch, Wither, Wither Skeleton, Wolf, Zoglin, Zombie, Zombie Villager, Zombified Piglin, Mobs that drop no experience are ignored for this advancement.
 		//[achievement] Overkill | Deal nine hearts of damage in a single hit. | Damage can be dealt to any mob, even those that do not have nine hearts of health overall.
 		//[advancement] Arbalistic | Kill five unique mobs with one crossbow shot | 
-		//[advancement] It Spreads | Kill a mob near a Sculk Catalyst | Kill one of these 70 mobs near a sculk catalyst:, Axolotl, Bee, Blaze, Camel, Cat, Cave Spider, Chicken, Chicken Jockey, Cod, Cow, Creeper, Donkey, Dolphin, Drowned, Elder Guardian, Enderman, Endermite, Evoker, Fox, Frog, Ghast, Goat, Glow Squid, Guardian, Hoglin, Horse, Husk, Llama, Magma Cube, Mooshroom, Ocelot, Panda, Parrot, Phantom, Pig, Piglin, Piglin Brute, Pillager, Polar Bear, Pufferfish, Rabbit, Ravager, Salmon, Sheep, Shulker, Silverfish, Skeleton, Skeleton Horse, Skeleton Horseman, Slime, Sniffer, Stray, Spider, Spider Jockey, Squid, Strider, Trader Llama, Tropical Fish, Turtle, Vex, Vindicator, Warden, Witch, Wither, Wither Skeleton, Wolf, Zoglin, Zombie, Zombie Villager, Zombified Piglin, Mobs that drop no experience are ignored for this advancement.
 		//[advancement] Monsters Hunted | Kill one of every hostile monster | Kill each of these 34 mobs:, Blaze, Cave Spider, Creeper, Drowned, Elder Guardian, Ender Dragon, Enderman, Endermite, Evoker, Ghast, Guardian, Hoglin, Husk, Magma Cube, Phantom, Piglin, Piglin Brute, Pillager, Ravager, Shulker, Silverfish, Skeleton, Slime, Spider, Stray, Vex, Vindicator, Witch, Wither, Wither Skeleton, Zoglin, Zombie, Zombie Villager, Zombified Piglin, Other mobs may be killed, but are ignored for this advancement. Only the riders of the chicken jockeys and skeleton horsemen are counted in this advancement.
 		//[advancement] Two Birds, One Arrow | Kill two Phantoms with a piercing Arrow | Use a crossbow enchanted with Piercing to kill two phantoms with a single arrow shot.
 		//[advancement] Who's the Pillager Now? | Give a Pillager a taste of their own medicine | Kill a pillager with a crossbow.
@@ -1395,94 +1408,99 @@ function redstoneInteractions(){
 }
 
 function spawnAndBreed(entity, player){
-		switch(entity){
-			case "iron_golem" :
-				if(!advancementTracker.checkAchievment("HiredHelp",player)){
-					achievementTracker.setAchievment("BodyGuard",player);//[achievement] Body Guard | Create an Iron Golem | —
-					advancementTracker.setAchievment("HiredHelp",player);//[advancement] Hired Help | Summon an Iron Golem to help defend a village | Summon an iron golem.
+	
+	switch(entity){
+		case "iron_golem" :
+			if(!advancementTracker.checkAchievment("HiredHelp",player)){
+				achievementTracker.setAchievment("BodyGuard",player);//[achievement] Body Guard | Create an Iron Golem | —
+				advancementTracker.setAchievment("HiredHelp",player);//[advancement] Hired Help | Summon an Iron Golem to help defend a village | Summon an iron golem.
+			}
+			break;
+		case "wither" :
+			if(!advancementTracker.checkAchievment("WitheringHeights",player)){
+				achievementTracker.setAchievment("TheBeginning",player);//[achievement] The Beginning? | Spawn the Wither | Be within a 100.9×100.9×103.5 cuboid centered on the Wither when it is spawned.
+				advancementTracker.setAchievment("WitheringHeights",player);//[advancement] Withering Heights | Summon the Wither | Be within a 100.9×100.9×103.5 cuboid centered on the wither when it is spawned.
+			}
+			break;
+		case "ender_dragon" :
+			if(world.getDynamicProperty("dragonKill") == 1){
+				if(world.getDynamicProperty("TheEndAgain") == 1){
+					achievementTracker.setAchievment("TheEndAgain",player);//[achievement] The End... Again... | Respawn the Enderdragon | —
+					advancementTracker.setAchievment("TheEndAgain",player);//[advancement] The End... Again... | Respawn the Ender Dragon | Be within a 192 block radius from the coordinates (0.0, 128, 0.0) when an ender dragon is summoned using end crystals.
 				}
-				break;
-			case "wither" :
-				if(!advancementTracker.checkAchievment("WitheringHeights",player)){
-					achievementTracker.setAchievment("TheBeginning",player);//[achievement] The Beginning? | Spawn the Wither | Be within a 100.9×100.9×103.5 cuboid centered on the Wither when it is spawned.
-					advancementTracker.setAchievment("WitheringHeights",player);//[advancement] Withering Heights | Summon the Wither | Be within a 100.9×100.9×103.5 cuboid centered on the wither when it is spawned.
+			}
+			break;
+		case "cow" :
+			if(!achievementTracker.checkAchievment("Repopulation",player)){
+				achievementTracker.setAchievment("Repopulation",player);//[achievement] Repopulation | Breed two cows with wheat. | Breed two cows or two mooshrooms.
+				if(!advancementTracker.checkAchievment("TheParrotsandtheBats",player)){
+					advancementTracker.setAchievment("TheParrotsandtheBats",player);
 				}
-				break;
-			case "ender_dragon" :
-				if(world.getDynamicProperty("dragonKill") == 1){
-					if(world.getDynamicProperty("TheEndAgain") == 1){
-						achievementTracker.setAchievment("TheEndAgain",player);//[achievement] The End... Again... | Respawn the Enderdragon | —
-						advancementTracker.setAchievment("TheEndAgain",player);//[advancement] The End... Again... | Respawn the Ender Dragon | Be within a 192 block radius from the coordinates (0.0, 128, 0.0) when an ender dragon is summoned using end crystals.
-					}
+			}
+		case "mule" :	
+			if(!achievementTracker.checkAchievment("ArtificialSelection",player)){
+				achievementTracker.setAchievment("ArtificialSelection",player);//[achievement] Artificial Selection | Breed a mule from a horse and a donkey. | —
+				if(!advancementTracker.checkAchievment("TheParrotsandtheBats",player)){
+					advancementTracker.setAchievment("TheParrotsandtheBats",player);
 				}
-				break;
-			case "cow" :
-				if(!achievementTracker.checkAchievment("Repopulation",player)){
-					achievementTracker.setAchievment("Repopulation",player);//[achievement] Repopulation | Breed two cows with wheat. | Breed two cows or two mooshrooms.
-					if(!advancementTracker.checkAchievment("TheParrotsandtheBats",player)){
-						advancementTracker.setAchievment("TheParrotsandtheBats",player);
-					}
-				}
-			case "mule" :	
-				if(!achievementTracker.checkAchievment("ArtificialSelection",player)){
-					achievementTracker.setAchievment("ArtificialSelection",player);//[achievement] Artificial Selection | Breed a mule from a horse and a donkey. | —
-					if(!advancementTracker.checkAchievment("TheParrotsandtheBats",player)){
-						advancementTracker.setAchievment("TheParrotsandtheBats",player);
-					}
-				}
-				break;
-			case "panda" :
-				if(!achievementTracker.checkAchievment("Zoologist",player)){
-					achievementTracker.setAchievment("Zoologist",player);//[achievement] Zoologist | Breed two pandas with bamboo. | —
-					if(!achievementTracker.checkAchievment("TheParrotsandtheBats",player)){
-						achievementTracker.setAchievment("TheParrotsandtheBats",player);
-					}
-				}
-				break;
-			case "axolotl" ://*fall through*
-			case "bee" ://*fall through*
-			case "camel" ://*fall through*
-			case "cat" ://*fall through*
-			case "chicken" ://*fall through*
-			case "donkey" ://*fall through*
-			case "fox" ://*fall through*
-			case "frog" ://*fall through*
-			case "goat" ://*fall through*
-			case "hoglin" ://*fall through*
-			case "horse" ://*fall through*
-			case "llama" ://*fall through*
-			case "mooshroom" ://*fall through*
-			case "ocelot" ://*fall through*
-			case "pig" ://*fall through*
-			case "rabbit" ://*fall through*
-			case "sheep" ://*fall through*
-			case "sniffer" ://*fall through*
-			case "strider" ://*fall through*
-			case "turtle" ://*fall through*
-			case "wolf" :
-				if(!achievementTracker.checkAchievment("TheParrotsandtheBats",player)){
-					achievementTracker.setAchievment("TheParrotsandtheBats",player);//[advancement] The Parrots and the Bats | Breed two animals together | Breed a pair of any of these 25 mobs:, Axolotl, Bee, Camel, Cat, Chicken, Cow, Donkey, Fox, Frog, Goat, Hoglin, Horse, Llama, Mooshroom, Mule, Ocelot, Panda, Pig, Rabbit, Sheep, Sniffer, Strider, Trader Llama, Turtle, Wolf, A mule must be the result of breeding a horse and a donkey for this advancement as they are not breedable together. Other breedable mobs are ignored for this advancement.
-				}
-			    //[advancement] Two by Two | Breed all the animals! | Breed a pair of each of these 24 mobs:, Axolotl, Bee, Camel, Cat, Chicken, Cow, Donkey, Fox, Frog, Goat, Hoglin, Horse, Llama, Mooshroom, Mule, Ocelot, Panda, Pig, Rabbit, Sheep, Sniffer, Strider, Turtle, Wolf, A trader llama does not count as a llama, and a mule must be the result of breeding a horse and a donkey for this advancement as they are not breedable together. Other breedable mobs can be bred, but are ignored for this advancement.
-				if(getScoreIfExists(world.scoreboard.getObjective("spawnAndBreedbreed_all_bool"), player) == 0){
-					if(getScoreIfExists(world.scoreboard.getObjective("spawnAndBreed" + entity), player) == 0){
-						addToScore("spawnAndBreedbreed_all_score", player);
-						//boolScore("spawnAndBreed", entity, player, 1);
-						if(getScoreIfExists(world.scoreboard.getObjective("spawnAndBreedbreed_all_score"), player) == 24){
-							//boolScore("spawnAndBreed", "breed_all_bool", player, 1);
-						}
-					}
-				}
-				break;
-			case "trader_llama" :
+			}
+			break;
+		case "panda" :
+			if(!achievementTracker.checkAchievment("Zoologist",player)){
+				achievementTracker.setAchievment("Zoologist",player);//[achievement] Zoologist | Breed two pandas with bamboo. | —
 				if(!achievementTracker.checkAchievment("TheParrotsandtheBats",player)){
 					achievementTracker.setAchievment("TheParrotsandtheBats",player);
 				}
-				break;
-		}
+			}
+			break;
+		case "axolotl" ://*fall through*
+		case "bee" ://*fall through*
+		case "camel" ://*fall through*
+		case "cat" ://*fall through*
+		case "chicken" ://*fall through*
+		case "donkey" ://*fall through*
+		case "fox" ://*fall through*
+		case "frog" ://*fall through*
+		case "goat" ://*fall through*
+		case "hoglin" ://*fall through*
+		case "horse" ://*fall through*
+		case "llama" ://*fall through*
+		case "mooshroom" ://*fall through*
+		case "ocelot" ://*fall through*
+		case "pig" ://*fall through*
+		case "rabbit" ://*fall through*
+		case "sheep" ://*fall through*
+		case "sniffer" ://*fall through*
+		case "strider" ://*fall through*
+		case "turtle" ://*fall through*
+		case "wolf" :
+			if(!achievementTracker.checkAchievment("TheParrotsandtheBats",player)){
+				achievementTracker.setAchievment("TheParrotsandtheBats",player);//[advancement] The Parrots and the Bats | Breed two animals together | Breed a pair of any of these 25 mobs:, Axolotl, Bee, Camel, Cat, Chicken, Cow, Donkey, Fox, Frog, Goat, Hoglin, Horse, Llama, Mooshroom, Mule, Ocelot, Panda, Pig, Rabbit, Sheep, Sniffer, Strider, Trader Llama, Turtle, Wolf, A mule must be the result of breeding a horse and a donkey for this advancement as they are not breedable together. Other breedable mobs are ignored for this advancement.
+			}
+			//[advancement] Two by Two | Breed all the animals! | Breed a pair of each of these 24 mobs:, Axolotl, Bee, Camel, Cat, Chicken, Cow, Donkey, Fox, Frog, Goat, Hoglin, Horse, Llama, Mooshroom, Mule, Ocelot, Panda, Pig, Rabbit, Sheep, Sniffer, Strider, Turtle, Wolf, A trader llama does not count as a llama, and a mule must be the result of breeding a horse and a donkey for this advancement as they are not breedable together. Other breedable mobs can be bred, but are ignored for this advancement.
+			if(getScoreIfExists(world.scoreboard.getObjective("spawnAndBreedbreed_all_bool"), player) == 0){
+				if(getScoreIfExists(world.scoreboard.getObjective("spawnAndBreed" + entity), player) == 0){
+					addToScore("spawnAndBreedbreed_all_score", player);
+					//boolScore("spawnAndBreed", entity, player, 1);
+					if(getScoreIfExists(world.scoreboard.getObjective("spawnAndBreedbreed_all_score"), player) == 24){
+						//boolScore("spawnAndBreed", "breed_all_bool", player, 1);
+					}
+				}
+			}
+			break;
+		case "trader_llama" :
+			if(!achievementTracker.checkAchievment("TheParrotsandtheBats",player)){
+				achievementTracker.setAchievment("TheParrotsandtheBats",player);
+			}
+			break;
+	}
 }
 function statusAndEffects(player){
 	//to-do--------------------
+		//[achievement] I've got a bad feeling about this | Kill a Pillager Captain. | —
+		//[advancement] Voluntary Exile | Kill a raid captain. Maybe consider staying away from villages for the time being… | Kill an entity in the #raiders entity tag wearing an ominous banner.
+		//[achievement] Moskstraumen | Activate a Conduit | Place a conduit in a valid prismarine/sea lantern structure to activate it.
+		//check conduit power
 		//[achievement] Great View From Up Here | Levitate up 50 blocks from the attacks of a Shulker | —
 		//[achievement] Stayin' Frosty | Swim in lava while having the Fire Resistance effect. | —
 		//[achievement] The Beaconator | Create and fully power a Beacon | Be within a 20×20×14 cuboid centered on the pyramid when the beacon block realizes it is fully powered.
@@ -1778,6 +1796,7 @@ function processBlockTags(tags){
 					tempTags.splice(index, 1)
 					index = tempTags.indexOf("log");
 					tempTags.splice(index, 1)
+					
 					return tempTags[0]+" Log"
 				}
 				if ("text_sign" in tags){
