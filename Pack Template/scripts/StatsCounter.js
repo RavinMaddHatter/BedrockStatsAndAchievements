@@ -369,8 +369,8 @@ function changedDimension(event){
 	switch(getDim){
 		case "nether":
 			addToScore("stats_enteredDimension_","Nether",player)
-			if(!advancementTracker.checkAchievment("TheEnd",player)){
-				achievementTracker.setAchievment("IntoTheNether",player)//[achievement] Into The Nether | Construct a Nether Portal. | Light a nether portal.
+			if(!advancementTracker.checkAchievment("WeNeedtoGoDeeper",player)){
+				achievementTracker.setAchievment("WeNeedtoGoDeeper",player)//[achievement] Into The Nether | Construct a Nether Portal. | Light a nether portal.
 				advancementTracker.setAchievment("IntoTheNether",player)//[advancement] Nether | Bring summer clothes | Enter the Nether dimension.
 
 			}
@@ -386,7 +386,9 @@ function changedDimension(event){
 		case "overworld":
 			addToScore("stats_enteredDimension_","Overworld",player)
 			if(advancementTracker.checkAchievment("TheEnd",player)){
-				achievementTracker.setAchievment("ExitTheEnd",player)//[achievement] The End | Kill the Enderdragon [sic] | Enter the end exit portal.
+				if(achievementTracker.checkAchievment("ExitTheEnd",player)){
+					achievementTracker.setAchievment("ExitTheEnd",player)//[achievement] The End | Kill the Enderdragon [sic] | Enter the end exit portal.
+				}
 			}
 			break;
 	}
@@ -683,7 +685,9 @@ function overworldBlocksTravelled(player){
 		}
 	//check if blocks travelled are more than 7000, then trigger achievement
 		if(blkDist > 7000){
-			advancementTracker.setAchievment("SubspaceBubble", player);//[advancement] Subspace Bubble | Use the Nether to travel 7 km in the Overworld | Use the Nether to travel between 2 points in the Overworld with a minimum horizontal euclidean distance of 7000 blocks between each other, which is 875 blocks in the Nether.
+			if(advancementTracker.checkAchievment("SubspaceBubble", player))
+				advancementTracker.setAchievment("SubspaceBubble", player);//[advancement] Subspace Bubble | Use the Nether to travel 7 km in the Overworld | Use the Nether to travel between 2 points in the Overworld with a minimum horizontal euclidean distance of 7000 blocks between each other, which is 875 blocks in the Nether.
+			}
 		}
 	//record the calculated blocks travelled, and set new checkpoints
 		player.setDynamicProperty("blockRun", blkDist);
@@ -1001,8 +1005,8 @@ function checkLooseItemachievements(player,inventorymask){
 		}
 		//[advancement] Bukkit Bukkit | Catch a Tadpole in a Bucket | —
 		if((tadpoleMask&inventorymask)==tadpoleMask){
-			if(!advancementTracker.checkAchievment("TheCutestPredator",player)){
-				advancementTracker.setAchievment("TheCutestPredator",player)
+			if(!advancementTracker.checkAchievment("BukkitBukkit",player)){
+				advancementTracker.setAchievment("BukkitBukkit",player)
 			}
 		}
 		//[achievement] I am a Marine Biologist | Collect a fish in a bucket | Use an empty bucket on any fish mob to collect it.
@@ -1057,7 +1061,6 @@ function checkLooseItemachievements(player,inventorymask){
 		//[achievement] You Need a Mint | Collect dragons breath in a glass bottle | Have a dragon's breath bottle in your inventory
 		if((dragonBreadthMask&inventorymask)==dragonBreadthMask){
 			if(!advancementTracker.checkAchievment("YouNeedaMint",player)){
-				console.warn("here?")
 				advancementTracker.setAchievment("YouNeedaMint",player)
 				achievementTracker.setAchievment("YouNeedaMint",player)
 			}
@@ -1203,8 +1206,8 @@ function checkArmorachievements(player,armorMask){
 	}
     //[advancement] Cover Me with Diamonds | Diamond armor saves lives | Have any type of diamond armor in your inventory.
 	if((allDiamondArmorMask & armorMask)>0){
-		if(!advancementTracker.checkAchievment("SuitUp",player)){
-			advancementTracker.setAchievment("SuitUp",player)
+		if(!advancementTracker.checkAchievment("CoverMewithDiamonds",player)){
+			advancementTracker.setAchievment("CoverMewithDiamonds",player)
 		}
 	}
 	
@@ -1362,15 +1365,17 @@ function spawnAndBreed(entity, player){
 				break;
 			case "ender_dragon" :
 				if(world.getDynamicProperty("dragonKill") == 1){
-					achievementTracker.setAchievment("TheEndAgain",player);//[achievement] The End... Again... | Respawn the Enderdragon | —
-					advancementTracker.setAchievment("TheEndAgain",player);//[advancement] The End... Again... | Respawn the Ender Dragon | Be within a 192 block radius from the coordinates (0.0, 128, 0.0) when an ender dragon is summoned using end crystals.
+					if(world.getDynamicProperty("TheEndAgain") == 1){
+						achievementTracker.setAchievment("TheEndAgain",player);//[achievement] The End... Again... | Respawn the Enderdragon | —
+						advancementTracker.setAchievment("TheEndAgain",player);//[advancement] The End... Again... | Respawn the Ender Dragon | Be within a 192 block radius from the coordinates (0.0, 128, 0.0) when an ender dragon is summoned using end crystals.
+					}
 				}
 				break;
 			case "cow" :
 				if(!achievementTracker.checkAchievment("Repopulation",player)){
 					advancementTracker.setAchievment("Repopulation",player);//[achievement] Repopulation | Breed two cows with wheat. | Breed two cows or two mooshrooms.
-					if(!achievementTracker.checkAchievment("TheParrotsandtheBats",player)){
-						achievementTracker.setAchievment("TheParrotsandtheBats",player);
+					if(!advancementTracker.checkAchievment("TheParrotsandtheBats",player)){
+						advancementTracker.setAchievment("TheParrotsandtheBats",player);
 					}
 				}
 			case "mule" :	
