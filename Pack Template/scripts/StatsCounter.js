@@ -685,7 +685,7 @@ function overworldBlocksTravelled(player){
 		}
 	//check if blocks travelled are more than 7000, then trigger achievement
 		if(blkDist > 7000){
-			if(advancementTracker.checkAchievment("SubspaceBubble", player))
+			if(advancementTracker.checkAchievment("SubspaceBubble", player)){
 				advancementTracker.setAchievment("SubspaceBubble", player);//[advancement] Subspace Bubble | Use the Nether to travel 7 km in the Overworld | Use the Nether to travel between 2 points in the Overworld with a minimum horizontal euclidean distance of 7000 blocks between each other, which is 875 blocks in the Nether.
 			}
 		}
@@ -705,7 +705,7 @@ function blockInteractions(item,Block){
 		//[achievement] Disenchanted | Use a Grindstone to get experience from an enchanted item. | —
 		//[achievement] Freight Station | Use a Hopper to move an item from a Chest Minecart to a Chest. | —
 		//[achievement] One Pickle, Two Pickle, Sea Pickle, Four | Place four Sea Pickles in a group | —
-		//[achievement] Organizational Wizard | Name a Shulker Box with an Anvil | —
+		
 		//[achievement] Me Gold! | Dig up a buried treasure | Open a buried treasure chest
 		//[achievement] Sneak 100 | Sneaking [sic] next to a Sculk Sensor without triggering it | Sneak next to a Sculk Sensor or Warden without triggering or aggravating it.
 		//[achievement] Sound the Alarm! | Ring the bell with a hostile enemy in the village. | —
@@ -786,7 +786,7 @@ function itemInventory(player){
 		//Maybe block interactions?
 		//[achievement] Chestful of Cobblestone | Mine 1,728 Cobblestone and place it in a chest. | A player must mine 1,728 cobblestone and place 1,728 cobblestone, or 27 stacks, in a chest. The cobblestone placed in the chest does not have to be the same cobblestone that was mined.
 		
-
+		
 		//needs new mask
 		//[advancement] With Our Powers Combined! | Have all Froglights in your inventory | Have a Pearlescent, Ochre, and Verdant Froglight in your inventory.
 		//[achievement] With our powers combined! | Have all 3 froglights in your inventory | Acquire at least one of each pearlescent, verdant, and ochre froglights in your inventory at the same time.		
@@ -820,6 +820,7 @@ function itemInventory(player){
 						"leather",			
 						"dispenser",		
 						"cooked_cod"]		
+	const woolTypes=[]
 	const toolsTypes = ["wooden_pickaxe",
 					"wooden_sword",
 					"wooden_shovel",
@@ -911,6 +912,13 @@ function itemInventory(player){
 				index = toolsTypes.indexOf(itemName)
 				toolMask = toolMask | (0b1<<index)
 				
+			}else if(itemName.includes("shulker_box")){
+				//[achievement] Organizational Wizard | Name a Shulker Box with an Anvil | —
+				if(itemStack.nameTag){
+					if(!achievementTracker.checkAchievment("OrganizationalWizard",player)){
+						achievementTracker.setAchievment("OrganizationalWizard",player)
+					}
+				}
 			}
 		}
 	}
@@ -1373,22 +1381,22 @@ function spawnAndBreed(entity, player){
 				break;
 			case "cow" :
 				if(!achievementTracker.checkAchievment("Repopulation",player)){
-					advancementTracker.setAchievment("Repopulation",player);//[achievement] Repopulation | Breed two cows with wheat. | Breed two cows or two mooshrooms.
+					achievementTracker.setAchievment("Repopulation",player);//[achievement] Repopulation | Breed two cows with wheat. | Breed two cows or two mooshrooms.
 					if(!advancementTracker.checkAchievment("TheParrotsandtheBats",player)){
 						advancementTracker.setAchievment("TheParrotsandtheBats",player);
 					}
 				}
 			case "mule" :	
 				if(!achievementTracker.checkAchievment("ArtificialSelection",player)){
-					advancementTracker.setAchievment("ArtificialSelection",player);//[achievement] Artificial Selection | Breed a mule from a horse and a donkey. | —
-					if(!achievementTracker.checkAchievment("TheParrotsandtheBats",player)){
-						achievementTracker.setAchievment("TheParrotsandtheBats",player);
+					achievementTracker.setAchievment("ArtificialSelection",player);//[achievement] Artificial Selection | Breed a mule from a horse and a donkey. | —
+					if(!advancementTracker.checkAchievment("TheParrotsandtheBats",player)){
+						advancementTracker.setAchievment("TheParrotsandtheBats",player);
 					}
 				}
 				break;
 			case "panda" :
 				if(!achievementTracker.checkAchievment("Zoologist",player)){
-					advancementTracker.setAchievment("Zoologist",player);//[achievement] Zoologist | Breed two pandas with bamboo. | —
+					achievementTracker.setAchievment("Zoologist",player);//[achievement] Zoologist | Breed two pandas with bamboo. | —
 					if(!achievementTracker.checkAchievment("TheParrotsandtheBats",player)){
 						achievementTracker.setAchievment("TheParrotsandtheBats",player);
 					}
@@ -1761,12 +1769,6 @@ function processBlockTags(tags){
 				return "Snow Layers"
 		}
 	}
-}
-function setAchievment(name){
-	//needs to be implemented
-}
-function setAdvancement(name){
-	//needs to be implemented
 }
 function initializeObjectives(player){
 
