@@ -773,6 +773,7 @@ function getSomeWhere(location, player){
 function itemInventory(player){
 	//to-do--------------------
 		//Required data values
+		//cant be done until after block renames happen our data values are given to itemStack class
 		//[advancement] Spooky Scary Skeleton | Obtain a Wither Skeleton's skull | Have a wither skeleton skull in your inventory.
 		//[achievement] Dry Spell | Dry a sponge in a furnace | —
 		//[advancement] Careful Restoration | Make a Decorated Pot out of 4 Pottery Sherds | —
@@ -782,15 +783,10 @@ function itemInventory(player){
 		//mabye should move
 		//maybe in the block breaking?
 		//[achievement] Getting Wood | Punch a tree until a block of wood pops out. | Pick up a log from the ground.
+		//i dont know how to do this one
 		//[achievement] Taking Inventory | Open your inventory. | —
 		//Maybe block interactions?
 		//[achievement] Chestful of Cobblestone | Mine 1,728 Cobblestone and place it in a chest. | A player must mine 1,728 cobblestone and place 1,728 cobblestone, or 27 stacks, in a chest. The cobblestone placed in the chest does not have to be the same cobblestone that was mined.
-		
-		
-		//needs new mask
-		//[advancement] With Our Powers Combined! | Have all Froglights in your inventory | Have a Pearlescent, Ochre, and Verdant Froglight in your inventory.
-		//[achievement] With our powers combined! | Have all 3 froglights in your inventory | Acquire at least one of each pearlescent, verdant, and ochre froglights in your inventory at the same time.		
-		//[achievement] Rainbow Collection | Gather all 16 colors of wool. | All the colors of wool do not have to be in the inventory at the same time, but must have been picked up by the player at least once.
 	//done--------------------
 	const loseItems = ["crafting_table",
 						"iron_ingot",		
@@ -820,7 +816,23 @@ function itemInventory(player){
 						"leather",			
 						"dispenser",		
 						"cooked_cod"]		
-	const woolTypes=[]
+	const woolTypes=["black_wool",
+					"blue_wool",
+					"brown_wool",
+					"cyan_wool",
+					"gray_wool",
+					"green_wool",
+					"light_blue_wool",
+					"light_gray_wool",
+					"lime_wool",
+					"magenta_wool",
+					"orange_wool",
+					"pink_wool",
+					"purple_wool",
+					"red_wool",
+					"white_wool",
+					"yellow_wool"]
+	const froglights=[]
 	const toolsTypes = ["wooden_pickaxe",
 					"wooden_sword",
 					"wooden_shovel",
@@ -865,7 +877,9 @@ function itemInventory(player){
 					"netherite_leggings",
 					"netherite_boots",
 					"elytra"];			
-					
+	const foglightType=["ochre_froglight",
+						"pearlescent_froglight",
+						"verdant_froglight"]
 	const sherdArray = ["angler_pottery_sherd",
 						"archer_pottery_sherd",
 						"arms_up_pottery_sherd",
@@ -892,6 +906,8 @@ function itemInventory(player){
 	let armorMask = 0;
 	let sherdMask = 0;
 	let toolMask = 0;
+	let woolMask = 0;
+	let froglight = 0;
 	for (let slot = 0; slot<36;slot++){
 		let itemStack = inventoryPlayer.container.getItem(slot);
 		if (itemStack){
@@ -911,6 +927,14 @@ function itemInventory(player){
 			}else if(toolsTypes.includes(itemName)){
 				index = toolsTypes.indexOf(itemName)
 				toolMask = toolMask | (0b1<<index)
+				
+			}else if(woolTypes.includes(itemName)){
+				index = woolTypes.indexOf(itemName)
+				woolMask = woolMask | (0b1<<index)
+				
+			}else if(foglightType.includes(itemName)){
+				index = foglightType.indexOf(itemName)
+				froglight = froglight | (0b1<<index)
 				
 			}else if(itemName.includes("shulker_box")){
 				//[achievement] Organizational Wizard | Name a Shulker Box with an Anvil | —
@@ -940,7 +964,20 @@ function itemInventory(player){
 			advancementTracker.setAchievment("RespectingtheRemnants",player)
 		}
 	}
-	
+	if(froglight=0b111){
+		//[advancement] With Our Powers Combined! | Have all Froglights in your inventory | Have a Pearlescent, Ochre, and Verdant Froglight in your inventory.
+		//[achievement] With our powers combined! | Have all 3 froglights in your inventory | Acquire at least one of each pearlescent, verdant, and ochre froglights in your inventory at the same time.		
+		if(!advancementTracker.checkAchievment("WithOurPowersCombined",player)){
+			advancementTracker.setAchievment("WithOurPowersCombined",player)
+			achievementTracker.setAchievment("Withourpowerscombined",player)
+		}
+	}
+	if(woolMask=0b1111111111111111){
+		//[achievement] Rainbow Collection | Gather all 16 colors of wool. | All the colors of wool do not have to be in the inventory at the same time, but must have been picked up by the player at least once.
+		if(!achievementTracker.checkAchievment("RainbowCollection",player)){
+			achievementTracker.setAchievment("RainbowCollection",player)
+		}
+	}
 }
 function checkLooseItemachievements(player,inventorymask){
 	const craftingTable =	 0b1
