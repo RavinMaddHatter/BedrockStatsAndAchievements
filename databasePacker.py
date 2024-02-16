@@ -18,7 +18,8 @@ def convertToJson(ws,playerJson=True):
         displayname=row[0].value
         description=row[1].value
         playerJsonRequired=row[8].value=="true"
-        implemented=row[7].value=="true"
+        print(row[7].value)
+        implemented=row[7].value
         if playerJson or not playerJsonRequired:
             dataStructure[name]={"displayName": displayname,
                                 "description": description,
@@ -31,4 +32,4 @@ def convertToJson(ws,playerJson=True):
 with open("Pack Template\\scripts\\textObjects.js","w+") as file:
     file.write("export const achievements = " + json.dumps(convertToJson(achievments),indent=2) + ";\n")
     file.write("export const advancements = " + json.dumps(convertToJson(advancements),indent=2) + ";\n")
-excelworkbook.save('lookupData\\en.xlsx')
+#excelworkbook.save('lookupData\\en.xlsx')

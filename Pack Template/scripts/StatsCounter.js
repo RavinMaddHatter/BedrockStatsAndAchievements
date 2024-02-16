@@ -420,6 +420,22 @@ function entityDied(event){
 		case "ender_dragon" :
 			world.setDynamicProperty("dragonKill", 1);
 			break;
+		//[achievement] The Beginning. | Kill the Wither | Be within a 100.9×100.9×203.5 cuboid centered on the Wither when it drops the nether star
+		case "wither":
+			const killer = event.damageSource.damagingEntity
+			const witherX=killer.location.x
+			const witherY=killer.location.y
+			const witherZ=killer.location.z
+			for(let player of world.getAllPlayers())
+				if (player.dimension.id == killer.dimension.id){
+					let inrange = Math.abs(player.location.x-witherX)<50.5
+					inrange = inrange && Math.abs(player.location.x-witherX)<50.5
+					inrange = inrange &&Math.abs(player.location.x-witherX)<101.75
+					if (inrange &&!achievementTracker.checkAchievment("TheBeginningKill",player)){
+						achievementTracker.setAchievment("TheBeginningKill",player)
+					}
+				}
+			break;
 	}
 }
 function hitByProjectile(event){
@@ -460,7 +476,6 @@ function itemComplete(event){
 	//done--------------------
 	let player = event.source;
 	let itemName = event.itemStack.typeId.replace("minecraft:","");
-	console.warn(itemName)
 	switch(itemName){
 		case "crossbow" :
 			player.setDynamicProperty("chargeCross", 1);
@@ -612,6 +627,14 @@ function spawnedEntity(event){
 					achievementTracker.setAchievment("ZombieDoctor", closePlayers[i]);//[advancement] A Terrible Fortress | Break your way into a Nether Fortress | Enter a nether fortress.
 				}
 			}
+			break;
+		case "witch":
+			if(event.cause=="Transformed"){
+				if(!advancementTracker.checkAchievment("VeryVeryFrightening", closePlayers[i])){
+					advancementTracker.setAchievment("VeryVeryFrightening", closePlayers[i]);//[advancement] A Terrible Fortress | Break your way into a Nether Fortress | Enter a nether fortress.
+				}
+			}
+			break
 		
 	}
 	//check for bred mobs
@@ -1349,13 +1372,13 @@ function entityInteractions(){
 	//done--------------------
 }
 function entityKills(victim,player,cause){
+	
 	//to-do--------------------
 		//needs component checks
 		//Needs a more detailed projectile check
 		//[achievement] Return to Sender | Destroy a Ghast with a fireball. | Kill a ghast using a ghast fireball.
 		//[advancement] Return to Sender | Destroy a Ghast with a fireball | Kill a ghast by deflecting a ghast fireball back into it via hitting or shooting a projectile at the fireball.
 		//needs more weapon data
-		//[achievement] The Beginning. | Kill the Wither | Be within a 100.9×100.9×203.5 cuboid centered on the Wither when it drops the nether star.
 		//[achievement] Camouflage | Kill a mob while wearing the same type of mob head. | —
 		//[achievement] It spreads | Kill a mob next to a catalyst | —
 		//[advancement] It Spreads | Kill a mob near a Sculk Catalyst | Kill one of these 70 mobs near a sculk catalyst:, Axolotl, Bee, Blaze, Camel, Cat, Cave Spider, Chicken, Chicken Jockey, Cod, Cow, Creeper, Donkey, Dolphin, Drowned, Elder Guardian, Enderman, Endermite, Evoker, Fox, Frog, Ghast, Goat, Glow Squid, Guardian, Hoglin, Horse, Husk, Llama, Magma Cube, Mooshroom, Ocelot, Panda, Parrot, Phantom, Pig, Piglin, Piglin Brute, Pillager, Polar Bear, Pufferfish, Rabbit, Ravager, Salmon, Sheep, Shulker, Silverfish, Skeleton, Skeleton Horse, Skeleton Horseman, Slime, Sniffer, Stray, Spider, Spider Jockey, Squid, Strider, Trader Llama, Tropical Fish, Turtle, Vex, Vindicator, Warden, Witch, Wither, Wither Skeleton, Wolf, Zoglin, Zombie, Zombie Villager, Zombified Piglin, Mobs that drop no experience are ignored for this advancement.
@@ -1366,7 +1389,40 @@ function entityKills(victim,player,cause){
 		//[advancement] Who's the Pillager Now? | Give a Pillager a taste of their own medicine | Kill a pillager with a crossbow.
 	//done--------------------
 	const victimType = victim.typeId.replace("minecraft:","")
-	console.warn(victimType)
+	const monsterList = ["blaze",
+						"cave_spider",
+						"creeper", 
+						"drowned",
+						"elder_guardian",
+						"ender_dragon",
+						"enderman",
+						"endermite",
+						"evocation_illager", 
+						"ghast", 
+						"guardian", 
+						"hoglin", 
+						"husk", 
+						"magma_cube", 
+						"phantom", 
+						"piglin", 
+						"piglin_brute", 
+						"pillager", 
+						"ravager", 
+						"shulker", 
+						"silverfish", 
+						"skeleton", 
+						"slime", 
+						"spider", 
+						"stray", 
+						"vex", 
+						"vindicator", 
+						"witch", 
+						"wither", 
+						"wither_skeleton", 
+						"zoglin", 
+						"zombie", 
+						"zombie_villager_v2", 
+						"zombified_piglin"]
 	switch(victimType){
 		//[achievement] Archer | Kill a creeper with arrows. | —
 		case "creeper":
@@ -1419,8 +1475,14 @@ function entityKills(victim,player,cause){
 	if(!advancementTracker.checkAchievment("Adventure",player)){
 		advancementTracker.setAchievment("Adventure",player)
 	}
-	//[achievement] Monster Hunter | Attack and destroy a monster. | Kill a hostile mob or one of the following neutral mobs: an enderman, a piglin, a zombified piglin, a spider, or a cave spider.
-	//[advancement] Monster Hunter | Kill any hostile monster | Kill one of these 34 mobs:, Blaze, Cave Spider, Creeper, Drowned, Elder Guardian, Ender Dragon, Enderman, Endermite, Evoker, Ghast, Guardian, Hoglin, Husk, Magma Cube, Phantom, Piglin, Piglin Brute, Pillager, Ravager, Shulker, Silverfish, Skeleton, Slime, Spider, Stray, Vex, Vindicator, Witch, Wither, Wither Skeleton, Zoglin, Zombie, Zombie Villager, Zombified Piglin, Only the riders of the chicken jockeys and skeleton horsemen are counted in this advancement. Other mobs may be killed, but are ignored for this advancement.
+	if(monsterList.includes(victimType)){
+		//[achievement] Monster Hunter | Attack and destroy a monster. | Kill a hostile mob or one of the following neutral mobs: an enderman, a piglin, a zombified piglin, a spider, or a cave spider.
+		//[advancement] Monster Hunter | Kill any hostile monster | Kill one of these 34 mobs:, Blaze, Cave Spider, Creeper, Drowned, Elder Guardian, Ender Dragon, Enderman, Endermite, Evoker, Ghast, Guardian, Hoglin, Husk, Magma Cube, Phantom, Piglin, Piglin Brute, Pillager, Ravager, Shulker, Silverfish, Skeleton, Slime, Spider, Stray, Vex, Vindicator, Witch, Wither, Wither Skeleton, Zoglin, Zombie, Zombie Villager, Zombified Piglin, Only the riders of the chicken jockeys and skeleton horsemen are counted in this advancement. Other mobs may be killed, but are ignored for this advancement.
+		if(!advancementTracker.checkAchievment("MonsterHunter",player)){
+			advancementTracker.setAchievment("MonsterHunter",player)
+			achievementTracker.setAchievment("MonsterHunter",player)
+		}
+	}
 		
 }
 function redstoneInteractions(){
@@ -1520,19 +1582,16 @@ function spawnAndBreed(entity, player){
 }
 function statusAndEffects(player){
 	//to-do--------------------
-		//[achievement] I've got a bad feeling about this | Kill a Pillager Captain. | —
-		//[advancement] Voluntary Exile | Kill a raid captain. Maybe consider staying away from villages for the time being… | Kill an entity in the #raiders entity tag wearing an ominous banner.
-		//[achievement] Moskstraumen | Activate a Conduit | Place a conduit in a valid prismarine/sea lantern structure to activate it.
 		//check conduit power
 		//[achievement] Great View From Up Here | Levitate up 50 blocks from the attacks of a Shulker | —
+		//[advancement] Great View From Up Here | Levitate up 50 blocks from the attacks of a Shulker | Move a distance of 50 blocks vertically with the Levitation effect applied, regardless of direction or whether it is caused by the effect.
 		//[achievement] Stayin' Frosty | Swim in lava while having the Fire Resistance effect. | —
 		//[achievement] The Beaconator | Create and fully power a Beacon | Be within a 20×20×14 cuboid centered on the pyramid when the beacon block realizes it is fully powered.
-		//[achievement] The Healing Power of Friendship! | Team up with an axolotl and win a fight | Team up with an axolotl by killing the hostile aquatic mob [verify] while the axolotl is fighting it (not playing dead).
-		//[achievement] We're being attacked! | Trigger a Pillager Raid. | Walk in a village with the Bad Omen effect applied.
 		//[advancement] Beaconator | Bring a Beacon to full power | Be within a 20×20×14 cuboid centered on a beacon block when it realizes it is being powered by a size 4 pyramid.
-		//[advancement] Bring Home the Beacon | Construct and place a Beacon | Be within a 20×20×14 cuboid centered on a beacon block when it realizes it has become powered.
-		//[advancement] Great View From Up Here | Levitate up 50 blocks from the attacks of a Shulker | Move a distance of 50 blocks vertically with the Levitation effect applied, regardless of direction or whether it is caused by the effect.
+		//[achievement] The Healing Power of Friendship! | Team up with an axolotl and win a fight | Team up with an axolotl by killing the hostile aquatic mob [verify] while the axolotl is fighting it (not playing dead).
 		//[advancement] The Healing Power of Friendship! | Team up with an axolotl and win a fight | Have the Regeneration effect applied from assisting an axolotl or it killing a mob.
+		//[achievement] We're being attacked! | Trigger a Pillager Raid. | Walk in a village with the Bad Omen effect applied.
+		//[advancement] Bring Home the Beacon | Construct and place a Beacon | Be within a 20×20×14 cuboid centered on a beacon block when it realizes it has become powered.
 	//done--------------------
 	const effectArray = ["fire_resistance",//potion
 						"invisibility",//potion
@@ -1567,13 +1626,26 @@ function statusAndEffects(player){
 	let index = 0;
 	
 	//create a mask for effects
-	if(getScoreIfExists(world.scoreboard.getObjective("statusAndEffectspotion_effects_bool"), player) == 0){
-		for(var i = 0; i < effectPlayer.length; i++){
-			let effect = effectPlayer[i].typeId
-			if(effectArray.includes(effect)){
-				index = effectArray.indexOf(effect)
-				effectMask = effectMask | (1<<index)
-			}
+	for(var i = 0; i < effectPlayer.length; i++){
+		let effect = effectPlayer[i].typeId
+		if(effectArray.includes(effect)){
+			index = effectArray.indexOf(effect)
+			effectMask = effectMask | (1<<index)
+		}
+		switch(effect){
+			//[achievement] I've got a bad feeling about this | Kill a Pillager Captain. | —
+			//[advancement] Voluntary Exile | Kill a raid captain. Maybe consider staying away from villages for the time being… | Kill an entity in the #raiders entity tag wearing an ominous banner.
+			case "bad_omen":
+				if(!advancementTracker.checkAchievment("VoluntaryExile",player)){
+					advancementTracker.setAchievment("VoluntaryExile",player)
+					achievementTracker.setAchievment("Ivegotabadfeelingaboutthis",player)
+				}
+				break;
+			case "conduit_power":
+				//[achievement] Moskstraumen | Activate a Conduit | Place a conduit in a valid prismarine/sea lantern structure to activate it.
+				if(!achievementTracker.checkAchievment("Moskstraumen",player)){
+					achievementTracker.setAchievment("Moskstraumen",player)
+				}
 		}
 	}
     //[advancement] A Furious Cocktail | Have every potion effect applied at the same time | Have all of these 13 status effects applied to the player at the same time:, Fire Resistance, Invisibility, Jump Boost, Night Vision, Poison, Regeneration, Resistance, Slow Falling, Slowness, Speed, Strength, Water Breathing, Weakness, The source of the effects is irrelevant for the purposes of this advancement. Other status effects may be applied to the player, but are ignored for this advancement.

@@ -104,7 +104,7 @@ export const achievements = {
     "globalIndex": 12,
     "category": "Adventure",
     "container": "Adventure1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 0
   },
   "TimetoStrike": {
@@ -140,7 +140,7 @@ export const achievements = {
     "globalIndex": 16,
     "category": "Adventure",
     "container": "Adventure1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 2
   },
   "SniperDuel": {
@@ -149,7 +149,7 @@ export const achievements = {
     "globalIndex": 17,
     "category": "Adventure",
     "container": "Adventure1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 3
   },
   "DIAMONDS": {
@@ -176,7 +176,7 @@ export const achievements = {
     "globalIndex": 20,
     "category": "Nether",
     "container": "Nether1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 1
   },
   "IntoFire": {
@@ -194,10 +194,19 @@ export const achievements = {
     "globalIndex": 22,
     "category": "Nether",
     "container": "Nether1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 3
   },
   "TheEnd": {
+    "displayName": "The End?",
+    "description": "Enter an End Portal",
+    "globalIndex": 23,
+    "category": "The_End",
+    "container": "The_End1",
+    "implemented": true,
+    "containerIndex": 0
+  },
+  "ExitTheEnd": {
     "displayName": "The End",
     "description": "Kill the Enderdragon [sic]",
     "globalIndex": 24,
@@ -221,7 +230,7 @@ export const achievements = {
     "globalIndex": 26,
     "category": "Adventure",
     "container": "Adventure1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 4
   },
   "Librarian": {
@@ -239,10 +248,19 @@ export const achievements = {
     "globalIndex": 28,
     "category": "Adventure",
     "container": "Adventure1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 6
   },
   "TheBeginning": {
+    "displayName": "The Beginning?",
+    "description": "Spawn the Wither",
+    "globalIndex": 29,
+    "category": "Nether",
+    "container": "Nether1",
+    "implemented": true,
+    "containerIndex": 4
+  },
+  "TheBeginningKill": {
     "displayName": "The Beginning.",
     "description": "Kill the Wither",
     "globalIndex": 30,
@@ -257,7 +275,7 @@ export const achievements = {
     "globalIndex": 31,
     "category": "Nether",
     "container": "Nether1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 6
   },
   "Repopulation": {
@@ -275,7 +293,7 @@ export const achievements = {
     "globalIndex": 33,
     "category": "Story",
     "container": "Story1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 10
   },
   "Overpowered": {
@@ -302,7 +320,7 @@ export const achievements = {
     "globalIndex": 36,
     "category": "Story",
     "container": "Story1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 13
   },
   "LeaderofthePack": {
@@ -311,7 +329,7 @@ export const achievements = {
     "globalIndex": 37,
     "category": "Husbandry",
     "container": "Husbandry1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 5
   },
   "PorkChop": {
@@ -338,7 +356,7 @@ export const achievements = {
     "globalIndex": 40,
     "category": "Story",
     "container": "Story1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 14
   },
   "PotPlanter": {
@@ -347,7 +365,7 @@ export const achievements = {
     "globalIndex": 41,
     "category": "Story",
     "container": "Story1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 15
   },
   "ItsaSign": {
@@ -365,7 +383,7 @@ export const achievements = {
     "globalIndex": 43,
     "category": "Adventure",
     "container": "Adventure1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 8
   },
   "HaveaShearfulDay": {
@@ -374,7 +392,7 @@ export const achievements = {
     "globalIndex": 44,
     "category": "Husbandry",
     "container": "Husbandry1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 8
   },
   "RainbowCollection": {
@@ -392,7 +410,7 @@ export const achievements = {
     "globalIndex": 46,
     "category": "Adventure",
     "container": "Adventure1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 9
   },
   "ChestfulofCobblestone": {
@@ -401,7 +419,7 @@ export const achievements = {
     "globalIndex": 47,
     "category": "Story",
     "container": "Story1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 17
   },
   "RenewableEnergy": {
@@ -410,7 +428,7 @@ export const achievements = {
     "globalIndex": 48,
     "category": "Story",
     "container": "Story1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 18
   },
   "BodyGuard": {
@@ -446,7 +464,7 @@ export const achievements = {
     "globalIndex": 52,
     "category": "Husbandry",
     "container": "Husbandry1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 12
   },
   "Archer": {
@@ -464,7 +482,7 @@ export const achievements = {
     "globalIndex": 54,
     "category": "Story",
     "container": "Story1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 20
   },
   "Trampoline": {
@@ -473,7 +491,7 @@ export const achievements = {
     "globalIndex": 55,
     "category": "Adventure",
     "container": "Adventure1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 11
   },
   "Camouflage": {
@@ -482,7 +500,7 @@ export const achievements = {
     "globalIndex": 56,
     "category": "Adventure",
     "container": "Adventure1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 12
   },
   "MapRoom": {
@@ -491,7 +509,7 @@ export const achievements = {
     "globalIndex": 57,
     "category": "Story",
     "container": "Story1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 21
   },
   "FreightStation": {
@@ -500,7 +518,7 @@ export const achievements = {
     "globalIndex": 58,
     "category": "Story",
     "container": "Story1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 22
   },
   "SmeltEverything": {
@@ -509,7 +527,7 @@ export const achievements = {
     "globalIndex": 59,
     "category": "Story",
     "container": "Story1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 23
   },
   "TasteofYourOwnMedicine": {
@@ -518,7 +536,7 @@ export const achievements = {
     "globalIndex": 60,
     "category": "Adventure",
     "container": "Adventure1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 13
   },
   "Inception": {
@@ -527,7 +545,7 @@ export const achievements = {
     "globalIndex": 61,
     "category": "Story",
     "container": "Story1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 24
   },
   "SaddleUp": {
@@ -536,7 +554,7 @@ export const achievements = {
     "globalIndex": 62,
     "category": "Husbandry",
     "container": "Husbandry1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 13
   },
   "ArtificialSelection": {
@@ -554,7 +572,7 @@ export const achievements = {
     "globalIndex": 64,
     "category": "Adventure",
     "container": "Adventure1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 14
   },
   "RabbitSeason": {
@@ -581,7 +599,7 @@ export const achievements = {
     "globalIndex": 67,
     "category": "Story",
     "container": "Story1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 25
   },
   "SuperFuel": {
@@ -590,7 +608,7 @@ export const achievements = {
     "globalIndex": 68,
     "category": "Story",
     "container": "Story1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 26
   },
   "YouNeedaMint": {
@@ -608,7 +626,7 @@ export const achievements = {
     "globalIndex": 70,
     "category": "Nether",
     "container": "Nether1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 7
   },
   "TheEndAgain": {
@@ -626,7 +644,7 @@ export const achievements = {
     "globalIndex": 72,
     "category": "The_End",
     "container": "The_End1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 4
   },
   "SuperSonic": {
@@ -635,7 +653,7 @@ export const achievements = {
     "globalIndex": 73,
     "category": "The_End",
     "container": "The_End1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 5
   },
   "TreasureHunter": {
@@ -644,7 +662,7 @@ export const achievements = {
     "globalIndex": 74,
     "category": "Adventure",
     "container": "Adventure1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 16
   },
   "OrganizationalWizard": {
@@ -662,7 +680,7 @@ export const achievements = {
     "globalIndex": 76,
     "category": "Adventure",
     "container": "Adventure1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 17
   },
   "FeelingIll": {
@@ -680,7 +698,7 @@ export const achievements = {
     "globalIndex": 78,
     "category": "Adventure",
     "container": "Adventure1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 19
   },
   "SoIGotThatGoingforMe": {
@@ -689,7 +707,7 @@ export const achievements = {
     "globalIndex": 79,
     "category": "Husbandry",
     "container": "Husbandry1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 16
   },
   "Atlantis": {
@@ -698,7 +716,7 @@ export const achievements = {
     "globalIndex": 80,
     "category": "Adventure",
     "container": "Adventure1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 20
   },
   "Sailthe7Seas": {
@@ -707,7 +725,7 @@ export const achievements = {
     "globalIndex": 81,
     "category": "Adventure",
     "container": "Adventure1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 21
   },
   "Castaway": {
@@ -716,7 +734,7 @@ export const achievements = {
     "globalIndex": 82,
     "category": "Adventure",
     "container": "Adventure1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 22
   },
   "Ahoy": {
@@ -725,7 +743,7 @@ export const achievements = {
     "globalIndex": 83,
     "category": "Adventure",
     "container": "Adventure1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 23
   },
   "IamaMarineBiologist": {
@@ -743,7 +761,7 @@ export const achievements = {
     "globalIndex": 85,
     "category": "Adventure",
     "container": "Adventure1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 24
   },
   "SleepwiththeFishes": {
@@ -752,7 +770,7 @@ export const achievements = {
     "globalIndex": 86,
     "category": "Adventure",
     "container": "Adventure1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 25
   },
   "AlternativeFuel": {
@@ -761,7 +779,7 @@ export const achievements = {
     "globalIndex": 87,
     "category": "Story",
     "container": "Story1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 27
   },
   "DoaBarrelRoll": {
@@ -770,7 +788,7 @@ export const achievements = {
     "globalIndex": 88,
     "category": "Adventure",
     "container": "Adventure1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 26
   },
   "OnePickle,TwoPickle,SeaPickle,Four": {
@@ -779,7 +797,7 @@ export const achievements = {
     "globalIndex": 89,
     "category": "Story",
     "container": "Story1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 28
   },
   "Echolocation": {
@@ -788,7 +806,7 @@ export const achievements = {
     "globalIndex": 90,
     "category": "Adventure",
     "container": "Adventure1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 27
   },
   "Moskstraumen": {
@@ -806,7 +824,7 @@ export const achievements = {
     "globalIndex": 92,
     "category": "Story",
     "container": "Story1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 30
   },
   "WhereHaveYouBeen": {
@@ -815,7 +833,7 @@ export const achievements = {
     "globalIndex": 93,
     "category": "Husbandry",
     "container": "Husbandry1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 18
   },
   "Zoologist": {
@@ -833,7 +851,7 @@ export const achievements = {
     "globalIndex": 95,
     "category": "Story",
     "container": "Story1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 31
   },
   "PlethoraofCats": {
@@ -842,7 +860,7 @@ export const achievements = {
     "globalIndex": 96,
     "category": "Husbandry",
     "container": "Husbandry1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 20
   },
   "KilltheBeast": {
@@ -860,7 +878,7 @@ export const achievements = {
     "globalIndex": 98,
     "category": "Story",
     "container": "Story2",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 0
   },
   "Disenchanted": {
@@ -869,7 +887,7 @@ export const achievements = {
     "globalIndex": 99,
     "category": "Story",
     "container": "Story2",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 1
   },
   "Werebeingattacked": {
@@ -878,7 +896,7 @@ export const achievements = {
     "globalIndex": 100,
     "category": "Adventure",
     "container": "Adventure1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 29
   },
   "SoundtheAlarm": {
@@ -887,7 +905,7 @@ export const achievements = {
     "globalIndex": 101,
     "category": "Story",
     "container": "Story2",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 2
   },
   "Ivegotabadfeelingaboutthis": {
@@ -905,7 +923,7 @@ export const achievements = {
     "globalIndex": 103,
     "category": "Story",
     "container": "Story2",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 3
   },
   "TimeforStew": {
@@ -914,7 +932,7 @@ export const achievements = {
     "globalIndex": 104,
     "category": "Story",
     "container": "Story2",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 4
   },
   "Beeourguest": {
@@ -923,7 +941,7 @@ export const achievements = {
     "globalIndex": 105,
     "category": "Husbandry",
     "container": "Husbandry1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 21
   },
   "TotalBeelocation": {
@@ -932,7 +950,7 @@ export const achievements = {
     "globalIndex": 106,
     "category": "Husbandry",
     "container": "Husbandry1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 22
   },
   "StickySituation": {
@@ -941,7 +959,7 @@ export const achievements = {
     "globalIndex": 107,
     "category": "Story",
     "container": "Story2",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 5
   },
   "Bullseye": {
@@ -968,7 +986,7 @@ export const achievements = {
     "globalIndex": 110,
     "category": "Nether",
     "container": "Nether1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 9
   },
   "Hottouristdestination": {
@@ -977,7 +995,7 @@ export const achievements = {
     "globalIndex": 111,
     "category": "Nether",
     "container": "Nether1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 10
   },
   "WhateverFloatsYourGoat": {
@@ -986,7 +1004,7 @@ export const achievements = {
     "globalIndex": 112,
     "category": "Adventure",
     "container": "Adventure1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 31
   },
   "Waxon,Waxoff": {
@@ -995,7 +1013,7 @@ export const achievements = {
     "globalIndex": 113,
     "category": "Story",
     "container": "Story2",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 7
   },
   "TheHealingPowerofFriendship": {
@@ -1004,7 +1022,7 @@ export const achievements = {
     "globalIndex": 114,
     "category": "Husbandry",
     "container": "Husbandry1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 23
   },
   "Caves&Cliffs": {
@@ -1013,7 +1031,7 @@ export const achievements = {
     "globalIndex": 115,
     "category": "Story",
     "container": "Story2",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 8
   },
   "Startrader": {
@@ -1022,7 +1040,7 @@ export const achievements = {
     "globalIndex": 116,
     "category": "Story",
     "container": "Story2",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 9
   },
   "SoundofMusic": {
@@ -1031,7 +1049,7 @@ export const achievements = {
     "globalIndex": 117,
     "category": "Story",
     "container": "Story2",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 10
   },
   "FeelsLikeHome": {
@@ -1040,7 +1058,7 @@ export const achievements = {
     "globalIndex": 118,
     "category": "Nether",
     "container": "Nether1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 11
   },
   "Itspreads": {
@@ -1049,7 +1067,7 @@ export const achievements = {
     "globalIndex": 119,
     "category": "Story",
     "container": "Story2",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 11
   },
   "Birthdaysong": {
@@ -1058,7 +1076,7 @@ export const achievements = {
     "globalIndex": 120,
     "category": "Husbandry",
     "container": "Husbandry1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 24
   },
   "Withourpowerscombined": {
@@ -1076,7 +1094,7 @@ export const achievements = {
     "globalIndex": 122,
     "category": "Story",
     "container": "Story2",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 12
   },
   "Plantingthepast": {
@@ -1094,7 +1112,7 @@ export const achievements = {
     "globalIndex": 124,
     "category": "Story",
     "container": "Story2",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 14
   },
   "Smithingwithstyle": {
@@ -1103,7 +1121,7 @@ export const achievements = {
     "globalIndex": 125,
     "category": "Story",
     "container": "Story2",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 15
   }
 };
@@ -1177,7 +1195,7 @@ export const advancements = {
     "globalIndex": 8,
     "category": "Story",
     "container": "advstory1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 7
   },
   "IceBucketChallenge": {
@@ -1222,7 +1240,7 @@ export const advancements = {
     "globalIndex": 13,
     "category": "Story",
     "container": "advstory1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 12
   },
   "ZombieDoctor": {
@@ -1240,7 +1258,7 @@ export const advancements = {
     "globalIndex": 15,
     "category": "Story",
     "container": "advstory1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 14
   },
   "TheEnd": {
@@ -1267,7 +1285,7 @@ export const advancements = {
     "globalIndex": 18,
     "category": "Nether",
     "container": "advNether1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 1
   },
   "ThoseWeretheDays": {
@@ -1321,7 +1339,7 @@ export const advancements = {
     "globalIndex": 24,
     "category": "Nether",
     "container": "advNether1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 7
   },
   "ThisBoatHasLegs": {
@@ -1330,7 +1348,7 @@ export const advancements = {
     "globalIndex": 25,
     "category": "Nether",
     "container": "advNether1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 8
   },
   "UneasyAlliance": {
@@ -1348,7 +1366,7 @@ export const advancements = {
     "globalIndex": 27,
     "category": "Nether",
     "container": "advNether1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 10
   },
   "CountryLode,TakeMeHome": {
@@ -1357,7 +1375,7 @@ export const advancements = {
     "globalIndex": 28,
     "category": "Nether",
     "container": "advNether1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 11
   },
   "CoverMeinDebris": {
@@ -1375,7 +1393,7 @@ export const advancements = {
     "globalIndex": 30,
     "category": "Nether",
     "container": "advNether1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 13
   },
   "IntoFire": {
@@ -1393,7 +1411,7 @@ export const advancements = {
     "globalIndex": 32,
     "category": "Nether",
     "container": "advNether1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 15
   },
   "FeelsLikeHome": {
@@ -1402,7 +1420,7 @@ export const advancements = {
     "globalIndex": 33,
     "category": "Nether",
     "container": "advNether1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 16
   },
   "HotTouristDestinations": {
@@ -1411,7 +1429,7 @@ export const advancements = {
     "globalIndex": 34,
     "category": "Nether",
     "container": "advNether1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 17
   },
   "WitheringHeights": {
@@ -1429,7 +1447,7 @@ export const advancements = {
     "globalIndex": 36,
     "category": "Nether",
     "container": "advNether1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 19
   },
   "BringHometheBeacon": {
@@ -1438,7 +1456,7 @@ export const advancements = {
     "globalIndex": 37,
     "category": "Nether",
     "container": "advNether1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 20
   },
   "AFuriousCocktail": {
@@ -1456,7 +1474,7 @@ export const advancements = {
     "globalIndex": 39,
     "category": "Nether",
     "container": "advNether1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 22
   },
   "HowDidWeGetHere": {
@@ -1492,7 +1510,7 @@ export const advancements = {
     "globalIndex": 44,
     "category": "The_End",
     "container": "advThe_End1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 3
   },
   "TheEndAgain": {
@@ -1519,7 +1537,7 @@ export const advancements = {
     "globalIndex": 47,
     "category": "The_End",
     "container": "advThe_End1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 6
   },
   "SkystheLimit": {
@@ -1537,7 +1555,7 @@ export const advancements = {
     "globalIndex": 49,
     "category": "The_End",
     "container": "advThe_End1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 8
   },
   "Adventure": {
@@ -1564,7 +1582,7 @@ export const advancements = {
     "globalIndex": 52,
     "category": "Adventure",
     "container": "advAdventure1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 2
   },
   "MonsterHunter": {
@@ -1582,7 +1600,7 @@ export const advancements = {
     "globalIndex": 54,
     "category": "Adventure",
     "container": "advAdventure1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 4
   },
   "WhataDeal": {
@@ -1591,7 +1609,7 @@ export const advancements = {
     "globalIndex": 55,
     "category": "Adventure",
     "container": "advAdventure1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 5
   },
   "CraftingaNewLook": {
@@ -1600,7 +1618,7 @@ export const advancements = {
     "globalIndex": 56,
     "category": "Adventure",
     "container": "advAdventure1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 6
   },
   "StickySituation": {
@@ -1609,7 +1627,7 @@ export const advancements = {
     "globalIndex": 57,
     "category": "Adventure",
     "container": "advAdventure1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 7
   },
   "OlBetsy": {
@@ -1627,7 +1645,7 @@ export const advancements = {
     "globalIndex": 59,
     "category": "Adventure",
     "container": "advAdventure1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 9
   },
   "Caves&Cliffs": {
@@ -1636,7 +1654,7 @@ export const advancements = {
     "globalIndex": 60,
     "category": "Adventure",
     "container": "advAdventure1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 10
   },
   "RespectingtheRemnants": {
@@ -1654,7 +1672,7 @@ export const advancements = {
     "globalIndex": 62,
     "category": "Adventure",
     "container": "advAdventure1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 12
   },
   "SweetDreams": {
@@ -1663,7 +1681,7 @@ export const advancements = {
     "globalIndex": 63,
     "category": "Adventure",
     "container": "advAdventure1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 13
   },
   "HerooftheVillage": {
@@ -1681,7 +1699,7 @@ export const advancements = {
     "globalIndex": 65,
     "category": "Adventure",
     "container": "advAdventure1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 15
   },
   "AThrowawayJoke": {
@@ -1699,7 +1717,7 @@ export const advancements = {
     "globalIndex": 67,
     "category": "Adventure",
     "container": "advAdventure1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 17
   },
   "TakeAim": {
@@ -1717,7 +1735,7 @@ export const advancements = {
     "globalIndex": 69,
     "category": "Adventure",
     "container": "advAdventure1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 19
   },
   "Postmortal": {
@@ -1726,7 +1744,7 @@ export const advancements = {
     "globalIndex": 70,
     "category": "Adventure",
     "container": "advAdventure1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 20
   },
   "HiredHelp": {
@@ -1744,7 +1762,7 @@ export const advancements = {
     "globalIndex": 72,
     "category": "Adventure",
     "container": "advAdventure1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 22
   },
   "SmithingwithStyle": {
@@ -1753,7 +1771,7 @@ export const advancements = {
     "globalIndex": 73,
     "category": "Adventure",
     "container": "advAdventure1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 23
   },
   "TwoBirds,OneArrow": {
@@ -1762,7 +1780,7 @@ export const advancements = {
     "globalIndex": 74,
     "category": "Adventure",
     "container": "advAdventure1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 24
   },
   "WhosthePillagerNow": {
@@ -1771,7 +1789,7 @@ export const advancements = {
     "globalIndex": 75,
     "category": "Adventure",
     "container": "advAdventure1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 25
   },
   "Arbalistic": {
@@ -1780,7 +1798,7 @@ export const advancements = {
     "globalIndex": 76,
     "category": "Adventure",
     "container": "advAdventure1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 26
   },
   "CarefulRestoration": {
@@ -1789,7 +1807,7 @@ export const advancements = {
     "globalIndex": 77,
     "category": "Adventure",
     "container": "advAdventure1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 27
   },
   "AdventuringTime": {
@@ -1798,7 +1816,7 @@ export const advancements = {
     "globalIndex": 78,
     "category": "Adventure",
     "container": "advAdventure1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 28
   },
   "SoundofMusic": {
@@ -1807,7 +1825,7 @@ export const advancements = {
     "globalIndex": 79,
     "category": "Adventure",
     "container": "advAdventure1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 29
   },
   "LightasaRabbit": {
@@ -1816,7 +1834,7 @@ export const advancements = {
     "globalIndex": 80,
     "category": "Adventure",
     "container": "advAdventure1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 30
   },
   "IsItaPlane": {
@@ -1825,7 +1843,7 @@ export const advancements = {
     "globalIndex": 81,
     "category": "Adventure",
     "container": "advAdventure1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 31
   },
   "VeryVeryFrightening": {
@@ -1843,7 +1861,7 @@ export const advancements = {
     "globalIndex": 83,
     "category": "Adventure",
     "container": "advAdeventure2",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 1
   },
   "Bullseye": {
@@ -1861,7 +1879,7 @@ export const advancements = {
     "globalIndex": 85,
     "category": "Husbandry",
     "container": "advHusbandry1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 0
   },
   "BeeOurGuest": {
@@ -1870,7 +1888,7 @@ export const advancements = {
     "globalIndex": 86,
     "category": "Husbandry",
     "container": "advHusbandry1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 1
   },
   "TheParrotsandtheBats": {
@@ -1888,7 +1906,7 @@ export const advancements = {
     "globalIndex": 88,
     "category": "Husbandry",
     "container": "advHusbandry1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 3
   },
   "WhateverFloatsYourGoat": {
@@ -1897,7 +1915,7 @@ export const advancements = {
     "globalIndex": 89,
     "category": "Husbandry",
     "container": "advHusbandry1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 4
   },
   "BestFriendsForever": {
@@ -1906,7 +1924,7 @@ export const advancements = {
     "globalIndex": 90,
     "category": "Husbandry",
     "container": "advHusbandry1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 5
   },
   "GlowandBehold": {
@@ -1924,7 +1942,7 @@ export const advancements = {
     "globalIndex": 92,
     "category": "Husbandry",
     "container": "advHusbandry1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 7
   },
   "TotalBeelocation": {
@@ -1933,7 +1951,7 @@ export const advancements = {
     "globalIndex": 93,
     "category": "Husbandry",
     "container": "advHusbandry1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 8
   },
   "BukkitBukkit": {
@@ -1969,7 +1987,7 @@ export const advancements = {
     "globalIndex": 97,
     "category": "Husbandry",
     "container": "advHusbandry1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 12
   },
   "TwobyTwo": {
@@ -1978,7 +1996,7 @@ export const advancements = {
     "globalIndex": 98,
     "category": "Husbandry",
     "container": "advHusbandry1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 13
   },
   "BirthdaySong": {
@@ -1987,7 +2005,7 @@ export const advancements = {
     "globalIndex": 99,
     "category": "Husbandry",
     "container": "advHusbandry1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 14
   },
   "ACompleteCatalogue": {
@@ -1996,7 +2014,7 @@ export const advancements = {
     "globalIndex": 100,
     "category": "Husbandry",
     "container": "advHusbandry1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 15
   },
   "TacticalFishing": {
@@ -2014,7 +2032,7 @@ export const advancements = {
     "globalIndex": 102,
     "category": "Husbandry",
     "container": "advHusbandry1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 17
   },
   "LittleSniffs": {
@@ -2023,7 +2041,7 @@ export const advancements = {
     "globalIndex": 103,
     "category": "Husbandry",
     "container": "advHusbandry1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 18
   },
   "ABalancedDiet": {
@@ -2032,7 +2050,7 @@ export const advancements = {
     "globalIndex": 104,
     "category": "Husbandry",
     "container": "advHusbandry1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 19
   },
   "SeriousDedication": {
@@ -2050,7 +2068,7 @@ export const advancements = {
     "globalIndex": 106,
     "category": "Husbandry",
     "container": "advHusbandry1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 21
   },
   "TheCutestPredator": {
@@ -2086,7 +2104,7 @@ export const advancements = {
     "globalIndex": 110,
     "category": "Husbandry",
     "container": "advHusbandry1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 25
   }
 };
