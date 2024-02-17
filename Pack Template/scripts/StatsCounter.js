@@ -456,9 +456,9 @@ function entityDied(event){
 		if(killer.typeId == "minecraft:player"){
 			let victimType = victim.typeId.replace("minecraft:","").replace("_"," ")
 			addToScore("stats_entitiesKilled_",victimType, killer)
-			entityKills(victim,killer,cause.cause)
 			const equipment=getequipped(killer)
 			addToScore("stats_weaponKills_",equipment["Mainhand"].replace("_"," "), killer)
+			entityKills(victim,killer,cause.cause,equipment["Mainhand"])
 		}
 	}
 	switch(victimName){
@@ -1437,7 +1437,7 @@ function entityInteractions(){
 		//[advancement] Zombie Doctor | Weaken and then cure a Zombie Villager | Use a golden apple on a zombie villager under the Weakness effect; the advancement is granted when the zombie villager converts into a villager., In multiplayer, only the player that feeds the golden apple gets the advancement.
 	//done--------------------
 }
-function entityKills(victim,player,cause){
+function entityKills(victim,player,cause,weapon){
 	
 	//to-do--------------------
 		//needs component checks
@@ -1447,7 +1447,6 @@ function entityKills(victim,player,cause){
 		//needs more weapon/player data
 			// requires selectedSlot
 			//[advancement] Arbalistic | Kill five unique mobs with one crossbow shot | 
-			//[advancement] Who's the Pillager Now? | Give a Pillager a taste of their own medicine | Kill a pillager with a crossbow.
 		//[achievement] Camouflage | Kill a mob while wearing the same type of mob head. | —
 		//[achievement] It spreads | Kill a mob next to a catalyst | —
 		//[advancement] It Spreads | Kill a mob near a Sculk Catalyst | Kill one of these 70 mobs near a sculk catalyst:, Axolotl, Bee, Blaze, Camel, Cat, Cave Spider, Chicken, Chicken Jockey, Cod, Cow, Creeper, Donkey, Dolphin, Drowned, Elder Guardian, Enderman, Endermite, Evoker, Fox, Frog, Ghast, Goat, Glow Squid, Guardian, Hoglin, Horse, Husk, Llama, Magma Cube, Mooshroom, Ocelot, Panda, Parrot, Phantom, Pig, Piglin, Piglin Brute, Pillager, Polar Bear, Pufferfish, Rabbit, Ravager, Salmon, Sheep, Shulker, Silverfish, Skeleton, Skeleton Horse, Skeleton Horseman, Slime, Sniffer, Stray, Spider, Spider Jockey, Squid, Strider, Trader Llama, Tropical Fish, Turtle, Vex, Vindicator, Warden, Witch, Wither, Wither Skeleton, Wolf, Zoglin, Zombie, Zombie Villager, Zombified Piglin, Mobs that drop no experience are ignored for this advancement.
@@ -1533,10 +1532,27 @@ function entityKills(victim,player,cause){
 				advancementTracker.setAchievment("FreetheEnd",player)
 			}
 			break;
-		//[achievement] The End | Kill the Enderdragon [sic] | Enter the end exit portal.
-
+		//[advancement] Who's the Pillager Now? | Give a Pillager a taste of their own medicine | Kill a pillager with a crossbow.
+		case "pillager":
+			if(weapon == "crossbow"){
+				if(!advancementTracker.checkAchievment("WhosthePillagerNow",player)){
+					advancementTracker.setAchievment("WhosthePillagerNow",player)
+				}
+			}
+			break;
 		//[achievement] Sniper Duel | Kill a Skeleton with an arrow from more than 50 meters. | Use a launched arrow to kill a skeleton, spider jockey, wither skeleton, or a stray from 50 or more blocks away, horizontally.
 		//[advancement] Sniper Duel | Kill a Skeleton from at least 50 meters away | Be at least 50 blocks away horizontally when a skeleton is killed by an arrow after the player has attacked it once.
+		case "skeleton":
+			if(weapon == "bow"){
+				const dist = calculateDistance(player.location.x, player.location.z, victim.location.x, victim.location.z)
+				if(dist>30){
+					if(!advancementTracker.checkAchievment("SniperDuel",player)){
+						advancementTracker.setAchievment("SniperDuel",player)
+						achievementTracker.setAchievment("SniperDuel",player)
+					}
+				}
+			}
+			break;
 	}
 	//[advancement] Adventure | Adventure, exploration and combat | Kill any entity, or be killed by any entity.
 	if(!advancementTracker.checkAchievment("Adventure",player)){
