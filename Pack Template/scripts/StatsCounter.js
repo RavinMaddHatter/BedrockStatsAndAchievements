@@ -76,7 +76,6 @@ function statList(player){
 	let statForm = new ActionFormData()
 		.title(player.name)
 		.body(statListBody(player))
-		.button("Close")
 		.button("Scores")
 		.button("Objectives");
 		
@@ -87,48 +86,47 @@ function statList(player){
 		statForm.show(player).then((response) => {
 			switch(response.selection){
 				case 0 :
-					break;
-				case 1 :
 					blockStatsDisplay(player)
 					break;
-				case 2 :
+				case 1 :
 					objectivesStatsDisplay(player);
 					break;
-				case 3 :
+				case 2 :
 					debugDisplay(player);
 					break;
 			}
 		});
 }
 function statListBody(player){
-	//add text
-	    //stats--------------------
-		let statTxt = "Stats";
-		let titleFormat = "\u00A7d";
-		let subtitleFormat = "\u00A73";
-		let bodyFormat = "\u00A7r";
-		let totalBlocksPlaced = world.scoreboard.getObjective("stats_blocksPlaced_total");
-		let totalBlocksBroken = world.scoreboard.getObjective("stats_blocksBroken_total");
-		let daysPlayed = player.getDynamicProperty("playTimeD");
-		
-		let statArrayTxt = [];
-		statArrayTxt[0] = subtitleFormat + "Overworld Travel: " + bodyFormat + player.getDynamicProperty("blockRun") + " blocks";
-		statArrayTxt[1] = subtitleFormat + "Total blocks placed: " + bodyFormat + getScoreIfExists(totalBlocksPlaced,player);
-		statArrayTxt[2] = subtitleFormat + "Total blocks broken: " + bodyFormat + getScoreIfExists(totalBlocksBroken,player);
-		statArrayTxt[3] = subtitleFormat + "Minecraft days played: " + bodyFormat + (daysPlayed === undefined ? 0 : daysPlayed);
-		
-	//construct the body
-		let indentSize = "";
-		let nextLine = '\n';
-		let indentNextLine = nextLine + indentSize;
-		let statBodyTxt = "";
-		
-		for(var i = 0; i < statArrayTxt.length; i++){
-			statBodyTxt = statBodyTxt + indentNextLine + statArrayTxt[i];
-		}
-		
-		let displayText = titleFormat + statTxt + nextLine + statBodyTxt
-		return displayText
+    //title
+	let statTxt = "Stats";
+	
+    //formatting
+	let titleFormat = "\u00A7d";
+	let subtitleFormat = "\u00A73";
+	let itemFormat = "\u00A7a";
+	let bodyFormat = "\u00A7r";
+	
+    //items
+	let overTravel = world.scoreboard.getObjective("stats_travel_Overwoldblocktravel");
+	let totalBlocksPlaced = world.scoreboard.getObjective("stats_blocksPlaced_total");
+	let totalBlocksBroken = world.scoreboard.getObjective("stats_blocksBroken_total");
+	let daysPlayed = world.scoreboard.getObjective("stats_playTime_MinecraftDays");
+	
+    //consolidate scores
+	let statArrayTxt = [];
+	statArrayTxt[0] = subtitleFormat + "Overworld blocks travelled: " + bodyFormat + getScoreIfExists(overTravel, player);
+	statArrayTxt[1] = subtitleFormat + "Total blocks placed: " + bodyFormat + getScoreIfExists(totalBlocksPlaced, player);
+	statArrayTxt[2] = subtitleFormat + "Total blocks broken: " + bodyFormat + getScoreIfExists(totalBlocksBroken, player);
+	statArrayTxt[3] = subtitleFormat + "Minecraft days played: " + bodyFormat + getScoreIfExists(daysPlayed, player);
+	
+    //construct body
+	let indentSize = "";
+	let nextLine = '\n';
+	let indentNextLine = nextLine + indentSize;
+	let displayText = titleFormat + statTxt + nextLine + nextLine + statArrayTxt.join(indentNextLine);
+	
+	return displayText
 }
 function objectivesStatsDisplay(player){
 	let scoresText= ["Objectives"];
@@ -181,8 +179,17 @@ function objectivesStatsDisplay(player){
 		.show(player);
 }
 function blockStatsDisplay(player){
+    //title
 	let scorestext= ["These are the scores being tracked"];
 	let scoreboards = world.scoreboard.getObjectives();
+	
+    //formatting
+	let titleFormat = "\u00A7d";
+	let subtitleFormat = "\u00A73";
+	let itemFormat = "\u00A7a";
+	let bodyFormat = "\u00A7r";
+	
+    //items
 	let blocksBroken = [];
 	let blocksPlaced = [];
 	let entitiesKilled = [];
@@ -191,6 +198,9 @@ function blockStatsDisplay(player){
 	let enteredDimensions=[];
 	let enemiesShot=[];
 	let itemsReleased=[];
+	let playTime=[];
+	
+    //totals
 	let totalBlocksBroken = world.scoreboard.getObjective("stats_blocksBroken_total");
 	let totalBlocksPlaced = world.scoreboard.getObjective("stats_blocksPlaced_total");
 	let totalKilled = world.scoreboard.getObjective("stats_entitiesKilled_");
@@ -199,14 +209,17 @@ function blockStatsDisplay(player){
 	let totalEnteredDimensions = world.scoreboard.getObjective("stats_enteredDimension_");
 	let totalEnimiesShot = world.scoreboard.getObjective("stats_projectilesHitEnemy_");
 	let totalItemsReleased = world.scoreboard.getObjective("stats_itemsReleased_");
-	blocksBroken = ["Total: " +getScoreIfExists(totalBlocksBroken,player)];
-	blocksPlaced = ["Total: " +getScoreIfExists(totalBlocksPlaced,player)];
-	entitiesKilled = ["Total: " +getScoreIfExists(totalKilled,player)];
-	deaths = ["Total: " +getScoreIfExists(totalDeaths,player)];
-	enteredDimensions = ["Total: " +getScoreIfExists(totalEnteredDimensions,player)];
-	redstoneInteractions = ["Total: " +getScoreIfExists(totalRedstoneInteractions,player)];
-	enemiesShot = ["Total: " +getScoreIfExists(totalEnimiesShot,player)];
-	itemsReleased = ["Total: " +getScoreIfExists(totalItemsReleased,player)];
+	
+	blocksBroken = [itemFormat + "Total: " + bodyFormat + getScoreIfExists(totalBlocksBroken,player)];
+	blocksPlaced = [itemFormat + "Total: " + bodyFormat + getScoreIfExists(totalBlocksPlaced,player)];
+	entitiesKilled = [itemFormat + "Total: " + bodyFormat + getScoreIfExists(totalKilled,player)];
+	deaths = [itemFormat + "Total: " + bodyFormat + getScoreIfExists(totalDeaths,player)];
+	enteredDimensions = [itemFormat + "Total: " + bodyFormat + getScoreIfExists(totalEnteredDimensions,player)];
+	redstoneInteractions = [itemFormat + "Total: " + bodyFormat + getScoreIfExists(totalRedstoneInteractions,player)];
+	enemiesShot = [itemFormat + "Total: " + bodyFormat + getScoreIfExists(totalEnimiesShot,player)];
+	itemsReleased = [itemFormat + "Total: " + bodyFormat + getScoreIfExists(totalItemsReleased,player)];
+	
+    //consolidate scores
 	for( let i in scoreboards){
 		let tempScore=0;
 		let board = scoreboards[i];
@@ -215,58 +228,64 @@ function blockStatsDisplay(player){
 		let category = temp[1];
 		let name = temp[2];
 		if(!(name)){
-			name=""
+			name="";
 		}
 		switch (type){
 			case "stats":
-				tempScore = getScoreIfExists(board,player)
+				tempScore = getScoreIfExists(board,player);
 				if(name.length>0){
 					switch(category){
 						case "blocksBroken":
 							if (!name.includes("total")){
-								blocksBroken.push(name+ ": " + tempScore.toString());
+								blocksBroken.push(itemFormat + name+ ": " + bodyFormat + tempScore.toString());
 							}
 							break;
 						case "blocksPlaced":
 							if (!name.includes("total")){
-								blocksPlaced.push(name+ ": " + tempScore.toString());
+								blocksPlaced.push(itemFormat + name+ ": " + bodyFormat + tempScore.toString());
 							}
 							break;
 						case "entitiesKilled":
-							entitiesKilled.push(name+ ": " + tempScore.toString());
+							entitiesKilled.push(itemFormat + name+ ": " + bodyFormat + tempScore.toString());
 							break;
 						case "Deaths":
-							deaths.push(name+ ": " + tempScore.toString());
+							deaths.push(itemFormat + name+ ": " + bodyFormat + tempScore.toString());
 							break;
 						case "redstonInteractions":
-							redstoneInteractions.push(name+ ": " + tempScore.toString());
+							redstoneInteractions.push(itemFormat + name+ ": " + bodyFormat + tempScore.toString());
 							break;
 						case "enteredDimension":
-							enteredDimensions.push(name+ ": " + tempScore.toString());
+							enteredDimensions.push(itemFormat + name+ ": " + bodyFormat + tempScore.toString());
 							break;
 						case "projectilesHitEnemy":
-							enemiesShot.push(name+ ": " + tempScore.toString());
+							enemiesShot.push(itemFormat + name+ ": " + bodyFormat + tempScore.toString());
 							break;
 						case "itemsReleased":
-							itemsReleased.push(name+ ": " + tempScore.toString());
-							break
+							itemsReleased.push(itemFormat + name+ ": " + bodyFormat + tempScore.toString());
+							break;
+						case "playTime":
+							playTime.push(itemFormat + name+ ": " + bodyFormat + tempScore.toString());
+							break;
 					}
 					break;
 			}
 		}
 	}
+	
+    //construct ui
 	let indentSize = "    ";
 	let nextLine = '\n';
 	let indentNextLine = nextLine + indentSize;
-	let allStats=scorestext.join(nextLine)
-		+ "\nBlocks Broken:" + indentNextLine + blocksBroken.join(indentNextLine)
-		+ "\nBlocks Placed:" + indentNextLine + blocksPlaced.join(indentNextLine)
-		+ "\nEntities Killed:" + indentNextLine + entitiesKilled.join(indentNextLine)
-		+ "\nDeaths:" + indentNextLine + deaths.join(indentNextLine)
-		+ "\nRedstone Interactions:" + indentNextLine + redstoneInteractions.join(indentNextLine)
-		+ "\nPortals Traveled:" + indentNextLine + enteredDimensions.join(indentNextLine)
-		+ "\nEnimies Shot:" + indentNextLine + enemiesShot.join(indentNextLine)
-		+ "\nItems Fired:" + indentNextLine + itemsReleased.join(indentNextLine)
+	let allStats=titleFormat + scorestext.join(nextLine) + nextLine
+		+ subtitleFormat + "\nBlocks Broken:" + bodyFormat + indentNextLine + blocksBroken.join(indentNextLine)
+		+ subtitleFormat + "\nBlocks Placed:" + bodyFormat + indentNextLine + blocksPlaced.join(indentNextLine)
+		+ subtitleFormat + "\nEntities Killed:" + bodyFormat + indentNextLine + entitiesKilled.join(indentNextLine)
+		+ subtitleFormat + "\nDeaths:" + bodyFormat + indentNextLine + deaths.join(indentNextLine)
+		+ subtitleFormat + "\nRedstone Interactions:" + bodyFormat + indentNextLine + redstoneInteractions.join(indentNextLine)
+		+ subtitleFormat + "\nPortals Traveled:" + bodyFormat + indentNextLine + enteredDimensions.join(indentNextLine)
+		+ subtitleFormat + "\nEnimies Shot:" + bodyFormat + indentNextLine + enemiesShot.join(indentNextLine)
+		+ subtitleFormat + "\nItems Fired:" + bodyFormat + indentNextLine + itemsReleased.join(indentNextLine)
+		+ subtitleFormat + "\nPlay Time:" + bodyFormat + indentNextLine + playTime.join(indentNextLine);
 	let statsForm = new ActionFormData()
 		.title(player.name)
 		.body(allStats)
@@ -274,46 +293,46 @@ function blockStatsDisplay(player){
 		.show(player);
 }
 function debugDisplay(player){
-	//add text
-		let debugTxt = "Additional game info";
-		let titleFormat = "\u00A7d";
-		let subtitleFormat = "\u00A73";
-		let bodyFormat = "\u00A7r";
-		let lightVal = lightLevel(player);
-		let biomeId =  biomeFinder(player);
-		
-		let debugArrayTxt = [];
-		debugArrayTxt[0] = subtitleFormat + "Dimension: " + bodyFormat + playerPosition(player, "dimension");
-		debugArrayTxt[1] = subtitleFormat + "XYZ: " + bodyFormat + playerPosition(player, "xyz");
-		debugArrayTxt[2] = subtitleFormat + "Block: " + bodyFormat + playerPosition(player, "block");
-		debugArrayTxt[3] = subtitleFormat + "Block within chunk: " + bodyFormat + playerPosition(player, "blockInChunk");
-		debugArrayTxt[4] = subtitleFormat + "Chunk: " + bodyFormat + playerPosition(player, "chunk");
-		debugArrayTxt[5] = subtitleFormat + "Region: " + bodyFormat + playerPosition(player, "region");
-		debugArrayTxt[6] = subtitleFormat + "Overworld coord: " + bodyFormat + playerPosition(player, "overworld");
-		debugArrayTxt[7] = subtitleFormat + "Nether coord: " + bodyFormat + playerPosition(player, "nether");
-		debugArrayTxt[8] = subtitleFormat + "Player spawnpoint: " + bodyFormat + playerRespawn(player);
-		debugArrayTxt[9] = subtitleFormat + "World spawnpoint: " + bodyFormat + worldSpawn();
-		debugArrayTxt[10] = subtitleFormat + "Facing: " + bodyFormat + facingDirection(player);
-		debugArrayTxt[11] = subtitleFormat + "Moon phase: " + bodyFormat + moonCycle();
-		debugArrayTxt[12] = subtitleFormat + "Time of day: " + bodyFormat + "\n    \u00A7aTick: \u00A7r" + getTheTime("tick") + "\n    \u00A7aMinecraft: \u00A7r" + getTheTime("minecraft") + "\n    \u00A7a12hr: \u00A7r" + getTheTime("12hr") + "\n    \u00A7a24hr: \u00A7r" + getTheTime("24hr");
-		debugArrayTxt[13] = subtitleFormat + "World life in ticks: " + bodyFormat + "\n        " + worldlife("tick");
-		debugArrayTxt[14] = subtitleFormat + "World day: " + bodyFormat + worldlife("day");
-		debugArrayTxt[15] = (biomeId == "NA" ? "" : subtitleFormat + "Light at player's head: " + bodyFormat + lightVal);
-		debugArrayTxt[16] = (biomeId == "NA" ? "" : subtitleFormat + "Biome: " + bodyFormat + biomeId);
-		
-	//construct the body
-		let indentSize = "";
-		let nextLine = '\n';
-		let indentNextLine = nextLine + indentSize;
-		let debugBodyTxt = "";
-		
-		for(var i = 0; i < debugArrayTxt.length; i++){
-			debugBodyTxt = debugBodyTxt + indentNextLine + debugArrayTxt[i];
-		}
-		
-		let displayText = titleFormat + debugTxt + nextLine + debugBodyTxt
-	//display ui
-		let debugForm = new ActionFormData()
+    //title
+	let debugTxt = "Additional game info";
+	
+    //formatting
+	let titleFormat = "\u00A7d";
+	let subtitleFormat = "\u00A73";
+	let itemFormat = "\u00A7a";
+	let bodyFormat = "\u00A7r";
+	
+    //items
+	let lightVal = lightLevel(player);
+	let biomeId =  biomeFinder(player);
+	
+    //consolidate scores
+	let debugArrayTxt = [];
+	debugArrayTxt[0] = subtitleFormat + "Dimension: " + bodyFormat + playerPosition(player, "dimension");
+	debugArrayTxt[1] = subtitleFormat + "XYZ: " + bodyFormat + playerPosition(player, "xyz");
+	debugArrayTxt[2] = subtitleFormat + "Block: " + bodyFormat + playerPosition(player, "block");
+	debugArrayTxt[3] = subtitleFormat + "Block within chunk: " + bodyFormat + playerPosition(player, "blockInChunk");
+	debugArrayTxt[4] = subtitleFormat + "Chunk: " + bodyFormat + playerPosition(player, "chunk");
+	debugArrayTxt[5] = subtitleFormat + "Region: " + bodyFormat + playerPosition(player, "region");
+	debugArrayTxt[6] = subtitleFormat + "Overworld coord: " + bodyFormat + playerPosition(player, "overworld");
+	debugArrayTxt[7] = subtitleFormat + "Nether coord: " + bodyFormat + playerPosition(player, "nether");
+	debugArrayTxt[8] = subtitleFormat + "Player spawnpoint: " + bodyFormat + playerRespawn(player);
+	debugArrayTxt[9] = subtitleFormat + "World spawnpoint: " + bodyFormat + worldSpawn();
+	debugArrayTxt[10] = subtitleFormat + "Facing: " + bodyFormat + facingDirection(player);
+	debugArrayTxt[11] = subtitleFormat + "Moon phase: " + bodyFormat + moonCycle();
+	debugArrayTxt[12] = subtitleFormat + "Time of day: " + bodyFormat + "\n    " + itemFormat + "Tick: " + bodyFormat + getTheTime("tick") + "\n    " + itemFormat + "Minecraft: " + bodyFormat + getTheTime("minecraft") + "\n    " + itemFormat + "12hr: " + bodyFormat + getTheTime("12hr") + "\n    " + itemFormat + "24hr: " + bodyFormat + getTheTime("24hr");
+	debugArrayTxt[13] = subtitleFormat + "World life in ticks: " + bodyFormat + "\n    " + worldlife("tick");
+	debugArrayTxt[14] = subtitleFormat + "World day: " + bodyFormat + worldlife("day");
+	debugArrayTxt[15] = (biomeId == "NA" ? "" : subtitleFormat + "Light at player's head: " + bodyFormat + lightVal);
+	debugArrayTxt[16] = (biomeId == "NA" ? "" : subtitleFormat + "Biome: " + bodyFormat + biomeId);
+	
+    //construct ui
+	let indentSize = "";
+	let nextLine = '\n';
+	let indentNextLine = nextLine + indentSize;
+	let displayText = titleFormat + debugTxt + nextLine + nextLine + debugArrayTxt.join(indentNextLine);
+	
+	let debugForm = new ActionFormData()
 		.title(player.name)
 		.body(displayText)
 		.button("Close")
@@ -653,6 +672,7 @@ function statStick(event){
 	let itemTag = event.itemStack.nameTag;
 	
 	if(itemName == "stick" && (itemTag == "statStick")){
+		propertyToScore(player)
 		statList(player);
 	}
 }
@@ -1928,6 +1948,36 @@ function achievementUnlock(player,data){
 	let display=player.onScreenDisplay
 	display.setActionBar("\u00A7cachievement Unlocked: \u00A7e"+data)
 	player.playSound("random.levelup")
+}
+function propertyToScore(player){
+    //declare variables
+	let daysPlayed = player.getDynamicProperty("playTimeD");
+	let minPlayed = player.getDynamicProperty("playTimeM");
+	let overTravel = player.getDynamicProperty("blockRun");
+	
+    //add categories
+	if(!world.scoreboard.getObjective("stats_playTime_")){
+		world.scoreboard.addObjective("stats_playTime_", "stats_playTime_");
+	}
+	if(!world.scoreboard.getObjective("stats_travel_")){
+		world.scoreboard.addObjective("stats_travel_", "stats_travel_");
+	}
+	
+    //add items
+	if(!world.scoreboard.getObjective("stats_playTime_MinecraftDays")){
+		world.scoreboard.addObjective("stats_playTime_MinecraftDays", "stats_playTime_Minecraft Days");
+	}
+	if(!world.scoreboard.getObjective("stats_playTime_Minutes")){
+		world.scoreboard.addObjective("stats_playTime_Minutes", "stats_playTime_Minutes");
+	}
+	if(!world.scoreboard.getObjective("stats_travel_Overwoldblocktravel")){
+		world.scoreboard.addObjective("stats_travel_Overwoldblocktravel", "stats_travel_Overwold block travel");
+	}
+	
+    //set score
+	world.scoreboard.getObjective("stats_playTime_MinecraftDays").setScore(player, (daysPlayed === undefined ? 0 : daysPlayed));
+	world.scoreboard.getObjective("stats_playTime_Minutes").setScore(player, (minPlayed === undefined ? 0 : minPlayed));
+	world.scoreboard.getObjective("stats_travel_Overwoldblocktravel").setScore(player, (overTravel === undefined ? 0 : overTravel));
 }
 function timer10Sec(){
 	system.runInterval(() => {
