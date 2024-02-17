@@ -689,19 +689,27 @@ function statStick(event){
 	}
 }
 function projectileHitBlock(event){
-	let shooter = event.source
+	let shooter = event.source;
+	let projectile = event.projectile.typeId.replace("minecraft:","");
+	
 	if(shooter){
-		let block = event.getBlockHit().block;
-		if(block.permutation.matches("minecraft:target")){
-			if(shooter.typeId=="minecraft:player"){
-				addToScore("stats_redstonInteractions_","Target Blocks Hit",shooter)
+		if(shooter.typeId=="minecraft:player"){
+			let player = shooter
+			let block = event.getBlockHit().block;
+			
+			if(block.isvalid){
+				if(block.permutation.matches("minecraft:target")){
+					addToScore("stats_redstonInteractions_","Target Blocks Hit",shooter)
+				}
+			}
+			if(projectile == "ender_pearl"){
+				pearlThrow(player)
 			}
 		}
 	}
 }
 function targetHit(event){
 	let power = event.redstonePower;
-	
 	
 	if(power == 15){
 		let closePlayers = event.dimension.getPlayers({
@@ -757,6 +765,10 @@ function useItem(event){
 			system.runTimeout(() => {
 				player.setDynamicProperty("snowThrow", 0);
 			}, 40);
+			break;
+		case "ender_pearl" :
+			player.setDynamicProperty("pearlThrowX", Math.floor(player.location.x));
+			player.setDynamicProperty("pearlThrowZ", Math.floor(player.location.z));
 			break;
 	}
 }
@@ -1715,7 +1727,6 @@ function trading(){
 }
 function usingItems(item, player){
 	//to-do--------------------
-		//[achievement] Beam Me Up | Teleport over 100 meters from a single throw of an Ender Pearl | Throw an ender pearl 100 blocks in any direction
 		//[achievement] Cheating Death | Use the Totem of Undying to cheat death | Have the Totem of Undying in your hand when you die.
 		//[advancement] Postmortal | Use a Totem of Undying to cheat death | Activate a totem of undying by taking fatal damage.
 	//done--------------------
@@ -1747,6 +1758,11 @@ function usingItems(item, player){
 		case "glow_ink_sac" :
 			if(!advancementTracker.checkAchievment("GlowandBehold",player)){
 				advancementTracker.setAchievment("GlowandBehold",player);//[advancement] Glow and Behold! | Make the text of any kind of sign glow | Use a glow ink sac on a sign or a hanging sign.
+			}
+			break;
+		case "ender_pearl" :
+			if(!achievementTracker.checkAchievment("BeamMeUp",player)){
+				achievementTracker.setAchievment("BeamMeUp",player);//[achievement] Beam Me Up | Teleport over 100 meters from a single throw of an Ender Pearl | Throw an ender pearl 100 blocks in any direction
 			}
 			break;
 	}
@@ -1960,6 +1976,28 @@ function achievementUnlock(player,data){
 	let display=player.onScreenDisplay
 	display.setActionBar("\u00A7cachievement Unlocked: \u00A7e"+data)
 	player.playSound("random.levelup")
+}
+function pearlThrow(player){
+	let x1 = player.getDynamicProperty("pearlThrowX");
+	let z1 = player.getDynamicProperty("pearlThrowZ");
+	let x2 = Math.floor(player.location.x);
+	let z2 = Math.floor(player.location.z);
+	let pearlDist = calculateDistance(x1, z1, x2, z2);
+	
+	if(pearlDist > 100){
+		usingItems("ender_pearl", player);
+	}
+	if(!world.scoreboard.getObjective("stats_pearlThrow_")){
+		world.scoreboard.addObjective("stats_pearlThrow_", "stats_pearlThrow_");
+	}
+	if(!world.scoreboard.getObjective("stats_pearlThrow_Farthestenderpearlthrow")){
+		world.scoreboard.addObjective("stats_pearlThrow_Farthestenderpearlthrow", "stats_pearlThrow_Farthest ender pearl throw");
+		world.scoreboard.getObjective("stats_pearlThrow_Farthestenderpearlthrow").setScore(player, 0);
+	}
+	let bestPearl = world.scoreboard.getObjective("stats_pearlThrow_Farthestenderpearlthrow").getScore(player);
+	if(pearlDist > bestPearl){
+		world.scoreboard.getObjective("stats_pearlThrow_Farthestenderpearlthrow").setScore(player, pearlDist);
+	}
 }
 function propertyToScore(player){
     //declare variables
