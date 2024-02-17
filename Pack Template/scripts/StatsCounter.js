@@ -129,19 +129,29 @@ function statListBody(player){
 	return displayText
 }
 function objectivesStatsDisplay(player){
+    //title
 	let scoresText= ["Objectives"];
+	
+    //formatting
+	let titleFormat = "\u00A7d";
+	let subtitleFormat = "\u00A73";
+	let itemFormat = "\u00A7r";
+	let bodyFormat = "\u00A7a";
+	
+    //items
 	let scoreboards = world.scoreboard.getObjectives();
 	let tempScore = 0;
 	let achievement = [];
 	let advancement = [];
 	
+    //consolidate scores
 	for( let i in scoreboards){
 		let board = scoreboards[i];
 		let temp = board.displayName.split("_");
 		let type = temp[0];
 		let category = temp[1];
 		let name = temp[2];
-		let boolPos = "\u00A7a" + "\u2714" + "\u00A7r";
+		let boolPos = "\u2714";
 		let boolNeg = " ";
 		let lineWrap = 28;
 		
@@ -151,27 +161,28 @@ function objectivesStatsDisplay(player){
 				switch(category){
 					case "achievement":
 						if (!name.includes("total") && name.length>1){
-							achievement.push(name+ ": " + tempScore.toString().replace("0", boolNeg).replace("1", boolPos));
+							achievement.push(itemFormat + name+ ": " + bodyFormat + tempScore.toString().replace("0", boolNeg).replace("1", boolPos));
 						}
 						break;
 					case "advancement":
 						if (!name.includes("total") && name.length>1){
-							advancement.push(name+ ": " + tempScore.toString().replace("0", boolNeg).replace("1", boolPos));
+							advancement.push(itemFormat + name+ ": " + bodyFormat + tempScore.toString().replace("0", boolNeg).replace("1", boolPos));
 						}
 						break;
 				}
 				break;
 		}
 	}
-	let titleFormat = "\u00A7d";
-	let subtitleFormat = "\u00A73";
-	let bodyFormat = "\u00A7r";
+	
+    //construct ui
 	let indentSize = "";
 	let nextLine = '\n';
 	let indentNextLine = nextLine + indentSize;
-	let allStats=titleFormat + scoresText.join(nextLine)
-		+ subtitleFormat + "\n\nAchievements:" + bodyFormat + indentNextLine + achievement.join(indentNextLine)
-		+ subtitleFormat + "\n\nAdvancements:" + bodyFormat + indentNextLine + advancement.join(indentNextLine);
+	let allStats=titleFormat + scoresText.join(nextLine) + nextLine
+		+ nextLine
+		+ subtitleFormat + "Achievements:" + bodyFormat + indentNextLine + achievement.join(indentNextLine) + nextLine
+		+ nextLine
+		+ subtitleFormat + "Advancements:" + bodyFormat + indentNextLine + advancement.join(indentNextLine) + nextLine;
 	let statsForm = new ActionFormData()
 		.title(player.name)
 		.body(allStats)
@@ -181,7 +192,6 @@ function objectivesStatsDisplay(player){
 function blockStatsDisplay(player){
     //title
 	let scorestext= ["These are the scores being tracked"];
-	let scoreboards = world.scoreboard.getObjectives();
 	
     //formatting
 	let titleFormat = "\u00A7d";
@@ -190,6 +200,7 @@ function blockStatsDisplay(player){
 	let bodyFormat = "\u00A7r";
 	
     //items
+	let scoreboards = world.scoreboard.getObjectives();
 	let blocksBroken = [];
 	let blocksPlaced = [];
 	let entitiesKilled = [];
@@ -277,15 +288,16 @@ function blockStatsDisplay(player){
 	let nextLine = '\n';
 	let indentNextLine = nextLine + indentSize;
 	let allStats=titleFormat + scorestext.join(nextLine) + nextLine
-		+ subtitleFormat + "\nBlocks Broken:" + bodyFormat + indentNextLine + blocksBroken.join(indentNextLine)
-		+ subtitleFormat + "\nBlocks Placed:" + bodyFormat + indentNextLine + blocksPlaced.join(indentNextLine)
-		+ subtitleFormat + "\nEntities Killed:" + bodyFormat + indentNextLine + entitiesKilled.join(indentNextLine)
-		+ subtitleFormat + "\nDeaths:" + bodyFormat + indentNextLine + deaths.join(indentNextLine)
-		+ subtitleFormat + "\nRedstone Interactions:" + bodyFormat + indentNextLine + redstoneInteractions.join(indentNextLine)
-		+ subtitleFormat + "\nPortals Traveled:" + bodyFormat + indentNextLine + enteredDimensions.join(indentNextLine)
-		+ subtitleFormat + "\nEnimies Shot:" + bodyFormat + indentNextLine + enemiesShot.join(indentNextLine)
-		+ subtitleFormat + "\nItems Fired:" + bodyFormat + indentNextLine + itemsReleased.join(indentNextLine)
-		+ subtitleFormat + "\nPlay Time:" + bodyFormat + indentNextLine + playTime.join(indentNextLine);
+		+ nextLine
+		+ subtitleFormat + "Blocks Broken:" + bodyFormat + indentNextLine + blocksBroken.join(indentNextLine) + nextLine
+		+ subtitleFormat + "Blocks Placed:" + bodyFormat + indentNextLine + blocksPlaced.join(indentNextLine) + nextLine
+		+ subtitleFormat + "Entities Killed:" + bodyFormat + indentNextLine + entitiesKilled.join(indentNextLine) + nextLine
+		+ subtitleFormat + "Deaths:" + bodyFormat + indentNextLine + deaths.join(indentNextLine) + nextLine
+		+ subtitleFormat + "Redstone Interactions:" + bodyFormat + indentNextLine + redstoneInteractions.join(indentNextLine) + nextLine
+		+ subtitleFormat + "Portals Traveled:" + bodyFormat + indentNextLine + enteredDimensions.join(indentNextLine) + nextLine
+		+ subtitleFormat + "Enimies Shot:" + bodyFormat + indentNextLine + enemiesShot.join(indentNextLine) + nextLine
+		+ subtitleFormat + "Items Fired:" + bodyFormat + indentNextLine + itemsReleased.join(indentNextLine) + nextLine
+		+ subtitleFormat + "Play Time:" + bodyFormat + indentNextLine + playTime.join(indentNextLine) + nextLine;
 	let statsForm = new ActionFormData()
 		.title(player.name)
 		.body(allStats)
