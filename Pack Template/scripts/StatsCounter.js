@@ -204,6 +204,7 @@ function blockStatsDisplay(player){
 	let blocksBroken = [];
 	let blocksPlaced = [];
 	let entitiesKilled = [];
+	let weaponKills = [];
 	let deaths=[];
 	let redstoneInteractions=[];
 	let enteredDimensions=[];
@@ -216,6 +217,7 @@ function blockStatsDisplay(player){
 	let totalBlocksBroken = world.scoreboard.getObjective("stats_blocksBroken_total");
 	let totalBlocksPlaced = world.scoreboard.getObjective("stats_blocksPlaced_total");
 	let totalKilled = world.scoreboard.getObjective("stats_entitiesKilled_");
+	let weaponKillsBoard = world.scoreboard.getObjective("stats_weaponKills_");
 	let totalDeaths = world.scoreboard.getObjective("stats_Deaths_");
 	let totalRedstoneInteractions = world.scoreboard.getObjective("stats_redstonInteractions_");
 	let totalEnteredDimensions = world.scoreboard.getObjective("stats_enteredDimension_");
@@ -225,6 +227,7 @@ function blockStatsDisplay(player){
 	blocksBroken = [itemFormat + "Total: " + bodyFormat + getScoreIfExists(totalBlocksBroken,player)];
 	blocksPlaced = [itemFormat + "Total: " + bodyFormat + getScoreIfExists(totalBlocksPlaced,player)];
 	entitiesKilled = [itemFormat + "Total: " + bodyFormat + getScoreIfExists(totalKilled,player)];
+	weaponKills = [itemFormat + "Total: " + bodyFormat + getScoreIfExists(weaponKillsBoard,player)];
 	deaths = [itemFormat + "Total: " + bodyFormat + getScoreIfExists(totalDeaths,player)];
 	enteredDimensions = [itemFormat + "Total: " + bodyFormat + getScoreIfExists(totalEnteredDimensions,player)];
 	redstoneInteractions = [itemFormat + "Total: " + bodyFormat + getScoreIfExists(totalRedstoneInteractions,player)];
@@ -259,6 +262,9 @@ function blockStatsDisplay(player){
 							break;
 						case "entitiesKilled":
 							entitiesKilled.push(itemFormat + name+ ": " + bodyFormat + tempScore.toString());
+							break;
+						case "weaponKills":
+							weaponKills.push(itemFormat + name+ ": " + bodyFormat + tempScore.toString());
 							break;
 						case "Deaths":
 							deaths.push(itemFormat + name+ ": " + bodyFormat + tempScore.toString());
@@ -296,6 +302,7 @@ function blockStatsDisplay(player){
 		+ subtitleFormat + "Blocks Broken:" + bodyFormat + indentNextLine + blocksBroken.join(indentNextLine) + nextLine
 		+ subtitleFormat + "Blocks Placed:" + bodyFormat + indentNextLine + blocksPlaced.join(indentNextLine) + nextLine
 		+ subtitleFormat + "Entities Killed:" + bodyFormat + indentNextLine + entitiesKilled.join(indentNextLine) + nextLine
+		+ subtitleFormat + "Weapon Kills:" + bodyFormat + indentNextLine + weaponKills.join(indentNextLine) + nextLine
 		+ subtitleFormat + "Deaths:" + bodyFormat + indentNextLine + deaths.join(indentNextLine) + nextLine
 		+ subtitleFormat + "Redstone Interactions:" + bodyFormat + indentNextLine + redstoneInteractions.join(indentNextLine) + nextLine
 		+ subtitleFormat + "Portals Traveled:" + bodyFormat + indentNextLine + enteredDimensions.join(indentNextLine) + nextLine
@@ -449,8 +456,9 @@ function entityDied(event){
 		if(killer.typeId == "minecraft:player"){
 			let victimType = victim.typeId.replace("minecraft:","").replace("_"," ")
 			addToScore("stats_entitiesKilled_",victimType, killer)
-			addToScore("stats_entitiesKilled_","total", killer)
 			entityKills(victim,killer,cause.cause)
+			const equipment=getequipped(killer)
+			addToScore("stats_weaponKills_",equipment["Mainhand"].replace("_"," "), killer)
 		}
 	}
 	switch(victimName){
@@ -1010,9 +1018,6 @@ function itemInventory(player){
 						"snort_pottery_sherd"];
 	
 	let inventoryPlayer = player.getComponent("minecraft:inventory");
-	const equipment = getequipped(player)
-	
-	console.warn(JSON.stringify(equipment))
 	let index=0;
 	let inventorymask = 0;
 	let armorMask = 0;
@@ -1027,15 +1032,10 @@ function itemInventory(player){
 			if(loseItems.includes(itemName)){
 				index = loseItems.indexOf(itemName)
 				inventorymask = inventorymask | (0b1<<index)
-				
 			}
 			else if (sherdArray.includes(itemName)){
 				index = sherdArray.indexOf(itemName)
 				sherdMask = sherdMask | (0b1<<index)
-			}
-			else if(armorTypes.includes(itemName)){
-				index = armorTypes.indexOf(itemName)
-				armorMask = armorMask | (0b1<<index)
 			}else if(toolsTypes.includes(itemName)){
 				index = toolsTypes.indexOf(itemName)
 				toolMask = toolMask | (0b1<<index)
@@ -1058,6 +1058,14 @@ function itemInventory(player){
 			}
 		}
 	}
+	const equip = getequipped(player)
+	for(const slot of ["Chest","Feet","Head","Legs"]){
+		let itemName = equip[slot];
+		if(armorTypes.includes(itemName)){
+			index = armorTypes.indexOf(itemName)
+			armorMask = armorMask | (0b1<<index)
+		}
+	} 
 	//Checks armor based achievements
 	if(armorMask>0){
 		checkArmorachievements(player,armorMask);
@@ -1986,7 +1994,7 @@ function processBlockTags(tags){
 }
 function getequipped(player){
 	const equipComp = player.getComponent("minecraft:equippable");
-	let equipment={"chest":"","Feet":"","Head":"","Legs":"","Mainhand":"","Offhand":""}
+	let equipment={"chest":"","Feet":"","Head":"","Legs":"","Mainhand":"Empty Hand","Offhand":""}
 	if( equipComp.getEquipment("Chest")){
 		equipment["chest"] = equipComp.getEquipment("Chest").typeId.replace("minecraft:","")
 	}
