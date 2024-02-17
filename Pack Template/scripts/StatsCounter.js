@@ -210,6 +210,7 @@ function blockStatsDisplay(player){
 	let enemiesShot=[];
 	let itemsReleased=[];
 	let playTime=[];
+	let travel=[];
 	
     //totals
 	let totalBlocksBroken = world.scoreboard.getObjective("stats_blocksBroken_total");
@@ -277,6 +278,9 @@ function blockStatsDisplay(player){
 						case "playTime":
 							playTime.push(itemFormat + name+ ": " + bodyFormat + tempScore.toString());
 							break;
+						case "travel":
+							travel.push(itemFormat + name+ ": " + bodyFormat + tempScore.toString());
+							break;
 					}
 					break;
 			}
@@ -297,7 +301,8 @@ function blockStatsDisplay(player){
 		+ subtitleFormat + "Portals Traveled:" + bodyFormat + indentNextLine + enteredDimensions.join(indentNextLine) + nextLine
 		+ subtitleFormat + "Enimies Shot:" + bodyFormat + indentNextLine + enemiesShot.join(indentNextLine) + nextLine
 		+ subtitleFormat + "Items Fired:" + bodyFormat + indentNextLine + itemsReleased.join(indentNextLine) + nextLine
-		+ subtitleFormat + "Play Time:" + bodyFormat + indentNextLine + playTime.join(indentNextLine) + nextLine;
+		+ subtitleFormat + "Play Time:" + bodyFormat + indentNextLine + playTime.join(indentNextLine) + nextLine
+		+ subtitleFormat + "Travel:" + bodyFormat + indentNextLine + travel.join(indentNextLine) + nextLine;
 	let statsForm = new ActionFormData()
 		.title(player.name)
 		.body(allStats)
@@ -1987,16 +1992,16 @@ function pearlThrow(player){
 	if(pearlDist > 100){
 		usingItems("ender_pearl", player);
 	}
-	if(!world.scoreboard.getObjective("stats_pearlThrow_")){
-		world.scoreboard.addObjective("stats_pearlThrow_", "stats_pearlThrow_");
+	if(!world.scoreboard.getObjective("stats_travel_")){
+		world.scoreboard.addObjective("stats_travel_", "stats_travel_");
 	}
-	if(!world.scoreboard.getObjective("stats_pearlThrow_Farthestenderpearlthrow")){
-		world.scoreboard.addObjective("stats_pearlThrow_Farthestenderpearlthrow", "stats_pearlThrow_Farthest ender pearl throw");
-		world.scoreboard.getObjective("stats_pearlThrow_Farthestenderpearlthrow").setScore(player, 0);
+	if(!world.scoreboard.getObjective("stats_travel_Farthestenderpearlthrow")){
+		world.scoreboard.addObjective("stats_travel_Farthestenderpearlthrow", "stats_travel_Farthest ender pearl throw");
+		world.scoreboard.getObjective("stats_travel_Farthestenderpearlthrow").setScore(player, 0);
 	}
-	let bestPearl = world.scoreboard.getObjective("stats_pearlThrow_Farthestenderpearlthrow").getScore(player);
+	let bestPearl = world.scoreboard.getObjective("stats_travel_Farthestenderpearlthrow").getScore(player);
 	if(pearlDist > bestPearl){
-		world.scoreboard.getObjective("stats_pearlThrow_Farthestenderpearlthrow").setScore(player, pearlDist);
+		world.scoreboard.getObjective("stats_travel_Farthestenderpearlthrow").setScore(player, pearlDist);
 	}
 }
 function propertyToScore(player){
