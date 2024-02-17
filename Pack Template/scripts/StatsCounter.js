@@ -420,16 +420,20 @@ function changedDimension(event){
 		case "the_end":
 			addToScore("stats_enteredDimension_","The End",player)
 			if(!advancementTracker.checkAchievment("TheEnd",player)){
-				achievementTracker.setAchievment("TheEnd",player)//[achievement] The End? | Enter an End Portal | Enter a stronghold End Portal activated with all twelve eyes of ender.
-				advancementTracker.setAchievment("TheEnd",player)//[advancement] The End? | Enter the End Portal | Enter the End dimension.
-				advancementTracker.setAchievment("TheEnd2",player)//[advancement] The End | Or the beginning? | Enter the End dimension.
+				//[achievement] The End? | Enter an End Portal | Enter a stronghold End Portal activated with all twelve eyes of ender.
+				achievementTracker.setAchievment("TheEnd",player)
+				//[advancement] The End? | Enter the End Portal | Enter the End dimension.
+				advancementTracker.setAchievment("TheEnd",player)
+				//[advancement] The End | Or the beginning? | Enter the End dimension.
+				advancementTracker.setAchievment("TheEnd2",player)
 			}
 			break;
 		case "overworld":
 			addToScore("stats_enteredDimension_","Overworld",player)
 			if(advancementTracker.checkAchievment("TheEnd",player)){
 				if(achievementTracker.checkAchievment("ExitTheEnd",player)){
-					achievementTracker.setAchievment("ExitTheEnd",player)//[achievement] The End | Kill the Enderdragon [sic] | Enter the end exit portal.
+					//[achievement] The End | Kill the Enderdragon [sic] | Enter the end exit portal.
+					achievementTracker.setAchievment("ExitTheEnd",player)
 				}
 			}
 			break;
@@ -601,7 +605,6 @@ function leverFlipped(event){
 function loadedEntity(event){
 	let entity = event.entity;
 	let entityName = entity.typeId.replace("minecraft:", "");
-	
 	//when bastion mobs load, search for nearby players and give them an achievement
 	if(entityName == "piglin_brute"){
 		let closePlayers = entity.dimension.getPlayers({
@@ -800,9 +803,11 @@ function overworldBlocksTravelled(player){
 			blkDist = blkDist + calculateDistance(x1, z1, x2, z2);
 		}
 	//check if blocks travelled are more than 7000, then trigger achievement
+	// I think this one is wrong.
 		if(blkDist > 7000){
+			//[advancement] Subspace Bubble | Use the Nether to travel 7 km in the Overworld | Use the Nether to travel between 2 points in the Overworld with a minimum horizontal euclidean distance of 7000 blocks between each other, which is 875 blocks in the Nether.
 			if(advancementTracker.checkAchievment("SubspaceBubble", player)){
-				advancementTracker.setAchievment("SubspaceBubble", player);//[advancement] Subspace Bubble | Use the Nether to travel 7 km in the Overworld | Use the Nether to travel between 2 points in the Overworld with a minimum horizontal euclidean distance of 7000 blocks between each other, which is 875 blocks in the Nether.
+				advancementTracker.setAchievment("SubspaceBubble", player);
 			}
 		}
 	//record the calculated blocks travelled, and set new checkpoints
@@ -1003,7 +1008,11 @@ function itemInventory(player){
 						"shelter_pottery_sherd",
 						"skull_pottery_sherd",
 						"snort_pottery_sherd"];
+	
 	let inventoryPlayer = player.getComponent("minecraft:inventory");
+	const equipment = getequipped(player)
+	
+	console.warn(JSON.stringify(equipment))
 	let index=0;
 	let inventorymask = 0;
 	let armorMask = 0;
@@ -1427,15 +1436,16 @@ function entityKills(victim,player,cause){
 		//Needs a more detailed projectile check
 		//[achievement] Return to Sender | Destroy a Ghast with a fireball. | Kill a ghast using a ghast fireball.
 		//[advancement] Return to Sender | Destroy a Ghast with a fireball | Kill a ghast by deflecting a ghast fireball back into it via hitting or shooting a projectile at the fireball.
-		//needs more weapon data
+		//needs more weapon/player data
+			// requires selectedSlot
+			//[advancement] Arbalistic | Kill five unique mobs with one crossbow shot | 
+			//[advancement] Who's the Pillager Now? | Give a Pillager a taste of their own medicine | Kill a pillager with a crossbow.
 		//[achievement] Camouflage | Kill a mob while wearing the same type of mob head. | —
 		//[achievement] It spreads | Kill a mob next to a catalyst | —
 		//[advancement] It Spreads | Kill a mob near a Sculk Catalyst | Kill one of these 70 mobs near a sculk catalyst:, Axolotl, Bee, Blaze, Camel, Cat, Cave Spider, Chicken, Chicken Jockey, Cod, Cow, Creeper, Donkey, Dolphin, Drowned, Elder Guardian, Enderman, Endermite, Evoker, Fox, Frog, Ghast, Goat, Glow Squid, Guardian, Hoglin, Horse, Husk, Llama, Magma Cube, Mooshroom, Ocelot, Panda, Parrot, Phantom, Pig, Piglin, Piglin Brute, Pillager, Polar Bear, Pufferfish, Rabbit, Ravager, Salmon, Sheep, Shulker, Silverfish, Skeleton, Skeleton Horse, Skeleton Horseman, Slime, Sniffer, Stray, Spider, Spider Jockey, Squid, Strider, Trader Llama, Tropical Fish, Turtle, Vex, Vindicator, Warden, Witch, Wither, Wither Skeleton, Wolf, Zoglin, Zombie, Zombie Villager, Zombified Piglin, Mobs that drop no experience are ignored for this advancement.
 		//[achievement] Overkill | Deal nine hearts of damage in a single hit. | Damage can be dealt to any mob, even those that do not have nine hearts of health overall.
-		//[advancement] Arbalistic | Kill five unique mobs with one crossbow shot | 
 		//[advancement] Monsters Hunted | Kill one of every hostile monster | Kill each of these 34 mobs:, Blaze, Cave Spider, Creeper, Drowned, Elder Guardian, Ender Dragon, Enderman, Endermite, Evoker, Ghast, Guardian, Hoglin, Husk, Magma Cube, Phantom, Piglin, Piglin Brute, Pillager, Ravager, Shulker, Silverfish, Skeleton, Slime, Spider, Stray, Vex, Vindicator, Witch, Wither, Wither Skeleton, Zoglin, Zombie, Zombie Villager, Zombified Piglin, Other mobs may be killed, but are ignored for this advancement. Only the riders of the chicken jockeys and skeleton horsemen are counted in this advancement.
 		//[advancement] Two Birds, One Arrow | Kill two Phantoms with a piercing Arrow | Use a crossbow enchanted with Piercing to kill two phantoms with a single arrow shot.
-		//[advancement] Who's the Pillager Now? | Give a Pillager a taste of their own medicine | Kill a pillager with a crossbow.
 	//done--------------------
 	const victimType = victim.typeId.replace("minecraft:","")
 	const monsterList = ["blaze",
@@ -1973,6 +1983,29 @@ function processBlockTags(tags){
 				return "Snow Layers"
 		}
 	}
+}
+function getequipped(player){
+	const equipComp = player.getComponent("minecraft:equippable");
+	let equipment={"chest":"","Feet":"","Head":"","Legs":"","Mainhand":"","Offhand":""}
+	if( equipComp.getEquipment("Chest")){
+		equipment["chest"] = equipComp.getEquipment("Chest").typeId.replace("minecraft:","")
+	}
+	if(equipComp.getEquipment("Feet")){
+		equipment["Feet"] = equipComp.getEquipment("Feet").typeId.replace("minecraft:","")
+	}
+	if(equipComp.getEquipment("Head")){
+		equipment["Head"] = equipComp.getEquipment("Head").typeId.replace("minecraft:","")
+	}
+	if(equipComp.getEquipment("Legs")){
+		equipment["Legs"] = equipComp.getEquipment("Legs").typeId.replace("minecraft:","")
+	}
+	if(equipComp.getEquipment("Mainhand")){
+		equipment["Mainhand"] = equipComp.getEquipment("Mainhand").typeId.replace("minecraft:","")
+	}
+	if(equipComp.getEquipment("Offhand")){
+		equipment["Offhand"] = equipComp.getEquipment("Offhand").typeId.replace("minecraft:","")
+	}
+	return equipment
 }
 function initializeObjectives(player){
 
