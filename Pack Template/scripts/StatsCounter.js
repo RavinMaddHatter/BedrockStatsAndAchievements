@@ -20,6 +20,9 @@ world.afterEvents.buttonPush.subscribe(event =>{
 world.afterEvents.entityDie.subscribe(event =>{ 
 	entityDied(event);
 });
+world.afterEvents.entityHealthChanged.subscribe(event =>{ 
+	entityChangeHealth(event);
+});
 world.afterEvents.entityLoad.subscribe(event =>{ 
 	loadedEntity(event);
 });
@@ -484,6 +487,18 @@ function entityDied(event){
 					}
 				}
 			break;
+	}
+}
+function entityChangeHealth(event){
+	let source = event.entity;
+	
+	if(source.typeId == "minecraft:player"){
+		let oldVal = event.oldValue;
+		let newVal = event.newValue;
+		
+		if(oldVal <= 0 && (newVal >= (oldVal +1))){
+			usingItems("totem_of_undying", source);
+		}
 	}
 }
 function hitByProjectile(event){
@@ -1766,22 +1781,20 @@ function trading(){
 }
 function usingItems(item, player){
 	//to-do--------------------
-		//[achievement] Cheating Death | Use the Totem of Undying to cheat death | Have the Totem of Undying in your hand when you die.
-		//[advancement] Postmortal | Use a Totem of Undying to cheat death | Activate a totem of undying by taking fatal damage.
 	//done--------------------
 	switch(item){
 		case "oak_sign" :
-			if(!achievementTracker.checkAchievment("ItsaSign",player)){
-				achievementTracker.setAchievment("ItsaSign",player);//[achievement] It's a Sign! | Craft and place an Oak Sign. | —
+			if(!achievementTracker.checkAchievment("ItsaSign", player)){
+				achievementTracker.setAchievment("ItsaSign", player);//[achievement] It's a Sign! | Craft and place an Oak Sign. | —
 			}
 			break;
 		case "pitcher_pod" ://*fall through*
 		case "torchflower_seeds" :
-			if(!achievementTracker.checkAchievment("Plantingthepast",player)){
-				achievementTracker.setAchievment("Plantingthepast",player);//[achievement] Planting the past | Plant any Sniffer seed | —
-				advancementTracker.setAchievment("PlantingthePast",player);//[advancement] Planting the Past | Plant any Sniffer seed | 
-				if(!advancementTracker.checkAchievment("ASeedyPlace",player)){
-					advancementTracker.setAchievment("ASeedyPlace",player);
+			if(!achievementTracker.checkAchievment("Plantingthepast", player)){
+				achievementTracker.setAchievment("Plantingthepast", player);//[achievement] Planting the past | Plant any Sniffer seed | —
+				advancementTracker.setAchievment("PlantingthePast", player);//[advancement] Planting the Past | Plant any Sniffer seed | 
+				if(!advancementTracker.checkAchievment("ASeedyPlace", player)){
+					advancementTracker.setAchievment("ASeedyPlace", player);
 				}
 			}
 			break;
@@ -1790,18 +1803,24 @@ function usingItems(item, player){
 		case "nether_wart" ://*fall through*
 		case "pumpkin_seeds" ://*fall through*
 		case "wheat_seeds" :
-			if(!advancementTracker.checkAchievment("ASeedyPlace",player)){
-				advancementTracker.setAchievment("ASeedyPlace",player);//[advancement] A Seedy Place | Plant a seed and watch it grow | Plant one of these 7 crops:, Beetroot, Melon, Nether Wart, Pumpkin, Wheat, Torchflower, Pitcher, Other crops and plants can be planted, but are ignored for this advancement.
+			if(!advancementTracker.checkAchievment("ASeedyPlace", player)){
+				advancementTracker.setAchievment("ASeedyPlace", player);//[advancement] A Seedy Place | Plant a seed and watch it grow | Plant one of these 7 crops:, Beetroot, Melon, Nether Wart, Pumpkin, Wheat, Torchflower, Pitcher, Other crops and plants can be planted, but are ignored for this advancement.
 			}
 			break;
 		case "glow_ink_sac" :
-			if(!advancementTracker.checkAchievment("GlowandBehold",player)){
-				advancementTracker.setAchievment("GlowandBehold",player);//[advancement] Glow and Behold! | Make the text of any kind of sign glow | Use a glow ink sac on a sign or a hanging sign.
+			if(!advancementTracker.checkAchievment("GlowandBehold", player)){
+				advancementTracker.setAchievment("GlowandBehold", player);//[advancement] Glow and Behold! | Make the text of any kind of sign glow | Use a glow ink sac on a sign or a hanging sign.
 			}
 			break;
 		case "ender_pearl" :
-			if(!achievementTracker.checkAchievment("BeamMeUp",player)){
-				achievementTracker.setAchievment("BeamMeUp",player);//[achievement] Beam Me Up | Teleport over 100 meters from a single throw of an Ender Pearl | Throw an ender pearl 100 blocks in any direction
+			if(!achievementTracker.checkAchievment("BeamMeUp", player)){
+				achievementTracker.setAchievment("BeamMeUp", player);//[achievement] Beam Me Up | Teleport over 100 meters from a single throw of an Ender Pearl | Throw an ender pearl 100 blocks in any direction
+			}
+			break;
+		case "totem_of_undying" :
+			if(!achievementTracker.checkAchievment("CheatingDeath", player)){
+				achievementTracker.setAchievment("CheatingDeath", player);//[achievement] Cheating Death | Use the Totem of Undying to cheat death | Have the Totem of Undying in your hand when you die.
+				advancementTracker.setAchievment("Postmortal", player);//[advancement] Postmortal | Use a Totem of Undying to cheat death | Activate a totem of undying by taking fatal damage.
 			}
 			break;
 	}
