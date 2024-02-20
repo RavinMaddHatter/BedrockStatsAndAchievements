@@ -69,6 +69,16 @@ world.afterEvents.projectileHitEntity.subscribe(event =>{
 world.afterEvents.targetBlockHit.subscribe(event=>{
 	targetHit(event);
 });
+world.afterEvents.dataDrivenEntityTrigger.subscribe(event=>{
+	if(event.entity.typeId!="minecraft:player"){
+		if(event.eventId=="minecraft:on_tame"){
+			tameEvents(event)
+		}
+		if(event.eventId=="minecraft:on_trust"){
+			tameEvents(event)
+		}
+	}
+});
 //end subscriptions----------------------------------------
 
 //ui functions----------------------------------------
@@ -1098,7 +1108,7 @@ function itemInventory(player){
 			advancementTracker.setAchievment("RespectingtheRemnants",player)
 		}
 	}
-	if(froglight=0b111){
+	if(froglight==0b111){
 		//[advancement] With Our Powers Combined! | Have all Froglights in your inventory | Have a Pearlescent, Ochre, and Verdant Froglight in your inventory.
 		//[achievement] With our powers combined! | Have all 3 froglights in your inventory | Acquire at least one of each pearlescent, verdant, and ochre froglights in your inventory at the same time.		
 		if(!advancementTracker.checkAchievment("WithOurPowersCombined",player)){
@@ -1106,7 +1116,7 @@ function itemInventory(player){
 			achievementTracker.setAchievment("Withourpowerscombined",player)
 		}
 	}
-	if(woolMask=0b1111111111111111){
+	if(woolMask==0b1111111111111111){
 		//[achievement] Rainbow Collection | Gather all 16 colors of wool. | All the colors of wool do not have to be in the inventory at the same time, but must have been picked up by the player at least once.
 		if(!achievementTracker.checkAchievment("RainbowCollection",player)){
 			achievementTracker.setAchievment("RainbowCollection",player)
@@ -1422,40 +1432,95 @@ function checkArmorachievements(player,armorMask){
 	}
 	
 }
+function tameEvents(event){
+	const animalType = event.entity.typeId.replace("minecraft:","")
+	
+	let player = event.entity.dimension.getPlayers({
+		closest: 1,
+			location: {x: event.entity.location.x, y: event.entity.location.y, z: event.entity.location.z}
+	})[0];
+	switch(animalType){
+		case "ocelot":
+		//[achievement] Lion Hunter | Gain the trust of an Ocelot. | —
+			if(!achievementTracker.checkAchievment("LionHunter",player)){
+				achievementTracker.setAchievment("LionHunter",player)
+			}
+			break;
+		case "wolf":
+		//[achievement] Leader of the Pack | Befriend five wolves. | This does not have to be in a single game, so multiple games or reloading old saves does count toward this achievement.
+			if(!achievementTracker.checkAchievment("LeaderofthePack",player)){
+				var numWolfs = player.getDynamicProperty("wolfCounter")
+				if(!numWolfs){
+					numWolfs=0
+				}
+				numWolfs+=1
+				player.setDynamicProperty("wolfCounter",numWolfs)
+				if(numWolfs>=5){
+					achievementTracker.setAchievment("LeaderofthePack",player)
+				}
+			}
+		case "cat":
+	//[achievement] Plethora of Cats | Befriend twenty stray cats. | Befriend and tame twenty stray cats found in villages. They do not all need to be tamed in a single world.
+			if(!achievementTracker.checkAchievment("PlethoraofCats",player)){
+				var numCats = player.getDynamicProperty("catCounter")
+				if(!numCats){
+					numCats=0
+				}
+				numCats+=1
+				player.setDynamicProperty("catCounter",numCats)
+				if(numCats>=12){
+					achievementTracker.setAchievment("PlethoraofCats",player)
+				}
+			}
+	//[advancement] A Complete Catalogue | Tame all Cat variants! | Tame each of these 11 cat variants:, Tabby, Tuxedo, Red, Siamese, British Shorthair, Calico, Persian, Ragdoll, White, Jellie, Black
+			if(!advancementTracker.checkAchievment("ACompleteCatalogue",player)){
+				let catMask = player.getDynamicProperty("catMask")
+				if(!catMask){
+					catMask=0b000000000000
+				}
+				const variant = event.entity.getComponent("minecraft:variant")
 
+				catMask = catMask | 0b1 << variant.value
+				player.setDynamicProperty("catMask",catMask)
+				if(catMask==0b11111111111){
+					advancementTracker.setAchievment("ACompleteCatalogue",player)
+				}
+			}
+	}
+	addToScore("stats_AnimalsTaimed_", animalType.replace("_",""), player)
+}
 function entityInteractions(){
 	//to-do--------------------
 		//[achievement] Birthday song | Have an Allay drop a cake at a noteblock | Tame an allay by giving it a cake while having dropped cake items and play a noteblock nearby.
-		//[achievement] Diamonds to you! | Throw diamonds at another player. | Drop a diamond. Another player or a mob must then pick up this diamond.
 		//[achievement] Echolocation | Feed a dolphin fish to have it lead you to treasure | Feed a dolphin cod or salmon and have it lure you to treasure.
 		//[achievement] Feels Like Home | Take a Strider for a loooong [sic] ride on a lava lake in the Overworld. | In the Overworld, use a strider to ride on a lava lake for a distance of 50 meters from the point where the ride starts.
-		//[achievement] Leader of the Pack | Befriend five wolves. | This does not have to be in a single game, so multiple games or reloading old saves does count toward this achievement.
-		//[achievement] Lion Hunter | Gain the trust of an Ocelot. | —
 		//[achievement] Oooh, shiny! | Distract a Piglin using gold | Give a piglin a gold item while it is aggressive toward the player.
-		//[achievement] Plethora of Cats | Befriend twenty stray cats. | Befriend and tame twenty stray cats found in villages. They do not all need to be tamed in a single world.
 		//[achievement] Saddle Up | Tame a horse. | —
 		//[achievement] So I Got That Going for Me | Lead a Caravan containing at least 5 Llamas | —
 		//[achievement] Taste of Your Own Medicine | Poison a witch with a splash potion. | Throw a splash potion of poison at a witch (by facing the witch and pressing the use key).
 		//[achievement] Time for Stew | Give someone a suspicious stew. | —
 		//[achievement] Whatever Floats Your Goat | Get in a boat and float with a goat | Use a boat and put a goat inside that boat, then ride it
 		//[achievement] When Pigs Fly | Use a saddle to ride a pig, and then have the pig get hurt from fall damage while riding it. | Be riding a pig (e.g. using a saddle) when it hits the ground with a fall distance greater than 5.
-		//[achievement] Where Have You Been? | Receive a gift from a tamed cat in the morning. | The gift must be picked up from the ground.
 		
-		//[advancement] A Complete Catalogue | Tame all Cat variants! | Tame each of these 11 cat variants:, Tabby, Tuxedo, Red, Siamese, British Shorthair, Calico, Persian, Ragdoll, White, Jellie, Black
 		//[advancement] Best Friends Forever | Tame an animal | Tame one of these 8 tameable mobs:, Cat, Donkey, Horse, Llama, Mule, Parrot, Trader Llama, Wolf
 		//[advancement] Birthday Song | Have an Allay drop a Cake at a Note Block | Give an allay a cake and then use a note block to make the allay drop the cake at a note block.
 		//[advancement] Feels Like Home | Take a Strider for a loooong ride on a lava lake in the Overworld | While riding a strider, travel 50 blocks on lava in the Overworld., Only horizontal displacement is counted. Traveling in a circle for more than 50 blocks doesn't count.
-		//[advancement] Is It a Balloon? | Look at a Ghast through a Spyglass | Look at a ghast through a spyglass while the ghast is focused on you.
-		//[advancement] Is It a Bird? | Look at a Parrot through a Spyglass | —
-		//[advancement] Is It a Plane? | Look at the Ender Dragon through a Spyglass | —
-		//[advancement] Little Sniffs | Feed a Snifflet | Feed a snifflet torchflower seeds.
 		//[advancement] Oh Shiny | Distract Piglins with gold | While aggravated, give a piglin one of these 25 gold-related items in the #piglin_loved item tag:, Bell, Block of Gold, Block of Raw Gold, Clock, Enchanted Golden Apple, Gilded Blackstone, Glistering Melon Slice, Gold Ingot, Gold Ore, Golden Apple, Golden Axe, Golden Boots, Golden Carrot, Golden Chestplate, Golden Helmet, Golden Hoe, Golden Horse Armor, Golden Leggings, Golden Pickaxe, Golden Shovel, Golden Sword, Light Weighted Pressure Plate, Nether Gold Ore, Deepslate Gold Ore, Raw Gold, Other gold-related items do not distract the piglin and do not trigger this advancement.
+		//[advancement] Little Sniffs | Feed a Snifflet | Feed a snifflet torchflower seeds.
 		//[advancement] Surge Protector | Protect a Villager from an undesired shock without starting a fire | Be within 30 blocks of a lightning strike that doesn't set any blocks on fire, while an unharmed villager is within or up to six blocks above a 30×30×30 volume centered on the lightning strike.
 		//[advancement] This Boat Has Legs | Ride a Strider with a Warped Fungus on a Stick | Boost[2] a strider with a warped fungus on a stick.
 		//[advancement] Whatever Floats Your Goat! | Get in a Boat and float with a Goat | Enter a boat or a raft with a goat.
 		//[advancement] When the Squad Hops into Town | Get each Frog variant on a Lead | The frogs don't need to be leashed at the same time.[5]
+		// Requires drop method
+		//Tag dropped diamonds and check on pick up Requires drop and pickup methods
+		//[achievement] Diamonds to you! | Throw diamonds at another player. | Drop a diamond. Another player or a mob must then pick up this diamond.
 		//[advancement] You've Got a Friend in Me | Have an Allay deliver items to you | Give an allay an item and then have it return to the player with more of that item.
-		//[advancement] Zombie Doctor | Weaken and then cure a Zombie Villager | Use a golden apple on a zombie villager under the Weakness effect; the advancement is granted when the zombie villager converts into a villager., In multiplayer, only the player that feeds the golden apple gets the advancement.
+		//tag items dropped by the cat. then check if they were picked up
+		//[achievement] Where Have You Been? | Receive a gift from a tamed cat in the morning. | The gift must be picked up from the ground.
+		//Requires look through looking glass method.
+		//[advancement] Is It a Balloon? | Look at a Ghast through a Spyglass | Look at a ghast through a spyglass while the ghast is focused on you.
+		//[advancement] Is It a Bird? | Look at a Parrot through a Spyglass | —
+		//[advancement] Is It a Plane? | Look at the Ender Dragon through a Spyglass | —
 	//done--------------------
 }
 function entityKills(victim,player,cause,weapon){
@@ -1533,7 +1598,6 @@ function entityKills(victim,player,cause,weapon){
 			break;
 		//[advancement] Uneasy Alliance | Rescue a Ghast from the Nether, bring it safely home to the Overworld... and then kill it | Kill a ghast while the player is in the Overworld.
 		case "ghast":
-		console.warn(victim.dimension.id.replace("minecraft:", ""))
 			if (victim.dimension.id.replace("minecraft:", "")=="overworld"){
 				if(!advancementTracker.checkAchievment("UneasyAlliance",player)){
 					advancementTracker.setAchievment("UneasyAlliance",player)
