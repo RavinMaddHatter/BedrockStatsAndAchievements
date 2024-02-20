@@ -32,6 +32,9 @@ world.afterEvents.itemCompleteUse.subscribe(event=>{
 world.afterEvents.itemUse.subscribe(event=>{
 	statStick(event)
 	useItem(event)
+})
+world.afterEvents.itemUseOn.subscribe(event=>{
+	useItemOn(event)
 });
 world.afterEvents.itemReleaseUse.subscribe(event=>{
 	itemRelease(event);
@@ -788,6 +791,38 @@ function targetHit(event){
 		}
 	}
 }
+function useItemOn(event){
+	const itemUsed = event.itemStack.typeId.replace("minecraft:" , "")
+	const blockInfo = processBlockTags(event.block.getTags())
+	const player = event.source
+	//Needs an update when Block.typeId is added
+	if(blockInfo.includes("Copper")){
+		//[achievement] Wax on, Wax off | Apply and remove Wax from all the Copper blocks!!! | Wax and de-wax each oxidation stage of all 4 Copper Blocks in the game, which include cut copper blocks, stairs, & slabs.
+		if (itemUsed.includes("axe")){
+			//[advancement] Wax Off | Scrape Wax off of a Copper block! | Use an axe to revert a waxed copper block.
+			if(!advancementTracker.checkAchievment("WaxOff",player)){
+				advancementTracker.setAchievment("WaxOff",player)
+			}
+			if(advancementTracker.checkAchievment("WaxOn",player)){
+				if(!achievementTracker.checkAchievment("Waxon,Waxoff",player)){
+					achievementTracker.setAchievment("Waxon,Waxoff",player)
+				}
+			}
+		}
+		if (itemUsed == "honeycomb"){
+			//[advancement] Wax On | Apply Honeycomb to a Copper block! | Use a honeycomb on a copper block.
+			if(!advancementTracker.checkAchievment("WaxOn",player)){
+				advancementTracker.setAchievment("WaxOn",player)
+			}
+			if(advancementTracker.checkAchievment("WaxOff",player)){
+				if(!achievementTracker.checkAchievment("Waxon,Waxoff",player)){
+					achievementTracker.setAchievment("Waxon,Waxoff",player)
+				}
+				
+			}
+		}
+	}
+}
 function useItem(event){
 	let player = event.source;
 	let itemName = event.itemStack.typeId.replace("minecraft:","");
@@ -874,7 +909,6 @@ function blockInteractions(item,Block){
 		//[achievement] Top of the World | Place scaffolding to the world limit. | Place a scaffolding at the world height limit.
 		//[achievement] Total Beelocation | Move and place a Bee Nest, with 3 bees inside, using Silk Touch. | —
 		//[achievement] Trampoline | Bounce 30 blocks upward off a slime block. | —
-		//[achievement] Wax on, Wax off | Apply and remove Wax from all the Copper blocks!!! | Wax and de-wax each oxidation stage of all 4 Copper Blocks in the game, which include cut copper blocks, stairs, & slabs.
 		//[advancement] Bee Our Guest | Use a Campfire to collect Honey from a Beehive using a Glass Bottle without aggravating the Bees | Use a glass bottle on a beehive or bee nest while not angering the bees inside.
 		//[advancement] Country Lode, Take Me Home | Use a Compass on a Lodestone | —
 		//[advancement] Enchanter | Enchant an item at an Enchanting Table | Insert an item in an enchanting table, then apply an enchantment.
@@ -884,8 +918,7 @@ function blockInteractions(item,Block){
 		//[advancement] Sweet Dreams | Sleep in a Bed to change your respawn point | Lie down in a bed. The advancement is granted as soon as the player is in the bed, even if the player does not successfully sleep.
 		//[advancement] Total Beelocation | Move a Bee Nest, with 3 Bees inside, using Silk Touch | —
 		//[advancement] War Pigs | Loot a Chest in a Bastion Remnant | Open a naturally generated, never-before opened chest in a bastion remnant.
-		//[advancement] Wax Off | Scrape Wax off of a Copper block! | Use an axe to revert a waxed copper block.
-		//[advancement] Wax On | Apply Honeycomb to a Copper block! | Use a honeycomb on a copper block.
+
 		//done--------------------
 }
 function craftAndCook(){
