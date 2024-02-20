@@ -1444,11 +1444,24 @@ function tameEvents(event){
 		closest: 1,
 			location: {x: event.entity.location.x, y: event.entity.location.y, z: event.entity.location.z}
 	})[0];
+	if (event.eventId=="minecraft:on_tame"){
+		//[advancement] Best Friends Forever | Tame an animal | Tame one of these 8 tameable mobs:, Cat, Donkey, Horse, Llama, Mule, Parrot, Trader Llama, Wolf
+		if(!advancementTracker.checkAchievment("BestFriendsForever",player)){
+			advancementTracker.setAchievment("BestFriendsForever",player)
+		}
+	}
+	
 	switch(animalType){
 		case "ocelot":
 		//[achievement] Lion Hunter | Gain the trust of an Ocelot. | —
 			if(!achievementTracker.checkAchievment("LionHunter",player)){
 				achievementTracker.setAchievment("LionHunter",player)
+			}
+			break;
+		case "horse":
+		//[achievement] Saddle Up | Tame a horse. | —
+			if(!achievementTracker.checkAchievment("SaddleUp",player)){
+				achievementTracker.setAchievment("SaddleUp",player)
 			}
 			break;
 		case "wolf":
@@ -1516,14 +1529,13 @@ function entityInteractions(){
 		//[achievement] Echolocation | Feed a dolphin fish to have it lead you to treasure | Feed a dolphin cod or salmon and have it lure you to treasure.
 		//[achievement] Feels Like Home | Take a Strider for a loooong [sic] ride on a lava lake in the Overworld. | In the Overworld, use a strider to ride on a lava lake for a distance of 50 meters from the point where the ride starts.
 		//[achievement] Oooh, shiny! | Distract a Piglin using gold | Give a piglin a gold item while it is aggressive toward the player.
-		//[achievement] Saddle Up | Tame a horse. | —
+		
 		//[achievement] So I Got That Going for Me | Lead a Caravan containing at least 5 Llamas | —
 		//[achievement] Taste of Your Own Medicine | Poison a witch with a splash potion. | Throw a splash potion of poison at a witch (by facing the witch and pressing the use key).
 		//[achievement] Time for Stew | Give someone a suspicious stew. | —
 		//[achievement] Whatever Floats Your Goat | Get in a boat and float with a goat | Use a boat and put a goat inside that boat, then ride it
 		//[achievement] When Pigs Fly | Use a saddle to ride a pig, and then have the pig get hurt from fall damage while riding it. | Be riding a pig (e.g. using a saddle) when it hits the ground with a fall distance greater than 5.
 		
-		//[advancement] Best Friends Forever | Tame an animal | Tame one of these 8 tameable mobs:, Cat, Donkey, Horse, Llama, Mule, Parrot, Trader Llama, Wolf
 		//[advancement] Birthday Song | Have an Allay drop a Cake at a Note Block | Give an allay a cake and then use a note block to make the allay drop the cake at a note block.
 		//[advancement] Feels Like Home | Take a Strider for a loooong ride on a lava lake in the Overworld | While riding a strider, travel 50 blocks on lava in the Overworld., Only horizontal displacement is counted. Traveling in a circle for more than 50 blocks doesn't count.
 		//[advancement] Oh Shiny | Distract Piglins with gold | While aggravated, give a piglin one of these 25 gold-related items in the #piglin_loved item tag:, Bell, Block of Gold, Block of Raw Gold, Clock, Enchanted Golden Apple, Gilded Blackstone, Glistering Melon Slice, Gold Ingot, Gold Ore, Golden Apple, Golden Axe, Golden Boots, Golden Carrot, Golden Chestplate, Golden Helmet, Golden Hoe, Golden Horse Armor, Golden Leggings, Golden Pickaxe, Golden Shovel, Golden Sword, Light Weighted Pressure Plate, Nether Gold Ore, Deepslate Gold Ore, Raw Gold, Other gold-related items do not distract the piglin and do not trigger this advancement.
