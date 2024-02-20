@@ -69,6 +69,9 @@ world.afterEvents.projectileHitEntity.subscribe(event =>{
 world.afterEvents.targetBlockHit.subscribe(event=>{
 	targetHit(event);
 });
+world.afterEvents.entityHurt.subscribe(event=>{
+	onHurtEvent(event);
+});
 world.afterEvents.dataDrivenEntityTrigger.subscribe(event=>{
 	if(event.entity.typeId!="minecraft:player"){
 		if(event.eventId=="minecraft:on_tame"){
@@ -475,6 +478,8 @@ function entityDied(event){
 			if(projectile){
 				if(projectile.typeId=="minecraft:fireball"){
 					if(victimName=="ghast"){
+						//[achievement] Return to Sender | Destroy a Ghast with a fireball. | Kill a ghast using a ghast fireball.
+						//[advancement] Return to Sender | Destroy a Ghast with a fireball | Kill a ghast by deflecting a ghast fireball back into it via hitting or shooting a projectile at the fireball.
 						if(!advancementTracker.checkAchievment("ReturntoSender",killer)){
 							advancementTracker.setAchievment("ReturntoSender",killer)
 							achievementTracker.setAchievment("ReturntoSender",killer)
@@ -543,10 +548,13 @@ function itemComplete(event){
 	//to-do--------------------
 		//[achievement] Castaway | Eat nothing but dried kelp for three in-game days | Eat dried kelp once; in the following three in-game days, eat nothing but dried kelp.
 		//[advancement] A Balanced Diet | Eat everything that is edible, even if it's not good for you | Eat each of these 40 foods:, Apple, Baked Potato, Beetroot, Beetroot Soup, Bread, Carrot, Chorus Fruit, Cooked Chicken, Cooked Cod, Cooked Mutton, Cooked Porkchop, Cooked Rabbit, Cooked Salmon, Cookie, Dried Kelp, Enchanted Golden Apple, Glow Berries, Golden Apple, Golden Carrot, Honey Bottle, Melon Slice, Mushroom Stew, Poisonous Potato, Potato, Pufferfish, Pumpkin Pie, Rabbit Stew, Raw Beef, Raw Chicken, Raw Cod, Raw Mutton, Raw Porkchop, Raw Rabbit, Raw Salmon, Rotten Flesh, Spider Eye, Steak, Suspicious Stew, Sweet Berries, Tropical Fish, Other foods and consumables can be eaten, but are ignored for this advancement.
-		//[advancement] Husbandry | The world is full of friends and food | Consume anything that can be consumed.
 	//done--------------------
 	let player = event.source;
 	let itemName = event.itemStack.typeId.replace("minecraft:","");
+	//[advancement] Husbandry | The world is full of friends and food | Consume anything that can be consumed.
+	if(!advancementTracker.checkAchievment("Husbandry",player)){
+		advancementTracker.setAchievment("Husbandry",player)
+	}
 	switch(itemName){
 		case "crossbow" :
 			player.setDynamicProperty("chargeCross", 1);
@@ -878,10 +886,7 @@ function blockInteractions(item,Block){
 		//[advancement] War Pigs | Loot a Chest in a Bastion Remnant | Open a naturally generated, never-before opened chest in a bastion remnant.
 		//[advancement] Wax Off | Scrape Wax off of a Copper block! | Use an axe to revert a waxed copper block.
 		//[advancement] Wax On | Apply Honeycomb to a Copper block! | Use a honeycomb on a copper block.
-		//[achievement] Into The Nether | Construct a Nether Portal. | Light a nether portal.
-		//[advancement] We Need to Go Deeper | Build, light and enter a Nether Portal | Enter the Nether dimension.
-		
-	//done--------------------
+		//done--------------------
 }
 function craftAndCook(){
 	//to-do--------------------
@@ -1489,6 +1494,22 @@ function tameEvents(event){
 	}
 	addToScore("stats_AnimalsTaimed_", animalType.replace("_",""), player)
 }
+function onHurtEvent(event){
+	const source = event.damageSource
+	const victim = event.hurtEntity
+	if(source.damagingEntity){
+		const agressor = source.damagingEntity
+		const agressorType = agressor.typeId.replace("minecraft:","")
+		if(agressorType=="player"){
+		//[achievement] Overkill | Deal nine hearts of damage in a single hit. | Damage can be dealt to any mob, even those that do not have nine hearts of health overall.
+			if(event.damage>9){
+				if(!achievementTracker.checkAchievment("Overkill",agressor)){
+					achievementTracker.setAchievment("Overkill",agressor)
+				}
+			}
+		}
+	}
+}
 function entityInteractions(){
 	//to-do--------------------
 		//[achievement] Birthday song | Have an Allay drop a cake at a noteblock | Tame an allay by giving it a cake while having dropped cake items and play a noteblock nearby.
@@ -1528,15 +1549,12 @@ function entityKills(victim,player,cause,weapon){
 	//to-do--------------------
 		//needs component checks
 		//Needs a more detailed projectile check
-		//[achievement] Return to Sender | Destroy a Ghast with a fireball. | Kill a ghast using a ghast fireball.
-		//[advancement] Return to Sender | Destroy a Ghast with a fireball | Kill a ghast by deflecting a ghast fireball back into it via hitting or shooting a projectile at the fireball.
 		//needs more weapon/player data
 			// requires selectedSlot
 			//[advancement] Arbalistic | Kill five unique mobs with one crossbow shot | 
 		//[achievement] Camouflage | Kill a mob while wearing the same type of mob head. | —
 		//[achievement] It spreads | Kill a mob next to a catalyst | —
 		//[advancement] It Spreads | Kill a mob near a Sculk Catalyst | Kill one of these 70 mobs near a sculk catalyst:, Axolotl, Bee, Blaze, Camel, Cat, Cave Spider, Chicken, Chicken Jockey, Cod, Cow, Creeper, Donkey, Dolphin, Drowned, Elder Guardian, Enderman, Endermite, Evoker, Fox, Frog, Ghast, Goat, Glow Squid, Guardian, Hoglin, Horse, Husk, Llama, Magma Cube, Mooshroom, Ocelot, Panda, Parrot, Phantom, Pig, Piglin, Piglin Brute, Pillager, Polar Bear, Pufferfish, Rabbit, Ravager, Salmon, Sheep, Shulker, Silverfish, Skeleton, Skeleton Horse, Skeleton Horseman, Slime, Sniffer, Stray, Spider, Spider Jockey, Squid, Strider, Trader Llama, Tropical Fish, Turtle, Vex, Vindicator, Warden, Witch, Wither, Wither Skeleton, Wolf, Zoglin, Zombie, Zombie Villager, Zombified Piglin, Mobs that drop no experience are ignored for this advancement.
-		//[achievement] Overkill | Deal nine hearts of damage in a single hit. | Damage can be dealt to any mob, even those that do not have nine hearts of health overall.
 		//[advancement] Monsters Hunted | Kill one of every hostile monster | Kill each of these 34 mobs:, Blaze, Cave Spider, Creeper, Drowned, Elder Guardian, Ender Dragon, Enderman, Endermite, Evoker, Ghast, Guardian, Hoglin, Husk, Magma Cube, Phantom, Piglin, Piglin Brute, Pillager, Ravager, Shulker, Silverfish, Skeleton, Slime, Spider, Stray, Vex, Vindicator, Witch, Wither, Wither Skeleton, Zoglin, Zombie, Zombie Villager, Zombified Piglin, Other mobs may be killed, but are ignored for this advancement. Only the riders of the chicken jockeys and skeleton horsemen are counted in this advancement.
 		//[advancement] Two Birds, One Arrow | Kill two Phantoms with a piercing Arrow | Use a crossbow enchanted with Piercing to kill two phantoms with a single arrow shot.
 	//done--------------------
