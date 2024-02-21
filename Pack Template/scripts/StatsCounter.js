@@ -435,7 +435,7 @@ function blockBroken(event){
 }
 function blockPlaced(event){
 	let player = event.player;
-	let blockData= processBlockTags(event.block.getTags())
+	let blockData= getequipped(player)["Mainhand"].replace("_"," ")
 	if (blockData!=undefined){
 		addToScore("stats_blocksPlaced_", blockData, player)
 	}
