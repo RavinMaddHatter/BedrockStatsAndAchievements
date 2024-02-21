@@ -436,33 +436,48 @@ function pleatePressed(event){
 }
 function changedDimension(event){
 	let player = event.player;
-	let getDim = event.toDimension.id.replace("minecraft:","");
-	switch(getDim){
+	let getDimTo = event.toDimension.id.replace("minecraft:","");
+	let getDimFrom = event.fromDimension.id.replace("minecraft:","");
+	let locationTo = event.toLocation;
+	let locationFrom = event.fromLocation;
+	
+	switch(getDimTo){
 		case "nether":
-			addToScore("stats_enteredDimension_","Nether",player)
-			if(!advancementTracker.checkAchievment("WeNeedtoGoDeeper",player)){
-				achievementTracker.setAchievment("WeNeedtoGoDeeper",player)//[achievement] Into The Nether | Construct a Nether Portal. | Light a nether portal.
-				advancementTracker.setAchievment("IntoTheNether",player)//[advancement] Nether | Bring summer clothes | Enter the Nether dimension.
-
+			addToScore("stats_enteredDimension_","Nether",player);
+			if(!advancementTracker.checkAchievment("WeNeedtoGoDeeper", player)){
+				achievementTracker.setAchievment("IntoTheNether", player);//[achievement] Into The Nether | Construct a Nether Portal. | Light a nether portal.
+				advancementTracker.setAchievment("WeNeedtoGoDeeper", player);//[advancement] We Need to Go Deeper | Build, light and enter a Nether Portal | Enter the Nether dimension.
+				advancementTracker.setAchievment("Nether", player);//[advancement] Nether | Bring summer clothes | Enter the Nether dimension.
 			}
+			player.setDynamicProperty("netherEnterX", Math.floor(locationFrom.x));
+			player.setDynamicProperty("netherEnterZ", Math.floor(locationFrom.z));
 			break;
 		case "the_end":
-			addToScore("stats_enteredDimension_","The End",player)
-			if(!advancementTracker.checkAchievment("TheEnd",player)){
-				//[achievement] The End? | Enter an End Portal | Enter a stronghold End Portal activated with all twelve eyes of ender.
-				achievementTracker.setAchievment("TheEnd",player)
-				//[advancement] The End? | Enter the End Portal | Enter the End dimension.
-				advancementTracker.setAchievment("TheEnd",player)
-				//[advancement] The End | Or the beginning? | Enter the End dimension.
-				advancementTracker.setAchievment("TheEnd2",player)
+			addToScore("stats_enteredDimension_","The End", player);
+			if(!advancementTracker.checkAchievment("TheEnd", player)){
+				achievementTracker.setAchievment("TheEnd", player);//[achievement] The End? | Enter an End Portal | Enter a stronghold End Portal activated with all twelve eyes of ender.
+				advancementTracker.setAchievment("TheEnd", player);//[advancement] The End? | Enter the End Portal | Enter the End dimension.
+				advancementTracker.setAchievment("TheEnd2", player);//[advancement] The End | Or the beginning? | Enter the End dimension.
 			}
 			break;
 		case "overworld":
-			addToScore("stats_enteredDimension_","Overworld",player)
-			if(advancementTracker.checkAchievment("TheEnd",player)){
-				if(achievementTracker.checkAchievment("ExitTheEnd",player)){
-					//[achievement] The End | Kill the Enderdragon [sic] | Enter the end exit portal.
-					achievementTracker.setAchievment("ExitTheEnd",player)
+			addToScore("stats_enteredDimension_","Overworld", player);
+			if(advancementTracker.checkAchievment("TheEnd", player)){
+				if(!achievementTracker.checkAchievment("ExitTheEnd", player)){
+					achievementTracker.setAchievment("ExitTheEnd", player);//[achievement] The End | Kill the Enderdragon [sic] | Enter the end exit portal.
+				}
+			}
+			if(getDimFrom == "nether"){
+				let x1 = player.getDynamicProperty("netherEnterX");
+				let z1 = player.getDynamicProperty("netherEnterZ");
+				let x2 = Math.floor(locationTo.x);
+				let z2 = Math.floor(locationTo.z);
+				let portalDist = calculateDistance(x1, z1, x2, z2);
+				
+				if(portalDist >= 7000){
+					if(!advancementTracker.checkAchievment("SubspaceBubble", player)){
+						advancementTracker.setAchievment("SubspaceBubble", player);//[advancement] Subspace Bubble | Use the Nether to travel 7 km in the Overworld | Use the Nether to travel between 2 points in the Overworld with a minimum horizontal euclidean distance of 7000 blocks between each other, which is 875 blocks in the Nether.
+					}
 				}
 			}
 			break;
@@ -873,38 +888,26 @@ function useItem(event){
 
 //stat functions----------------------------------------
 function overworldBlocksTravelled(player){
-	//get value of blocks travelled, or initialize if undefined
-		let blkDist = player.getDynamicProperty("blockRun");
-		let x2;
-		let z2;
+	let blkDist = player.getDynamicProperty("blockRun");
+	
+	if(player.dimension.id == "minecraft:overworld"){
+		let x1 = player.getDynamicProperty("blockRunX");
+		let z1 = player.getDynamicProperty("blockRunZ");
 		
-	//verify the player is in the overworld. calculate distance from last saved checkpoint or initial spawn if distance is 0
-		if(player.dimension.id == "minecraft:overworld"){
-			let x1 = player.getDynamicProperty("blockRunX");
-			let z1 = player.getDynamicProperty("blockRunZ");
-			
-			if(blkDist == 0){//if first time, calculate from initial spawn location
-				x1 = player.getDynamicProperty("initialX");
-				z1 = player.getDynamicProperty("initialZ");
-			}
-			x2 = Math.floor(player.location.x);
-			z2 = Math.floor(player.location.z);
-			blkDist = blkDist + calculateDistance(x1, z1, x2, z2);
+		if(blkDist == 0){//if first time, calculate from initial spawn location
+			x1 = player.getDynamicProperty("initialX");
+			z1 = player.getDynamicProperty("initialZ");
 		}
-	//check if blocks travelled are more than 7000, then trigger achievement
-	// I think this one is wrong.
-		if(blkDist > 7000){
-			//[advancement] Subspace Bubble | Use the Nether to travel 7 km in the Overworld | Use the Nether to travel between 2 points in the Overworld with a minimum horizontal euclidean distance of 7000 blocks between each other, which is 875 blocks in the Nether.
-			if(advancementTracker.checkAchievment("SubspaceBubble", player)){
-				advancementTracker.setAchievment("SubspaceBubble", player);
-			}
-		}
-	//record the calculated blocks travelled, and set new checkpoints
+		let x2 = Math.floor(player.location.x);
+		let z2 = Math.floor(player.location.z);
+		blkDist = blkDist + calculateDistance(x1, z1, x2, z2);
+		
 		player.setDynamicProperty("blockRun", blkDist);
 		player.setDynamicProperty("blockRunX", x2);
 		player.setDynamicProperty("blockRunZ", z2);
-	//output blocks travelled
-		return blkDist;
+	}
+	
+	return blkDist;
 }
 //end stat functions----------------------------------------
 
