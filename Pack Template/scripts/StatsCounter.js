@@ -10,8 +10,8 @@ const debugToggle = true;
 timer10Sec();
 timer1Min();
 timer1Day();
-var achievementTracker = new achievementHandler(achievements);
-var advancementTracker = new achievementHandler(advancements);
+var achievementTracker = new achievementHandler(achievements, "Achievments");
+var advancementTracker = new achievementHandler(advancements, "Advancements");
 
 //subscriptions----------------------------------------
 world.afterEvents.buttonPush.subscribe(event =>{ 
@@ -230,7 +230,11 @@ function blockStatsDisplay(player){
 	let enemiesShot=[];
 	let itemsReleased=[];
 	let playTime=[];
+	let achievmentsUnlocked=[];
 	let travel=[];
+	let tamed=[];
+	let damage=[];
+	let damagetaken=[];
 	
     //totals
 	let totalBlocksBroken = world.scoreboard.getObjective("stats_blocksBroken_total");
@@ -242,6 +246,10 @@ function blockStatsDisplay(player){
 	let totalEnteredDimensions = world.scoreboard.getObjective("stats_enteredDimension_");
 	let totalEnimiesShot = world.scoreboard.getObjective("stats_projectilesHitEnemy_");
 	let totalItemsReleased = world.scoreboard.getObjective("stats_itemsReleased_");
+	let totalachievments = world.scoreboard.getObjective("stats_achievments_");
+	let tamedScoreboard = world.scoreboard.getObjective("stats_Tamed_");
+	let damageScoreboard = world.scoreboard.getObjective("stats_DamageDelt_");
+	let damageTakenScoreboard = world.scoreboard.getObjective("stats_DamageTaken_");
 	
 	blocksBroken = [itemFormat + "Total: " + bodyFormat + getScoreIfExists(totalBlocksBroken,player)];
 	blocksPlaced = [itemFormat + "Total: " + bodyFormat + getScoreIfExists(totalBlocksPlaced,player)];
@@ -252,6 +260,10 @@ function blockStatsDisplay(player){
 	redstoneInteractions = [itemFormat + "Total: " + bodyFormat + getScoreIfExists(totalRedstoneInteractions,player)];
 	enemiesShot = [itemFormat + "Total: " + bodyFormat + getScoreIfExists(totalEnimiesShot,player)];
 	itemsReleased = [itemFormat + "Total: " + bodyFormat + getScoreIfExists(totalItemsReleased,player)];
+	achievmentsUnlocked = [itemFormat + "Total: " + bodyFormat + getScoreIfExists(totalachievments,player)];
+	tamed = [itemFormat + "Total: " + bodyFormat + getScoreIfExists(tamedScoreboard,player)];
+	damage = [itemFormat + "Total: " + bodyFormat + getScoreIfExists(damageScoreboard,player)];
+	damagetaken = [itemFormat + "Total: " + bodyFormat + getScoreIfExists(damageTakenScoreboard,player)];
 	
     //consolidate scores
 	for( let i in scoreboards){
@@ -306,6 +318,18 @@ function blockStatsDisplay(player){
 						case "travel":
 							travel.push(itemFormat + name+ ": " + bodyFormat + tempScore.toString());
 							break;
+						case "achievments":
+							achievmentsUnlocked.push(itemFormat + name+ ": " + bodyFormat + tempScore.toString());
+							break;
+						case "Tamed":
+							tamed.push(itemFormat + name+ ": " + bodyFormat + tempScore.toString());
+							break;
+						case "DamageDelt":
+							damage.push(itemFormat + name+ ": " + bodyFormat + tempScore.toString());
+							break;
+						case "DamageTaken":
+							damagetaken.push(itemFormat + name+ ": " + bodyFormat + tempScore.toString());
+							break;
 					}
 					break;
 			}
@@ -321,14 +345,18 @@ function blockStatsDisplay(player){
 		+ subtitleFormat + "Blocks Broken:" + bodyFormat + indentNextLine + blocksBroken.join(indentNextLine) + nextLine
 		+ subtitleFormat + "Blocks Placed:" + bodyFormat + indentNextLine + blocksPlaced.join(indentNextLine) + nextLine
 		+ subtitleFormat + "Entities Killed:" + bodyFormat + indentNextLine + entitiesKilled.join(indentNextLine) + nextLine
+		+ subtitleFormat + "Entities Tamed:" + bodyFormat + indentNextLine + tamed.join(indentNextLine) + nextLine
+		+ subtitleFormat + "Damage Delt:" + bodyFormat + indentNextLine + damage.join(indentNextLine) + nextLine
 		+ subtitleFormat + "Weapon Kills:" + bodyFormat + indentNextLine + weaponKills.join(indentNextLine) + nextLine
 		+ subtitleFormat + "Deaths:" + bodyFormat + indentNextLine + deaths.join(indentNextLine) + nextLine
+		+ subtitleFormat + "Damage Taken:" + bodyFormat + indentNextLine + damagetaken.join(indentNextLine) + nextLine
 		+ subtitleFormat + "Redstone Interactions:" + bodyFormat + indentNextLine + redstoneInteractions.join(indentNextLine) + nextLine
 		+ subtitleFormat + "Portals Traveled:" + bodyFormat + indentNextLine + enteredDimensions.join(indentNextLine) + nextLine
 		+ subtitleFormat + "Enimies Shot:" + bodyFormat + indentNextLine + enemiesShot.join(indentNextLine) + nextLine
 		+ subtitleFormat + "Items Fired:" + bodyFormat + indentNextLine + itemsReleased.join(indentNextLine) + nextLine
 		+ subtitleFormat + "Play Time:" + bodyFormat + indentNextLine + playTime.join(indentNextLine) + nextLine
 		+ subtitleFormat + "Travel:" + bodyFormat + indentNextLine + travel.join(indentNextLine) + nextLine;
+		+ subtitleFormat + "Achievments:" + bodyFormat + indentNextLine + achievmentsUnlocked.join(indentNextLine) + nextLine;
 	let statsForm = new ActionFormData()
 		.title(player.name)
 		.body(allStats)
@@ -727,7 +755,6 @@ function spawnedEntity(event){
 		case "witch":
 			//[advancement] Very Very Frightening | Strike a Villager with lightning | Hit a villager with lightning created by a trident with the Channeling enchantment.
 			if(event.cause=="Transformed"){
-				console.warn("here")
 				if(!advancementTracker.checkAchievment("VeryVeryFrightening", playersClosest)){
 					advancementTracker.setAchievment("VeryVeryFrightening", playersClosest);
 				}
@@ -812,8 +839,6 @@ function useItemOn(event){
 	const itemUsed = event.itemStack.typeId.replace("minecraft:" , "")
 	const blockInfo = processBlockTags(event.block.getTags())
 	const player = event.source
-	console.warn(processBlockTags(event.block.getTags()))
-	console.warn(itemUsed)
 	//Needs an update when Block.typeId is added
 	if(blockInfo.includes("Copper")){
 		//[achievement] Wax on, Wax off | Apply and remove Wax from all the Copper blocks!!! | Wax and de-wax each oxidation stage of all 4 Copper Blocks in the game, which include cut copper blocks, stairs, & slabs.
@@ -1498,6 +1523,7 @@ function tameEvents(event){
 		closest: 1,
 			location: {x: event.entity.location.x, y: event.entity.location.y, z: event.entity.location.z}
 	})[0];
+	this.addToScore("stats_Tamed_",animalType,player)
 	if (event.eventId=="minecraft:on_tame"){
 		//[advancement] Best Friends Forever | Tame an animal | Tame one of these 8 tameable mobs:, Cat, Donkey, Horse, Llama, Mule, Parrot, Trader Llama, Wolf
 		if(!advancementTracker.checkAchievment("BestFriendsForever",player)){
@@ -1568,12 +1594,18 @@ function onHurtEvent(event){
 		const agressor = source.damagingEntity
 		const agressorType = agressor.typeId.replace("minecraft:","")
 		if(agressorType=="player"){
+			const weapon = getequipped(agressor)["Mainhand"]
+			for(let i=0; i<Math.round(event.damage);i++){
+				addToScore("stats_DamageDelt_",weapon,agressor)
+			}
 		//[achievement] Overkill | Deal nine hearts of damage in a single hit. | Damage can be dealt to any mob, even those that do not have nine hearts of health overall.
 			if(event.damage>9){
 				if(!achievementTracker.checkAchievment("Overkill",agressor)){
 					achievementTracker.setAchievment("Overkill",agressor)
 				}
 			}
+		}else if(victim.typeId.replace("minecraft:","")=="player"){
+			addToScore("stats_DamageTaken_",agressor.typeId.replace("minecraft:",""),victim)
 		}
 	}
 }
@@ -1989,6 +2021,7 @@ function weaponsToolsArmor(subject, player){
 		//[advancement] Light as a Rabbit | Walk on Powder Snow... without sinking in it | Walk on powder snow while wearing leather boots.
 		//[advancement] Not Today, Thank You | Deflect a projectile with a Shield | Block any projectile with a shield.
 		//[advancement] Smithing with Style | Apply these smithing templates at least once: Spire, Snout, Rib, Ward, Silence, Vex, Tide, Wayfinder | —
+		//[advancement] Very Very Frightening | Strike a Villager with lightning | Hit a villager with lightning created by a trident with the Channeling enchantment.
 	//done--------------------
 		switch(subject){
 			case "crossbow" :
