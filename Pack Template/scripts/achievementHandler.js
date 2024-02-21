@@ -1,5 +1,6 @@
 export class achievementHandler{
-	constructor(achievmentObject){
+	constructor(achievmentObject,name){
+		this.name=name
 		this.achievments=achievmentObject;
 		this.dynamicProperties=[]
 		for (const [key, value] of Object.entries(this.achievments)) {
@@ -30,6 +31,7 @@ export class achievementHandler{
 		}else{
 			player.setDynamicProperty(achievmentDefs.container,mask);
 		}
+		this.addToScore("stats_achievments_",name,player)
 		this.achievmentUnlock(player,achievmentDefs.displayName+"\n"+achievmentDefs.description)
 	}
 	getAchievmentName(handle){
@@ -65,4 +67,25 @@ export class achievementHandler{
 		display.setActionBar({text:"\u00A7cAchievment Unlocked: \u00A7e"+str})
 		player.playSound("random.levelup")
 	}
+	addToScore(category, item, player){
+		let categoryId = category.replace(" ","");
+		let itemId=categoryId+item.replace(" ","");
+		const allBoards = world.scoreboard.getObjectives();
+		const checkCategoryID = obj => obj.displayName === category;
+		if(!allBoards.some(checkCategoryID)){ 
+			world.scoreboard.addObjective(categoryId, category);
+		}
+		const checkItemID = obj => obj.displayName === category+" "+item;
+		
+		if(!allBoards.some(checkItemID)){ 
+			world.scoreboard.addObjective(itemId, category+" "+item);
+		}
+		let categoryBoard = world.scoreboard.getObjective(categoryId);
+		let itemBoard = world.scoreboard.getObjective(itemId);
+		
+		categoryBoard.addScore(player,1);
+		itemBoard.addScore(player,1);
+	}
 }
+
+
