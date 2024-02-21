@@ -694,6 +694,10 @@ function loadedEntity(event){
 function spawnedEntity(event){
 	let entity = event.entity;
 	let entityName = entity.typeId.replace("minecraft:","");
+	let playersClosest = entity.dimension.getPlayers({
+				closest: 1,
+				location: {x: entity.location.x, y: entity.location.y, z: entity.location.z}
+			})[0];
 	switch(entityName){
 	    //when fortress mobs spawn, search for nearby players and give them an achievement
 		case "blaze" ://*fall through*
@@ -713,12 +717,7 @@ function spawnedEntity(event){
 	    //check for player spawned mobs
 		case "iron_golem" ://*fall through*
 		case "wither" :
-			let playersClosest = entity.dimension.getPlayers({
-				closest: 1,
-				location: {x: entity.location.x, y: entity.location.y, z: entity.location.z}
-			});
-			
-			spawnAndBreed(entityName, playersClosest[0]);
+			spawnAndBreed(entityName, playersClosest);
 			break;
 		
 		case "ender_dragon" :
@@ -732,17 +731,20 @@ function spawnedEntity(event){
 			}
 			break;
 		case "villager_v2":
+			
 				//[achievement] Zombie Doctor | Cure a zombie villager. | Throw a splash potion of weakness at a zombie villager and give it a golden apple (by facing the zombie and pressing the use key with a golden apple in your hand)
 			if(event.cause=="Transformed"){
-				if(!achievementTracker.checkAchievment("ZombieDoctor", closePlayers[i])){
-					achievementTracker.setAchievment("ZombieDoctor", closePlayers[i]);//[advancement] A Terrible Fortress | Break your way into a Nether Fortress | Enter a nether fortress.
+				if(!achievementTracker.checkAchievment("ZombieDoctor", playersClosest)){
+					achievementTracker.setAchievment("ZombieDoctor", playersClosest);//[advancement] A Terrible Fortress | Break your way into a Nether Fortress | Enter a nether fortress.
 				}
 			}
 			break;
 		case "witch":
+			//[advancement] Very Very Frightening | Strike a Villager with lightning | Hit a villager with lightning created by a trident with the Channeling enchantment.
 			if(event.cause=="Transformed"){
-				if(!advancementTracker.checkAchievment("VeryVeryFrightening", closePlayers[i])){
-					advancementTracker.setAchievment("VeryVeryFrightening", closePlayers[i]);//[advancement] A Terrible Fortress | Break your way into a Nether Fortress | Enter a nether fortress.
+				console.warn("here")
+				if(!advancementTracker.checkAchievment("VeryVeryFrightening", playersClosest)){
+					advancementTracker.setAchievment("VeryVeryFrightening", playersClosest);
 				}
 			}
 			break
@@ -825,6 +827,8 @@ function useItemOn(event){
 	const itemUsed = event.itemStack.typeId.replace("minecraft:" , "")
 	const blockInfo = processBlockTags(event.block.getTags())
 	const player = event.source
+	console.warn(processBlockTags(event.block.getTags()))
+	console.warn(itemUsed)
 	//Needs an update when Block.typeId is added
 	if(blockInfo.includes("Copper")){
 		//[achievement] Wax on, Wax off | Apply and remove Wax from all the Copper blocks!!! | Wax and de-wax each oxidation stage of all 4 Copper Blocks in the game, which include cut copper blocks, stairs, & slabs.
@@ -855,7 +859,9 @@ function useItemOn(event){
 }
 function useItem(event){
 	let player = event.source;
-	let itemName = event.itemStack.typeId.replace("minecraft:","");
+	let itemName = getequipped(player)["Mainhand"]
+	console.warn(itemName)
+	
 	
 	switch(itemName){
 		case "crossbow" :
@@ -1986,7 +1992,6 @@ function weaponsToolsArmor(subject, player){
 		//[advancement] Light as a Rabbit | Walk on Powder Snow... without sinking in it | Walk on powder snow while wearing leather boots.
 		//[advancement] Not Today, Thank You | Deflect a projectile with a Shield | Block any projectile with a shield.
 		//[advancement] Smithing with Style | Apply these smithing templates at least once: Spire, Snout, Rib, Ward, Silence, Vex, Tide, Wayfinder | —
-		//[advancement] Very Very Frightening | Strike a Villager with lightning | Hit a villager with lightning created by a trident with the Channeling enchantment.
 	//done--------------------
 		switch(subject){
 			case "crossbow" :
@@ -2016,51 +2021,48 @@ function weaponsToolsArmor(subject, player){
 				break;
 		    //[advancement] Fishy Business | Catch a fish | Use a fishing rod to catch any of these fishes:, Cod, Salmon, Tropical Fish, Pufferfish
 			case "fishing_rod" :
-				if(getScoreIfExists(world.scoreboard.getObjective("weaponsToolsArmorcatch_fish"), player) == 0){
+				if(!advancementTracker.checkAchievment("FishyBusiness",player)){
 					const fishArray = [];
 					fishArray[0] = "cod";
 					fishArray[1] = "salmon";
 					fishArray[2] = "pufferfish";
 					fishArray[3] = "tropical_fish";
+					let fishSlots = 0
+					let fishCount = 0
 					let inventoryPlayer = player.getComponent("minecraft:inventory");
-					var i;
-					var j;
-					
-					for(i = 0; i < fishArray.length; i++){
-						for(j = 0; j < 36; j++){
-							let slotItem = inventoryPlayer.container.getItem(j);
-							
-							if(slotItem){
-								let slotItemName = slotItem.typeId;
-								let slotItemAmount = slotItem.amount;
-								
-								if(slotItemName == ("minecraft:" + fishArray[i])){
-									//scoreSet("weaponsToolsArmor", fishArray[i], player, slotItemAmount);
-								}
+					for(let slotnum = 0; slotnum < 36; slotnum++){
+						let slotItem = inventoryPlayer.container.getItem(slotnum);
+						if(slotItem){
+							let slotItemName = slotItem.typeId.replace("minecraft:","");
+							let slotItemAmount = slotItem.amount;
+							if(fishArray.includes(slotItemName)){
+								fishSlots=fishSlots | 0b1<<fishArray.indexOf(slotItemName)
+								fishCount+=slotItemAmount
 							}
 						}
 					}
+					player.setDynamicProperty("fishSlots",fishSlots)
+					player.setDynamicProperty("fishCount",fishCount)
 					system.runTimeout(() => {
-						for(i = 0; i < fishArray.length; i++){
-							for(j = 0; j < 36; j++){
-								let slotItem = inventoryPlayer.container.getItem(j);
-								
-								if(slotItem){
-									let slotItemName = slotItem.typeId;
-									let slotItemAmount = slotItem.amount;
-									
-									if(slotItemName == ("minecraft:" + fishArray[i])){
-										if(getScoreIfExists(world.scoreboard.getObjective("weaponsToolsArmor" + fishArray[i]), player) < slotItemAmount){
-											//boolScore("weaponsToolsArmor", "catch_fish", player, 1);
-											achievementUnlock(player,"Fishy Business")
-										}else{
-											//scoreSet("weaponsToolsArmor", fishArray[i], player, 0);
-										}
-									}
-								}
+						let tempSlots=0
+						let tempfishCount = 0
+						for(let slotnum = 0; slotnum < 36; slotnum++){
+						let slotItem = inventoryPlayer.container.getItem(slotnum);
+						if(slotItem){
+							let slotItemName = slotItem.typeId.replace("minecraft:","");
+							let slotItemAmount = slotItem.amount;
+							if(fishArray.includes(slotItemName)){
+								tempSlots=tempSlots | 0b1<<fishArray.indexOf(slotItemName)
+								tempfishCount+=slotItemAmount
 							}
+							
 						}
-					}, 20);
+					}
+					player.getDynamicProperty("fishSlots")
+					if(tempfishCount>player.getDynamicProperty("fishCount")){
+						advancementTracker.setAchievment("FishyBusiness",player)
+					}
+					}, 40);
 				}
 				break;
 		}
@@ -2175,6 +2177,7 @@ function processBlockTags(tags){
 				return "Snow Layers"
 		}
 	}
+	return "unknown"
 }
 function getequipped(player){
 	const equipComp = player.getComponent("minecraft:equippable");
