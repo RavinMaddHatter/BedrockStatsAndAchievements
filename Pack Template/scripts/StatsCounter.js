@@ -2101,19 +2101,56 @@ function weaponsToolsArmor(subject, player){
 		}
 }
 
-function worldAndBiome(){
+function worldAndBiome(subject, player){
 	//to-do--------------------
-		//[achievement] Adventuring Time | Discover 17 biomes. | Visit any 17 biomes. Does not have to be in a single world.
 		//[achievement] Free Diver | Stay underwater for 2 minutes | Drink a potion of water breathing that can last for 2 minutes or more, then jump into the water or activate a conduit or sneak on a magma block underwater for 2 minutes.
-		//[achievement] Hot tourist destination | Visit all Nether biomes | The achievement can be completed if one visit biomes in different worlds.
 		//[achievement] Map Room | Place 9 fully explored, adjacent map items into 9 item frames in a 3 by 3 square. | The frames have to be on a wall, not the floor.
-		//[achievement] Sail the 7 Seas | Visit all ocean biomes | Visit all ocean biomes except the deep warm ocean/legacy frozen ocean (as they are unused)
 		//[achievement] Sleep with the Fishes | Spend a day underwater. | Spend 20 minutes underwater without any air.
-		//[achievement] Sound of Music | Make the Meadows come alive with the sound of music from a jukebox. | Use a music disc on a jukebox in the Meadow biome.
-		//[advancement] Adventuring Time | Discover every biome | Visit all of these 53 biomes:, Badlands, Bamboo Jungle, Beach, Birch Forest, Cherry Grove, Cold Ocean, Dark Forest, Deep Cold Ocean, Deep Dark, Deep Frozen Ocean, Deep Lukewarm Ocean, Deep Ocean, Desert, Dripstone Caves, Eroded Badlands, Flower Forest, Forest, Frozen Ocean, Frozen Peaks, Frozen River, Grove, Ice Spikes, Jagged Peaks, Jungle, Lukewarm Ocean, Lush Caves, Mangrove Swamp, Meadow, Mushroom Fields, Ocean, Old Growth Birch Forest, Old Growth Pine Taiga, Old Growth Spruce Taiga, Plains, River, Savanna, Savanna Plateau, Snowy Beach, Snowy Plains, Snowy Slopes, Snowy Taiga, Sparse Jungle, Stony Peaks, Stony Shore, Sunflower Plains, Swamp, Taiga, Warm Ocean, Windswept Forest, Windswept Gravelly Hills, Windswept Hills, Windswept Savanna, Wooded Badlands, The advancement is only for Overworld biomes. Other biomes may also be visited, but are ignored for this advancement.
-		//[advancement] Hot Tourist Destinations | Explore all Nether biomes | Visit all of the 5 following biomes:, Basalt Deltas, Crimson Forest, Nether Wastes, Soul Sand Valley, Warped Forest, The advancement is only for Nether biomes. Other biomes may also be visited, but are ignored for this advancement.
-		//[advancement] Sound of Music | Make the Meadows come alive with the sound of music from a Jukebox | While in a meadow biome, place down a jukebox and use a music disc on it.
 	//done--------------------
+		//[advancement] Adventuring Time | Discover every biome | Visit all of these 53 biomes:, Badlands, Bamboo Jungle, Beach, Birch Forest, Cherry Grove, Cold Ocean, Dark Forest, Deep Cold Ocean, Deep Dark, Deep Frozen Ocean, Deep Lukewarm Ocean, Deep Ocean, Desert, Dripstone Caves, Eroded Badlands, Flower Forest, Forest, Frozen Ocean, Frozen Peaks, Frozen River, Grove, Ice Spikes, Jagged Peaks, Jungle, Lukewarm Ocean, Lush Caves, Mangrove Swamp, Meadow, Mushroom Fields, Ocean, Old Growth Birch Forest, Old Growth Pine Taiga, Old Growth Spruce Taiga, Plains, River, Savanna, Savanna Plateau, Snowy Beach, Snowy Plains, Snowy Slopes, Snowy Taiga, Sparse Jungle, Stony Peaks, Stony Shore, Sunflower Plains, Swamp, Taiga, Warm Ocean, Windswept Forest, Windswept Gravelly Hills, Windswept Hills, Windswept Savanna, Wooded Badlands, The advancement is only for Overworld biomes. Other biomes may also be visited, but are ignored for this advancement.
+		//[achievement] Sound of Music | Make the Meadows come alive with the sound of music from a jukebox. | Use a music disc on a jukebox in the Meadow biome.
+		//[advancement] Sound of Music | Make the Meadows come alive with the sound of music from a Jukebox | While in a meadow biome, place down a jukebox and use a music disc on it.
+	switch(){
+		case "biomeChecks" :
+			let propertyIds = player.getDynamicPropertyIds();
+			
+			if((propertyIds.includes("biome_basalt_deltas"))
+			    &&(propertyIds.includes("biome_crimson_forest"))
+			    &&(propertyIds.includes("biome_hell"))
+			    &&(propertyIds.includes("biome_soulsand_valley"))
+			    &&(propertyIds.includes("biome_warped_forest"))){
+				if(!achievementTracker.checkAchievment("Hottouristdestination", player)){
+					achievementTracker.setAchievment("Hottouristdestination", player);//[achievement] Hot tourist destination | Visit all Nether biomes | The achievement can be completed if one visit biomes in different worlds.
+					advancementTracker.setAchievment("HotTouristDestinations", player);//[advancement] Hot Tourist Destinations | Explore all Nether biomes | Visit all of the 5 following biomes:, Basalt Deltas, Crimson Forest, Nether Wastes, Soul Sand Valley, Warped Forest, The advancement is only for Nether biomes. Other biomes may also be visited, but are ignored for this advancement.
+				}
+			}
+			if((propertyIds.includes("biome_ocean"))
+			    &&(propertyIds.includes("biome_warm_ocean"))
+			    &&(propertyIds.includes("biome_lukewarm_ocean"))
+			    &&(propertyIds.includes("biome_frozen_ocean"))
+			    &&(propertyIds.includes("biome_deep_ocean"))
+			    &&(propertyIds.includes("biome_cold_ocean"))
+			    &&(propertyIds.includes("biome_deep_lukewarm_ocean"))
+			    &&(propertyIds.includes("biome_deep_frozen_ocean"))
+			    &&(propertyIds.includes("biome_deep_cold_ocean"))){
+				if(!achievementTracker.checkAchievment("Sailthe7Seas", player)){
+					achievementTracker.setAchievment("Sailthe7Seas", player);//[achievement] Sail the 7 Seas | Visit all ocean biomes | Visit all ocean biomes except the deep warm ocean/legacy frozen ocean (as they are unused)
+				}
+			}
+			if(!achievementTracker.checkAchievment("AdventuringTime", player)){
+				let tempBiome = 0;
+				
+				for(var i = 0; i < propertyIds.length; i++){
+					if(propertyIds[i].indexOf("biome_") > -1){
+						tempBiome++;
+					}
+				}
+				if(tempBiome >= 17){
+					achievementTracker.setAchievment("AdventuringTime", player);//[achievement] Adventuring Time | Discover 17 biomes. | Visit any 17 biomes. Does not have to be in a single world.
+				}
+			}
+			break;
+	}
 }
 //end achievement and advancement functions----------------------------------------
 
@@ -2235,9 +2272,6 @@ function getequipped(player){
 	}
 	return equipment
 }
-function initializeObjectives(player){
-
-}
 function achievementUnlock(player,data){
 	let display=player.onScreenDisplay
 	display.setActionBar("\u00A7cachievement Unlocked: \u00A7e"+data)
@@ -2322,6 +2356,7 @@ function timer1Day(){
 			if(dayCount == 100){
 				achievementTracker.setAchievment("PassingtheTime", playerArrayList[i]);//[achievement] Passing the Time | Play for 100 days. | Play for 100 Minecraft days, which is equivalent to 33 hours in real time.
 			}
+			worldAndBiome("biomeChecks", playerArrayList[i]);
 		}
 	}
 	
@@ -2335,6 +2370,7 @@ function timer1Min(){
 			let minCount = playerArrayList[i].getDynamicProperty("playTimeM");
 			
 			playerArrayList[i].setDynamicProperty("playTimeM", (minCount === undefined ? 0 : minCount) + 1);
+			playerArrayList[i].setDynamicProperty("biome_" + biomeFinder(playerArrayList[i]), 1);
 		}
 	}, 1200);
 }
