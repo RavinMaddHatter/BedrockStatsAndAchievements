@@ -885,7 +885,7 @@ function useItemOn(event){
 function useItem(event){
 	let player = event.source;
 	let itemName = getequipped(player)["Mainhand"]
-	console.warn(itemName)
+	//console.warn(itemName)
 	
 	
 	switch(itemName){
@@ -2106,11 +2106,10 @@ function worldAndBiome(subject, player){
 		//[achievement] Free Diver | Stay underwater for 2 minutes | Drink a potion of water breathing that can last for 2 minutes or more, then jump into the water or activate a conduit or sneak on a magma block underwater for 2 minutes.
 		//[achievement] Map Room | Place 9 fully explored, adjacent map items into 9 item frames in a 3 by 3 square. | The frames have to be on a wall, not the floor.
 		//[achievement] Sleep with the Fishes | Spend a day underwater. | Spend 20 minutes underwater without any air.
-	//done--------------------
-		//[advancement] Adventuring Time | Discover every biome | Visit all of these 53 biomes:, Badlands, Bamboo Jungle, Beach, Birch Forest, Cherry Grove, Cold Ocean, Dark Forest, Deep Cold Ocean, Deep Dark, Deep Frozen Ocean, Deep Lukewarm Ocean, Deep Ocean, Desert, Dripstone Caves, Eroded Badlands, Flower Forest, Forest, Frozen Ocean, Frozen Peaks, Frozen River, Grove, Ice Spikes, Jagged Peaks, Jungle, Lukewarm Ocean, Lush Caves, Mangrove Swamp, Meadow, Mushroom Fields, Ocean, Old Growth Birch Forest, Old Growth Pine Taiga, Old Growth Spruce Taiga, Plains, River, Savanna, Savanna Plateau, Snowy Beach, Snowy Plains, Snowy Slopes, Snowy Taiga, Sparse Jungle, Stony Peaks, Stony Shore, Sunflower Plains, Swamp, Taiga, Warm Ocean, Windswept Forest, Windswept Gravelly Hills, Windswept Hills, Windswept Savanna, Wooded Badlands, The advancement is only for Overworld biomes. Other biomes may also be visited, but are ignored for this advancement.
 		//[achievement] Sound of Music | Make the Meadows come alive with the sound of music from a jukebox. | Use a music disc on a jukebox in the Meadow biome.
 		//[advancement] Sound of Music | Make the Meadows come alive with the sound of music from a Jukebox | While in a meadow biome, place down a jukebox and use a music disc on it.
-	switch(){
+	//done--------------------
+	switch(subject){
 		case "biomeChecks" :
 			let propertyIds = player.getDynamicPropertyIds();
 			
@@ -2137,7 +2136,7 @@ function worldAndBiome(subject, player){
 					achievementTracker.setAchievment("Sailthe7Seas", player);//[achievement] Sail the 7 Seas | Visit all ocean biomes | Visit all ocean biomes except the deep warm ocean/legacy frozen ocean (as they are unused)
 				}
 			}
-			if(!achievementTracker.checkAchievment("AdventuringTime", player)){
+			if(!advancementTracker.checkAchievment("AdventuringTime", player)){
 				let tempBiome = 0;
 				
 				for(var i = 0; i < propertyIds.length; i++){
@@ -2147,6 +2146,9 @@ function worldAndBiome(subject, player){
 				}
 				if(tempBiome >= 17){
 					achievementTracker.setAchievment("AdventuringTime", player);//[achievement] Adventuring Time | Discover 17 biomes. | Visit any 17 biomes. Does not have to be in a single world.
+				}
+				if(tempBiome >= 53){
+					advancementTracker.setAchievment("AdventuringTime", player);//[advancement] Adventuring Time | Discover every biome | Visit all of these 53 biomes:, Badlands, Bamboo Jungle, Beach, Birch Forest, Cherry Grove, Cold Ocean, Dark Forest, Deep Cold Ocean, Deep Dark, Deep Frozen Ocean, Deep Lukewarm Ocean, Deep Ocean, Desert, Dripstone Caves, Eroded Badlands, Flower Forest, Forest, Frozen Ocean, Frozen Peaks, Frozen River, Grove, Ice Spikes, Jagged Peaks, Jungle, Lukewarm Ocean, Lush Caves, Mangrove Swamp, Meadow, Mushroom Fields, Ocean, Old Growth Birch Forest, Old Growth Pine Taiga, Old Growth Spruce Taiga, Plains, River, Savanna, Savanna Plateau, Snowy Beach, Snowy Plains, Snowy Slopes, Snowy Taiga, Sparse Jungle, Stony Peaks, Stony Shore, Sunflower Plains, Swamp, Taiga, Warm Ocean, Windswept Forest, Windswept Gravelly Hills, Windswept Hills, Windswept Savanna, Wooded Badlands, The advancement is only for Overworld biomes. Other biomes may also be visited, but are ignored for this advancement.
 				}
 			}
 			break;
