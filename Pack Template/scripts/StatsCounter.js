@@ -302,7 +302,17 @@ function debugDisplay(player){
 		.title(player.name)
 		.body(displayText)
 		.button("Close")
-		.show(player);
+		.button("To chat")
+		
+		debugForm.show(player).then((response) => {
+			switch(response.selection){
+				case 0 :
+					break;
+				case 1 :
+					player.sendMessage(displayText);
+					break;
+			}
+		});
 }
 function frontPageDisplay(player){
     //title
