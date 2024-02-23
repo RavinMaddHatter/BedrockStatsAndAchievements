@@ -569,7 +569,7 @@ function entityDied(event){
 			const witherY=killer.location.y;
 			const witherZ=killer.location.z;
 			
-			for(let player of world.getAllPlayers())
+			for(let player of world.getAllPlayers()){
 				if (player.dimension.id == killer.dimension.id){
 					let inrange = Math.abs(player.location.x-witherX)<50.5;
 					inrange = inrange && Math.abs(player.location.x-witherX)<50.5;
@@ -579,6 +579,7 @@ function entityDied(event){
 						achievementTracker.setAchievment("TheBeginningKill",player);//[achievement] The Beginning. | Kill the Wither | Be within a 100.9×100.9×203.5 cuboid centered on the Wither when it drops the nether star
 					}
 				}
+			}
 			break;
 	}
 }
