@@ -1646,9 +1646,6 @@ function redstoneInteractions(){
 	//done--------------------
 }
 function spawnAndBreed(entity, player){
-	//to-do--------------------
-		//[advancement] Two by Two | Breed all the animals! | Breed a pair of each of these 24 mobs:, Axolotl, Bee, Camel, Cat, Chicken, Cow, Donkey, Fox, Frog, Goat, Hoglin, Horse, Llama, Mooshroom, Mule, Ocelot, Panda, Pig, Rabbit, Sheep, Sniffer, Strider, Turtle, Wolf, A trader llama does not count as a llama, and a mule must be the result of breeding a horse and a donkey for this advancement as they are not breedable together. Other breedable mobs can be bred, but are ignored for this advancement.
-	//done--------------------
 	switch(entity){
 		case "iron_golem" :
 			if(!advancementTracker.checkAchievment("HiredHelp",player)){
@@ -1671,13 +1668,15 @@ function spawnAndBreed(entity, player){
 			}
 			break;
 		case "cow" :
+			player.setDynamicProperty("breed_" + entity, 1);
 			if(!achievementTracker.checkAchievment("Repopulation",player)){
 				achievementTracker.setAchievment("Repopulation",player);//[achievement] Repopulation | Breed two cows with wheat. | Breed two cows or two mooshrooms.
 				if(!advancementTracker.checkAchievment("TheParrotsandtheBats",player)){
 					advancementTracker.setAchievment("TheParrotsandtheBats",player);
 				}
 			}
-		case "mule" :	
+		case "mule" :
+			player.setDynamicProperty("breed_" + entity, 1);
 			if(!achievementTracker.checkAchievment("ArtificialSelection",player)){
 				achievementTracker.setAchievment("ArtificialSelection",player);//[achievement] Artificial Selection | Breed a mule from a horse and a donkey. | —
 				if(!advancementTracker.checkAchievment("TheParrotsandtheBats",player)){
@@ -1686,6 +1685,7 @@ function spawnAndBreed(entity, player){
 			}
 			break;
 		case "panda" :
+			player.setDynamicProperty("breed_" + entity, 1);
 			if(!achievementTracker.checkAchievment("Zoologist",player)){
 				achievementTracker.setAchievment("Zoologist",player);//[achievement] Zoologist | Breed two pandas with bamboo. | —
 				if(!achievementTracker.checkAchievment("TheParrotsandtheBats",player)){
@@ -1714,6 +1714,7 @@ function spawnAndBreed(entity, player){
 		case "strider" ://*fall through*
 		case "turtle" ://*fall through*
 		case "wolf" :
+			player.setDynamicProperty("breed_" + entity, 1);
 			if(!achievementTracker.checkAchievment("TheParrotsandtheBats",player)){
 				achievementTracker.setAchievment("TheParrotsandtheBats",player);//[advancement] The Parrots and the Bats | Breed two animals together | Breed a pair of any of these 25 mobs:, Axolotl, Bee, Camel, Cat, Chicken, Cow, Donkey, Fox, Frog, Goat, Hoglin, Horse, Llama, Mooshroom, Mule, Ocelot, Panda, Pig, Rabbit, Sheep, Sniffer, Strider, Trader Llama, Turtle, Wolf, A mule must be the result of breeding a horse and a donkey for this advancement as they are not breedable together. Other breedable mobs are ignored for this advancement.
 			}
@@ -1723,6 +1724,20 @@ function spawnAndBreed(entity, player){
 				achievementTracker.setAchievment("TheParrotsandtheBats",player);
 			}
 			break;
+	}
+	let propertyIds = player.getDynamicPropertyIds();
+	
+	if(!advancementTracker.checkAchievment("TwobyTwo", player)){
+		let tempBreed = 0;
+		
+		for(var i = 0; i < propertyIds.length; i++){
+			if(propertyIds[i].indexOf("breed_") > -1){
+				tempBiome++;
+			}
+		}
+		if(tempBiome >= 24){
+			advancementTracker.setAchievment("TwobyTwo", player);//[advancement] Two by Two | Breed all the animals! | Breed a pair of each of these 24 mobs:, Axolotl, Bee, Camel, Cat, Chicken, Cow, Donkey, Fox, Frog, Goat, Hoglin, Horse, Llama, Mooshroom, Mule, Ocelot, Panda, Pig, Rabbit, Sheep, Sniffer, Strider, Turtle, Wolf, A trader llama does not count as a llama, and a mule must be the result of breeding a horse and a donkey for this advancement as they are not breedable together. Other breedable mobs can be bred, but are ignored for this advancement.
+		}
 	}
 }
 function statusAndEffects(player){
