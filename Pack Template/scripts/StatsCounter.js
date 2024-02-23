@@ -930,31 +930,6 @@ function useItem(event){
 }
 //end event functions----------------------------------------
 
-//stat functions----------------------------------------
-function overworldBlocksTravelled(player){
-	let blkDist = player.getDynamicProperty("blockRun");
-	
-	if(player.dimension.id == "minecraft:overworld"){
-		let x1 = player.getDynamicProperty("blockRunX");
-		let z1 = player.getDynamicProperty("blockRunZ");
-		
-		if(blkDist == 0){//if first time, calculate from initial spawn location
-			x1 = player.getDynamicProperty("initialX");
-			z1 = player.getDynamicProperty("initialZ");
-		}
-		let x2 = Math.floor(player.location.x);
-		let z2 = Math.floor(player.location.z);
-		blkDist = blkDist + calculateDistance(x1, z1, x2, z2);
-		
-		player.setDynamicProperty("blockRun", blkDist);
-		player.setDynamicProperty("blockRunX", x2);
-		player.setDynamicProperty("blockRunZ", z2);
-	}
-	
-	return blkDist;
-}
-//end stat functions----------------------------------------
-
 //achievement and advancement functions----------------------------------------
 function blockInteractions(item,Block){
 	//to-do--------------------
@@ -2090,7 +2065,7 @@ function worldAndBiome(subject, player){
 }
 //end achievement and advancement functions----------------------------------------
 
-//helper functions----------------------------------------
+//stats and helper functions----------------------------------------
 function achievementUnlock(player,data){
 	let display=player.onScreenDisplay;
 	
@@ -2155,6 +2130,28 @@ function getScoreIfExists(board, player){
 	}
 	
 	return tempScore;
+}
+function overworldBlocksTravelled(player){
+	let blkDist = player.getDynamicProperty("blockRun");
+	
+	if(player.dimension.id == "minecraft:overworld"){
+		let x1 = player.getDynamicProperty("blockRunX");
+		let z1 = player.getDynamicProperty("blockRunZ");
+		
+		if(blkDist == 0){//if first time, calculate from initial spawn location
+			x1 = player.getDynamicProperty("initialX");
+			z1 = player.getDynamicProperty("initialZ");
+		}
+		let x2 = Math.floor(player.location.x);
+		let z2 = Math.floor(player.location.z);
+		blkDist = blkDist + calculateDistance(x1, z1, x2, z2);
+		
+		player.setDynamicProperty("blockRun", blkDist);
+		player.setDynamicProperty("blockRunX", x2);
+		player.setDynamicProperty("blockRunZ", z2);
+	}
+	
+	return blkDist;
 }
 function pearlThrow(player){
 	let x1 = player.getDynamicProperty("pearlThrowX");
@@ -2315,7 +2312,7 @@ function timer1Min(){
 		}
 	}, 1200);
 }
-//end helper functions----------------------------------------
+//end stats and helper functions----------------------------------------
 
 //debug functions----------------------------------------
 function blockLookingAt(subject, player){
