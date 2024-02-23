@@ -1,11 +1,11 @@
 import { world, system } from '@minecraft/server';
 import {ActionFormData, ActionFormResponse } from "@minecraft/server-ui";
 import { achievements, advancements } from "textObjects";
-import {achievementHandler} from "achievementHandler"
-import {biomeFinder, lightLevel} from "playerDependent"
+import {achievementHandler} from "achievementHandler";
+import {biomeFinder, lightLevel} from "playerDependent";
 
-var blockBreaks = {}
-var blocksUsed = {}
+var blockBreaks = {};
+var blocksUsed = {};
 const debugToggle = true;
 timer10Sec();
 timer1Min();
@@ -33,11 +33,11 @@ world.afterEvents.itemCompleteUse.subscribe(event=>{
 	itemComplete(event);
 });
 world.afterEvents.itemUse.subscribe(event=>{
-	statStick(event)
-	useItem(event)
-})
+	statStick(event);
+	useItem(event);
+});
 world.afterEvents.itemUseOn.subscribe(event=>{
-	useItemOn(event)
+	useItemOn(event);
 });
 world.afterEvents.itemReleaseUse.subscribe(event=>{
 	itemRelease(event);
@@ -81,10 +81,10 @@ world.afterEvents.entityHurt.subscribe(event=>{
 world.afterEvents.dataDrivenEntityTrigger.subscribe(event=>{
 	if(event.entity.typeId!="minecraft:player"){
 		if(event.eventId=="minecraft:on_tame"){
-			tameEvents(event)
+			tameEvents(event);
 		}
 		if(event.eventId=="minecraft:on_trust"){
-			tameEvents(event)
+			tameEvents(event);
 		}
 	}
 });
@@ -105,7 +105,7 @@ function statList(player){
 		statForm.show(player).then((response) => {
 			switch(response.selection){
 				case 0 :
-					blockStatsDisplay(player)
+					blockStatsDisplay(player);
 					break;
 				case 1 :
 					objectivesStatsDisplay(player);
@@ -355,7 +355,7 @@ function blockStatsDisplay(player){
 		+ subtitleFormat + "Enimies Shot:" + bodyFormat + indentNextLine + enemiesShot.join(indentNextLine) + nextLine
 		+ subtitleFormat + "Items Fired:" + bodyFormat + indentNextLine + itemsReleased.join(indentNextLine) + nextLine
 		+ subtitleFormat + "Play Time:" + bodyFormat + indentNextLine + playTime.join(indentNextLine) + nextLine
-		+ subtitleFormat + "Travel:" + bodyFormat + indentNextLine + travel.join(indentNextLine) + nextLine;
+		+ subtitleFormat + "Travel:" + bodyFormat + indentNextLine + travel.join(indentNextLine) + nextLine
 		+ subtitleFormat + "Achievments:" + bodyFormat + indentNextLine + achievmentsUnlocked.join(indentNextLine) + nextLine;
 	let statsForm = new ActionFormData()
 		.title(player.name)
@@ -391,11 +391,23 @@ function debugDisplay(player){
 	debugArrayTxt[9] = subtitleFormat + "World spawnpoint: " + bodyFormat + worldSpawn();
 	debugArrayTxt[10] = subtitleFormat + "Facing: " + bodyFormat + facingDirection(player);
 	debugArrayTxt[11] = subtitleFormat + "Moon phase: " + bodyFormat + moonCycle();
-	debugArrayTxt[12] = subtitleFormat + "Time of day: " + bodyFormat + "\n    " + itemFormat + "Tick: " + bodyFormat + getTheTime("tick") + "\n    " + itemFormat + "Minecraft: " + bodyFormat + getTheTime("minecraft") + "\n    " + itemFormat + "12hr: " + bodyFormat + getTheTime("12hr") + "\n    " + itemFormat + "24hr: " + bodyFormat + getTheTime("24hr");
+	debugArrayTxt[12] = subtitleFormat + "Time of day: " + bodyFormat
+		+ "\n    " + itemFormat + "Tick: " + bodyFormat + getTheTime("tick")
+		+ "\n    " + itemFormat + "Minecraft: " + bodyFormat + getTheTime("minecraft")
+		+ "\n    " + itemFormat + "12hr: " + bodyFormat + getTheTime("12hr")
+		+ "\n    " + itemFormat + "24hr: " + bodyFormat + getTheTime("24hr");
 	debugArrayTxt[13] = subtitleFormat + "World life in ticks: " + bodyFormat + "\n    " + worldlife("tick");
 	debugArrayTxt[14] = subtitleFormat + "World day: " + bodyFormat + worldlife("day");
-	debugArrayTxt[15] = (biomeId == "NA" ? "" : subtitleFormat + "Light at player's head: " + bodyFormat + lightVal);
-	debugArrayTxt[16] = (biomeId == "NA" ? "" : subtitleFormat + "Biome: " + bodyFormat + biomeId);
+	debugArrayTxt[15] = subtitleFormat + "Block looking at: " + bodyFormat
+		+ "\n    " + itemFormat + "Id: " + bodyFormat + blockLookingAt("id", player)
+		+ "\n    " + itemFormat + "Tags: " + bodyFormat + blockLookingAt("tags", player)
+		+ "\n    " + itemFormat + "Location: " + bodyFormat + blockLookingAt("location", player)
+		+ "\n    " + itemFormat + "Distance: " + bodyFormat + blockLookingAt("distance", player)
+		+ "\n    " + itemFormat + "Growth stage: " + bodyFormat + blockLookingAt("growth", player)
+		+ "\n    " + itemFormat + "Hydration: " + bodyFormat + blockLookingAt("moisturized_amount", player)
+		+ "\n    " + itemFormat + "Redstone power: " + bodyFormat + blockLookingAt("redstone_signal", player);
+	debugArrayTxt[16] = (biomeId == "NA" ? "" : subtitleFormat + "Light at player's head: " + bodyFormat + lightVal);
+	debugArrayTxt[17] = (biomeId == "NA" ? "" : subtitleFormat + "Biome: " + bodyFormat + biomeId);
 	
     //construct ui
 	let indentSize = "";
@@ -413,53 +425,56 @@ function debugDisplay(player){
 
 //event functions----------------------------------------
 function preBreak(event){
-	blockBreaks["L"+event.block.x+" "+event.block.y+" "+event.block.z]=processBlockTags(event.block.getTags())
+	blockBreaks["L"+event.block.x+" "+event.block.y+" "+event.block.z]=processBlockTags(event.block.getTags());
 }
 function blockBroken(event){
 	let player = event.player;
-	let blockData = blockBreaks["L"+event.block.x+" "+event.block.y+" "+event.block.z]
+	let blockData = blockBreaks["L"+event.block.x+" "+event.block.y+" "+event.block.z];
+	
 	if(!blockData){
-		blockData="None"
+		blockData="None";
 	}
 	delete blockBreaks["L"+event.block.x+" "+event.block.y+" "+event.block.z]
 	if (blockData!=undefined){
-		addToScore("stats_blocksBroken_", blockData, player)
+		addToScore("stats_blocksBroken_", blockData, player);
 	}
-	//[achievement] Getting Wood | Punch a tree until a block of wood pops out. | Pick up a log from the ground.
 	if(blockData.includes("Log")){
 		if(!achievementTracker.checkAchievment("GettingWood",player)){
-			achievementTracker.setAchievment("GettingWood",player)
+			achievementTracker.setAchievment("GettingWood",player);//[achievement] Getting Wood | Punch a tree until a block of wood pops out. | Pick up a log from the ground.
 		}
 	}
 	addToScore("stats_blocksBroken_", "total", player);
 }
 function blockPlaced(event){
 	let player = event.player;
-	let blockData= getequipped(player)["Mainhand"].replace("_"," ")
+	let blockData= getequipped(player)["Mainhand"].replace("_"," ");
+	
 	if (blockData!=undefined){
-		addToScore("stats_blocksPlaced_", blockData, player)
+		addToScore("stats_blocksPlaced_", blockData, player);
 	}
 	addToScore("stats_blocksPlaced_", "total", player);
 }
 function buttonPushed(event){
 	if(event.source.typeId=="minecraft:player"){
-		let type = "Stone Buttons"
+		let type = "Stone Buttons";
+		
 		if (event.block.getTags().includes("wood")){
-			type = "Wood Buttons"
+			type = "Wood Buttons";
 		}
-		addToScore("stats_redstonInteractions_",type, event.source)
+		addToScore("stats_redstonInteractions_",type, event.source);
 	}
 }
 function pleatePressed(event){
 	if(event.source.typeId=="minecraft:player"){
-		let type = "Weighted Pressure Plate"
+		let type = "Weighted Pressure Plate";
+		
 		if (event.block.getTags().includes("stone")){
-			type = "Stone Pressure Plate"
+			type = "Stone Pressure Plate";
 		}
 		if (event.block.getTags().includes("wood")){
-			type = "Wood Pressure Plate"
+			type = "Wood Pressure Plate";
 		}
-		addToScore("stats_redstonInteractions_",type, event.source)
+		addToScore("stats_redstonInteractions_",type, event.source);
 	}
 }
 function changedDimension(event){
@@ -512,26 +527,27 @@ function changedDimension(event){
 	}
 }
 function entityDied(event){
-	const victim = event.deadEntity
-	const cause = event.damageSource
-	let victimName= victim.typeId.replace("minecraft:","")
+	const victim = event.deadEntity;
+	const cause = event.damageSource;
+	let victimName= victim.typeId.replace("minecraft:","");
+	
 	if(event.damageSource.damagingEntity){
-		const killer = event.damageSource.damagingEntity
+		const killer = event.damageSource.damagingEntity;
+		
 		if(killer.typeId == "minecraft:player"){
-			let victimType = victim.typeId.replace("minecraft:","").replace("_"," ")
-			addToScore("stats_entitiesKilled_",victimType, killer)
-			const equipment=getequipped(killer)
-			addToScore("stats_weaponKills_",equipment["Mainhand"].replace("_"," "), killer)
-			entityKills(victim,killer,cause.cause,equipment["Mainhand"])
-			const projectile=event.damageSource.damagingProjectile
+			let victimType = victim.typeId.replace("minecraft:","").replace("_"," ");
+			addToScore("stats_entitiesKilled_",victimType, killer);
+			const equipment=getequipped(killer);
+			addToScore("stats_weaponKills_",equipment["Mainhand"].replace("_"," "), killer);
+			entityKills(victim,killer,cause.cause,equipment["Mainhand"]);
+			const projectile=event.damageSource.damagingProjectile;
+			
 			if(projectile){
 				if(projectile.typeId=="minecraft:fireball"){
 					if(victimName=="ghast"){
-						//[achievement] Return to Sender | Destroy a Ghast with a fireball. | Kill a ghast using a ghast fireball.
-						//[advancement] Return to Sender | Destroy a Ghast with a fireball | Kill a ghast by deflecting a ghast fireball back into it via hitting or shooting a projectile at the fireball.
 						if(!advancementTracker.checkAchievment("ReturntoSender",killer)){
-							advancementTracker.setAchievment("ReturntoSender",killer)
-							achievementTracker.setAchievment("ReturntoSender",killer)
+							advancementTracker.setAchievment("ReturntoSender",killer);//[advancement] Return to Sender | Destroy a Ghast with a fireball | Kill a ghast by deflecting a ghast fireball back into it via hitting or shooting a projectile at the fireball.
+							achievementTracker.setAchievment("ReturntoSender",killer);//[achievement] Return to Sender | Destroy a Ghast with a fireball. | Kill a ghast using a ghast fireball.
 						}
 					}
 				}
@@ -545,19 +561,20 @@ function entityDied(event){
 		case "ender_dragon" :
 			world.setDynamicProperty("dragonKill", 1);
 			break;
-		//[achievement] The Beginning. | Kill the Wither | Be within a 100.9×100.9×203.5 cuboid centered on the Wither when it drops the nether star
 		case "wither":
-			const killer = event.damageSource.damagingEntity
-			const witherX=killer.location.x
-			const witherY=killer.location.y
-			const witherZ=killer.location.z
+			const killer = event.damageSource.damagingEntity;
+			const witherX=killer.location.x;
+			const witherY=killer.location.y;
+			const witherZ=killer.location.z;
+			
 			for(let player of world.getAllPlayers())
 				if (player.dimension.id == killer.dimension.id){
-					let inrange = Math.abs(player.location.x-witherX)<50.5
-					inrange = inrange && Math.abs(player.location.x-witherX)<50.5
-					inrange = inrange &&Math.abs(player.location.x-witherX)<101.75
+					let inrange = Math.abs(player.location.x-witherX)<50.5;
+					inrange = inrange && Math.abs(player.location.x-witherX)<50.5;
+					inrange = inrange &&Math.abs(player.location.x-witherX)<101.75;
+					
 					if (inrange &&!achievementTracker.checkAchievment("TheBeginningKill",player)){
-						achievementTracker.setAchievment("TheBeginningKill",player)
+						achievementTracker.setAchievment("TheBeginningKill",player);//[achievement] The Beginning. | Kill the Wither | Be within a 100.9×100.9×203.5 cuboid centered on the Wither when it drops the nether star
 					}
 				}
 			break;
@@ -578,15 +595,16 @@ function entityChangeHealth(event){
 function hitByProjectile(event){
 	let projectile = event.projectile.typeId.replace("minecraft:","");
 	let source = event.source;
+	
 	if(source && (source.typeId == "minecraft:player")){
 		switch(projectile){
 			case "arrow" :
 				weaponsToolsArmor(projectile, source);
-				addToScore("stats_projectilesHitEnemy_",getArrowType(event.projectile),source)
+				addToScore("stats_projectilesHitEnemy_",getArrowType(event.projectile),source);
 				break;
 			case "thrown_trident" :
 				weaponsToolsArmor(projectile, event.source);
-				addToScore("stats_projectilesHitEnemy_","Trident",source)
+				addToScore("stats_projectilesHitEnemy_","Trident",source);
 				break;
 		}
 	}
@@ -612,30 +630,27 @@ function itemComplete(event){
 	//done--------------------
 	let player = event.source;
 	let itemName = event.itemStack.typeId.replace("minecraft:","");
-	//[advancement] Husbandry | The world is full of friends and food | Consume anything that can be consumed.
+	
 	if(!advancementTracker.checkAchievment("Husbandry",player)){
-		advancementTracker.setAchievment("Husbandry",player)
+		advancementTracker.setAchievment("Husbandry",player);//[advancement] Husbandry | The world is full of friends and food | Consume anything that can be consumed.
 	}
 	switch(itemName){
 		case "crossbow" :
 			player.setDynamicProperty("chargeCross", 1);
 			break;
-		//[achievement] Overpowered | Eat an Enchanted Apple | Eat an enchanted apple.
 		case "enchanted_golden_apple":
 			if(!achievementTracker.checkAchievment("Overpowered",player)){
-				achievementTracker.setAchievment("Overpowered",player)
+				achievementTracker.setAchievment("Overpowered",player);//[achievement] Overpowered | Eat an Enchanted Apple | Eat an enchanted apple.
 			}
 			break;
-		//[achievement] Pork Chop | Cook and eat a pork chop. | —
 		case "cooked_porkchop":
 			if(!achievementTracker.checkAchievment("PorkChop",player)){
-				achievementTracker.setAchievment("PorkChop",player)
+				achievementTracker.setAchievment("PorkChop",player);//[achievement] Pork Chop | Cook and eat a pork chop. | —
 			}
 			break;
-		//[achievement] Rabbit Season | Cook and Eat Rabbit Meat | —
 		case "cooked_rabbit":
 			if(!achievementTracker.checkAchievment("RabbitSeason",player)){
-				achievementTracker.setAchievment("RabbitSeason",player)
+				achievementTracker.setAchievment("RabbitSeason",player);//[achievement] Rabbit Season | Cook and Eat Rabbit Meat | —
 			}
 			break;
 		case "rotten_flesh":
@@ -643,7 +658,7 @@ function itemComplete(event){
 		//Needs a hunger or saturation component check
 			if(false){
 				if(!achievementTracker.checkAchievment("RabbitSeason",player)){
-					achievementTracker.setAchievment("RabbitSeason",player)
+					achievementTracker.setAchievment("RabbitSeason",player);
 				}
 			}
 			break;
@@ -705,6 +720,7 @@ function leverFlipped(event){
 function loadedEntity(event){
 	let entity = event.entity;
 	let entityName = entity.typeId.replace("minecraft:", "");
+	
 	//when bastion mobs load, search for nearby players and give them an achievement
 	if(entityName == "piglin_brute"){
 		let closePlayers = entity.dimension.getPlayers({
@@ -726,65 +742,58 @@ function spawnedEntity(event){
 				closest: 1,
 				location: {x: entity.location.x, y: entity.location.y, z: entity.location.z}
 			})[0];
+	let closePlayers;
+	var i;
+	
 	switch(entityName){
 	    //when fortress mobs spawn, search for nearby players and give them an achievement
 		case "blaze" ://*fall through*
-		case "wither_skeleton" :{
-			let closePlayers = entity.dimension.getPlayers({
+		case "wither_skeleton" :
+			closePlayers = entity.dimension.getPlayers({
 				maxDistance: 50,
 				location: {x: entity.location.x, y: entity.location.y, z: entity.location.z}
 			});
 			
-			for(var i = 0; i < closePlayers.length; i++){
+			for(i = 0; i < closePlayers.length; i++){
 				if(!advancementTracker.checkAchievment("ATerribleFortress", closePlayers[i])){
 					advancementTracker.setAchievment("ATerribleFortress", closePlayers[i]);//[advancement] A Terrible Fortress | Break your way into a Nether Fortress | Enter a nether fortress.
 				}
 			}
 			break;
-		}
 	    //check for player spawned mobs
 		case "iron_golem" ://*fall through*
 		case "wither" :
 			spawnAndBreed(entityName, playersClosest);
 			break;
-		
 		case "ender_dragon" :
-			let closePlayers = entity.dimension.getPlayers({
+			closePlayers = entity.dimension.getPlayers({
 				maxDistance: 192,
 				location: {x: entity.location.x, y: entity.location.y, z: entity.location.z}
 			});
 			
-			for(var i = 0; i < closePlayers.length; i++){
+			for(i = 0; i < closePlayers.length; i++){
 				spawnAndBreed(entityName, closePlayers[i]);
 			}
 			break;
 		case "villager_v2":
-			
-				//[achievement] Zombie Doctor | Cure a zombie villager. | Throw a splash potion of weakness at a zombie villager and give it a golden apple (by facing the zombie and pressing the use key with a golden apple in your hand)
 			if(event.cause=="Transformed"){
 				if(!achievementTracker.checkAchievment("ZombieDoctor", playersClosest)){
-					achievementTracker.setAchievment("ZombieDoctor", playersClosest);//[advancement] A Terrible Fortress | Break your way into a Nether Fortress | Enter a nether fortress.
+					achievementTracker.setAchievment("ZombieDoctor", playersClosest);//[achievement] Zombie Doctor | Cure a zombie villager. | Throw a splash potion of weakness at a zombie villager and give it a golden apple (by facing the zombie and pressing the use key with a golden apple in your hand)
 				}
 			}
 			break;
 		case "witch":
-			//[advancement] Very Very Frightening | Strike a Villager with lightning | Hit a villager with lightning created by a trident with the Channeling enchantment.
 			if(event.cause=="Transformed"){
 				if(!advancementTracker.checkAchievment("VeryVeryFrightening", playersClosest)){
-					advancementTracker.setAchievment("VeryVeryFrightening", playersClosest);
+					advancementTracker.setAchievment("VeryVeryFrightening", playersClosest);//[advancement] Very Very Frightening | Strike a Villager with lightning | Hit a villager with lightning created by a trident with the Channeling enchantment.
 				}
 			}
-			break
+			break;
 		
 	}
 	//check for bred mobs
-	if(event.cause == "Born"){
-		let playersClosest = entity.dimension.getPlayers({
-			closest: 1,
-			location: {x: entity.location.x, y: entity.location.y, z: entity.location.z}
-		});
-		
-		spawnAndBreed(entityName, playersClosest[0]);
+	if(event.cause == "Born"){		
+		spawnAndBreed(entityName, playersClosest);
 	}
 }
 function statStick(event){
@@ -793,7 +802,7 @@ function statStick(event){
 	let itemTag = event.itemStack.nameTag;
 	
 	if(itemName == "stick" && (itemTag == "statStick")){
-		propertyToScore(player)
+		propertyToScore(player);
 		statList(player);
 	}
 }
@@ -803,16 +812,16 @@ function projectileHitBlock(event){
 	
 	if(shooter){
 		if(shooter.typeId=="minecraft:player"){
-			let player = shooter
+			let player = shooter;
 			let block = event.getBlockHit().block;
 			
 			if(block.isvalid){
 				if(block.permutation.matches("minecraft:target")){
-					addToScore("stats_redstonInteractions_","Target Blocks Hit",shooter)
+					addToScore("stats_redstonInteractions_","Target Blocks Hit",shooter);
 				}
 			}
 			if(projectile == "ender_pearl"){
-				pearlThrow(player)
+				pearlThrow(player);
 			}
 		}
 	}
@@ -851,31 +860,29 @@ function targetHit(event){
 	}
 }
 function useItemOn(event){
-	const itemUsed = event.itemStack.typeId.replace("minecraft:" , "")
-	const blockInfo = processBlockTags(event.block.getTags())
-	const player = event.source
+	const itemUsed = event.itemStack.typeId.replace("minecraft:" , "");
+	const blockInfo = processBlockTags(event.block.getTags());
+	const player = event.source;
+	
 	//Needs an update when Block.typeId is added
 	if(blockInfo.includes("Copper")){
-		//[achievement] Wax on, Wax off | Apply and remove Wax from all the Copper blocks!!! | Wax and de-wax each oxidation stage of all 4 Copper Blocks in the game, which include cut copper blocks, stairs, & slabs.
 		if (itemUsed.includes("axe")){
-			//[advancement] Wax Off | Scrape Wax off of a Copper block! | Use an axe to revert a waxed copper block.
 			if(!advancementTracker.checkAchievment("WaxOff",player)){
-				advancementTracker.setAchievment("WaxOff",player)
+				advancementTracker.setAchievment("WaxOff",player);//[advancement] Wax Off | Scrape Wax off of a Copper block! | Use an axe to revert a waxed copper block.
 			}
 			if(advancementTracker.checkAchievment("WaxOn",player)){
 				if(!achievementTracker.checkAchievment("Waxon,Waxoff",player)){
-					achievementTracker.setAchievment("Waxon,Waxoff",player)
+					achievementTracker.setAchievment("Waxon,Waxoff",player);//[achievement] Wax on, Wax off | Apply and remove Wax from all the Copper blocks!!! | Wax and de-wax each oxidation stage of all 4 Copper Blocks in the game, which include cut copper blocks, stairs, & slabs.
 				}
 			}
 		}
 		if (itemUsed == "honeycomb"){
-			//[advancement] Wax On | Apply Honeycomb to a Copper block! | Use a honeycomb on a copper block.
 			if(!advancementTracker.checkAchievment("WaxOn",player)){
-				advancementTracker.setAchievment("WaxOn",player)
+				advancementTracker.setAchievment("WaxOn",player);//[advancement] Wax On | Apply Honeycomb to a Copper block! | Use a honeycomb on a copper block.
 			}
 			if(advancementTracker.checkAchievment("WaxOff",player)){
 				if(!achievementTracker.checkAchievment("Waxon,Waxoff",player)){
-					achievementTracker.setAchievment("Waxon,Waxoff",player)
+					achievementTracker.setAchievment("Waxon,Waxoff",player);
 				}
 				
 			}
@@ -884,9 +891,8 @@ function useItemOn(event){
 }
 function useItem(event){
 	let player = event.source;
-	let itemName = getequipped(player)["Mainhand"]
+	let itemName = getequipped(player)["Mainhand"];
 	//console.warn(itemName)
-	
 	
 	switch(itemName){
 		case "crossbow" :
@@ -967,7 +973,6 @@ function blockInteractions(item,Block){
 		//[advancement] Sweet Dreams | Sleep in a Bed to change your respawn point | Lie down in a bed. The advancement is granted as soon as the player is in the bed, even if the player does not successfully sleep.
 		//[advancement] Total Beelocation | Move a Bee Nest, with 3 Bees inside, using Silk Touch | —
 		//[advancement] War Pigs | Loot a Chest in a Bastion Remnant | Open a naturally generated, never-before opened chest in a bastion remnant.
-
 		//done--------------------
 }
 function craftAndCook(){
@@ -978,9 +983,6 @@ function craftAndCook(){
 		//[advancement] Local Brewery | Brew a Potion | Pick up an item from a brewing stand potion slot. This does not need to be a potion. Water bottles or even glass bottles can also trigger this advancement.[3]
 		//maybe move to block place
 		//[achievement] Smelt Everything! | Connect 3 Chests to a single Furnace using 3 Hoppers. | Be within the range of three chests connected to a Furnace with 3 Hoppers.
-		
-		
-		
 	//done--------------------
 }
 function getSomeWhere(location, player){
@@ -994,8 +996,7 @@ function getSomeWhere(location, player){
 		//[advancement] Eye Spy | Follow an Eye of Ender | Enter a stronghold.
 		//[advancement] Remote Getaway | Escape the island | Throw an ender pearl through, fly, or walk into an end gateway.
 		//[advancement] The City at the End of the Game | Go on in, what could happen? | Enter an end city.
-	//done--------------------	
-
+	//done--------------------
 }
 
 function itemInventory(player){
@@ -1043,7 +1044,7 @@ function itemInventory(player){
 						"dispenser",		
 						"cooked_cod",		
 						"charcoal",
-						"flower_pot"]		
+						"flower_pot"];
 	const woolTypes=["black_wool",
 					"blue_wool",
 					"brown_wool",
@@ -1059,7 +1060,7 @@ function itemInventory(player){
 					"purple_wool",
 					"red_wool",
 					"white_wool",
-					"yellow_wool"]
+					"yellow_wool"];
 	const toolsTypes = ["wooden_pickaxe",
 					"wooden_sword",
 					"wooden_shovel",
@@ -1089,8 +1090,7 @@ function itemInventory(player){
 					"netherite_sword",				
 					"netherite_shovel",				
 					"netherite_axe",				
-					"netherite_hoe"]				
-						
+					"netherite_hoe"];
 	const armorTypes = ["iron_helmet",
 					"iron_chestplate",
 					"iron_leggings",
@@ -1103,10 +1103,10 @@ function itemInventory(player){
 					"netherite_chestplate",
 					"netherite_leggings",
 					"netherite_boots",
-					"elytra"];			
+					"elytra"];
 	const foglightType=["ochre_froglight",
 						"pearlescent_froglight",
-						"verdant_froglight"]
+						"verdant_froglight"];
 	const sherdArray = ["angler_pottery_sherd",
 						"archer_pottery_sherd",
 						"arms_up_pottery_sherd",
@@ -1127,7 +1127,6 @@ function itemInventory(player){
 						"shelter_pottery_sherd",
 						"skull_pottery_sherd",
 						"snort_pottery_sherd"];
-	
 	let inventoryPlayer = player.getComponent("minecraft:inventory");
 	let index=0;
 	let inventorymask = 0;
@@ -1141,42 +1140,40 @@ function itemInventory(player){
 		if (itemStack){
 			const itemName = itemStack.typeId.replace("minecraft:","")
 			if(loseItems.includes(itemName)){
-				index = loseItems.indexOf(itemName)
-				inventorymask = inventorymask | (0b1<<index)
+				index = loseItems.indexOf(itemName);
+				inventorymask = inventorymask | (0b1<<index);
 			}
 			else if (sherdArray.includes(itemName)){
-				index = sherdArray.indexOf(itemName)
-				sherdMask = sherdMask | (0b1<<index)
+				index = sherdArray.indexOf(itemName);
+				sherdMask = sherdMask | (0b1<<index);
 			}else if(toolsTypes.includes(itemName)){
-				index = toolsTypes.indexOf(itemName)
-				toolMask = toolMask | (0b1<<index)
-				
+				index = toolsTypes.indexOf(itemName);
+				toolMask = toolMask | (0b1<<index);
 			}else if(woolTypes.includes(itemName)){
-				index = woolTypes.indexOf(itemName)
-				woolMask = woolMask | (0b1<<index)
-				
+				index = woolTypes.indexOf(itemName);
+				woolMask = woolMask | (0b1<<index);
 			}else if(foglightType.includes(itemName)){
-				index = foglightType.indexOf(itemName)
-				froglight = froglight | (0b1<<index)
-				
+				index = foglightType.indexOf(itemName);
+				froglight = froglight | (0b1<<index);
 			}else if(itemName.includes("shulker_box")){
-				//[achievement] Organizational Wizard | Name a Shulker Box with an Anvil | —
 				if(itemStack.nameTag){
 					if(!achievementTracker.checkAchievment("OrganizationalWizard",player)){
-						achievementTracker.setAchievment("OrganizationalWizard",player)
+						achievementTracker.setAchievment("OrganizationalWizard",player);//[achievement] Organizational Wizard | Name a Shulker Box with an Anvil | —
 					}
 				}
 			}
 		}
 	}
-	const equip = getequipped(player)
+	const equip = getequipped(player);
+	
 	for(const slot of ["Chest","Feet","Head","Legs"]){
 		let itemName = equip[slot];
+		
 		if(armorTypes.includes(itemName)){
-			index = armorTypes.indexOf(itemName)
-			armorMask = armorMask | (0b1<<index)
+			index = armorTypes.indexOf(itemName);
+			armorMask = armorMask | (0b1<<index);
 		}
-	} 
+	}
 	//Checks armor based achievements
 	if(armorMask>0){
 		checkArmorachievements(player,armorMask);
@@ -1186,36 +1183,32 @@ function itemInventory(player){
 		checkToolachievements(player,toolMask);
 	}
 	if(inventorymask>0){
-		checkLooseItemachievements(player,inventorymask)
+		checkLooseItemachievements(player,inventorymask);
 	}
-    
 	//[advancement] Respecting the Remnants | Brush a Suspicious block to obtain a Pottery Sherd | —
 	if(sherdArray>0){
 		if(!advancementTracker.checkAchievment("RespectingtheRemnants",player)){
-			advancementTracker.setAchievment("RespectingtheRemnants",player)
+			advancementTracker.setAchievment("RespectingtheRemnants",player);
 		}
 	}
 	if(froglight==0b111){
-		//[advancement] With Our Powers Combined! | Have all Froglights in your inventory | Have a Pearlescent, Ochre, and Verdant Froglight in your inventory.
-		//[achievement] With our powers combined! | Have all 3 froglights in your inventory | Acquire at least one of each pearlescent, verdant, and ochre froglights in your inventory at the same time.		
 		if(!advancementTracker.checkAchievment("WithOurPowersCombined",player)){
-			advancementTracker.setAchievment("WithOurPowersCombined",player)
-			achievementTracker.setAchievment("Withourpowerscombined",player)
+			advancementTracker.setAchievment("WithOurPowersCombined",player);//[advancement] With Our Powers Combined! | Have all Froglights in your inventory | Have a Pearlescent, Ochre, and Verdant Froglight in your inventory.
+			achievementTracker.setAchievment("Withourpowerscombined",player);//[achievement] With our powers combined! | Have all 3 froglights in your inventory | Acquire at least one of each pearlescent, verdant, and ochre froglights in your inventory at the same time.
 		}
 	}
 	if(woolMask==0b1111111111111111){
-		//[achievement] Rainbow Collection | Gather all 16 colors of wool. | All the colors of wool do not have to be in the inventory at the same time, but must have been picked up by the player at least once.
 		if(!achievementTracker.checkAchievment("RainbowCollection",player)){
-			achievementTracker.setAchievment("RainbowCollection",player)
+			achievementTracker.setAchievment("RainbowCollection",player);//[achievement] Rainbow Collection | Gather all 16 colors of wool. | All the colors of wool do not have to be in the inventory at the same time, but must have been picked up by the player at least once.
 		}
 	}
 }
 function checkLooseItemachievements(player,inventorymask){
-	const craftingTable =	 0b1
-	const ironIngotMask =	 0b10
-	const diamondMask = 	 0b100
-	const ancientDebrisMask =0b1000
-	const lavaMask=			 0b10000
+	const craftingTable =	 0b1;
+	const ironIngotMask =	 0b10;
+	const diamondMask = 	 0b100;
+	const ancientDebrisMask =0b1000;
+	const lavaMask=			 0b10000;
 	const bucketOfFishMask = 0b111100000;
 	const axolotlMask = 	 0b1000000000;
 	const tadpoleMask = 	 0b10000000000;
@@ -1238,169 +1231,139 @@ function checkLooseItemachievements(player,inventorymask){
 	const charcoalMask = 	 0b10000000000000000000000000000;
 	const flowerPot = 		 0b100000000000000000000000000000;
 	const otherhalfMask = 	 0b111111111111111100000000000000;
+	
 	if((halfMask&inventorymask)>0){
-		//[achievement] Benchmaking | Craft a workbench with four blocks of wooden planks. | Pick up a crafting table from the inventory's crafting field output or a crafting table output.
-		//[advancement] Minecraft | The heart and story of the game | Have a crafting table in your inventory.
 		if((craftingTable&inventorymask)==craftingTable){
 			if(!advancementTracker.checkAchievment("Minecraft",player)){
-				advancementTracker.setAchievment("Minecraft",player)
-				achievementTracker.setAchievment("Benchmaking",player)
+				advancementTracker.setAchievment("Minecraft",player);//[advancement] Minecraft | The heart and story of the game | Have a crafting table in your inventory.
+				achievementTracker.setAchievment("Benchmaking",player);//[achievement] Benchmaking | Craft a workbench with four blocks of wooden planks. | Pick up a crafting table from the inventory's crafting field output or a crafting table output.
 			}
 		}
-		//[achievement] Acquire Hardware | Smelt an iron ingot | Pick up an iron ingot from a furnace output.
-		//[advancement] Acquire Hardware | Smelt an Iron Ingot | Have an iron ingot in your inventory.
 		if((ironIngotMask&inventorymask)==ironIngotMask){
 			if(!advancementTracker.checkAchievment("AcquireHardware",player)){
-				advancementTracker.setAchievment("AcquireHardware",player)
-				achievementTracker.setAchievment("AcquireHardware",player)
+				advancementTracker.setAchievment("AcquireHardware",player);//[advancement] Acquire Hardware | Smelt an Iron Ingot | Have an iron ingot in your inventory.
+				achievementTracker.setAchievment("AcquireHardware",player);//[achievement] Acquire Hardware | Smelt an iron ingot | Pick up an iron ingot from a furnace output.
 			}
 		}
-		//[achievement] DIAMONDS! | Acquire diamonds with your iron tools. | Pick up a diamond from the ground.
-		//[advancement] Diamonds! | Acquire diamonds | Have a diamond in your inventory.
 		if((diamondMask&inventorymask)==diamondMask){
 			if(!advancementTracker.checkAchievment("Diamonds",player)){
-				advancementTracker.setAchievment("Diamonds",player)
-				achievementTracker.setAchievment("DIAMONDS",player)
+				advancementTracker.setAchievment("Diamonds",player);//[advancement] Diamonds! | Acquire diamonds | Have a diamond in your inventory.
+				achievementTracker.setAchievment("DIAMONDS",player);//[achievement] DIAMONDS! | Acquire diamonds with your iron tools. | Pick up a diamond from the ground.
 			}
 		}
-		//[advancement] Hidden in the Depths | Obtain Ancient Debris | Have an ancient debris in your inventory.
 		if((ancientDebrisMask&inventorymask)==ancientDebrisMask){
 			if(!advancementTracker.checkAchievment("HiddenintheDepths",player)){
-				advancementTracker.setAchievment("HiddenintheDepths",player)
+				advancementTracker.setAchievment("HiddenintheDepths",player);//[advancement] Hidden in the Depths | Obtain Ancient Debris | Have an ancient debris in your inventory.
 			}
 		}
-		//[advancement] Hot Stuff | Fill a Bucket with lava | Have a lava bucket in your inventory.
 		if((lavaMask&inventorymask)==lavaMask){
 			if(!advancementTracker.checkAchievment("HotStuff",player)){
-				advancementTracker.setAchievment("HotStuff",player)
+				advancementTracker.setAchievment("HotStuff",player);//[advancement] Hot Stuff | Fill a Bucket with lava | Have a lava bucket in your inventory.
 			}
 		}
-		//[advancement] The Cutest Predator | Catch an Axolotl in a Bucket | Use a water bucket on an axolotl.
 		if((axolotlMask&inventorymask)==axolotlMask){
 			if(!advancementTracker.checkAchievment("TheCutestPredator",player)){
-				advancementTracker.setAchievment("TheCutestPredator",player)
+				advancementTracker.setAchievment("TheCutestPredator",player);//[advancement] The Cutest Predator | Catch an Axolotl in a Bucket | Use a water bucket on an axolotl.
 			}
 		}
-		//[advancement] Bukkit Bukkit | Catch a Tadpole in a Bucket | —
 		if((tadpoleMask&inventorymask)==tadpoleMask){
 			if(!advancementTracker.checkAchievment("BukkitBukkit",player)){
-				advancementTracker.setAchievment("BukkitBukkit",player)
+				advancementTracker.setAchievment("BukkitBukkit",player);//[advancement] Bukkit Bukkit | Catch a Tadpole in a Bucket | —
 			}
 		}
-		//[achievement] I am a Marine Biologist | Collect a fish in a bucket | Use an empty bucket on any fish mob to collect it.
-		//[advancement] Tactical Fishing | Catch a Fish... without a Fishing Rod! | Use a water bucket on any fish mob.
 		if(( bucketOfFishMask & inventorymask)>0){
 			if(!advancementTracker.checkAchievment("TacticalFishing",player)){
-				advancementTracker.setAchievment("TacticalFishing",player)
-				achievementTracker.setAchievment("IamaMarineBiologist",player)
+				advancementTracker.setAchievment("TacticalFishing",player);//[advancement] Tactical Fishing | Catch a Fish... without a Fishing Rod! | Use a water bucket on any fish mob.
+				achievementTracker.setAchievment("IamaMarineBiologist",player);//[achievement] I am a Marine Biologist | Collect a fish in a bucket | Use an empty bucket on any fish mob to collect it.
 			}
 		}
 	}
 	if((otherhalfMask&inventorymask)>0){
-		//[advancement] Stone Age | Mine Stone with your new Pickaxe | Have one of these 3 stones in the #stone_tool_materials item tag:, Cobblestone, Blackstone, Cobbled Deepslate, in your inventory.
 		if((stoneTypesMask & inventorymask)>0){
 			if(!advancementTracker.checkAchievment("StoneAge",player)){
-				advancementTracker.setAchievment("StoneAge",player)
+				advancementTracker.setAchievment("StoneAge",player);//[advancement] Stone Age | Mine Stone with your new Pickaxe | Have one of these 3 stones in the #stone_tool_materials item tag:, Cobblestone, Blackstone, Cobbled Deepslate, in your inventory.
 			}
 		}
-		//[advancement] Ice Bucket Challenge | Obtain a block of Obsidian | Have a block of obsidian in your inventory.
 		if((obsidianMask&inventorymask)==obsidianMask){
 			if(!advancementTracker.checkAchievment("IceBucketChallenge",player)){
-				advancementTracker.setAchievment("IceBucketChallenge",player)
+				advancementTracker.setAchievment("IceBucketChallenge",player);//[advancement] Ice Bucket Challenge | Obtain a block of Obsidian | Have a block of obsidian in your inventory.
 			}
 		}
-		//[advancement] Who is Cutting Onions? | Obtain Crying Obsidian | Have a block of crying obsidian in your inventory.
 		if((cryingMask&inventorymask)==cryingMask){
 			if(!advancementTracker.checkAchievment("WhoisCuttingOnions",player)){
-				advancementTracker.setAchievment("WhoisCuttingOnions",player)
+				advancementTracker.setAchievment("WhoisCuttingOnions",player);//[advancement] Who is Cutting Onions? | Obtain Crying Obsidian | Have a block of crying obsidian in your inventory.
 			}
 		}
-		//[achievement] Into Fire | Relieve a Blaze of its rod. | Pick up a blaze rod from the ground.
-		//[advancement] Into Fire | Relieve a Blaze of its rod | Have a blaze rod in your inventory.
 		if((blazeMask&inventorymask)==blazeMask){
 			if(!advancementTracker.checkAchievment("IntoFire",player)){
-				advancementTracker.setAchievment("IntoFire",player)
-				achievementTracker.setAchievment("IntoFire",player)
+				advancementTracker.setAchievment("IntoFire",player);//[advancement] Into Fire | Relieve a Blaze of its rod | Have a blaze rod in your inventory.
+				achievementTracker.setAchievment("IntoFire",player);//[achievement] Into Fire | Relieve a Blaze of its rod. | Pick up a blaze rod from the ground.
 			}
 		}
-		//[advancement] The Next Generation | Hold the Dragon Egg | Have a dragon egg in your inventory.
 		if((dragonEggMask&inventorymask)==dragonEggMask){
 			if(!advancementTracker.checkAchievment("TheNextGeneration",player)){
-				advancementTracker.setAchievment("TheNextGeneration",player)
+				advancementTracker.setAchievment("TheNextGeneration",player);//[advancement] The Next Generation | Hold the Dragon Egg | Have a dragon egg in your inventory.
 			}
 		}
-		//[advancement] Smells Interesting | Obtain a Sniffer Egg | Have a sniffer egg in your inventory.
 		if((snifferEggMask&inventorymask)==snifferEggMask){
 			if(!advancementTracker.checkAchievment("SmellsInteresting",player)){
-				advancementTracker.setAchievment("SmellsInteresting",player)
+				advancementTracker.setAchievment("SmellsInteresting",player);//[advancement] Smells Interesting | Obtain a Sniffer Egg | Have a sniffer egg in your inventory.
 			}
 		}
-		//[advancement] You Need a Mint | Collect Dragon's Breath in a Glass Bottle | Have a bottle of dragon's breath in your inventory.
-		//[achievement] You Need a Mint | Collect dragons breath in a glass bottle | Have a dragon's breath bottle in your inventory
 		if((dragonBreadthMask&inventorymask)==dragonBreadthMask){
 			if(!advancementTracker.checkAchievment("YouNeedaMint",player)){
-				advancementTracker.setAchievment("YouNeedaMint",player)
-				achievementTracker.setAchievment("YouNeedaMint",player)
+				advancementTracker.setAchievment("YouNeedaMint",player);//[advancement] You Need a Mint | Collect Dragon's Breath in a Glass Bottle | Have a bottle of dragon's breath in your inventory.
+				achievementTracker.setAchievment("YouNeedaMint",player);//[achievement] You Need a Mint | Collect dragons breath in a glass bottle | Have a dragon's breath bottle in your inventory
 			}
 		}
-		//[achievement] Bake Bread | Turn wheat into bread. | Pick up bread from a crafting table output.
 		if((breadMask&inventorymask)==breadMask){
 			if(!achievementTracker.checkAchievment("BakeBread",player)){
-				achievementTracker.setAchievment("BakeBread",player)
+				achievementTracker.setAchievment("BakeBread",player);//[achievement] Bake Bread | Turn wheat into bread. | Pick up bread from a crafting table output.
 			}
 		}
-		//[achievement] Hot Topic | Construct a furnace out of eight cobblestone blocks. | Pick up a furnace from a crafting table output.
 		if((furnaceMask&inventorymask)==furnaceMask){
 			if(!achievementTracker.checkAchievment("HotTopic",player)){
-				achievementTracker.setAchievment("HotTopic",player)
+				achievementTracker.setAchievment("HotTopic",player);//[achievement] Hot Topic | Construct a furnace out of eight cobblestone blocks. | Pick up a furnace from a crafting table output.
 			}
 		}
-		//[achievement] Enchanter | Construct an Enchantment Table. | Pick up an enchantment table from a crafting table output.
 		if((tableMask&inventorymask)==tableMask){
 			if(!achievementTracker.checkAchievment("Enchanter",player)){
-				achievementTracker.setAchievment("Enchanter",player)
+				achievementTracker.setAchievment("Enchanter",player);//[achievement] Enchanter | Construct an Enchantment Table. | Pick up an enchantment table from a crafting table output.
 			}
 		}
-		//[achievement] Librarian | Build some bookshelves to improve your enchantment table. | Pick up a bookshelf from a crafting table output.
 		if((bookshelfMask&inventorymask)==bookshelfMask){
 			if(!achievementTracker.checkAchievment("Librarian",player)){
-				achievementTracker.setAchievment("Librarian",player)
+				achievementTracker.setAchievment("Librarian",player);//[achievement] Librarian | Build some bookshelves to improve your enchantment table. | Pick up a bookshelf from a crafting table output.
 			}
 		}
-		//[achievement] The Lie | Bake a cake using: wheat, sugar, milk, and eggs. | Pick up a cake from a crafting table output.
 		if((cakeMask&inventorymask)==cakeMask){
 			if(!achievementTracker.checkAchievment("TheLie",player)){
-				achievementTracker.setAchievment("TheLie",player)
+				achievementTracker.setAchievment("TheLie",player);//[achievement] The Lie | Bake a cake using: wheat, sugar, milk, and eggs. | Pick up a cake from a crafting table output.
 			}
 		}
-		//[achievement] Cow Tipper | Harvest some leather. | Pick up leather from the ground.
 		if((leatherMask&inventorymask)==leatherMask){
 			if(!achievementTracker.checkAchievment("CowTipper",player)){
-				achievementTracker.setAchievment("CowTipper",player)
+				achievementTracker.setAchievment("CowTipper",player);//[achievement] Cow Tipper | Harvest some leather. | Pick up leather from the ground.
 			}
 		}
-		//[achievement] Dispense with This | Construct a Dispenser. | —
 		if((dispenserMask&inventorymask)==dispenserMask){
 			if(!achievementTracker.checkAchievment("DispensewithThis",player)){
-				achievementTracker.setAchievment("DispensewithThis",player)
+				achievementTracker.setAchievment("DispensewithThis",player);//[achievement] Dispense with This | Construct a Dispenser. | —
 			}
 		}
-		//[achievement] Catch and cook a fish! | Pick up a cooked cod after cooking it in a Furnace, Smoker, Campfire, or Soul Campfire. Doesn't work if the block used is hooked up to a hopper, as the player is not getting the item directly from the output.
 		if((coookedCodMask&inventorymask)==coookedCodMask){
 			if(!achievementTracker.checkAchievment("DeliciousFish",player)){
-				achievementTracker.setAchievment("DeliciousFish",player)
+				achievementTracker.setAchievment("DeliciousFish",player);//[achievement] Catch and cook a fish! | Pick up a cooked cod after cooking it in a Furnace, Smoker, Campfire, or Soul Campfire. Doesn't work if the block used is hooked up to a hopper, as the player is not getting the item directly from the output.
 			}
 		}
-		//[achievement] Renewable Energy | Smelt wood trunks using charcoal to make more charcoal. | Smelt a wooden log with charcoal as the fuel.
 		if((charcoalMask&inventorymask)==charcoalMask){
 			if(!achievementTracker.checkAchievment("RenewableEnergy",player)){
-				achievementTracker.setAchievment("RenewableEnergy",player)
+				achievementTracker.setAchievment("RenewableEnergy",player);//[achievement] Renewable Energy | Smelt wood trunks using charcoal to make more charcoal. | Smelt a wooden log with charcoal as the fuel.
 			}
 		}
-		//[achievement] Renewable Energy | Smelt wood trunks using charcoal to make more charcoal. | Smelt a wooden log with charcoal as the fuel.
 		if((flowerPot&inventorymask)==flowerPot){
 			if(!achievementTracker.checkAchievment("PotPlanter",player)){
-				achievementTracker.setAchievment("PotPlanter",player)
+				achievementTracker.setAchievment("PotPlanter",player);//[achievement] Pot Planter | Craft and place a Flower Pot. | —
 			}
 		}
 	}
@@ -1419,196 +1382,178 @@ function checkToolachievements(player,toolMask){
 	const alliron=0b111110000000000;
 	const alldiamond=0b11111000000000000000;
 	const allnetherite=0b1111100000000000000000000;
-	const woodHoe=0b10000
-	const woodSword=0b10
-	const netheriteHoe=0b100000000000000000000000000000
+	const woodHoe=0b10000;
+	const woodSword=0b10;
+	const netheriteHoe=0b100000000000000000000000000000;
+	
 	if((pickAnyType&toolMask)>0){
-		//[achievement] Time to Mine! | Use planks and sticks to make a pickaxe. | Pick up any type of pickaxe from a crafting table output.
 		if((woodPickType&toolMask)==woodPickType){
 			if(!achievementTracker.checkAchievment("TimetoMine",player)){
-				achievementTracker.setAchievment("TimetoMine",player)
+				achievementTracker.setAchievment("TimetoMine",player);//[achievement] Time to Mine! | Use planks and sticks to make a pickaxe. | Pick up any type of pickaxe from a crafting table output.
 			}
 		}
-		//[achievement] Getting an Upgrade | Construct a better pickaxe. | Pick up a stone pickaxe from a crafting table output.
-		//[advancement] Getting an Upgrade | Construct a better Pickaxe | Have a stone pickaxe in your inventory.
 		if((stonePickType&toolMask)==stonePickType){
 			if(!advancementTracker.checkAchievment("GettinganUpgrade",player)){
-				advancementTracker.setAchievment("GettinganUpgrade",player)
-				achievementTracker.setAchievment("GettinganUpgrade",player)
+				advancementTracker.setAchievment("GettinganUpgrade",player);//[advancement] Getting an Upgrade | Construct a better Pickaxe | Have a stone pickaxe in your inventory.
+				achievementTracker.setAchievment("GettinganUpgrade",player);//[achievement] Getting an Upgrade | Construct a better pickaxe. | Pick up a stone pickaxe from a crafting table output.
 			}
 		}
-
-		//[advancement] Isn't It Iron Pick | Upgrade your Pickaxe | Have an iron pickaxe in your inventory.
 		if((ironPickType&toolMask)==ironPickType){
 			if(!advancementTracker.checkAchievment("IsntItIronPick",player)){
-				advancementTracker.setAchievment("IsntItIronPick",player)
+				advancementTracker.setAchievment("IsntItIronPick",player);//[advancement] Isn't It Iron Pick | Upgrade your Pickaxe | Have an iron pickaxe in your inventory.
 			}
 		}	
-		//[achievement] MOAR Tools | Construct one type of each tool. | Construct one pickaxe, one shovel, one axe, and one hoe with the same material.
-		let toolsOfOneType = (toolMask&allWood)==allWood
-		toolsOfOneType = toolsOfOneType || (toolMask&allstone)==allstone
-		toolsOfOneType = toolsOfOneType || (toolMask&alliron)==alliron
-		toolsOfOneType = toolsOfOneType || (toolMask&alldiamond)==alldiamond
-		toolsOfOneType = toolsOfOneType || (toolMask&allnetherite)==allnetherite
+		let toolsOfOneType = (toolMask&allWood)==allWood;
+		toolsOfOneType = toolsOfOneType || (toolMask&allstone)==allstone;
+		toolsOfOneType = toolsOfOneType || (toolMask&alliron)==alliron;
+		toolsOfOneType = toolsOfOneType || (toolMask&alldiamond)==alldiamond;
+		toolsOfOneType = toolsOfOneType || (toolMask&allnetherite)==allnetherite;
+		
 		if(toolsOfOneType){
 			if(!achievementTracker.checkAchievment("MOARTools",player)){
-				achievementTracker.setAchievment("MOARTools",player)
+				achievementTracker.setAchievment("MOARTools",player);//[achievement] MOAR Tools | Construct one type of each tool. | Construct one pickaxe, one shovel, one axe, and one hoe with the same material.
 			}
 		}
 	}
 	if((hoeAnyType&toolMask)>0){
-		//[achievement] Time to Farm! | Make a Hoe. | Pick up any type of hoe from a crafting table output.
 		if((woodHoe&toolMask)==woodHoe){
 			if(!achievementTracker.checkAchievment("TimetoFarm",player)){
-				achievementTracker.setAchievment("TimetoFarm",player)
+				achievementTracker.setAchievment("TimetoFarm",player);//[achievement] Time to Farm! | Make a Hoe. | Pick up any type of hoe from a crafting table output.
 			}
 		}
-		// [advancement] Serious Dedication | Have a netherite hoe in your inventory.
 		if((netheriteHoe&toolMask)==netheriteHoe){
 			if(!advancementTracker.checkAchievment("SeriousDedication",player)){
-				advancementTracker.setAchievment("SeriousDedication",player)
+				advancementTracker.setAchievment("SeriousDedication",player);// [advancement] Serious Dedication | Have a netherite hoe in your inventory.
 			}
 		}
 	}
-	//[achievement] Time to Strike! | Use planks and sticks to make a sword. | Pick up any type of sword from a crafting table output.
 	if((woodSword&toolMask)==woodSword){
-			if(!achievementTracker.checkAchievment("TimetoStrike",player)){
-				achievementTracker.setAchievment("TimetoStrike",player)
-			}
+		if(!achievementTracker.checkAchievment("TimetoStrike",player)){
+			achievementTracker.setAchievment("TimetoStrike",player);//[achievement] Time to Strike! | Use planks and sticks to make a sword. | Pick up any type of sword from a crafting table output.
 		}
+	}
 }
 function checkArmorachievements(player,armorMask){
 	const allIronArmorMask = 0b1111;
 	const allDiamondArmorMask = 0b11110000;
 	const allNetheriteArmorMask = 0b111100000000;
-	const elytraMask = 0b1000000000000
-	//[advancement] Suit Up | Protect yourself with a piece of iron armor | Have any type of iron armor in your inventory.
+	const elytraMask = 0b1000000000000;
+	
 	if((allIronArmorMask & armorMask)>0){
 		if(!advancementTracker.checkAchievment("SuitUp",player)){
-			advancementTracker.setAchievment("SuitUp",player)
+			advancementTracker.setAchievment("SuitUp",player);//[advancement] Suit Up | Protect yourself with a piece of iron armor | Have any type of iron armor in your inventory.
 		}
-		//[achievement] Iron Man | Wear a full suit of Iron Armor. | —
 		if((allIronArmorMask & armorMask) == allIronArmorMask){
 			if(!achievementTracker.checkAchievment("IronMan",player)){
-				achievementTracker.setAchievment("IronMan",player)
+				achievementTracker.setAchievment("IronMan",player);//[achievement] Iron Man | Wear a full suit of Iron Armor. | —
 			}
 		}
 	}
-    //[advancement] Cover Me with Diamonds | Diamond armor saves lives | Have any type of diamond armor in your inventory.
 	if((allDiamondArmorMask & armorMask)>0){
 		if(!advancementTracker.checkAchievment("CoverMewithDiamonds",player)){
-			advancementTracker.setAchievment("CoverMewithDiamonds",player)
+			advancementTracker.setAchievment("CoverMewithDiamonds",player);//[advancement] Cover Me with Diamonds | Diamond armor saves lives | Have any type of diamond armor in your inventory.
 		}
 	}
-	
-	
-    //[achievement] Cover me in debris | Wear a full set of Netherite armor | Have a full set of Netherite armor in your inventory.
-    //[advancement] Cover Me in Debris | Get a full suit of Netherite armor | Have a full set of netherite armor in your inventory.
 	if((allNetheriteArmorMask & armorMask)==allNetheriteArmorMask){
 		if(!advancementTracker.checkAchievment("Covermeindebris",player)){
-			advancementTracker.setAchievment("Covermeindebris",player)
-			achievementTracker.setAchievment("Covermeindebris",player)
+			advancementTracker.setAchievment("Covermeindebris",player);//[advancement] Cover Me in Debris | Get a full suit of Netherite armor | Have a full set of netherite armor in your inventory.
+			achievementTracker.setAchievment("Covermeindebris",player);//[achievement] Cover me in debris | Wear a full set of Netherite armor | Have a full set of Netherite armor in your inventory.
 		}
 	}
-	
-	//[advancement] Sky's the Limit | Find Elytra | Have a pair of elytra in your inventory.
 	if((elytraMask & armorMask)==elytraMask){
 		if(!advancementTracker.checkAchievment("SkystheLimit",player)){
-			advancementTracker.setAchievment("SkystheLimit",player)
+			advancementTracker.setAchievment("SkystheLimit",player);//[advancement] Sky's the Limit | Find Elytra | Have a pair of elytra in your inventory.
 		}
 	}
-	
 }
 function tameEvents(event){
-	const animalType = event.entity.typeId.replace("minecraft:","")
-	
+	const animalType = event.entity.typeId.replace("minecraft:","");
 	let player = event.entity.dimension.getPlayers({
 		closest: 1,
 			location: {x: event.entity.location.x, y: event.entity.location.y, z: event.entity.location.z}
 	})[0];
-	this.addToScore("stats_Tamed_",animalType,player)
+	this.addToScore("stats_Tamed_",animalType,player);
+	
 	if (event.eventId=="minecraft:on_tame"){
-		//[advancement] Best Friends Forever | Tame an animal | Tame one of these 8 tameable mobs:, Cat, Donkey, Horse, Llama, Mule, Parrot, Trader Llama, Wolf
 		if(!advancementTracker.checkAchievment("BestFriendsForever",player)){
-			advancementTracker.setAchievment("BestFriendsForever",player)
+			advancementTracker.setAchievment("BestFriendsForever",player);//[advancement] Best Friends Forever | Tame an animal | Tame one of these 8 tameable mobs:, Cat, Donkey, Horse, Llama, Mule, Parrot, Trader Llama, Wolf
 		}
 	}
-	
 	switch(animalType){
 		case "ocelot":
-		//[achievement] Lion Hunter | Gain the trust of an Ocelot. | —
 			if(!achievementTracker.checkAchievment("LionHunter",player)){
-				achievementTracker.setAchievment("LionHunter",player)
+				achievementTracker.setAchievment("LionHunter",player);//[achievement] Lion Hunter | Gain the trust of an Ocelot. | —
 			}
 			break;
 		case "horse":
-		//[achievement] Saddle Up | Tame a horse. | —
 			if(!achievementTracker.checkAchievment("SaddleUp",player)){
-				achievementTracker.setAchievment("SaddleUp",player)
+				achievementTracker.setAchievment("SaddleUp",player);//[achievement] Saddle Up | Tame a horse. | —
 			}
 			break;
 		case "wolf":
-		//[achievement] Leader of the Pack | Befriend five wolves. | This does not have to be in a single game, so multiple games or reloading old saves does count toward this achievement.
 			if(!achievementTracker.checkAchievment("LeaderofthePack",player)){
-				var numWolfs = player.getDynamicProperty("wolfCounter")
+				var numWolfs = player.getDynamicProperty("wolfCounter");
+				
 				if(!numWolfs){
-					numWolfs=0
+					numWolfs=0;
 				}
-				numWolfs+=1
-				player.setDynamicProperty("wolfCounter",numWolfs)
+				numWolfs+=1;
+				player.setDynamicProperty("wolfCounter",numWolfs);
 				if(numWolfs>=5){
-					achievementTracker.setAchievment("LeaderofthePack",player)
+					achievementTracker.setAchievment("LeaderofthePack",player);//[achievement] Leader of the Pack | Befriend five wolves. | This does not have to be in a single game, so multiple games or reloading old saves does count toward this achievement.
 				}
 			}
 		case "cat":
-	//[achievement] Plethora of Cats | Befriend twenty stray cats. | Befriend and tame twenty stray cats found in villages. They do not all need to be tamed in a single world.
 			if(!achievementTracker.checkAchievment("PlethoraofCats",player)){
-				var numCats = player.getDynamicProperty("catCounter")
+				var numCats = player.getDynamicProperty("catCounter");
+				
 				if(!numCats){
-					numCats=0
+					numCats=0;
 				}
-				numCats+=1
-				player.setDynamicProperty("catCounter",numCats)
+				numCats+=1;
+				player.setDynamicProperty("catCounter",numCats);
 				if(numCats>=12){
-					achievementTracker.setAchievment("PlethoraofCats",player)
+					achievementTracker.setAchievment("PlethoraofCats",player);//[achievement] Plethora of Cats | Befriend twenty stray cats. | Befriend and tame twenty stray cats found in villages. They do not all need to be tamed in a single world.
 				}
 			}
-	//[advancement] A Complete Catalogue | Tame all Cat variants! | Tame each of these 11 cat variants:, Tabby, Tuxedo, Red, Siamese, British Shorthair, Calico, Persian, Ragdoll, White, Jellie, Black
 			if(!advancementTracker.checkAchievment("ACompleteCatalogue",player)){
-				let catMask = player.getDynamicProperty("catMask")
+				let catMask = player.getDynamicProperty("catMask");
+				
 				if(!catMask){
-					catMask=0b000000000000
+					catMask=0b000000000000;
 				}
-				const variant = event.entity.getComponent("minecraft:variant")
+				const variant = event.entity.getComponent("minecraft:variant");
 
-				catMask = catMask | 0b1 << variant.value
-				player.setDynamicProperty("catMask",catMask)
+				catMask = catMask | 0b1 << variant.value;
+				player.setDynamicProperty("catMask",catMask);
 				if(catMask==0b11111111111){
-					advancementTracker.setAchievment("ACompleteCatalogue",player)
+					advancementTracker.setAchievment("ACompleteCatalogue",player);//[advancement] A Complete Catalogue | Tame all Cat variants! | Tame each of these 11 cat variants:, Tabby, Tuxedo, Red, Siamese, British Shorthair, Calico, Persian, Ragdoll, White, Jellie, Black
 				}
 			}
 	}
-	addToScore("stats_AnimalsTaimed_", animalType.replace("_",""), player)
+	addToScore("stats_AnimalsTaimed_", animalType.replace("_",""), player);
 }
 function onHurtEvent(event){
-	const source = event.damageSource
-	const victim = event.hurtEntity
+	const source = event.damageSource;
+	const victim = event.hurtEntity;
+	
 	if(source.damagingEntity){
-		const agressor = source.damagingEntity
-		const agressorType = agressor.typeId.replace("minecraft:","")
+		const agressor = source.damagingEntity;
+		const agressorType = agressor.typeId.replace("minecraft:","");
+		
 		if(agressorType=="player"){
-			const weapon = getequipped(agressor)["Mainhand"]
+			const weapon = getequipped(agressor)["Mainhand"];
+			
 			for(let i=0; i<Math.round(event.damage);i++){
-				addToScore("stats_DamageDelt_",weapon,agressor)
+				addToScore("stats_DamageDelt_",weapon,agressor);
 			}
-		//[achievement] Overkill | Deal nine hearts of damage in a single hit. | Damage can be dealt to any mob, even those that do not have nine hearts of health overall.
 			if(event.damage>9){
 				if(!achievementTracker.checkAchievment("Overkill",agressor)){
-					achievementTracker.setAchievment("Overkill",agressor)
+					achievementTracker.setAchievment("Overkill",agressor);//[achievement] Overkill | Deal nine hearts of damage in a single hit. | Damage can be dealt to any mob, even those that do not have nine hearts of health overall.
 				}
 			}
 		}else if(victim.typeId.replace("minecraft:","")=="player"){
-			addToScore("stats_DamageTaken_",agressor.typeId.replace("minecraft:",""),victim)
+			addToScore("stats_DamageTaken_",agressor.typeId.replace("minecraft:",""),victim);
 		}
 	}
 }
@@ -1618,13 +1563,11 @@ function entityInteractions(){
 		//[achievement] Echolocation | Feed a dolphin fish to have it lead you to treasure | Feed a dolphin cod or salmon and have it lure you to treasure.
 		//[achievement] Feels Like Home | Take a Strider for a loooong [sic] ride on a lava lake in the Overworld. | In the Overworld, use a strider to ride on a lava lake for a distance of 50 meters from the point where the ride starts.
 		//[achievement] Oooh, shiny! | Distract a Piglin using gold | Give a piglin a gold item while it is aggressive toward the player.
-		
 		//[achievement] So I Got That Going for Me | Lead a Caravan containing at least 5 Llamas | —
 		//[achievement] Taste of Your Own Medicine | Poison a witch with a splash potion. | Throw a splash potion of poison at a witch (by facing the witch and pressing the use key).
 		//[achievement] Time for Stew | Give someone a suspicious stew. | —
 		//[achievement] Whatever Floats Your Goat | Get in a boat and float with a goat | Use a boat and put a goat inside that boat, then ride it
 		//[achievement] When Pigs Fly | Use a saddle to ride a pig, and then have the pig get hurt from fall damage while riding it. | Be riding a pig (e.g. using a saddle) when it hits the ground with a fall distance greater than 5.
-		
 		//[advancement] Birthday Song | Have an Allay drop a Cake at a Note Block | Give an allay a cake and then use a note block to make the allay drop the cake at a note block.
 		//[advancement] Feels Like Home | Take a Strider for a loooong ride on a lava lake in the Overworld | While riding a strider, travel 50 blocks on lava in the Overworld., Only horizontal displacement is counted. Traveling in a circle for more than 50 blocks doesn't count.
 		//[advancement] Oh Shiny | Distract Piglins with gold | While aggravated, give a piglin one of these 25 gold-related items in the #piglin_loved item tag:, Bell, Block of Gold, Block of Raw Gold, Clock, Enchanted Golden Apple, Gilded Blackstone, Glistering Melon Slice, Gold Ingot, Gold Ore, Golden Apple, Golden Axe, Golden Boots, Golden Carrot, Golden Chestplate, Golden Helmet, Golden Hoe, Golden Horse Armor, Golden Leggings, Golden Pickaxe, Golden Shovel, Golden Sword, Light Weighted Pressure Plate, Nether Gold Ore, Deepslate Gold Ore, Raw Gold, Other gold-related items do not distract the piglin and do not trigger this advancement.
@@ -1646,7 +1589,6 @@ function entityInteractions(){
 	//done--------------------
 }
 function entityKills(victim,player,cause,weapon){
-	
 	//to-do--------------------
 		//needs component checks
 		//Needs a more detailed projectile check
@@ -1659,7 +1601,7 @@ function entityKills(victim,player,cause,weapon){
 		//[advancement] Monsters Hunted | Kill one of every hostile monster | Kill each of these 34 mobs:, Blaze, Cave Spider, Creeper, Drowned, Elder Guardian, Ender Dragon, Enderman, Endermite, Evoker, Ghast, Guardian, Hoglin, Husk, Magma Cube, Phantom, Piglin, Piglin Brute, Pillager, Ravager, Shulker, Silverfish, Skeleton, Slime, Spider, Stray, Vex, Vindicator, Witch, Wither, Wither Skeleton, Zoglin, Zombie, Zombie Villager, Zombified Piglin, Other mobs may be killed, but are ignored for this advancement. Only the riders of the chicken jockeys and skeleton horsemen are counted in this advancement.
 		//[advancement] Two Birds, One Arrow | Kill two Phantoms with a piercing Arrow | Use a crossbow enchanted with Piercing to kill two phantoms with a single arrow shot.
 	//done--------------------
-	const victimType = victim.typeId.replace("minecraft:","")
+	const victimType = victim.typeId.replace("minecraft:","");
 	const monsterList = ["blaze",
 						"cave_spider",
 						"creeper", 
@@ -1693,84 +1635,71 @@ function entityKills(victim,player,cause,weapon){
 						"zoglin", 
 						"zombie", 
 						"zombie_villager_v2", 
-						"zombified_piglin"]
+						"zombified_piglin"];
+	
 	switch(victimType){
-		//[achievement] Archer | Kill a creeper with arrows. | —
 		case "creeper":
 			if (cause=="projectile"){
 				if(!achievementTracker.checkAchievment("Archer",player)){
-					achievementTracker.setAchievment("Archer",player)
+					achievementTracker.setAchievment("Archer",player);//[achievement] Archer | Kill a creeper with arrows. | —
 				}
 			}
 			break;
-		//[achievement] Feeling Ill | Defeat an Evoker | —
 		case "evocation_illager":
 			if(!achievementTracker.checkAchievment("FeelingIll",player)){
-				achievementTracker.setAchievment("FeelingIll",player)
+				achievementTracker.setAchievment("FeelingIll",player);//[achievement] Feeling Ill | Defeat an Evoker | —
 			}
 			break;
-		//[achievement] Kill the Beast! | Defeat a Ravager. | —
 		case "ravager":
 			if(!achievementTracker.checkAchievment("KilltheBeast",player)){
-				achievementTracker.setAchievment("KilltheBeast",player)
+				achievementTracker.setAchievment("KilltheBeast",player);//[achievement] Kill the Beast! | Defeat a Ravager. | —
 			}
 			break;
-		//[advancement] Uneasy Alliance | Rescue a Ghast from the Nether, bring it safely home to the Overworld... and then kill it | Kill a ghast while the player is in the Overworld.
 		case "ghast":
 			if (victim.dimension.id.replace("minecraft:", "")=="overworld"){
 				if(!advancementTracker.checkAchievment("UneasyAlliance",player)){
-					advancementTracker.setAchievment("UneasyAlliance",player)
+					advancementTracker.setAchievment("UneasyAlliance",player);//[advancement] Uneasy Alliance | Rescue a Ghast from the Nether, bring it safely home to the Overworld... and then kill it | Kill a ghast while the player is in the Overworld.
 				}
 			}
 			break;		
-		//[achievement] The Deep End | Defeat an Elder Guardian | —
 		case "elder_guardian":
 			if(!achievementTracker.checkAchievment("TheDeepEnd",player)){
-				achievementTracker.setAchievment("TheDeepEnd",player)
+				achievementTracker.setAchievment("TheDeepEnd",player);//[achievement] The Deep End | Defeat an Elder Guardian | —
 			}
 			break;
-		
-		//[advancement] Free the End | Good luck | Kill the ender dragon. If multiple players are involved in the dragon fight, only the player that deals the final blow to the dragon receives the advancement.[4]
 		case "ender_dragon":
 			if(!advancementTracker.checkAchievment("FreetheEnd",player)){
-				advancementTracker.setAchievment("FreetheEnd",player)
+				advancementTracker.setAchievment("FreetheEnd",player);//[advancement] Free the End | Good luck | Kill the ender dragon. If multiple players are involved in the dragon fight, only the player that deals the final blow to the dragon receives the advancement.[4]
 			}
 			break;
-		//[advancement] Who's the Pillager Now? | Give a Pillager a taste of their own medicine | Kill a pillager with a crossbow.
 		case "pillager":
 			if(weapon == "crossbow"){
 				if(!advancementTracker.checkAchievment("WhosthePillagerNow",player)){
-					advancementTracker.setAchievment("WhosthePillagerNow",player)
+					advancementTracker.setAchievment("WhosthePillagerNow",player);//[advancement] Who's the Pillager Now? | Give a Pillager a taste of their own medicine | Kill a pillager with a crossbow.
 				}
 			}
 			break;
-		//[achievement] Sniper Duel | Kill a Skeleton with an arrow from more than 50 meters. | Use a launched arrow to kill a skeleton, spider jockey, wither skeleton, or a stray from 50 or more blocks away, horizontally.
-		//[advancement] Sniper Duel | Kill a Skeleton from at least 50 meters away | Be at least 50 blocks away horizontally when a skeleton is killed by an arrow after the player has attacked it once.
 		case "skeleton":
 			if(weapon == "bow"){
 				const dist = calculateDistance(player.location.x, player.location.z, victim.location.x, victim.location.z)
 				if(dist>30){
 					if(!advancementTracker.checkAchievment("SniperDuel",player)){
-						advancementTracker.setAchievment("SniperDuel",player)
-						achievementTracker.setAchievment("SniperDuel",player)
+						advancementTracker.setAchievment("SniperDuel",player);//[advancement] Sniper Duel | Kill a Skeleton from at least 50 meters away | Be at least 50 blocks away horizontally when a skeleton is killed by an arrow after the player has attacked it once.
+						achievementTracker.setAchievment("SniperDuel",player);//[achievement] Sniper Duel | Kill a Skeleton with an arrow from more than 50 meters. | Use a launched arrow to kill a skeleton, spider jockey, wither skeleton, or a stray from 50 or more blocks away, horizontally.
 					}
 				}
 			}
 			break;
 	}
-	//[advancement] Adventure | Adventure, exploration and combat | Kill any entity, or be killed by any entity.
 	if(!advancementTracker.checkAchievment("Adventure",player)){
-		advancementTracker.setAchievment("Adventure",player)
+		advancementTracker.setAchievment("Adventure",player);//[advancement] Adventure | Adventure, exploration and combat | Kill any entity, or be killed by any entity.
 	}
 	if(monsterList.includes(victimType)){
-		//[achievement] Monster Hunter | Attack and destroy a monster. | Kill a hostile mob or one of the following neutral mobs: an enderman, a piglin, a zombified piglin, a spider, or a cave spider.
-		//[advancement] Monster Hunter | Kill any hostile monster | Kill one of these 34 mobs:, Blaze, Cave Spider, Creeper, Drowned, Elder Guardian, Ender Dragon, Enderman, Endermite, Evoker, Ghast, Guardian, Hoglin, Husk, Magma Cube, Phantom, Piglin, Piglin Brute, Pillager, Ravager, Shulker, Silverfish, Skeleton, Slime, Spider, Stray, Vex, Vindicator, Witch, Wither, Wither Skeleton, Zoglin, Zombie, Zombie Villager, Zombified Piglin, Only the riders of the chicken jockeys and skeleton horsemen are counted in this advancement. Other mobs may be killed, but are ignored for this advancement.
 		if(!advancementTracker.checkAchievment("MonsterHunter",player)){
-			advancementTracker.setAchievment("MonsterHunter",player)
-			achievementTracker.setAchievment("MonsterHunter",player)
+			advancementTracker.setAchievment("MonsterHunter",player);//[advancement] Monster Hunter | Kill any hostile monster | Kill one of these 34 mobs:, Blaze, Cave Spider, Creeper, Drowned, Elder Guardian, Ender Dragon, Enderman, Endermite, Evoker, Ghast, Guardian, Hoglin, Husk, Magma Cube, Phantom, Piglin, Piglin Brute, Pillager, Ravager, Shulker, Silverfish, Skeleton, Slime, Spider, Stray, Vex, Vindicator, Witch, Wither, Wither Skeleton, Zoglin, Zombie, Zombie Villager, Zombified Piglin, Only the riders of the chicken jockeys and skeleton horsemen are counted in this advancement. Other mobs may be killed, but are ignored for this advancement.
+			achievementTracker.setAchievment("MonsterHunter",player);//[achievement] Monster Hunter | Attack and destroy a monster. | Kill a hostile mob or one of the following neutral mobs: an enderman, a piglin, a zombified piglin, a spider, or a cave spider.
 		}
 	}
-		
 }
 function redstoneInteractions(){
 	//to-do--------------------
@@ -1778,9 +1707,10 @@ function redstoneInteractions(){
 		//[advancement] The Power of Books | Read the power signal of a Chiseled Bookshelf using a Comparator | Place a comparator on any side of a chiseled bookshelf or the chiseled bookshelf against a comparator to trigger the advancement.
 	//done--------------------
 }
-
 function spawnAndBreed(entity, player){
-	
+	//to-do--------------------
+		//[advancement] Two by Two | Breed all the animals! | Breed a pair of each of these 24 mobs:, Axolotl, Bee, Camel, Cat, Chicken, Cow, Donkey, Fox, Frog, Goat, Hoglin, Horse, Llama, Mooshroom, Mule, Ocelot, Panda, Pig, Rabbit, Sheep, Sniffer, Strider, Turtle, Wolf, A trader llama does not count as a llama, and a mule must be the result of breeding a horse and a donkey for this advancement as they are not breedable together. Other breedable mobs can be bred, but are ignored for this advancement.
+	//done--------------------
 	switch(entity){
 		case "iron_golem" :
 			if(!advancementTracker.checkAchievment("HiredHelp",player)){
@@ -1849,16 +1779,6 @@ function spawnAndBreed(entity, player){
 			if(!achievementTracker.checkAchievment("TheParrotsandtheBats",player)){
 				achievementTracker.setAchievment("TheParrotsandtheBats",player);//[advancement] The Parrots and the Bats | Breed two animals together | Breed a pair of any of these 25 mobs:, Axolotl, Bee, Camel, Cat, Chicken, Cow, Donkey, Fox, Frog, Goat, Hoglin, Horse, Llama, Mooshroom, Mule, Ocelot, Panda, Pig, Rabbit, Sheep, Sniffer, Strider, Trader Llama, Turtle, Wolf, A mule must be the result of breeding a horse and a donkey for this advancement as they are not breedable together. Other breedable mobs are ignored for this advancement.
 			}
-			//[advancement] Two by Two | Breed all the animals! | Breed a pair of each of these 24 mobs:, Axolotl, Bee, Camel, Cat, Chicken, Cow, Donkey, Fox, Frog, Goat, Hoglin, Horse, Llama, Mooshroom, Mule, Ocelot, Panda, Pig, Rabbit, Sheep, Sniffer, Strider, Turtle, Wolf, A trader llama does not count as a llama, and a mule must be the result of breeding a horse and a donkey for this advancement as they are not breedable together. Other breedable mobs can be bred, but are ignored for this advancement.
-			if(getScoreIfExists(world.scoreboard.getObjective("spawnAndBreedbreed_all_bool"), player) == 0){
-				if(getScoreIfExists(world.scoreboard.getObjective("spawnAndBreed" + entity), player) == 0){
-					addToScore("spawnAndBreedbreed_all_score", player);
-					//boolScore("spawnAndBreed", entity, player, 1);
-					if(getScoreIfExists(world.scoreboard.getObjective("spawnAndBreedbreed_all_score"), player) == 24){
-						//boolScore("spawnAndBreed", "breed_all_bool", player, 1);
-					}
-				}
-			}
 			break;
 		case "trader_llama" :
 			if(!achievementTracker.checkAchievment("TheParrotsandtheBats",player)){
@@ -1905,59 +1825,50 @@ function statusAndEffects(player){
 						"mining_fatigue",
 						"nausea",
 						"wither"];
-	const allPotionsMask = 0b0000000000001111111111111
-	const allEffectsMask = 0b1111111111111111111111111
-	const heroMask = 0b1<<19
+	const allPotionsMask = 0b0000000000001111111111111;
+	const allEffectsMask = 0b1111111111111111111111111;
+	const heroMask = 0b1<<19;
 	let effectPlayer = player.getEffects();
 	let effectMask = 0;
 	let index = 0;
 	
 	//create a mask for effects
 	for(var i = 0; i < effectPlayer.length; i++){
-		let effect = effectPlayer[i].typeId
+		let effect = effectPlayer[i].typeId;
+		
 		if(effectArray.includes(effect)){
-			index = effectArray.indexOf(effect)
-			effectMask = effectMask | (1<<index)
+			index = effectArray.indexOf(effect);
+			effectMask = effectMask | (1<<index);
 		}
 		switch(effect){
-			//[achievement] I've got a bad feeling about this | Kill a Pillager Captain. | —
-			//[advancement] Voluntary Exile | Kill a raid captain. Maybe consider staying away from villages for the time being… | Kill an entity in the #raiders entity tag wearing an ominous banner.
 			case "bad_omen":
 				if(!advancementTracker.checkAchievment("VoluntaryExile",player)){
-					advancementTracker.setAchievment("VoluntaryExile",player)
-					achievementTracker.setAchievment("Ivegotabadfeelingaboutthis",player)
+					advancementTracker.setAchievment("VoluntaryExile",player);//[advancement] Voluntary Exile | Kill a raid captain. Maybe consider staying away from villages for the time being… | Kill an entity in the #raiders entity tag wearing an ominous banner.
+					achievementTracker.setAchievment("Ivegotabadfeelingaboutthis",player);//[achievement] I've got a bad feeling about this | Kill a Pillager Captain. | —
 				}
 				break;
 			case "conduit_power":
-				//[achievement] Moskstraumen | Activate a Conduit | Place a conduit in a valid prismarine/sea lantern structure to activate it.
 				if(!achievementTracker.checkAchievment("Moskstraumen",player)){
-					achievementTracker.setAchievment("Moskstraumen",player)
+					achievementTracker.setAchievment("Moskstraumen",player);//[achievement] Moskstraumen | Activate a Conduit | Place a conduit in a valid prismarine/sea lantern structure to activate it.
 				}
 		}
 	}
-    //[advancement] A Furious Cocktail | Have every potion effect applied at the same time | Have all of these 13 status effects applied to the player at the same time:, Fire Resistance, Invisibility, Jump Boost, Night Vision, Poison, Regeneration, Resistance, Slow Falling, Slowness, Speed, Strength, Water Breathing, Weakness, The source of the effects is irrelevant for the purposes of this advancement. Other status effects may be applied to the player, but are ignored for this advancement.
 	if((allPotionsMask & effectMask)==allPotionsMask){
 		if(!advancementTracker.checkAchievment("AFuriousCocktail",player)){
-			advancementTracker.setAchievment("AFuriousCocktail",player)
+			advancementTracker.setAchievment("AFuriousCocktail",player);//[advancement] A Furious Cocktail | Have every potion effect applied at the same time | Have all of these 13 status effects applied to the player at the same time:, Fire Resistance, Invisibility, Jump Boost, Night Vision, Poison, Regeneration, Resistance, Slow Falling, Slowness, Speed, Strength, Water Breathing, Weakness, The source of the effects is irrelevant for the purposes of this advancement. Other status effects may be applied to the player, but are ignored for this advancement.
 		}
 	}
-	
-	
-    //[advancement] How Did We Get Here? | Have every effect applied at the same time | Have all of these 27 status effects applied to the player at the same time:, Absorption, Bad Omen, Blindness, Conduit Power, Darkness, Dolphin's Grace, Fire Resistance, Glowing, Haste, Hero of the Village, Hunger, Invisibility, Jump Boost, Levitation, Mining Fatigue, Nausea, Night Vision, Poison, Regeneration, Resistance, Slow Falling, Slowness, Speed, Strength, Water Breathing, Weakness, Wither, The source of the effects is irrelevant for the purposes of this advancement. Other status effects may be applied to the player, but are ignored for this advancement.
 	if((allPotionsMask & effectMask)==allPotionsMask){
 		if(!advancementTracker.checkAchievment("HowDidWeGetHere",player)){
-			advancementTracker.setAchievment("HowDidWeGetHere",player)
+			advancementTracker.setAchievment("HowDidWeGetHere",player);//[advancement] How Did We Get Here? | Have every effect applied at the same time | Have all of these 27 status effects applied to the player at the same time:, Absorption, Bad Omen, Blindness, Conduit Power, Darkness, Dolphin's Grace, Fire Resistance, Glowing, Haste, Hero of the Village, Hunger, Invisibility, Jump Boost, Levitation, Mining Fatigue, Nausea, Night Vision, Poison, Regeneration, Resistance, Slow Falling, Slowness, Speed, Strength, Water Breathing, Weakness, Wither, The source of the effects is irrelevant for the purposes of this advancement. Other status effects may be applied to the player, but are ignored for this advancement.
 		}
-		
 	}
 	if((heroMask & effectMask)==heroMask){
-		//[advancement] Hero of the Village | Successfully defend a village from a raid | Kill at least one raid mob during a raid and wait until it ends in victory.
 		if(!advancementTracker.checkAchievment("HerooftheVillage"),player){
-			advancementTracker.setAchievment("HerooftheVillage",player)
+			advancementTracker.setAchievment("HerooftheVillage",player);//[advancement] Hero of the Village | Successfully defend a village from a raid | Kill at least one raid mob during a raid and wait until it ends in victory.
 		}
 	}
 }
-
 function trading(){
 	//to-do--------------------
 		//[achievement] Buy Low, Sell High | Trade for the best possible price. | Buy something for 1 emerald, or when the Hero of the Village effect is applied.
@@ -2012,7 +1923,6 @@ function usingItems(item, player){
 			break;
 	}
 }
-
 function weaponsToolsArmor(subject, player){
 	//to-do--------------------
 		//[achievement] Do a Barrel Roll! | Use Riptide to give yourself a boost | Obtain a trident enchanted with Riptide and launch yourself any distance with it.
@@ -2052,7 +1962,6 @@ function weaponsToolsArmor(subject, player){
 					advancementTracker.setAchievment("Bullseye",player); //[advancement] Bullseye | Hit the bullseye of a Target block from at least 30 meters away | Be at least 30 blocks away horizontally when the center of a target is shot with a projectile by the player.
 				}
 				break;
-		    //[advancement] Fishy Business | Catch a fish | Use a fishing rod to catch any of these fishes:, Cod, Salmon, Tropical Fish, Pufferfish
 			case "fishing_rod" :
 				if(!advancementTracker.checkAchievment("FishyBusiness",player)){
 					const fishArray = [];
@@ -2060,47 +1969,51 @@ function weaponsToolsArmor(subject, player){
 					fishArray[1] = "salmon";
 					fishArray[2] = "pufferfish";
 					fishArray[3] = "tropical_fish";
-					let fishSlots = 0
-					let fishCount = 0
+					let fishSlots = 0;
+					let fishCount = 0;
 					let inventoryPlayer = player.getComponent("minecraft:inventory");
+					
 					for(let slotnum = 0; slotnum < 36; slotnum++){
 						let slotItem = inventoryPlayer.container.getItem(slotnum);
+						
 						if(slotItem){
 							let slotItemName = slotItem.typeId.replace("minecraft:","");
 							let slotItemAmount = slotItem.amount;
-							if(fishArray.includes(slotItemName)){
-								fishSlots=fishSlots | 0b1<<fishArray.indexOf(slotItemName)
-								fishCount+=slotItemAmount
-							}
-						}
-					}
-					player.setDynamicProperty("fishSlots",fishSlots)
-					player.setDynamicProperty("fishCount",fishCount)
-					system.runTimeout(() => {
-						let tempSlots=0
-						let tempfishCount = 0
-						for(let slotnum = 0; slotnum < 36; slotnum++){
-						let slotItem = inventoryPlayer.container.getItem(slotnum);
-						if(slotItem){
-							let slotItemName = slotItem.typeId.replace("minecraft:","");
-							let slotItemAmount = slotItem.amount;
-							if(fishArray.includes(slotItemName)){
-								tempSlots=tempSlots | 0b1<<fishArray.indexOf(slotItemName)
-								tempfishCount+=slotItemAmount
-							}
 							
+							if(fishArray.includes(slotItemName)){
+								fishSlots=fishSlots | 0b1<<fishArray.indexOf(slotItemName);
+								fishCount+=slotItemAmount;
+							}
 						}
 					}
-					player.getDynamicProperty("fishSlots")
-					if(tempfishCount>player.getDynamicProperty("fishCount")){
-						advancementTracker.setAchievment("FishyBusiness",player)
-					}
+					player.setDynamicProperty("fishSlots",fishSlots);
+					player.setDynamicProperty("fishCount",fishCount);
+					system.runTimeout(() => {
+						let tempSlots=0;
+						let tempfishCount = 0;
+						
+						for(let slotnum = 0; slotnum < 36; slotnum++){
+							let slotItem = inventoryPlayer.container.getItem(slotnum);
+								
+							if(slotItem){
+								let slotItemName = slotItem.typeId.replace("minecraft:","");
+								let slotItemAmount = slotItem.amount;
+								if(fishArray.includes(slotItemName)){
+									tempSlots=tempSlots | 0b1<<fishArray.indexOf(slotItemName);
+									tempfishCount+=slotItemAmount;
+								}
+								
+							}
+						}
+						player.getDynamicProperty("fishSlots");
+						if(tempfishCount>player.getDynamicProperty("fishCount")){
+							advancementTracker.setAchievment("FishyBusiness",player);//[advancement] Fishy Business | Catch a fish | Use a fishing rod to catch any of these fishes:, Cod, Salmon, Tropical Fish, Pufferfish
+						}
 					}, 40);
 				}
 				break;
 		}
 }
-
 function worldAndBiome(subject, player){
 	//to-do--------------------
 		//[achievement] Free Diver | Stay underwater for 2 minutes | Drink a potion of water breathing that can last for 2 minutes or more, then jump into the water or activate a conduit or sneak on a magma block underwater for 2 minutes.
@@ -2162,6 +2075,7 @@ function addToScore(category, item, player){
 	let itemId=categoryId+item.replace(" ","");
 	const allBoards = world.scoreboard.getObjectives();
 	const checkCategoryID = obj => obj.displayName === category;
+	
 	if(!allBoards.some(checkCategoryID)){ 
 		world.scoreboard.addObjective(categoryId, category);
 	}
@@ -2181,103 +2095,111 @@ function calculateDistance(x1, z1, x2, z2) {
 }
 function getScoreIfExists(board, player){
 	let tempScore = 0;
+	
 	if (board){
 		if (board.hasParticipant(player)){
-			tempScore =board.getScore(player)
+			tempScore =board.getScore(player);
 		}
 	}
-	return tempScore
+	
+	return tempScore;
 }
 function processBlockTags(tags){
 	for(let index in tags) {
-		const tag = tags[index]
+		const tag = tags[index];
+		
 		switch(tag){
 			case "dirt":
 				if (tags.includes("grass")){
 					if (tags.includes("fertilize_area")){
-						return "Grass"
+						return "Grass";
 					}
-					return "Dirt"
+					return "Dirt";
 				}
-				return "Dirt Variants"
+				return "Dirt Variants";
 				break;
 			case "stone":
-				return "Stone bits"
+				return "Stone bits";
 			case "stone_pick_diggable":
-				return "Copper Ore"
+				return "Copper Ore";
 			case "iron_pick_diggable":
 				break;
 			case "diamond_pick_diggable":
 				if(!tags.includes("iron_pick_diggable")){
-					return "Obsidian"
+					return "Obsidian";
 				}
-				return "Ore Blocks"
+				return "Ore Blocks";
 				break;
 			case "wood":
-				let tempTags=tags
+				let tempTags=tags;
+				
 				if (tags.includes("log")){
 					let index = tempTags.indexOf("wood");
-					tempTags.splice(index, 1)
+					tempTags.splice(index, 1);
 					index = tempTags.indexOf("log");
-					tempTags.splice(index, 1)
+					tempTags.splice(index, 1);
 					
-					return tempTags[0]+" Log"
+					return tempTags[0]+" Log";
 				}
 				if ("text_sign" in tags){
-					return "Signs"
+					return "Signs";
 				}
-				return "Wood Bits"
+				return "Wood Bits";
 			case "pumpkin":
-				return "Pumpkins"
+				return "Pumpkins";
 			case "plant":
-				return "2 high Plants or saplings"
+				return "2 high Plants or saplings";
 			case "fertilize_area":
 				if(!tags.includes("grass")){
-					return "Flowers"
+					return "Flowers";
 				}
 				break;
 			case "minecraft:crop":
-				return "Cropland"
+				return "Cropland";
 			case "sand":
-				return "Sand"
+				return "Sand";
 			case "gravel":
-				return "Gravel"
+				return "Gravel";
 			case "metal":
 				//cauldron and blocks of smelted iron bars
-				return "Metal Blocks"
+				return "Metal Blocks";
 			case "snow":
-				return "Snow Layers"
+				return "Snow Layers";
 		}
 	}
-	return "unknown"
+	
+	return "unknown";
 }
 function getequipped(player){
 	const equipComp = player.getComponent("minecraft:equippable");
-	let equipment={"chest":"","Feet":"","Head":"","Legs":"","Mainhand":"Empty Hand","Offhand":""}
+	let equipment={"chest":"","Feet":"","Head":"","Legs":"","Mainhand":"Empty Hand","Offhand":""};
+	
 	if( equipComp.getEquipment("Chest")){
-		equipment["chest"] = equipComp.getEquipment("Chest").typeId.replace("minecraft:","")
+		equipment["chest"] = equipComp.getEquipment("Chest").typeId.replace("minecraft:","");
 	}
 	if(equipComp.getEquipment("Feet")){
-		equipment["Feet"] = equipComp.getEquipment("Feet").typeId.replace("minecraft:","")
+		equipment["Feet"] = equipComp.getEquipment("Feet").typeId.replace("minecraft:","");
 	}
 	if(equipComp.getEquipment("Head")){
-		equipment["Head"] = equipComp.getEquipment("Head").typeId.replace("minecraft:","")
+		equipment["Head"] = equipComp.getEquipment("Head").typeId.replace("minecraft:","");
 	}
 	if(equipComp.getEquipment("Legs")){
-		equipment["Legs"] = equipComp.getEquipment("Legs").typeId.replace("minecraft:","")
+		equipment["Legs"] = equipComp.getEquipment("Legs").typeId.replace("minecraft:","");
 	}
 	if(equipComp.getEquipment("Mainhand")){
-		equipment["Mainhand"] = equipComp.getEquipment("Mainhand").typeId.replace("minecraft:","")
+		equipment["Mainhand"] = equipComp.getEquipment("Mainhand").typeId.replace("minecraft:","");
 	}
 	if(equipComp.getEquipment("Offhand")){
-		equipment["Offhand"] = equipComp.getEquipment("Offhand").typeId.replace("minecraft:","")
+		equipment["Offhand"] = equipComp.getEquipment("Offhand").typeId.replace("minecraft:","");
 	}
-	return equipment
+	
+	return equipment;
 }
 function achievementUnlock(player,data){
-	let display=player.onScreenDisplay
-	display.setActionBar("\u00A7cachievement Unlocked: \u00A7e"+data)
-	player.playSound("random.levelup")
+	let display=player.onScreenDisplay;
+	
+	display.setActionBar("\u00A7cachievement Unlocked: \u00A7e"+data);
+	player.playSound("random.levelup");
 }
 function pearlThrow(player){
 	let x1 = player.getDynamicProperty("pearlThrowX");
@@ -2336,12 +2258,9 @@ function timer10Sec(){
 		let playerArrayList = world.getAllPlayers();//get list of players
 		
 		for(let i = 0; i < playerArrayList.length; i++){
-			//distance data sampling at defined interval
-			overworldBlocksTravelled(playerArrayList[i]);
-			//inventory checks for achievement items
-			itemInventory(playerArrayList[i]);
-			//effect checks for achievement
-			statusAndEffects(playerArrayList[i]);
+			overworldBlocksTravelled(playerArrayList[i]);//distance data sampling at defined interval
+			itemInventory(playerArrayList[i]);//inventory checks for achievement items
+			statusAndEffects(playerArrayList[i]);//effect checks for achievement
 		}
 	}, 200);
 }
@@ -2361,7 +2280,6 @@ function timer1Day(){
 			worldAndBiome("biomeChecks", playerArrayList[i]);
 		}
 	}
-	
 	system.run(timer1Day);
 }
 function timer1Min(){
@@ -2379,6 +2297,55 @@ function timer1Min(){
 //end helper functions----------------------------------------
 
 //debug functions----------------------------------------
+function blockLookingAt(subject, player){
+	let blockInspect = "";
+	let inspectText = "";
+	let inspectLocation = "";
+	
+	if(player.getBlockFromViewDirection() && player.getBlockFromViewDirection().block.isValid()){
+		blockInspect = player.getBlockFromViewDirection({includeLiquidBlocks : true, includePassableBlocks : true}).block;
+	}
+	if(blockInspect){
+		switch(subject){
+			case "id" :
+				//inspectText = player.getBlockFromViewDirection().block.typeId;
+				inspectText = "not implemented";
+				break;
+			case "tags" :
+				inspectText = blockInspect.getTags().join(", ");
+				break;
+			case "location" :
+				inspectLocation = blockInspect.location;
+				inspectText = Math.floor(inspectLocation.x)
+							+ ", " + Math.floor(inspectLocation.y)
+							+ ", " + Math.floor(inspectLocation.z);
+				break;
+			case "distance" :
+				inspectLocation = blockInspect.location;
+				let x1 = Math.floor(player.location.x);
+				let z1 = Math.floor(player.location.z);
+				let x2 = Math.floor(inspectLocation.x);
+				let z2 = Math.floor(inspectLocation.z);
+				inspectText = calculateDistance(x1, z1, x2, z2);
+				break;
+			case "growth" :
+				inspectText = blockInspect.permutation.getState("growth");
+				break;
+			case "moisturized_amount" :
+				inspectText = blockInspect.permutation.getState("moisturized_amount");
+				break;
+			case "redstone_signal" :
+				inspectText = blockInspect.permutation.getState("redstone_signal");
+				break;
+		}
+	}
+	
+	if(inspectText){
+		return inspectText;
+	}else{
+		return "";
+	}
+}
 function facingDirection(player){
 	let faceDir = player.getRotation().y;
 	let faceTxt = "";
@@ -2414,7 +2381,7 @@ function facingDirection(player){
 }
 function getTheTime(style){
 	let timeVal = world.getTimeOfDay();
-	let timeOffset = timeVal + 6000
+	let timeOffset = timeVal + 6000;
 	let timeHour = 0;
 	let timeMin = 0;
 	let timePeriod = "";
