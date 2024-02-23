@@ -91,123 +91,6 @@ world.beforeEvents.playerBreakBlock.subscribe(event=>{
 //end subscriptions----------------------------------------
 
 //ui functions----------------------------------------
-function statList(player){
-	let statForm = new ActionFormData()
-		.title(player.name)
-		.body(statListBody(player))
-		.button("Scores")
-		.button("Objectives");
-		
-		if(player.hasTag("debug")||debugToggle){
-			statForm.button("Debug");
-		}
-		
-		statForm.show(player).then((response) => {
-			switch(response.selection){
-				case 0 :
-					blockStatsDisplay(player);
-					break;
-				case 1 :
-					objectivesStatsDisplay(player);
-					break;
-				case 2 :
-					debugDisplay(player);
-					break;
-			}
-		});
-}
-function statListBody(player){
-    //title
-	let statTxt = "Stats";
-	
-    //formatting
-	let titleFormat = "\u00A7d";
-	let subtitleFormat = "\u00A73";
-	let itemFormat = "\u00A7a";
-	let bodyFormat = "\u00A7r";
-	
-    //items
-	let overTravel = world.scoreboard.getObjective("stats_travel_Overwoldblocktravel");
-	let totalBlocksPlaced = world.scoreboard.getObjective("stats_blocksPlaced_total");
-	let totalBlocksBroken = world.scoreboard.getObjective("stats_blocksBroken_total");
-	let daysPlayed = world.scoreboard.getObjective("stats_playTime_MinecraftDays");
-	
-    //consolidate scores
-	let statArrayTxt = [];
-	statArrayTxt[0] = subtitleFormat + "Overworld blocks travelled: " + bodyFormat + getScoreIfExists(overTravel, player);
-	statArrayTxt[1] = subtitleFormat + "Total blocks placed: " + bodyFormat + getScoreIfExists(totalBlocksPlaced, player);
-	statArrayTxt[2] = subtitleFormat + "Total blocks broken: " + bodyFormat + getScoreIfExists(totalBlocksBroken, player);
-	statArrayTxt[3] = subtitleFormat + "Minecraft days played: " + bodyFormat + getScoreIfExists(daysPlayed, player);
-	
-    //construct body
-	let indentSize = "";
-	let nextLine = '\n';
-	let indentNextLine = nextLine + indentSize;
-	let displayText = titleFormat + statTxt + nextLine + nextLine + statArrayTxt.join(indentNextLine);
-	
-	return displayText
-}
-function objectivesStatsDisplay(player){
-    //title
-	let scoresText= ["Objectives"];
-	
-    //formatting
-	let titleFormat = "\u00A7d";
-	let subtitleFormat = "\u00A73";
-	let itemFormat = "\u00A7r";
-	let bodyFormat = "\u00A7a";
-	
-    //items
-	let scoreboards = world.scoreboard.getObjectives();
-	let tempScore = 0;
-	let achievement = [];
-	let advancement = [];
-	
-    //consolidate scores
-	for( let i in scoreboards){
-		let board = scoreboards[i];
-		let temp = board.displayName.split("_");
-		let type = temp[0];
-		let category = temp[1];
-		let name = temp[2];
-		let boolPos = "\u2714";
-		let boolNeg = " ";
-		let lineWrap = 28;
-		
-		switch (type){
-			case "objectives":
-				tempScore = getScoreIfExists(board,player);
-				switch(category){
-					case "achievement":
-						if (!name.includes("total") && name.length>1){
-							achievement.push(itemFormat + name+ ": " + bodyFormat + tempScore.toString().replace("0", boolNeg).replace("1", boolPos));
-						}
-						break;
-					case "advancement":
-						if (!name.includes("total") && name.length>1){
-							advancement.push(itemFormat + name+ ": " + bodyFormat + tempScore.toString().replace("0", boolNeg).replace("1", boolPos));
-						}
-						break;
-				}
-				break;
-		}
-	}
-	
-    //construct ui
-	let indentSize = "";
-	let nextLine = '\n';
-	let indentNextLine = nextLine + indentSize;
-	let allStats=titleFormat + scoresText.join(nextLine) + nextLine
-		+ nextLine
-		+ subtitleFormat + "Achievements:" + bodyFormat + indentNextLine + achievement.join(indentNextLine) + nextLine
-		+ nextLine
-		+ subtitleFormat + "Advancements:" + bodyFormat + indentNextLine + advancement.join(indentNextLine) + nextLine;
-	let statsForm = new ActionFormData()
-		.title(player.name)
-		.body(allStats)
-		.button("Close")
-		.show(player);
-}
 function blockStatsDisplay(player){
     //title
 	let scorestext= ["These are the scores being tracked"];
@@ -418,6 +301,119 @@ function debugDisplay(player){
 	let debugForm = new ActionFormData()
 		.title(player.name)
 		.body(displayText)
+		.button("Close")
+		.show(player);
+}
+function frontPageDisplay(player){
+    //title
+	let statTxt = "Stats";
+	
+    //formatting
+	let titleFormat = "\u00A7d";
+	let subtitleFormat = "\u00A73";
+	let itemFormat = "\u00A7a";
+	let bodyFormat = "\u00A7r";
+	
+    //items
+	let overTravel = world.scoreboard.getObjective("stats_travel_Overwoldblocktravel");
+	let totalBlocksPlaced = world.scoreboard.getObjective("stats_blocksPlaced_total");
+	let totalBlocksBroken = world.scoreboard.getObjective("stats_blocksBroken_total");
+	let daysPlayed = world.scoreboard.getObjective("stats_playTime_MinecraftDays");
+	
+    //consolidate scores
+	let statArrayTxt = [];
+	statArrayTxt[0] = subtitleFormat + "Overworld blocks travelled: " + bodyFormat + getScoreIfExists(overTravel, player);
+	statArrayTxt[1] = subtitleFormat + "Total blocks placed: " + bodyFormat + getScoreIfExists(totalBlocksPlaced, player);
+	statArrayTxt[2] = subtitleFormat + "Total blocks broken: " + bodyFormat + getScoreIfExists(totalBlocksBroken, player);
+	statArrayTxt[3] = subtitleFormat + "Minecraft days played: " + bodyFormat + getScoreIfExists(daysPlayed, player);
+	
+    //construct ui
+	let indentSize = "";
+	let nextLine = '\n';
+	let indentNextLine = nextLine + indentSize;
+	let displayText = titleFormat + statTxt + nextLine + nextLine + statArrayTxt.join(indentNextLine);
+	let statForm = new ActionFormData()
+		.title(player.name)
+		.body(displayText)
+		.button("Scores")
+		.button("Objectives");
+		
+		if(player.hasTag("debug")||debugToggle){
+			statForm.button("Debug");
+		}
+		
+		statForm.show(player).then((response) => {
+			switch(response.selection){
+				case 0 :
+					blockStatsDisplay(player);
+					break;
+				case 1 :
+					objectivesStatsDisplay(player);
+					break;
+				case 2 :
+					debugDisplay(player);
+					break;
+			}
+		});
+}
+function objectivesStatsDisplay(player){
+    //title
+	let scoresText= ["Objectives"];
+	
+    //formatting
+	let titleFormat = "\u00A7d";
+	let subtitleFormat = "\u00A73";
+	let itemFormat = "\u00A7r";
+	let bodyFormat = "\u00A7a";
+	
+    //items
+	let scoreboards = world.scoreboard.getObjectives();
+	let tempScore = 0;
+	let achievement = [];
+	let advancement = [];
+	
+    //consolidate scores
+	for( let i in scoreboards){
+		let board = scoreboards[i];
+		let temp = board.displayName.split("_");
+		let type = temp[0];
+		let category = temp[1];
+		let name = temp[2];
+		let boolPos = "\u2714";
+		let boolNeg = " ";
+		let lineWrap = 28;
+		
+		switch (type){
+			case "objectives":
+				tempScore = getScoreIfExists(board,player);
+				switch(category){
+					case "achievement":
+						if (!name.includes("total") && name.length>1){
+							achievement.push(itemFormat + name+ ": " + bodyFormat + tempScore.toString().replace("0", boolNeg).replace("1", boolPos));
+						}
+						break;
+					case "advancement":
+						if (!name.includes("total") && name.length>1){
+							advancement.push(itemFormat + name+ ": " + bodyFormat + tempScore.toString().replace("0", boolNeg).replace("1", boolPos));
+						}
+						break;
+				}
+				break;
+		}
+	}
+	
+    //construct ui
+	let indentSize = "";
+	let nextLine = '\n';
+	let indentNextLine = nextLine + indentSize;
+	let allStats=titleFormat + scoresText.join(nextLine) + nextLine
+		+ nextLine
+		+ subtitleFormat + "Achievements:" + bodyFormat + indentNextLine + achievement.join(indentNextLine) + nextLine
+		+ nextLine
+		+ subtitleFormat + "Advancements:" + bodyFormat + indentNextLine + advancement.join(indentNextLine) + nextLine;
+	let statsForm = new ActionFormData()
+		.title(player.name)
+		.body(allStats)
 		.button("Close")
 		.show(player);
 }
@@ -823,7 +819,7 @@ function statStick(event){
 	
 	if(itemName == "stick" && (itemTag == "statStick")){
 		propertyToScore(player);
-		statList(player);
+		frontPageDisplay(player);
 	}
 }
 function targetHit(event){
