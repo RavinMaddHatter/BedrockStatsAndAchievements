@@ -8,8 +8,8 @@ var blockBreaks = {};
 var blocksUsed = {};
 const debugToggle = true;
 timer10Sec();
-timer1Min();
 timer1Day();
+timer1Min();
 var achievementTracker = new achievementHandler(achievements, "Achievments");
 var advancementTracker = new achievementHandler(advancements, "Advancements");
 
@@ -17,11 +17,24 @@ var advancementTracker = new achievementHandler(advancements, "Advancements");
 world.afterEvents.buttonPush.subscribe(event =>{ 
 	buttonPushed(event);
 });
+world.afterEvents.dataDrivenEntityTrigger.subscribe(event=>{
+	if(event.entity.typeId!="minecraft:player"){
+		if(event.eventId=="minecraft:on_tame"){
+			tameEvents(event);
+		}
+		if(event.eventId=="minecraft:on_trust"){
+			tameEvents(event);
+		}
+	}
+});
 world.afterEvents.entityDie.subscribe(event =>{ 
 	entityDied(event);
 });
 world.afterEvents.entityHealthChanged.subscribe(event =>{ 
 	entityChangeHealth(event);
+});
+world.afterEvents.entityHurt.subscribe(event=>{
+	onHurtEvent(event);
 });
 world.afterEvents.entityLoad.subscribe(event =>{ 
 	loadedEntity(event);
@@ -45,20 +58,11 @@ world.afterEvents.itemReleaseUse.subscribe(event=>{
 world.afterEvents.itemStopUseOn.subscribe(event=>{
 	itemStopOn(event);
 });
-world.afterEvents.pressurePlatePush.subscribe(event=>{
-	pleatePressed(event);
-});
-world.afterEvents.projectileHitBlock.subscribe(event=>{
-	 projectileHitBlock(event);
-});
 world.afterEvents.leverAction.subscribe(event=>{
 	leverFlipped(event);
 });
 world.afterEvents.playerBreakBlock.subscribe(event=>{
 	blockBroken(event);
-});
-world.beforeEvents.playerBreakBlock.subscribe(event=>{
-	preBreak(event);
 });
 world.afterEvents.playerDimensionChange.subscribe(event =>{ 
 	changedDimension(event);
@@ -69,24 +73,20 @@ world.afterEvents.playerPlaceBlock.subscribe(event=>{
 world.afterEvents.playerSpawn.subscribe(event =>{ 
 	initSpawn(event);
 });
+world.afterEvents.pressurePlatePush.subscribe(event=>{
+	pleatePressed(event);
+});
+world.afterEvents.projectileHitBlock.subscribe(event=>{
+	 projectileHitBlock(event);
+});
 world.afterEvents.projectileHitEntity.subscribe(event =>{ 
 	hitByProjectile(event);
 });
 world.afterEvents.targetBlockHit.subscribe(event=>{
 	targetHit(event);
 });
-world.afterEvents.entityHurt.subscribe(event=>{
-	onHurtEvent(event);
-});
-world.afterEvents.dataDrivenEntityTrigger.subscribe(event=>{
-	if(event.entity.typeId!="minecraft:player"){
-		if(event.eventId=="minecraft:on_tame"){
-			tameEvents(event);
-		}
-		if(event.eventId=="minecraft:on_trust"){
-			tameEvents(event);
-		}
-	}
+world.beforeEvents.playerBreakBlock.subscribe(event=>{
+	preBreak(event);
 });
 //end subscriptions----------------------------------------
 
@@ -424,9 +424,6 @@ function debugDisplay(player){
 //end ui functions----------------------------------------
 
 //event functions----------------------------------------
-function preBreak(event){
-	blockBreaks["L"+event.block.x+" "+event.block.y+" "+event.block.z]=processBlockTags(event.block.getTags());
-}
 function blockBroken(event){
 	let player = event.player;
 	let blockData = blockBreaks["L"+event.block.x+" "+event.block.y+" "+event.block.z];
@@ -460,19 +457,6 @@ function buttonPushed(event){
 		
 		if (event.block.getTags().includes("wood")){
 			type = "Wood Buttons";
-		}
-		addToScore("stats_redstonInteractions_",type, event.source);
-	}
-}
-function pleatePressed(event){
-	if(event.source.typeId=="minecraft:player"){
-		let type = "Weighted Pressure Plate";
-		
-		if (event.block.getTags().includes("stone")){
-			type = "Stone Pressure Plate";
-		}
-		if (event.block.getTags().includes("wood")){
-			type = "Wood Pressure Plate";
 		}
 		addToScore("stats_redstonInteractions_",type, event.source);
 	}
@@ -524,6 +508,18 @@ function changedDimension(event){
 				}
 			}
 			break;
+	}
+}
+function entityChangeHealth(event){
+	let source = event.entity;
+	
+	if(source.typeId == "minecraft:player"){
+		let oldVal = event.oldValue;
+		let newVal = event.newValue;
+		
+		if(oldVal <= 0 && (newVal >= (oldVal +1))){
+			usingItems("totem_of_undying", source);
+		}
 	}
 }
 function entityDied(event){
@@ -580,17 +576,9 @@ function entityDied(event){
 			break;
 	}
 }
-function entityChangeHealth(event){
-	let source = event.entity;
-	
-	if(source.typeId == "minecraft:player"){
-		let oldVal = event.oldValue;
-		let newVal = event.newValue;
-		
-		if(oldVal <= 0 && (newVal >= (oldVal +1))){
-			usingItems("totem_of_undying", source);
-		}
-	}
+function getArrowType(arrow){
+	//cant do this yet...
+	return "Arrow"
 }
 function hitByProjectile(event){
 	let projectile = event.projectile.typeId.replace("minecraft:","");
@@ -608,10 +596,6 @@ function hitByProjectile(event){
 				break;
 		}
 	}
-}
-function getArrowType(arrow){
-	//cant do this yet...
-	return "Arrow"
 }
 function initSpawn(event){
 	let player = event.player;
@@ -735,6 +719,42 @@ function loadedEntity(event){
 		}
 	}
 }
+function pleatePressed(event){
+	if(event.source.typeId=="minecraft:player"){
+		let type = "Weighted Pressure Plate";
+		
+		if (event.block.getTags().includes("stone")){
+			type = "Stone Pressure Plate";
+		}
+		if (event.block.getTags().includes("wood")){
+			type = "Wood Pressure Plate";
+		}
+		addToScore("stats_redstonInteractions_",type, event.source);
+	}
+}
+function preBreak(event){
+	blockBreaks["L"+event.block.x+" "+event.block.y+" "+event.block.z]=processBlockTags(event.block.getTags());
+}
+function projectileHitBlock(event){
+	let shooter = event.source;
+	let projectile = event.projectile.typeId.replace("minecraft:","");
+	
+	if(shooter){
+		if(shooter.typeId=="minecraft:player"){
+			let player = shooter;
+			let block = event.getBlockHit().block;
+			
+			if(block.isvalid){
+				if(block.permutation.matches("minecraft:target")){
+					addToScore("stats_redstonInteractions_","Target Blocks Hit",shooter);
+				}
+			}
+			if(projectile == "ender_pearl"){
+				pearlThrow(player);
+			}
+		}
+	}
+}
 function spawnedEntity(event){
 	let entity = event.entity;
 	let entityName = entity.typeId.replace("minecraft:","");
@@ -804,26 +824,6 @@ function statStick(event){
 	if(itemName == "stick" && (itemTag == "statStick")){
 		propertyToScore(player);
 		statList(player);
-	}
-}
-function projectileHitBlock(event){
-	let shooter = event.source;
-	let projectile = event.projectile.typeId.replace("minecraft:","");
-	
-	if(shooter){
-		if(shooter.typeId=="minecraft:player"){
-			let player = shooter;
-			let block = event.getBlockHit().block;
-			
-			if(block.isvalid){
-				if(block.permutation.matches("minecraft:target")){
-					addToScore("stats_redstonInteractions_","Target Blocks Hit",shooter);
-				}
-			}
-			if(projectile == "ender_pearl"){
-				pearlThrow(player);
-			}
-		}
 	}
 }
 function targetHit(event){
@@ -975,231 +975,36 @@ function blockInteractions(item,Block){
 		//[advancement] War Pigs | Loot a Chest in a Bastion Remnant | Open a naturally generated, never-before opened chest in a bastion remnant.
 		//done--------------------
 }
-function craftAndCook(){
-	//to-do--------------------
-		//[achievement] Alternative Fuel | Power a furnace with a kelp block | This achievement is awarded only if the dried kelp block is put into the furnace's fuel slot manually, not via redstone components such as hoppers.
-		//[achievement] Super Fuel | Power a Furnace with Lava | —		
-		//[achievement] Local Brewery | Brew a potion. | Pick up a potion from a brewing stand potion slot. An already-created potion placed and removed qualifies.
-		//[advancement] Local Brewery | Brew a Potion | Pick up an item from a brewing stand potion slot. This does not need to be a potion. Water bottles or even glass bottles can also trigger this advancement.[3]
-		//maybe move to block place
-		//[achievement] Smelt Everything! | Connect 3 Chests to a single Furnace using 3 Hoppers. | Be within the range of three chests connected to a Furnace with 3 Hoppers.
-	//done--------------------
-}
-function getSomeWhere(location, player){
-	//to-do--------------------
-		//[achievement] Ahoy! | Find a shipwreck | —
-		//[achievement] Atlantis? | Find an underwater ruin | —
-		//[achievement] Caves & Cliffs | Freefall from the top of the world (build limit) to the bottom of the world and survive. | —
-		//[achievement] On A Rail | Travel by minecart to a point at least 500m in a single direction from where you started. | Travel by minecart 500 blocks in a straight line away from the player's starting point.
-		//[achievement] Treasure Hunter | Acquire a map from a cartographer villager, then enter the revealed structure | Visit the structure indicated while the purchased map is in your main hand (hotbar).
-		//[advancement] Caves & Cliffs | Free fall from the top of the world (build limit) to the bottom of the world and survive | Fall from at least y=319 to at most y=-59 with a vertical distance of greater than 379 blocks.
-		//[advancement] Eye Spy | Follow an Eye of Ender | Enter a stronghold.
-		//[advancement] Remote Getaway | Escape the island | Throw an ender pearl through, fly, or walk into an end gateway.
-		//[advancement] The City at the End of the Game | Go on in, what could happen? | Enter an end city.
-	//done--------------------
-}
-
-function itemInventory(player){
-	//to-do--------------------
-		//Required data values
-		//cant be done until after block renames happen our data values are given to itemStack class
-		//[advancement] Spooky Scary Skeleton | Obtain a Wither Skeleton's skull | Have a wither skeleton skull in your inventory.
-		//[achievement] Dry Spell | Dry a sponge in a furnace | —
-		//[advancement] Careful Restoration | Make a Decorated Pot out of 4 Pottery Sherds | —
-		//[achievement] Careful restoration | Make a Decorated Pot out of 4 Pottery Sherds | —
-		//[achievement] Fruit on the Loom | Make a banner using an Enchanted Apple Stencil | Make a banner using an enchanted apple.
-		
-		//mabye should move
-		//i dont know how to do this one
-		//[achievement] Taking Inventory | Open your inventory. | —
-		//Maybe block interactions?
-		//[achievement] Chestful of Cobblestone | Mine 1,728 Cobblestone and place it in a chest. | A player must mine 1,728 cobblestone and place 1,728 cobblestone, or 27 stacks, in a chest. The cobblestone placed in the chest does not have to be the same cobblestone that was mined.
-	//done--------------------
-	const loseItems = ["crafting_table",
-						"iron_ingot",		
-						"diamond",			
-						"ancient_debris",	
-						"lava_bucket",		
-						"cod_bucket",
-						"salmon_bucket",
-						"tropical_fish_bucket",
-						"pufferfish_bucket",
-						"axolotl_bucket",	
-						"tadpole_bucket",	
-						"cobblestone",
-						"blackstone",
-						"cobbled_deepslate",
-						"obsidian",			
-						"crying_obsidian",	
-						"blaze_rod",		
-						"dragon_egg",		
-						"sniffer_egg",		
-						"dragon_breath",	
-						"bread", 			
-						"furnace", 		 	
-						"enchanting_table",	
-						"bookshelf",		
-						"cake",				
-						"leather",			
-						"dispenser",		
-						"cooked_cod",		
-						"charcoal",
-						"flower_pot"];
-	const woolTypes=["black_wool",
-					"blue_wool",
-					"brown_wool",
-					"cyan_wool",
-					"gray_wool",
-					"green_wool",
-					"light_blue_wool",
-					"light_gray_wool",
-					"lime_wool",
-					"magenta_wool",
-					"orange_wool",
-					"pink_wool",
-					"purple_wool",
-					"red_wool",
-					"white_wool",
-					"yellow_wool"];
-	const toolsTypes = ["wooden_pickaxe",
-					"wooden_sword",
-					"wooden_shovel",
-					"wooden_axe",
-					"wooden_hoe",
-					"stone_pickaxe",
-					"stone_sword",
-					"stone_shovel",
-					"stone_axe",
-					"stone_hoe",
-					"iron_pickaxe",
-					"iron_sword",
-					"iron_shovel",
-					"iron_axe",
-					"iron_hoe",
-					"golden_pickaxe",
-					"golden_sword",
-					"golden_shovel",
-					"golden_axe",
-					"golden_hoe",
-					"diamond_pickaxe",
-					"diamond_sword",
-					"diamond_shovel",
-					"diamond_axe",
-					"diamond_hoe",
-					"netherite_pickaxe",				
-					"netherite_sword",				
-					"netherite_shovel",				
-					"netherite_axe",				
-					"netherite_hoe"];
-	const armorTypes = ["iron_helmet",
-					"iron_chestplate",
-					"iron_leggings",
-					"iron_boots",
-					"diamond_helmet",
-					"diamond_chestplate",
-					"diamond_leggings",
-					"diamond_boots",
-					"netherite_helmet",
-					"netherite_chestplate",
-					"netherite_leggings",
-					"netherite_boots",
-					"elytra"];
-	const foglightType=["ochre_froglight",
-						"pearlescent_froglight",
-						"verdant_froglight"];
-	const sherdArray = ["angler_pottery_sherd",
-						"archer_pottery_sherd",
-						"arms_up_pottery_sherd",
-						"blade_pottery_sherd",
-						"brewer_pottery_sherd",
-						"burn_pottery_sherd",
-						"danger_pottery_sherd",
-						"explorer_pottery_sherd",
-						"friend_pottery_sherd",
-						"heart_pottery_sherd",
-						"heartbreak_pottery_sherd",
-						"howl_pottery_sherd",
-						"miner_pottery_sherd",
-						"mourner_pottery_sherd",
-						"plenty_pottery_sherd",
-						"prize_pottery_sherd",
-						"sheaf_pottery_sherd",
-						"shelter_pottery_sherd",
-						"skull_pottery_sherd",
-						"snort_pottery_sherd"];
-	let inventoryPlayer = player.getComponent("minecraft:inventory");
-	let index=0;
-	let inventorymask = 0;
-	let armorMask = 0;
-	let sherdMask = 0;
-	let toolMask = 0;
-	let woolMask = 0;
-	let froglight = 0;
-	for (let slot = 0; slot<36;slot++){
-		let itemStack = inventoryPlayer.container.getItem(slot);
-		if (itemStack){
-			const itemName = itemStack.typeId.replace("minecraft:","")
-			if(loseItems.includes(itemName)){
-				index = loseItems.indexOf(itemName);
-				inventorymask = inventorymask | (0b1<<index);
-			}
-			else if (sherdArray.includes(itemName)){
-				index = sherdArray.indexOf(itemName);
-				sherdMask = sherdMask | (0b1<<index);
-			}else if(toolsTypes.includes(itemName)){
-				index = toolsTypes.indexOf(itemName);
-				toolMask = toolMask | (0b1<<index);
-			}else if(woolTypes.includes(itemName)){
-				index = woolTypes.indexOf(itemName);
-				woolMask = woolMask | (0b1<<index);
-			}else if(foglightType.includes(itemName)){
-				index = foglightType.indexOf(itemName);
-				froglight = froglight | (0b1<<index);
-			}else if(itemName.includes("shulker_box")){
-				if(itemStack.nameTag){
-					if(!achievementTracker.checkAchievment("OrganizationalWizard",player)){
-						achievementTracker.setAchievment("OrganizationalWizard",player);//[achievement] Organizational Wizard | Name a Shulker Box with an Anvil | —
-					}
-				}
-			}
-		}
-	}
-	const equip = getequipped(player);
+function checkArmorachievements(player,armorMask){
+	const allIronArmorMask = 0b1111;
+	const allDiamondArmorMask = 0b11110000;
+	const allNetheriteArmorMask = 0b111100000000;
+	const elytraMask = 0b1000000000000;
 	
-	for(const slot of ["Chest","Feet","Head","Legs"]){
-		let itemName = equip[slot];
-		
-		if(armorTypes.includes(itemName)){
-			index = armorTypes.indexOf(itemName);
-			armorMask = armorMask | (0b1<<index);
+	if((allIronArmorMask & armorMask)>0){
+		if(!advancementTracker.checkAchievment("SuitUp",player)){
+			advancementTracker.setAchievment("SuitUp",player);//[advancement] Suit Up | Protect yourself with a piece of iron armor | Have any type of iron armor in your inventory.
+		}
+		if((allIronArmorMask & armorMask) == allIronArmorMask){
+			if(!achievementTracker.checkAchievment("IronMan",player)){
+				achievementTracker.setAchievment("IronMan",player);//[achievement] Iron Man | Wear a full suit of Iron Armor. | —
+			}
 		}
 	}
-	//Checks armor based achievements
-	if(armorMask>0){
-		checkArmorachievements(player,armorMask);
-	}
-	//check tool based achievements
-	if(toolMask>0){
-		checkToolachievements(player,toolMask);
-	}
-	if(inventorymask>0){
-		checkLooseItemachievements(player,inventorymask);
-	}
-	//[advancement] Respecting the Remnants | Brush a Suspicious block to obtain a Pottery Sherd | —
-	if(sherdArray>0){
-		if(!advancementTracker.checkAchievment("RespectingtheRemnants",player)){
-			advancementTracker.setAchievment("RespectingtheRemnants",player);
+	if((allDiamondArmorMask & armorMask)>0){
+		if(!advancementTracker.checkAchievment("CoverMewithDiamonds",player)){
+			advancementTracker.setAchievment("CoverMewithDiamonds",player);//[advancement] Cover Me with Diamonds | Diamond armor saves lives | Have any type of diamond armor in your inventory.
 		}
 	}
-	if(froglight==0b111){
-		if(!advancementTracker.checkAchievment("WithOurPowersCombined",player)){
-			advancementTracker.setAchievment("WithOurPowersCombined",player);//[advancement] With Our Powers Combined! | Have all Froglights in your inventory | Have a Pearlescent, Ochre, and Verdant Froglight in your inventory.
-			achievementTracker.setAchievment("Withourpowerscombined",player);//[achievement] With our powers combined! | Have all 3 froglights in your inventory | Acquire at least one of each pearlescent, verdant, and ochre froglights in your inventory at the same time.
+	if((allNetheriteArmorMask & armorMask)==allNetheriteArmorMask){
+		if(!advancementTracker.checkAchievment("Covermeindebris",player)){
+			advancementTracker.setAchievment("Covermeindebris",player);//[advancement] Cover Me in Debris | Get a full suit of Netherite armor | Have a full set of netherite armor in your inventory.
+			achievementTracker.setAchievment("Covermeindebris",player);//[achievement] Cover me in debris | Wear a full set of Netherite armor | Have a full set of Netherite armor in your inventory.
 		}
 	}
-	if(woolMask==0b1111111111111111){
-		if(!achievementTracker.checkAchievment("RainbowCollection",player)){
-			achievementTracker.setAchievment("RainbowCollection",player);//[achievement] Rainbow Collection | Gather all 16 colors of wool. | All the colors of wool do not have to be in the inventory at the same time, but must have been picked up by the player at least once.
+	if((elytraMask & armorMask)==elytraMask){
+		if(!advancementTracker.checkAchievment("SkystheLimit",player)){
+			advancementTracker.setAchievment("SkystheLimit",player);//[advancement] Sky's the Limit | Find Elytra | Have a pair of elytra in your inventory.
 		}
 	}
 }
@@ -1433,129 +1238,15 @@ function checkToolachievements(player,toolMask){
 		}
 	}
 }
-function checkArmorachievements(player,armorMask){
-	const allIronArmorMask = 0b1111;
-	const allDiamondArmorMask = 0b11110000;
-	const allNetheriteArmorMask = 0b111100000000;
-	const elytraMask = 0b1000000000000;
-	
-	if((allIronArmorMask & armorMask)>0){
-		if(!advancementTracker.checkAchievment("SuitUp",player)){
-			advancementTracker.setAchievment("SuitUp",player);//[advancement] Suit Up | Protect yourself with a piece of iron armor | Have any type of iron armor in your inventory.
-		}
-		if((allIronArmorMask & armorMask) == allIronArmorMask){
-			if(!achievementTracker.checkAchievment("IronMan",player)){
-				achievementTracker.setAchievment("IronMan",player);//[achievement] Iron Man | Wear a full suit of Iron Armor. | —
-			}
-		}
-	}
-	if((allDiamondArmorMask & armorMask)>0){
-		if(!advancementTracker.checkAchievment("CoverMewithDiamonds",player)){
-			advancementTracker.setAchievment("CoverMewithDiamonds",player);//[advancement] Cover Me with Diamonds | Diamond armor saves lives | Have any type of diamond armor in your inventory.
-		}
-	}
-	if((allNetheriteArmorMask & armorMask)==allNetheriteArmorMask){
-		if(!advancementTracker.checkAchievment("Covermeindebris",player)){
-			advancementTracker.setAchievment("Covermeindebris",player);//[advancement] Cover Me in Debris | Get a full suit of Netherite armor | Have a full set of netherite armor in your inventory.
-			achievementTracker.setAchievment("Covermeindebris",player);//[achievement] Cover me in debris | Wear a full set of Netherite armor | Have a full set of Netherite armor in your inventory.
-		}
-	}
-	if((elytraMask & armorMask)==elytraMask){
-		if(!advancementTracker.checkAchievment("SkystheLimit",player)){
-			advancementTracker.setAchievment("SkystheLimit",player);//[advancement] Sky's the Limit | Find Elytra | Have a pair of elytra in your inventory.
-		}
-	}
-}
-function tameEvents(event){
-	const animalType = event.entity.typeId.replace("minecraft:","");
-	let player = event.entity.dimension.getPlayers({
-		closest: 1,
-			location: {x: event.entity.location.x, y: event.entity.location.y, z: event.entity.location.z}
-	})[0];
-	this.addToScore("stats_Tamed_",animalType,player);
-	
-	if (event.eventId=="minecraft:on_tame"){
-		if(!advancementTracker.checkAchievment("BestFriendsForever",player)){
-			advancementTracker.setAchievment("BestFriendsForever",player);//[advancement] Best Friends Forever | Tame an animal | Tame one of these 8 tameable mobs:, Cat, Donkey, Horse, Llama, Mule, Parrot, Trader Llama, Wolf
-		}
-	}
-	switch(animalType){
-		case "ocelot":
-			if(!achievementTracker.checkAchievment("LionHunter",player)){
-				achievementTracker.setAchievment("LionHunter",player);//[achievement] Lion Hunter | Gain the trust of an Ocelot. | —
-			}
-			break;
-		case "horse":
-			if(!achievementTracker.checkAchievment("SaddleUp",player)){
-				achievementTracker.setAchievment("SaddleUp",player);//[achievement] Saddle Up | Tame a horse. | —
-			}
-			break;
-		case "wolf":
-			if(!achievementTracker.checkAchievment("LeaderofthePack",player)){
-				var numWolfs = player.getDynamicProperty("wolfCounter");
-				
-				if(!numWolfs){
-					numWolfs=0;
-				}
-				numWolfs+=1;
-				player.setDynamicProperty("wolfCounter",numWolfs);
-				if(numWolfs>=5){
-					achievementTracker.setAchievment("LeaderofthePack",player);//[achievement] Leader of the Pack | Befriend five wolves. | This does not have to be in a single game, so multiple games or reloading old saves does count toward this achievement.
-				}
-			}
-		case "cat":
-			if(!achievementTracker.checkAchievment("PlethoraofCats",player)){
-				var numCats = player.getDynamicProperty("catCounter");
-				
-				if(!numCats){
-					numCats=0;
-				}
-				numCats+=1;
-				player.setDynamicProperty("catCounter",numCats);
-				if(numCats>=12){
-					achievementTracker.setAchievment("PlethoraofCats",player);//[achievement] Plethora of Cats | Befriend twenty stray cats. | Befriend and tame twenty stray cats found in villages. They do not all need to be tamed in a single world.
-				}
-			}
-			if(!advancementTracker.checkAchievment("ACompleteCatalogue",player)){
-				let catMask = player.getDynamicProperty("catMask");
-				
-				if(!catMask){
-					catMask=0b000000000000;
-				}
-				const variant = event.entity.getComponent("minecraft:variant");
-
-				catMask = catMask | 0b1 << variant.value;
-				player.setDynamicProperty("catMask",catMask);
-				if(catMask==0b11111111111){
-					advancementTracker.setAchievment("ACompleteCatalogue",player);//[advancement] A Complete Catalogue | Tame all Cat variants! | Tame each of these 11 cat variants:, Tabby, Tuxedo, Red, Siamese, British Shorthair, Calico, Persian, Ragdoll, White, Jellie, Black
-				}
-			}
-	}
-	addToScore("stats_AnimalsTaimed_", animalType.replace("_",""), player);
-}
-function onHurtEvent(event){
-	const source = event.damageSource;
-	const victim = event.hurtEntity;
-	
-	if(source.damagingEntity){
-		const agressor = source.damagingEntity;
-		const agressorType = agressor.typeId.replace("minecraft:","");
-		
-		if(agressorType=="player"){
-			const weapon = getequipped(agressor)["Mainhand"];
-			
-			for(let i=0; i<Math.round(event.damage);i++){
-				addToScore("stats_DamageDelt_",weapon,agressor);
-			}
-			if(event.damage>9){
-				if(!achievementTracker.checkAchievment("Overkill",agressor)){
-					achievementTracker.setAchievment("Overkill",agressor);//[achievement] Overkill | Deal nine hearts of damage in a single hit. | Damage can be dealt to any mob, even those that do not have nine hearts of health overall.
-				}
-			}
-		}else if(victim.typeId.replace("minecraft:","")=="player"){
-			addToScore("stats_DamageTaken_",agressor.typeId.replace("minecraft:",""),victim);
-		}
-	}
+function craftAndCook(){
+	//to-do--------------------
+		//[achievement] Alternative Fuel | Power a furnace with a kelp block | This achievement is awarded only if the dried kelp block is put into the furnace's fuel slot manually, not via redstone components such as hoppers.
+		//[achievement] Super Fuel | Power a Furnace with Lava | —		
+		//[achievement] Local Brewery | Brew a potion. | Pick up a potion from a brewing stand potion slot. An already-created potion placed and removed qualifies.
+		//[advancement] Local Brewery | Brew a Potion | Pick up an item from a brewing stand potion slot. This does not need to be a potion. Water bottles or even glass bottles can also trigger this advancement.[3]
+		//maybe move to block place
+		//[achievement] Smelt Everything! | Connect 3 Chests to a single Furnace using 3 Hoppers. | Be within the range of three chests connected to a Furnace with 3 Hoppers.
+	//done--------------------
 }
 function entityInteractions(){
 	//to-do--------------------
@@ -1698,6 +1389,247 @@ function entityKills(victim,player,cause,weapon){
 		if(!advancementTracker.checkAchievment("MonsterHunter",player)){
 			advancementTracker.setAchievment("MonsterHunter",player);//[advancement] Monster Hunter | Kill any hostile monster | Kill one of these 34 mobs:, Blaze, Cave Spider, Creeper, Drowned, Elder Guardian, Ender Dragon, Enderman, Endermite, Evoker, Ghast, Guardian, Hoglin, Husk, Magma Cube, Phantom, Piglin, Piglin Brute, Pillager, Ravager, Shulker, Silverfish, Skeleton, Slime, Spider, Stray, Vex, Vindicator, Witch, Wither, Wither Skeleton, Zoglin, Zombie, Zombie Villager, Zombified Piglin, Only the riders of the chicken jockeys and skeleton horsemen are counted in this advancement. Other mobs may be killed, but are ignored for this advancement.
 			achievementTracker.setAchievment("MonsterHunter",player);//[achievement] Monster Hunter | Attack and destroy a monster. | Kill a hostile mob or one of the following neutral mobs: an enderman, a piglin, a zombified piglin, a spider, or a cave spider.
+		}
+	}
+}
+function getSomeWhere(location, player){
+	//to-do--------------------
+		//[achievement] Ahoy! | Find a shipwreck | —
+		//[achievement] Atlantis? | Find an underwater ruin | —
+		//[achievement] Caves & Cliffs | Freefall from the top of the world (build limit) to the bottom of the world and survive. | —
+		//[achievement] On A Rail | Travel by minecart to a point at least 500m in a single direction from where you started. | Travel by minecart 500 blocks in a straight line away from the player's starting point.
+		//[achievement] Treasure Hunter | Acquire a map from a cartographer villager, then enter the revealed structure | Visit the structure indicated while the purchased map is in your main hand (hotbar).
+		//[advancement] Caves & Cliffs | Free fall from the top of the world (build limit) to the bottom of the world and survive | Fall from at least y=319 to at most y=-59 with a vertical distance of greater than 379 blocks.
+		//[advancement] Eye Spy | Follow an Eye of Ender | Enter a stronghold.
+		//[advancement] Remote Getaway | Escape the island | Throw an ender pearl through, fly, or walk into an end gateway.
+		//[advancement] The City at the End of the Game | Go on in, what could happen? | Enter an end city.
+	//done--------------------
+}
+function itemInventory(player){
+	//to-do--------------------
+		//Required data values
+		//cant be done until after block renames happen our data values are given to itemStack class
+		//[advancement] Spooky Scary Skeleton | Obtain a Wither Skeleton's skull | Have a wither skeleton skull in your inventory.
+		//[achievement] Dry Spell | Dry a sponge in a furnace | —
+		//[advancement] Careful Restoration | Make a Decorated Pot out of 4 Pottery Sherds | —
+		//[achievement] Careful restoration | Make a Decorated Pot out of 4 Pottery Sherds | —
+		//[achievement] Fruit on the Loom | Make a banner using an Enchanted Apple Stencil | Make a banner using an enchanted apple.
+		
+		//mabye should move
+		//i dont know how to do this one
+		//[achievement] Taking Inventory | Open your inventory. | —
+		//Maybe block interactions?
+		//[achievement] Chestful of Cobblestone | Mine 1,728 Cobblestone and place it in a chest. | A player must mine 1,728 cobblestone and place 1,728 cobblestone, or 27 stacks, in a chest. The cobblestone placed in the chest does not have to be the same cobblestone that was mined.
+	//done--------------------
+	const loseItems = ["crafting_table",
+						"iron_ingot",		
+						"diamond",			
+						"ancient_debris",	
+						"lava_bucket",		
+						"cod_bucket",
+						"salmon_bucket",
+						"tropical_fish_bucket",
+						"pufferfish_bucket",
+						"axolotl_bucket",	
+						"tadpole_bucket",	
+						"cobblestone",
+						"blackstone",
+						"cobbled_deepslate",
+						"obsidian",			
+						"crying_obsidian",	
+						"blaze_rod",		
+						"dragon_egg",		
+						"sniffer_egg",		
+						"dragon_breath",	
+						"bread", 			
+						"furnace", 		 	
+						"enchanting_table",	
+						"bookshelf",		
+						"cake",				
+						"leather",			
+						"dispenser",		
+						"cooked_cod",		
+						"charcoal",
+						"flower_pot"];
+	const woolTypes=["black_wool",
+					"blue_wool",
+					"brown_wool",
+					"cyan_wool",
+					"gray_wool",
+					"green_wool",
+					"light_blue_wool",
+					"light_gray_wool",
+					"lime_wool",
+					"magenta_wool",
+					"orange_wool",
+					"pink_wool",
+					"purple_wool",
+					"red_wool",
+					"white_wool",
+					"yellow_wool"];
+	const toolsTypes = ["wooden_pickaxe",
+					"wooden_sword",
+					"wooden_shovel",
+					"wooden_axe",
+					"wooden_hoe",
+					"stone_pickaxe",
+					"stone_sword",
+					"stone_shovel",
+					"stone_axe",
+					"stone_hoe",
+					"iron_pickaxe",
+					"iron_sword",
+					"iron_shovel",
+					"iron_axe",
+					"iron_hoe",
+					"golden_pickaxe",
+					"golden_sword",
+					"golden_shovel",
+					"golden_axe",
+					"golden_hoe",
+					"diamond_pickaxe",
+					"diamond_sword",
+					"diamond_shovel",
+					"diamond_axe",
+					"diamond_hoe",
+					"netherite_pickaxe",				
+					"netherite_sword",				
+					"netherite_shovel",				
+					"netherite_axe",				
+					"netherite_hoe"];
+	const armorTypes = ["iron_helmet",
+					"iron_chestplate",
+					"iron_leggings",
+					"iron_boots",
+					"diamond_helmet",
+					"diamond_chestplate",
+					"diamond_leggings",
+					"diamond_boots",
+					"netherite_helmet",
+					"netherite_chestplate",
+					"netherite_leggings",
+					"netherite_boots",
+					"elytra"];
+	const foglightType=["ochre_froglight",
+						"pearlescent_froglight",
+						"verdant_froglight"];
+	const sherdArray = ["angler_pottery_sherd",
+						"archer_pottery_sherd",
+						"arms_up_pottery_sherd",
+						"blade_pottery_sherd",
+						"brewer_pottery_sherd",
+						"burn_pottery_sherd",
+						"danger_pottery_sherd",
+						"explorer_pottery_sherd",
+						"friend_pottery_sherd",
+						"heart_pottery_sherd",
+						"heartbreak_pottery_sherd",
+						"howl_pottery_sherd",
+						"miner_pottery_sherd",
+						"mourner_pottery_sherd",
+						"plenty_pottery_sherd",
+						"prize_pottery_sherd",
+						"sheaf_pottery_sherd",
+						"shelter_pottery_sherd",
+						"skull_pottery_sherd",
+						"snort_pottery_sherd"];
+	let inventoryPlayer = player.getComponent("minecraft:inventory");
+	let index=0;
+	let inventorymask = 0;
+	let armorMask = 0;
+	let sherdMask = 0;
+	let toolMask = 0;
+	let woolMask = 0;
+	let froglight = 0;
+	for (let slot = 0; slot<36;slot++){
+		let itemStack = inventoryPlayer.container.getItem(slot);
+		if (itemStack){
+			const itemName = itemStack.typeId.replace("minecraft:","")
+			if(loseItems.includes(itemName)){
+				index = loseItems.indexOf(itemName);
+				inventorymask = inventorymask | (0b1<<index);
+			}
+			else if (sherdArray.includes(itemName)){
+				index = sherdArray.indexOf(itemName);
+				sherdMask = sherdMask | (0b1<<index);
+			}else if(toolsTypes.includes(itemName)){
+				index = toolsTypes.indexOf(itemName);
+				toolMask = toolMask | (0b1<<index);
+			}else if(woolTypes.includes(itemName)){
+				index = woolTypes.indexOf(itemName);
+				woolMask = woolMask | (0b1<<index);
+			}else if(foglightType.includes(itemName)){
+				index = foglightType.indexOf(itemName);
+				froglight = froglight | (0b1<<index);
+			}else if(itemName.includes("shulker_box")){
+				if(itemStack.nameTag){
+					if(!achievementTracker.checkAchievment("OrganizationalWizard",player)){
+						achievementTracker.setAchievment("OrganizationalWizard",player);//[achievement] Organizational Wizard | Name a Shulker Box with an Anvil | —
+					}
+				}
+			}
+		}
+	}
+	const equip = getequipped(player);
+	
+	for(const slot of ["Chest","Feet","Head","Legs"]){
+		let itemName = equip[slot];
+		
+		if(armorTypes.includes(itemName)){
+			index = armorTypes.indexOf(itemName);
+			armorMask = armorMask | (0b1<<index);
+		}
+	}
+	//Checks armor based achievements
+	if(armorMask>0){
+		checkArmorachievements(player,armorMask);
+	}
+	//check tool based achievements
+	if(toolMask>0){
+		checkToolachievements(player,toolMask);
+	}
+	if(inventorymask>0){
+		checkLooseItemachievements(player,inventorymask);
+	}
+	//[advancement] Respecting the Remnants | Brush a Suspicious block to obtain a Pottery Sherd | —
+	if(sherdArray>0){
+		if(!advancementTracker.checkAchievment("RespectingtheRemnants",player)){
+			advancementTracker.setAchievment("RespectingtheRemnants",player);
+		}
+	}
+	if(froglight==0b111){
+		if(!advancementTracker.checkAchievment("WithOurPowersCombined",player)){
+			advancementTracker.setAchievment("WithOurPowersCombined",player);//[advancement] With Our Powers Combined! | Have all Froglights in your inventory | Have a Pearlescent, Ochre, and Verdant Froglight in your inventory.
+			achievementTracker.setAchievment("Withourpowerscombined",player);//[achievement] With our powers combined! | Have all 3 froglights in your inventory | Acquire at least one of each pearlescent, verdant, and ochre froglights in your inventory at the same time.
+		}
+	}
+	if(woolMask==0b1111111111111111){
+		if(!achievementTracker.checkAchievment("RainbowCollection",player)){
+			achievementTracker.setAchievment("RainbowCollection",player);//[achievement] Rainbow Collection | Gather all 16 colors of wool. | All the colors of wool do not have to be in the inventory at the same time, but must have been picked up by the player at least once.
+		}
+	}
+}
+function onHurtEvent(event){
+	const source = event.damageSource;
+	const victim = event.hurtEntity;
+	
+	if(source.damagingEntity){
+		const agressor = source.damagingEntity;
+		const agressorType = agressor.typeId.replace("minecraft:","");
+		
+		if(agressorType=="player"){
+			const weapon = getequipped(agressor)["Mainhand"];
+			
+			for(let i=0; i<Math.round(event.damage);i++){
+				addToScore("stats_DamageDelt_",weapon,agressor);
+			}
+			if(event.damage>9){
+				if(!achievementTracker.checkAchievment("Overkill",agressor)){
+					achievementTracker.setAchievment("Overkill",agressor);//[achievement] Overkill | Deal nine hearts of damage in a single hit. | Damage can be dealt to any mob, even those that do not have nine hearts of health overall.
+				}
+			}
+		}else if(victim.typeId.replace("minecraft:","")=="player"){
+			addToScore("stats_DamageTaken_",agressor.typeId.replace("minecraft:",""),victim);
 		}
 	}
 }
@@ -1868,6 +1800,73 @@ function statusAndEffects(player){
 			advancementTracker.setAchievment("HerooftheVillage",player);//[advancement] Hero of the Village | Successfully defend a village from a raid | Kill at least one raid mob during a raid and wait until it ends in victory.
 		}
 	}
+}
+function tameEvents(event){
+	const animalType = event.entity.typeId.replace("minecraft:","");
+	let player = event.entity.dimension.getPlayers({
+		closest: 1,
+			location: {x: event.entity.location.x, y: event.entity.location.y, z: event.entity.location.z}
+	})[0];
+	this.addToScore("stats_Tamed_",animalType,player);
+	
+	if (event.eventId=="minecraft:on_tame"){
+		if(!advancementTracker.checkAchievment("BestFriendsForever",player)){
+			advancementTracker.setAchievment("BestFriendsForever",player);//[advancement] Best Friends Forever | Tame an animal | Tame one of these 8 tameable mobs:, Cat, Donkey, Horse, Llama, Mule, Parrot, Trader Llama, Wolf
+		}
+	}
+	switch(animalType){
+		case "ocelot":
+			if(!achievementTracker.checkAchievment("LionHunter",player)){
+				achievementTracker.setAchievment("LionHunter",player);//[achievement] Lion Hunter | Gain the trust of an Ocelot. | —
+			}
+			break;
+		case "horse":
+			if(!achievementTracker.checkAchievment("SaddleUp",player)){
+				achievementTracker.setAchievment("SaddleUp",player);//[achievement] Saddle Up | Tame a horse. | —
+			}
+			break;
+		case "wolf":
+			if(!achievementTracker.checkAchievment("LeaderofthePack",player)){
+				var numWolfs = player.getDynamicProperty("wolfCounter");
+				
+				if(!numWolfs){
+					numWolfs=0;
+				}
+				numWolfs+=1;
+				player.setDynamicProperty("wolfCounter",numWolfs);
+				if(numWolfs>=5){
+					achievementTracker.setAchievment("LeaderofthePack",player);//[achievement] Leader of the Pack | Befriend five wolves. | This does not have to be in a single game, so multiple games or reloading old saves does count toward this achievement.
+				}
+			}
+		case "cat":
+			if(!achievementTracker.checkAchievment("PlethoraofCats",player)){
+				var numCats = player.getDynamicProperty("catCounter");
+				
+				if(!numCats){
+					numCats=0;
+				}
+				numCats+=1;
+				player.setDynamicProperty("catCounter",numCats);
+				if(numCats>=12){
+					achievementTracker.setAchievment("PlethoraofCats",player);//[achievement] Plethora of Cats | Befriend twenty stray cats. | Befriend and tame twenty stray cats found in villages. They do not all need to be tamed in a single world.
+				}
+			}
+			if(!advancementTracker.checkAchievment("ACompleteCatalogue",player)){
+				let catMask = player.getDynamicProperty("catMask");
+				
+				if(!catMask){
+					catMask=0b000000000000;
+				}
+				const variant = event.entity.getComponent("minecraft:variant");
+
+				catMask = catMask | 0b1 << variant.value;
+				player.setDynamicProperty("catMask",catMask);
+				if(catMask==0b11111111111){
+					advancementTracker.setAchievment("ACompleteCatalogue",player);//[advancement] A Complete Catalogue | Tame all Cat variants! | Tame each of these 11 cat variants:, Tabby, Tuxedo, Red, Siamese, British Shorthair, Calico, Persian, Ragdoll, White, Jellie, Black
+				}
+			}
+	}
+	addToScore("stats_AnimalsTaimed_", animalType.replace("_",""), player);
 }
 function trading(){
 	//to-do--------------------
@@ -2070,6 +2069,12 @@ function worldAndBiome(subject, player){
 //end achievement and advancement functions----------------------------------------
 
 //helper functions----------------------------------------
+function achievementUnlock(player,data){
+	let display=player.onScreenDisplay;
+	
+	display.setActionBar("\u00A7cachievement Unlocked: \u00A7e"+data);
+	player.playSound("random.levelup");
+}
 function addToScore(category, item, player){
 	let categoryId = category.replace(" ","");
 	let itemId=categoryId+item.replace(" ","");
@@ -2093,6 +2098,31 @@ function addToScore(category, item, player){
 function calculateDistance(x1, z1, x2, z2) {
 	return Math.floor(Math.hypot(Math.abs(z2 - z1), Math.abs(x2 - x1)));
 }
+function getequipped(player){
+	const equipComp = player.getComponent("minecraft:equippable");
+	let equipment={"chest":"","Feet":"","Head":"","Legs":"","Mainhand":"Empty Hand","Offhand":""};
+	
+	if( equipComp.getEquipment("Chest")){
+		equipment["chest"] = equipComp.getEquipment("Chest").typeId.replace("minecraft:","");
+	}
+	if(equipComp.getEquipment("Feet")){
+		equipment["Feet"] = equipComp.getEquipment("Feet").typeId.replace("minecraft:","");
+	}
+	if(equipComp.getEquipment("Head")){
+		equipment["Head"] = equipComp.getEquipment("Head").typeId.replace("minecraft:","");
+	}
+	if(equipComp.getEquipment("Legs")){
+		equipment["Legs"] = equipComp.getEquipment("Legs").typeId.replace("minecraft:","");
+	}
+	if(equipComp.getEquipment("Mainhand")){
+		equipment["Mainhand"] = equipComp.getEquipment("Mainhand").typeId.replace("minecraft:","");
+	}
+	if(equipComp.getEquipment("Offhand")){
+		equipment["Offhand"] = equipComp.getEquipment("Offhand").typeId.replace("minecraft:","");
+	}
+	
+	return equipment;
+}
 function getScoreIfExists(board, player){
 	let tempScore = 0;
 	
@@ -2103,6 +2133,28 @@ function getScoreIfExists(board, player){
 	}
 	
 	return tempScore;
+}
+function pearlThrow(player){
+	let x1 = player.getDynamicProperty("pearlThrowX");
+	let z1 = player.getDynamicProperty("pearlThrowZ");
+	let x2 = Math.floor(player.location.x);
+	let z2 = Math.floor(player.location.z);
+	let pearlDist = calculateDistance(x1, z1, x2, z2);
+	
+	if(pearlDist > 100){
+		usingItems("ender_pearl", player);
+	}
+	if(!world.scoreboard.getObjective("stats_travel_")){
+		world.scoreboard.addObjective("stats_travel_", "stats_travel_");
+	}
+	if(!world.scoreboard.getObjective("stats_travel_Farthestenderpearlthrow")){
+		world.scoreboard.addObjective("stats_travel_Farthestenderpearlthrow", "stats_travel_Farthest ender pearl throw");
+		world.scoreboard.getObjective("stats_travel_Farthestenderpearlthrow").setScore(player, 0);
+	}
+	let bestPearl = world.scoreboard.getObjective("stats_travel_Farthestenderpearlthrow").getScore(player);
+	if(pearlDist > bestPearl){
+		world.scoreboard.getObjective("stats_travel_Farthestenderpearlthrow").setScore(player, pearlDist);
+	}
 }
 function processBlockTags(tags){
 	for(let index in tags) {
@@ -2169,59 +2221,6 @@ function processBlockTags(tags){
 	}
 	
 	return "unknown";
-}
-function getequipped(player){
-	const equipComp = player.getComponent("minecraft:equippable");
-	let equipment={"chest":"","Feet":"","Head":"","Legs":"","Mainhand":"Empty Hand","Offhand":""};
-	
-	if( equipComp.getEquipment("Chest")){
-		equipment["chest"] = equipComp.getEquipment("Chest").typeId.replace("minecraft:","");
-	}
-	if(equipComp.getEquipment("Feet")){
-		equipment["Feet"] = equipComp.getEquipment("Feet").typeId.replace("minecraft:","");
-	}
-	if(equipComp.getEquipment("Head")){
-		equipment["Head"] = equipComp.getEquipment("Head").typeId.replace("minecraft:","");
-	}
-	if(equipComp.getEquipment("Legs")){
-		equipment["Legs"] = equipComp.getEquipment("Legs").typeId.replace("minecraft:","");
-	}
-	if(equipComp.getEquipment("Mainhand")){
-		equipment["Mainhand"] = equipComp.getEquipment("Mainhand").typeId.replace("minecraft:","");
-	}
-	if(equipComp.getEquipment("Offhand")){
-		equipment["Offhand"] = equipComp.getEquipment("Offhand").typeId.replace("minecraft:","");
-	}
-	
-	return equipment;
-}
-function achievementUnlock(player,data){
-	let display=player.onScreenDisplay;
-	
-	display.setActionBar("\u00A7cachievement Unlocked: \u00A7e"+data);
-	player.playSound("random.levelup");
-}
-function pearlThrow(player){
-	let x1 = player.getDynamicProperty("pearlThrowX");
-	let z1 = player.getDynamicProperty("pearlThrowZ");
-	let x2 = Math.floor(player.location.x);
-	let z2 = Math.floor(player.location.z);
-	let pearlDist = calculateDistance(x1, z1, x2, z2);
-	
-	if(pearlDist > 100){
-		usingItems("ender_pearl", player);
-	}
-	if(!world.scoreboard.getObjective("stats_travel_")){
-		world.scoreboard.addObjective("stats_travel_", "stats_travel_");
-	}
-	if(!world.scoreboard.getObjective("stats_travel_Farthestenderpearlthrow")){
-		world.scoreboard.addObjective("stats_travel_Farthestenderpearlthrow", "stats_travel_Farthest ender pearl throw");
-		world.scoreboard.getObjective("stats_travel_Farthestenderpearlthrow").setScore(player, 0);
-	}
-	let bestPearl = world.scoreboard.getObjective("stats_travel_Farthestenderpearlthrow").getScore(player);
-	if(pearlDist > bestPearl){
-		world.scoreboard.getObjective("stats_travel_Farthestenderpearlthrow").setScore(player, pearlDist);
-	}
 }
 function propertyToScore(player){
     //declare variables
