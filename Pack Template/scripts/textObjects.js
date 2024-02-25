@@ -98,14 +98,14 @@ export const achievements = {
     "implemented": true,
     "containerIndex": 3
   },
-  "OnARail": {
-    "displayName": "On A Rail",
-    "description": "Travel by minecart to a point at least 500m in a single direction from where you started.",
-    "globalIndex": 12,
-    "category": "Adventure",
-    "container": "Adventure1",
-    "implemented": false,
-    "containerIndex": 0
+  "PlethoraofCats": {
+    "displayName": "Plethora of Cats",
+    "description": "Befriend twenty stray cats.",
+    "globalIndex": 96,
+    "category": "Husbandry",
+    "container": "Husbandry1",
+    "implemented": true,
+    "containerIndex": 20
   },
   "TimetoStrike": {
     "displayName": "Time to Strike!",
@@ -149,7 +149,7 @@ export const achievements = {
     "globalIndex": 17,
     "category": "Adventure",
     "container": "Adventure1",
-    "implemented": false,
+    "implemented": true,
     "containerIndex": 3
   },
   "DIAMONDS": {
@@ -176,7 +176,7 @@ export const achievements = {
     "globalIndex": 20,
     "category": "Nether",
     "container": "Nether1",
-    "implemented": false,
+    "implemented": true,
     "containerIndex": 1
   },
   "IntoFire": {
@@ -230,7 +230,7 @@ export const achievements = {
     "globalIndex": 26,
     "category": "Adventure",
     "container": "Adventure1",
-    "implemented": false,
+    "implemented": true,
     "containerIndex": 4
   },
   "Librarian": {
@@ -248,7 +248,7 @@ export const achievements = {
     "globalIndex": 28,
     "category": "Adventure",
     "container": "Adventure1",
-    "implemented": false,
+    "implemented": true,
     "containerIndex": 6
   },
   "TheBeginning": {
@@ -329,7 +329,7 @@ export const achievements = {
     "globalIndex": 37,
     "category": "Husbandry",
     "container": "Husbandry1",
-    "implemented": false,
+    "implemented": true,
     "containerIndex": 5
   },
   "PorkChop": {
@@ -365,7 +365,7 @@ export const achievements = {
     "globalIndex": 41,
     "category": "Story",
     "container": "Story1",
-    "implemented": false,
+    "implemented": true,
     "containerIndex": 15
   },
   "ItsaSign": {
@@ -464,7 +464,7 @@ export const achievements = {
     "globalIndex": 52,
     "category": "Husbandry",
     "container": "Husbandry1",
-    "implemented": false,
+    "implemented": true,
     "containerIndex": 12
   },
   "Archer": {
@@ -554,7 +554,7 @@ export const achievements = {
     "globalIndex": 62,
     "category": "Husbandry",
     "container": "Husbandry1",
-    "implemented": false,
+    "implemented": true,
     "containerIndex": 13
   },
   "ArtificialSelection": {
@@ -626,7 +626,7 @@ export const achievements = {
     "globalIndex": 70,
     "category": "Nether",
     "container": "Nether1",
-    "implemented": false,
+    "implemented": true,
     "containerIndex": 7
   },
   "TheEndAgain": {
@@ -680,7 +680,7 @@ export const achievements = {
     "globalIndex": 76,
     "category": "Adventure",
     "container": "Adventure1",
-    "implemented": false,
+    "implemented": true,
     "containerIndex": 17
   },
   "FeelingIll": {
@@ -725,7 +725,7 @@ export const achievements = {
     "globalIndex": 81,
     "category": "Adventure",
     "container": "Adventure1",
-    "implemented": false,
+    "implemented": true,
     "containerIndex": 21
   },
   "Castaway": {
@@ -853,15 +853,6 @@ export const achievements = {
     "container": "Story1",
     "implemented": false,
     "containerIndex": 31
-  },
-  "PlethoraofCats": {
-    "displayName": "Plethora of Cats",
-    "description": "Befriend twenty stray cats.",
-    "globalIndex": 96,
-    "category": "Husbandry",
-    "container": "Husbandry1",
-    "implemented": false,
-    "containerIndex": 20
   },
   "KilltheBeast": {
     "displayName": "Kill the Beast!",
@@ -995,7 +986,7 @@ export const achievements = {
     "globalIndex": 111,
     "category": "Nether",
     "container": "Nether1",
-    "implemented": false,
+    "implemented": true,
     "containerIndex": 10
   },
   "WhateverFloatsYourGoat": {
@@ -1013,7 +1004,7 @@ export const achievements = {
     "globalIndex": 113,
     "category": "Story",
     "container": "Story2",
-    "implemented": false,
+    "implemented": true,
     "containerIndex": 7
   },
   "TheHealingPowerofFriendship": {
@@ -1285,7 +1276,7 @@ export const advancements = {
     "globalIndex": 18,
     "category": "Nether",
     "container": "advNether1",
-    "implemented": false,
+    "implemented": true,
     "containerIndex": 1
   },
   "ThoseWeretheDays": {
@@ -1429,7 +1420,7 @@ export const advancements = {
     "globalIndex": 34,
     "category": "Nether",
     "container": "advNether1",
-    "implemented": false,
+    "implemented": true,
     "containerIndex": 17
   },
   "WitheringHeights": {
@@ -1582,7 +1573,7 @@ export const advancements = {
     "globalIndex": 52,
     "category": "Adventure",
     "container": "advAdventure1",
-    "implemented": false,
+    "implemented": true,
     "containerIndex": 2
   },
   "MonsterHunter": {
@@ -1699,7 +1690,7 @@ export const advancements = {
     "globalIndex": 65,
     "category": "Adventure",
     "container": "advAdventure1",
-    "implemented": false,
+    "implemented": true,
     "containerIndex": 15
   },
   "AThrowawayJoke": {
@@ -1744,7 +1735,7 @@ export const advancements = {
     "globalIndex": 70,
     "category": "Adventure",
     "container": "advAdventure1",
-    "implemented": false,
+    "implemented": true,
     "containerIndex": 20
   },
   "HiredHelp": {
@@ -1789,7 +1780,7 @@ export const advancements = {
     "globalIndex": 75,
     "category": "Adventure",
     "container": "advAdventure1",
-    "implemented": false,
+    "implemented": true,
     "containerIndex": 25
   },
   "Arbalistic": {
@@ -1816,7 +1807,7 @@ export const advancements = {
     "globalIndex": 78,
     "category": "Adventure",
     "container": "advAdventure1",
-    "implemented": false,
+    "implemented": true,
     "containerIndex": 28
   },
   "SoundofMusic": {
@@ -1843,7 +1834,7 @@ export const advancements = {
     "globalIndex": 81,
     "category": "Adventure",
     "container": "advAdventure1",
-    "implemented": false,
+    "implemented": true,
     "containerIndex": 31
   },
   "VeryVeryFrightening": {
@@ -1861,7 +1852,7 @@ export const advancements = {
     "globalIndex": 83,
     "category": "Adventure",
     "container": "advAdeventure2",
-    "implemented": false,
+    "implemented": true,
     "containerIndex": 1
   },
   "Bullseye": {
@@ -1879,7 +1870,7 @@ export const advancements = {
     "globalIndex": 85,
     "category": "Husbandry",
     "container": "advHusbandry1",
-    "implemented": false,
+    "implemented": true,
     "containerIndex": 0
   },
   "BeeOurGuest": {
@@ -1924,7 +1915,7 @@ export const advancements = {
     "globalIndex": 90,
     "category": "Husbandry",
     "container": "advHusbandry1",
-    "implemented": false,
+    "implemented": true,
     "containerIndex": 5
   },
   "GlowandBehold": {
@@ -1942,7 +1933,7 @@ export const advancements = {
     "globalIndex": 92,
     "category": "Husbandry",
     "container": "advHusbandry1",
-    "implemented": false,
+    "implemented": true,
     "containerIndex": 7
   },
   "TotalBeelocation": {
@@ -1987,7 +1978,7 @@ export const advancements = {
     "globalIndex": 97,
     "category": "Husbandry",
     "container": "advHusbandry1",
-    "implemented": false,
+    "implemented": true,
     "containerIndex": 12
   },
   "TwobyTwo": {
@@ -1996,7 +1987,7 @@ export const advancements = {
     "globalIndex": 98,
     "category": "Husbandry",
     "container": "advHusbandry1",
-    "implemented": false,
+    "implemented": true,
     "containerIndex": 13
   },
   "BirthdaySong": {
@@ -2014,7 +2005,7 @@ export const advancements = {
     "globalIndex": 100,
     "category": "Husbandry",
     "container": "advHusbandry1",
-    "implemented": false,
+    "implemented": true,
     "containerIndex": 15
   },
   "TacticalFishing": {
@@ -2068,7 +2059,7 @@ export const advancements = {
     "globalIndex": 106,
     "category": "Husbandry",
     "container": "advHusbandry1",
-    "implemented": false,
+    "implemented": true,
     "containerIndex": 21
   },
   "TheCutestPredator": {
@@ -2106,5 +2097,583 @@ export const advancements = {
     "container": "advHusbandry1",
     "implemented": false,
     "containerIndex": 25
+  }
+};
+export const challenges = {
+  "PorkChop": {
+    "displayName": "Pork Chop",
+    "description": "Kill a mob with a pork chop",
+    "globalIndex": 1,
+    "category": "Slackville",
+    "container": "slackvill1",
+    "implemented": false,
+    "containerIndex": 0
+  },
+  "BeefSlap": {
+    "displayName": "Beef Slap",
+    "description": "Kill a mob with a cooked beef",
+    "globalIndex": 2,
+    "category": "Slackville",
+    "container": "slackvill1",
+    "implemented": false,
+    "containerIndex": 1
+  },
+  "HattersVacationHome": {
+    "displayName": "Hatter Vaction Home",
+    "description": "Die in the end in the viod",
+    "globalIndex": 3,
+    "category": "Slackville",
+    "container": "slackvill1",
+    "implemented": false,
+    "containerIndex": 2
+  },
+  "WhyGypsy": {
+    "displayName": "Why Gypsy",
+    "description": "Kill a Tamed Horse",
+    "globalIndex": 4,
+    "category": "Slackville",
+    "container": "slackvill1",
+    "implemented": false,
+    "containerIndex": 3
+  },
+  "YouTooRadar": {
+    "displayName": "You Too Radar?",
+    "description": "Kill A named Horse",
+    "globalIndex": 5,
+    "category": "Slackville",
+    "container": "slackvill1",
+    "implemented": false,
+    "containerIndex": 4
+  },
+  "AtLeastItWasntSkyblock": {
+    "displayName": "At Least it wasn\u2019t Skyblock",
+    "description": "Be Killed By a Dolphin.",
+    "globalIndex": 6,
+    "category": "Slackville",
+    "container": "slackvill1",
+    "implemented": false,
+    "containerIndex": 5
+  },
+  "ItsColorNotColour": {
+    "displayName": "Its Color not Colour",
+    "description": "Get all 16 Dyes",
+    "globalIndex": 7,
+    "category": "Slackville",
+    "container": "slackvill1",
+    "implemented": false,
+    "containerIndex": 6
+  },
+  "TmansBlackDye": {
+    "displayName": "Tman's Black Dye",
+    "description": "Obtain a Wither Rose",
+    "globalIndex": 8,
+    "category": "Slackville",
+    "container": "slackvill1",
+    "implemented": false,
+    "containerIndex": 7
+  },
+  "NoMoreTraders": {
+    "displayName": "No More Traders",
+    "description": "Place Slime at Build Height",
+    "globalIndex": 9,
+    "category": "Slackville",
+    "container": "slackvill1",
+    "implemented": false,
+    "containerIndex": 8
+  },
+  "NoReallyHowDidWeGetHere": {
+    "displayName": "No Really How did we get here",
+    "description": "Have 20 vindicators within 16 blocks of the player",
+    "globalIndex": 10,
+    "category": "Slackville",
+    "container": "slackvill1",
+    "implemented": false,
+    "containerIndex": 9
+  },
+  "NowThatThatIsAGoldFarm": {
+    "displayName": "Now That, That is a gold farm",
+    "description": "Place 42,000 magma blocks",
+    "globalIndex": 11,
+    "category": "Slackville",
+    "container": "slackvill1",
+    "implemented": false,
+    "containerIndex": 10
+  },
+  "JustGettingStarted": {
+    "displayName": "Just Getting Started",
+    "description": "Break 1,000,000 Blocks",
+    "globalIndex": 12,
+    "category": "Slackville",
+    "container": "slackvill1",
+    "implemented": false,
+    "containerIndex": 11
+  },
+  "TmanArmor": {
+    "displayName": "Tman Armor",
+    "description": "swim in lava for 5 minutes Without dying (fire protection on everything)",
+    "globalIndex": 13,
+    "category": "Slackville",
+    "container": "slackvill1",
+    "implemented": false,
+    "containerIndex": 12
+  },
+  "RedSheep": {
+    "displayName": "Red Sheep",
+    "description": "Dye a sheep red",
+    "globalIndex": 14,
+    "category": "Slackville",
+    "container": "slackvill1",
+    "implemented": false,
+    "containerIndex": 13
+  },
+  "Debtstobesettled": {
+    "displayName": "Debts to be settled",
+    "description": "Did you loose a bet tman?",
+    "globalIndex": 15,
+    "category": "Slackville",
+    "container": "slackvill1",
+    "implemented": false,
+    "containerIndex": 14
+  },
+  "RunSlackRun": {
+    "displayName": "Run Slack Run",
+    "description": "Summon a Wither",
+    "globalIndex": 16,
+    "category": "Slackville",
+    "container": "slackvill1",
+    "implemented": false,
+    "containerIndex": 15
+  },
+  "PlickIsThatYou": {
+    "displayName": "Plick is that you",
+    "description": "Place 1,000,000 gravel",
+    "globalIndex": 17,
+    "category": "Slackville",
+    "container": "slackvill1",
+    "implemented": false,
+    "containerIndex": 16
+  },
+  "DayOneGuardianFarm": {
+    "displayName": "Day one Guardian Farm",
+    "description": "Kill a guardian with no diamond gear",
+    "globalIndex": 18,
+    "category": "Slackville",
+    "container": "slackvill1",
+    "implemented": false,
+    "containerIndex": 17
+  },
+  "Structura": {
+    "displayName": "Structura",
+    "description": "Name tag an armorstand",
+    "globalIndex": 19,
+    "category": "Slackville",
+    "container": "slackvill1",
+    "implemented": false,
+    "containerIndex": 18
+  },
+  "DayOneWither": {
+    "displayName": "Day one Wither",
+    "description": "Kill a wither with no beacon effects and no diamond gear",
+    "globalIndex": 20,
+    "category": "Slackville",
+    "container": "slackvill1",
+    "implemented": false,
+    "containerIndex": 19
+  },
+  "WhereIsHatter": {
+    "displayName": "Where is Hatter",
+    "description": "Be killed by friendly fire while you have the wither effect",
+    "globalIndex": 21,
+    "category": "Slackville",
+    "container": "slackvill1",
+    "implemented": false,
+    "containerIndex": 20
+  },
+  "MoreDangerousThanTheWither": {
+    "displayName": "More Dangerous than the wither",
+    "description": "Kill a player when that player has the wither effect",
+    "globalIndex": 22,
+    "category": "Slackville",
+    "container": "slackvill1",
+    "implemented": false,
+    "containerIndex": 21
+  },
+  "SeeYouInCort": {
+    "displayName": "See you in Court",
+    "description": "Killed by a player when you have no gear on",
+    "globalIndex": 23,
+    "category": "Slackville",
+    "container": "slackvill1",
+    "implemented": false,
+    "containerIndex": 22
+  },
+  "CharcoalSeeds": {
+    "displayName": "charcoal seeds",
+    "description": "have dark oak log, dark oak saplings and a furnace in your inventory",
+    "globalIndex": 24,
+    "category": "Slackville",
+    "container": "slackvill1",
+    "implemented": false,
+    "containerIndex": 23
+  },
+  "FastestUnloader": {
+    "displayName": "fastest unloader",
+    "description": "destroy a shulker with fire",
+    "globalIndex": 25,
+    "category": "Slackville",
+    "container": "slackvill1",
+    "implemented": false,
+    "containerIndex": 24
+  },
+  "HeaftyGarbageBag": {
+    "displayName": "heafty garbage bag",
+    "description": "have a shulker that is dyed black",
+    "globalIndex": 26,
+    "category": "Slackville",
+    "container": "slackvill1",
+    "implemented": false,
+    "containerIndex": 25
+  },
+  "MrCheeseLessNoMore": {
+    "displayName": "Mr-Cheese-less No More",
+    "description": "Obtain a gold ingot",
+    "globalIndex": 27,
+    "category": "Slackville",
+    "container": "slackvill1",
+    "implemented": false,
+    "containerIndex": 26
+  },
+  "MayTheCheeseBeEverInYourFlavor": {
+    "displayName": "May the cheese be ever in your flavor!",
+    "description": "Obtain 164 gold blocks",
+    "globalIndex": 28,
+    "category": "Slackville",
+    "container": "slackvill1",
+    "implemented": false,
+    "containerIndex": 27
+  },
+  "TellThemMrfearlessSentYou": {
+    "displayName": "Tell them MrFearless Sent You",
+    "description": "Send a dolphin to the nether",
+    "globalIndex": 29,
+    "category": "Slackville",
+    "container": "slackvill1",
+    "implemented": false,
+    "containerIndex": 28
+  },
+  "ItDoesntWorkLikeThat": {
+    "displayName": "It doesn't work like that",
+    "description": "Water does not belong here.",
+    "globalIndex": 30,
+    "category": "Slackville",
+    "container": "slackvill1",
+    "implemented": false,
+    "containerIndex": 29
+  },
+  "SpicyOrangeJuice": {
+    "displayName": "Spicy Orange Juice",
+    "description": "Die in lava",
+    "globalIndex": 31,
+    "category": "Slackville",
+    "container": "slackvill1",
+    "implemented": false,
+    "containerIndex": 30
+  },
+  "OutOfFoodAreWe": {
+    "displayName": "Out of Food are we?",
+    "description": "Die to starvation",
+    "globalIndex": 32,
+    "category": "Slackville",
+    "container": "slackvill1",
+    "implemented": false,
+    "containerIndex": 31
+  },
+  "TmanLadder": {
+    "displayName": "Tman Ladder",
+    "description": "Craft 64 crafting tables",
+    "globalIndex": 33,
+    "category": "Slackville",
+    "container": "slackvill2",
+    "implemented": false,
+    "containerIndex": 0
+  },
+  "CharcoalCheddar": {
+    "displayName": "Charcoal Cheddar",
+    "description": "Burn 64 dark oak logs",
+    "globalIndex": 34,
+    "category": "Slackville",
+    "container": "slackvill2",
+    "implemented": false,
+    "containerIndex": 1
+  },
+  "StoryTime": {
+    "displayName": "Story Time",
+    "description": null,
+    "globalIndex": 35,
+    "category": "Slackville",
+    "container": "slackvill2",
+    "implemented": false,
+    "containerIndex": 2
+  },
+  "ThatWasEasy": {
+    "displayName": "That Was Easy",
+    "description": "Have 164 netherite blocks and a beacon in your inventory",
+    "globalIndex": 36,
+    "category": "Slackville",
+    "container": "slackvill2",
+    "implemented": false,
+    "containerIndex": 3
+  },
+  "TheBestville": {
+    "displayName": "The BestVille",
+    "description": "Play for 1 in-game year",
+    "globalIndex": 37,
+    "category": "Slackville",
+    "container": "slackvill2",
+    "implemented": false,
+    "containerIndex": 4
+  },
+  "SupercowReturns": {
+    "displayName": "SuperCow Returns",
+    "description": "Name a cow super cow.",
+    "globalIndex": 38,
+    "category": "Slackville",
+    "container": "slackvill2",
+    "implemented": false,
+    "containerIndex": 5
+  },
+  "DeathOfSupercow": {
+    "displayName": "Death of SuperCow",
+    "description": null,
+    "globalIndex": 39,
+    "category": "Slackville",
+    "container": "slackvill2",
+    "implemented": false,
+    "containerIndex": 6
+  },
+  "PunchAPiggy": {
+    "displayName": "Punch a Piggy",
+    "description": "Punch a zombie piglin or a piglin with an empty hand.",
+    "globalIndex": 40,
+    "category": "Slackville",
+    "container": "slackvill2",
+    "implemented": false,
+    "containerIndex": 7
+  },
+  "MoAllowance": {
+    "displayName": "I Need Mo' Allowance",
+    "description": "Eat a beetroot",
+    "globalIndex": 41,
+    "category": "bud",
+    "container": "bud1",
+    "implemented": false,
+    "containerIndex": 0
+  },
+  "HeroInAHalfShell": {
+    "displayName": "Hero in a Half Shell",
+    "description": "Wear a Turtle Shell",
+    "globalIndex": 42,
+    "category": "bud",
+    "container": "bud1",
+    "implemented": false,
+    "containerIndex": 1
+  },
+  "EnterSandman": {
+    "displayName": "Enter Sandman",
+    "description": "Suffocate in sand",
+    "globalIndex": 43,
+    "category": "bud",
+    "container": "bud1",
+    "implemented": false,
+    "containerIndex": 2
+  },
+  "Hanami": {
+    "displayName": "Hanami",
+    "description": "Visit a cherry grove during Sakura Season (day 74 to 105, annually)",
+    "globalIndex": 44,
+    "category": "bud",
+    "container": "bud1",
+    "implemented": false,
+    "containerIndex": 3
+  },
+  "FootballHead": {
+    "displayName": "Move it, Football Head!",
+    "description": "Wear a leather helmet",
+    "globalIndex": 45,
+    "category": "bud",
+    "container": "bud1",
+    "implemented": false,
+    "containerIndex": 4
+  },
+  "TheSlenderMan": {
+    "displayName": "The Slender Man",
+    "description": "Look at an Enderman",
+    "globalIndex": 46,
+    "category": "bud",
+    "container": "bud1",
+    "implemented": false,
+    "containerIndex": 5
+  },
+  "Pumpkinhead": {
+    "displayName": "Return of Pumpkinhead",
+    "description": "Wear a Jack o'Lantern on your head",
+    "globalIndex": 47,
+    "category": "bud",
+    "container": "bud1",
+    "implemented": false,
+    "containerIndex": 6
+  },
+  "GummiberryJuice": {
+    "displayName": "Gummiberry Juice",
+    "description": "Eat glow berries",
+    "globalIndex": 48,
+    "category": "bud",
+    "container": "bud1",
+    "implemented": false,
+    "containerIndex": 7
+  },
+  "DeadTravelFast": {
+    "displayName": "For the Dead Travel Fast",
+    "description": "Drink a Potion of Healing",
+    "globalIndex": 49,
+    "category": "bud",
+    "container": "bud1",
+    "implemented": false,
+    "containerIndex": 8
+  },
+  "ABiggerBoat": {
+    "displayName": "You\u2019re Gonna Need A Bigger Boat",
+    "description": "Get killed by an Elder Guardian",
+    "globalIndex": 50,
+    "category": "bud",
+    "container": "bud1",
+    "implemented": false,
+    "containerIndex": 9
+  },
+  "GameOverMan": {
+    "displayName": "Game Over, Man! Game Over!",
+    "description": "Get killed by a Silverfish",
+    "globalIndex": 51,
+    "category": "bud",
+    "container": "bud1",
+    "implemented": false,
+    "containerIndex": 10
+  },
+  "HelloClarice": {
+    "displayName": "Hello Clarice\u2026",
+    "description": "Kill a baby sheep",
+    "globalIndex": 52,
+    "category": "bud",
+    "container": "bud1",
+    "implemented": false,
+    "containerIndex": 11
+  },
+  "WentWrong": {
+    "displayName": "Something Went Wrong",
+    "description": "Teleport to the Nether with another entity",
+    "globalIndex": 53,
+    "category": "bud",
+    "container": "bud1",
+    "implemented": false,
+    "containerIndex": 12
+  },
+  "YoullFloatToo": {
+    "displayName": "You\u2019ll Float, Too",
+    "description": "Get killed by a Drowned",
+    "globalIndex": 54,
+    "category": "bud",
+    "container": "bud1",
+    "implemented": false,
+    "containerIndex": 13
+  },
+  "ThisIsMyBoomstick": {
+    "displayName": "This... Is My Boomstick!",
+    "description": "Kill a skeleton",
+    "globalIndex": 55,
+    "category": "bud",
+    "container": "bud1",
+    "implemented": false,
+    "containerIndex": 14
+  },
+  "TheNightIsDark": {
+    "displayName": "The Night Is Dark and Full Of Terrors",
+    "description": "Kill a Stray",
+    "globalIndex": 56,
+    "category": "bud",
+    "container": "bud1",
+    "implemented": false,
+    "containerIndex": 15
+  },
+  "AfterMidnight": {
+    "displayName": "Never Feed Them After Midnight",
+    "description": "Breed mobs between 00:00 and 01:00 (day tick 18,000 to 19,000)",
+    "globalIndex": 57,
+    "category": "bud",
+    "container": "bud1",
+    "implemented": false,
+    "containerIndex": 16
+  },
+  "OneGoodScare": {
+    "displayName": "Everyone's Entitled To One Good Scare",
+    "description": "Get killed by a Creeper",
+    "globalIndex": 58,
+    "category": "bud",
+    "container": "bud1",
+    "implemented": false,
+    "containerIndex": 17
+  },
+  "PaintItBlack": {
+    "displayName": "I Want It Painted Black",
+    "description": "Place a crimson door",
+    "globalIndex": 59,
+    "category": "bud",
+    "container": "bud1",
+    "implemented": false,
+    "containerIndex": 18
+  },
+  "CloseToTheCar": {
+    "displayName": "The Rhino's Getting Too Close To the Car",
+    "description": "Get hit by a Ravager",
+    "globalIndex": 60,
+    "category": "bud",
+    "container": "bud1",
+    "implemented": false,
+    "containerIndex": 19
+  },
+  "Deathbat": {
+    "displayName": "Deathbat",
+    "description": "Get killed by a Phantom",
+    "globalIndex": 61,
+    "category": "bud",
+    "container": "bud1",
+    "implemented": false,
+    "containerIndex": 20
+  },
+  "CanBeOnlyOne": {
+    "displayName": "There Can Be Only One",
+    "description": "Kill another player while your health is full",
+    "globalIndex": 62,
+    "category": "bud",
+    "container": "bud1",
+    "implemented": false,
+    "containerIndex": 21
+  },
+  "WhatsInTheBox": {
+    "displayName": "What's In the Box?",
+    "description": "Place an Ender Chest",
+    "globalIndex": 63,
+    "category": "bud",
+    "container": "bud1",
+    "implemented": false,
+    "containerIndex": 22
+  },
+  "ISeeDeadPeople": {
+    "displayName": "I See Dead People",
+    "description": "Look at a Zombie through a spyglass",
+    "globalIndex": 64,
+    "category": "bud",
+    "container": "bud1",
+    "implemented": false,
+    "containerIndex": 23
   }
 };
