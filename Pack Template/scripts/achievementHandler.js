@@ -1,3 +1,5 @@
+import { world, system } from '@minecraft/server';
+
 export class achievementHandler{
 	constructor(achievmentObject,name){
 		this.name=name
@@ -31,7 +33,7 @@ export class achievementHandler{
 		}else{
 			player.setDynamicProperty(achievmentDefs.container,mask);
 		}
-		this.addToScore("stats_achievments_",name,player)
+		this.addToScore("stats_achievments_",this.name,player)
 		this.achievmentUnlock(player,achievmentDefs.displayName+"\n"+achievmentDefs.description)
 	}
 	getAchievmentName(handle){
