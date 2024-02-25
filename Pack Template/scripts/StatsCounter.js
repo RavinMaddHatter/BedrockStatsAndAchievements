@@ -45,6 +45,18 @@ world.afterEvents.entitySpawn.subscribe(event =>{
 world.afterEvents.itemCompleteUse.subscribe(event=>{
 	itemComplete(event);
 });
+world.afterEvents.itemReleaseUse.subscribe(event=>{
+	itemRelease(event);
+});
+world.afterEvents.itemStartUse.subscribe(event=>{
+	itemStart(event);
+});
+world.afterEvents.itemStopUse.subscribe(event=>{
+	itemStop(event);
+});
+world.afterEvents.itemStopUseOn.subscribe(event=>{
+	itemStopOn(event);
+});
 world.afterEvents.itemUse.subscribe(event=>{
 	statStick(event);
 	useItem(event);
@@ -52,12 +64,7 @@ world.afterEvents.itemUse.subscribe(event=>{
 world.afterEvents.itemUseOn.subscribe(event=>{
 	useItemOn(event);
 });
-world.afterEvents.itemReleaseUse.subscribe(event=>{
-	itemRelease(event);
-});
-world.afterEvents.itemStopUseOn.subscribe(event=>{
-	itemStopOn(event);
-});
+
 world.afterEvents.leverAction.subscribe(event=>{
 	leverFlipped(event);
 });
@@ -676,6 +683,27 @@ function itemRelease(event){
 			break;
 	}
 }
+function itemStart(event){
+	let player = event.source;
+	let itemName = event.itemStack.typeId.replace("minecraft:","");
+	
+	switch(itemName){
+		case "spyglass" :
+			player.setDynamicProperty("spying", 1);
+			spying(player);
+			break;
+	}
+}
+function itemStop(event){
+	let player = event.source;
+	let itemName = event.itemStack.typeId.replace("minecraft:","");
+	
+	switch(itemName){
+		case "spyglass" :
+			player.setDynamicProperty("spying", 0);
+			break;
+	}
+}
 function itemStopOn(event){
 	let player = event.source;
 	let itemName = event.itemStack.typeId.replace("minecraft:","");
@@ -1255,10 +1283,6 @@ function entityInteractions(){
 		//[advancement] You've Got a Friend in Me | Have an Allay deliver items to you | Give an allay an item and then have it return to the player with more of that item.
 		//tag items dropped by the cat. then check if they were picked up
 		//[achievement] Where Have You Been? | Receive a gift from a tamed cat in the morning. | The gift must be picked up from the ground.
-		//Requires look through looking glass method.
-		//[advancement] Is It a Balloon? | Look at a Ghast through a Spyglass | Look at a ghast through a spyglass while the ghast is focused on you.
-		//[advancement] Is It a Bird? | Look at a Parrot through a Spyglass | —
-		//[advancement] Is It a Plane? | Look at the Ender Dragon through a Spyglass | —
 	//done--------------------
 }
 function entityKills(victim,player,cause,weapon){
@@ -2270,6 +2294,37 @@ function propertyToScore(player){
 	world.scoreboard.getObjective("stats_playTime_MinecraftDays").setScore(player, (daysPlayed === undefined ? 0 : daysPlayed));
 	world.scoreboard.getObjective("stats_playTime_Minutes").setScore(player, (minPlayed === undefined ? 0 : minPlayed));
 	world.scoreboard.getObjective("stats_travel_Overwoldblocktravel").setScore(player, (overTravel === undefined ? 0 : overTravel));
+}
+function spying(player){
+	let isSpying = player.getDynamicProperty("spying");
+	let entitySpyingArray = player.getEntitiesFromViewDirection();
+	
+	for(let i = 0; i < entitySpyingArray.length; i++){
+		let entitySpying = entitySpyingArray[i].entity.typeId.replace("minecraft:","");
+		
+		switch(entitySpying){
+			case "ghast" :
+				if(!advancementTracker.checkAchievment("IsItaBalloon", player)){
+					advancementTracker.setAchievment("IsItaBalloon", player);//[advancement] Is It a Balloon? | Look at a Ghast through a Spyglass | Look at a ghast through a spyglass while the ghast is focused on you.
+				}
+				break;
+			case "parrot" :
+				if(!advancementTracker.checkAchievment("IsItaBird", player)){
+					advancementTracker.setAchievment("IsItaBird", player);//[advancement] Is It a Bird? | Look at a Parrot through a Spyglass | —
+				}
+				break;
+			case "ender_dragon" :
+				if(!advancementTracker.checkAchievment("IsItaPlane", player)){
+					advancementTracker.setAchievment("IsItaPlane", player);//[advancement] Is It a Plane? | Look at the Ender Dragon through a Spyglass | —
+				}
+				break;
+		}
+	}
+	if(isSpying){
+		system.run(() => {
+			spying(player);
+		});
+	}
 }
 function timer10Sec(){
 	system.runInterval(() => {
