@@ -549,14 +549,44 @@ function entityDied(event){
 			if(killer){
 				switch(killertype){
 					case "dolphin":
-						if(!chalengeTracker.checkAchievment("AtLeastItWasntSkyblock",player)){
-							chalengeTracker.setAchievment("AtLeastItWasntSkyblock",player)
+						if(!chalengeTracker.checkAchievment("AtLeastItWasntSkyblock",victim)){
+							chalengeTracker.setAchievment("AtLeastItWasntSkyblock",victim)
+						}
+						break;
+					case "player":
+						
+						if(victim.getEffect("wither")){
+							if(!chalengeTracker.checkAchievment("WhereIsHatter",victim)){
+								chalengeTracker.setAchievment("WhereIsHatter",victim)
+							}
+							if(!chalengeTracker.checkAchievment("MoreDangerousThanTheWither",killer)){
+								chalengeTracker.setAchievment("MoreDangerousThanTheWither",killer)
+							}
 						}
 						break;
 				}
-				
 			}
+			switch(event.damageSource.cause){
+				case "starve":
+					if(!chalengeTracker.checkAchievment("OutOfFoodAreWe",victim)){
+						chalengeTracker.setAchievment("OutOfFoodAreWe",victim)
+					}
+					OutOfFoodAreWe
+					break
+			}
+
 			break
+		case "dolphin":
+			if(victim.dimension.id=="minecraft:nether"){
+				for(let player of world.getAllPlayers()){
+					if (player.dimension.id == "minecraft:nether"){
+						if(!chalengeTracker.checkAchievment("TellThemMrfearlessSentYou",player)){
+							chalengeTracker.setAchievment("TellThemMrfearlessSentYou",player)
+						}
+					}
+				}
+			}
+			break;
 		case "ender_dragon" :
 			world.setDynamicProperty("dragonKill", 1);
 			break;
@@ -711,9 +741,6 @@ function itemStopOn(event){
 				usingItems(itemName, player);
 			}
 			break;
-		//case "nether_wart" :
-			//console.warn(blockComponent)
-			//break;
 		case "glow_ink_sac" :
 			if (blockTag.includes("text_sign")){
 				usingItems(itemName, player);
@@ -907,7 +934,6 @@ function useItemOn(event){
 function useItem(event){
 	let player = event.source;
 	let itemName = getequipped(player)["Mainhand"]
-	console.warn(itemName)
 	
 	
 	switch(itemName){
@@ -1718,7 +1744,6 @@ function entityKills(victim,player,cause,weapon){
  	switch(weapon){
 		case "porkchop":
 		case "cooked_porkchop":
-		console.warn("porkchop")
 			if(!chalengeTracker.checkAchievment("PorkChop",player)){
 				chalengeTracker.setAchievment("PorkChop",player)
 			}
@@ -1734,7 +1759,6 @@ function entityKills(victim,player,cause,weapon){
 		case "guardian":
 			const equipment = getequipped(player)
 			if (equipment["dayOne"]){
-				console.warn("guardian advancement")
 				if(!chalengeTracker.checkAchievment("DayOneGuardianFarm",player)){
 					chalengeTracker.setAchievment("DayOneGuardianFarm",player)
 				}
@@ -2331,7 +2355,6 @@ function getequipped(player){
 	if(JSON.stringify(equipment).includes("iamond")||JSON.stringify(equipment).includes("etherite")){
 		equipment["dayOne"]=false
 	}
-	console.warn(equipment["dayOne"])
 	return equipment
 }
 function achievementUnlock(player,data){
