@@ -43,6 +43,12 @@ world.afterEvents.itemUseOn.subscribe(event=>{
 world.afterEvents.itemReleaseUse.subscribe(event=>{
 	itemRelease(event);
 });
+world.afterEvents.itemStartUse.subscribe(event=>{
+	itemStart(event);
+});
+world.afterEvents.itemStopUse.subscribe(event=>{
+	itemStop(event);
+});
 world.afterEvents.itemStopUseOn.subscribe(event=>{
 	itemStopOn(event);
 });
@@ -392,11 +398,23 @@ function debugDisplay(player){
 	debugArrayTxt[9] = subtitleFormat + "World spawnpoint: " + bodyFormat + worldSpawn();
 	debugArrayTxt[10] = subtitleFormat + "Facing: " + bodyFormat + facingDirection(player);
 	debugArrayTxt[11] = subtitleFormat + "Moon phase: " + bodyFormat + moonCycle();
-	debugArrayTxt[12] = subtitleFormat + "Time of day: " + bodyFormat + "\n    " + itemFormat + "Tick: " + bodyFormat + getTheTime("tick") + "\n    " + itemFormat + "Minecraft: " + bodyFormat + getTheTime("minecraft") + "\n    " + itemFormat + "12hr: " + bodyFormat + getTheTime("12hr") + "\n    " + itemFormat + "24hr: " + bodyFormat + getTheTime("24hr");
+	debugArrayTxt[12] = subtitleFormat + "Time of day: " + bodyFormat
+		+ "\n    " + itemFormat + "Tick: " + bodyFormat + getTheTime("tick")
+		+ "\n    " + itemFormat + "Minecraft: " + bodyFormat + getTheTime("minecraft")
+		+ "\n    " + itemFormat + "12hr: " + bodyFormat + getTheTime("12hr")
+		+ "\n    " + itemFormat + "24hr: " + bodyFormat + getTheTime("24hr");
 	debugArrayTxt[13] = subtitleFormat + "World life in ticks: " + bodyFormat + "\n    " + worldlife("tick");
 	debugArrayTxt[14] = subtitleFormat + "World day: " + bodyFormat + worldlife("day");
-	debugArrayTxt[15] = (biomeId == "NA" ? "" : subtitleFormat + "Light at player's head: " + bodyFormat + lightVal);
-	debugArrayTxt[16] = (biomeId == "NA" ? "" : subtitleFormat + "Biome: " + bodyFormat + biomeId);
+	debugArrayTxt[15] = subtitleFormat + "Block looking at: " + bodyFormat
+		+ "\n    " + itemFormat + "Id: " + bodyFormat + blockLookingAt("id", player)
+		+ "\n    " + itemFormat + "Tags: " + bodyFormat + blockLookingAt("tags", player)
+		+ "\n    " + itemFormat + "Location: " + bodyFormat + blockLookingAt("location", player)
+		+ "\n    " + itemFormat + "Distance: " + bodyFormat + blockLookingAt("distance", player)
+		+ "\n    " + itemFormat + "Growth stage: " + bodyFormat + blockLookingAt("growth", player)
+		+ "\n    " + itemFormat + "Hydration: " + bodyFormat + blockLookingAt("moisturized_amount", player)
+		+ "\n    " + itemFormat + "Redstone power: " + bodyFormat + blockLookingAt("redstone_signal", player);
+	debugArrayTxt[16] = (biomeId == "NA" ? "" : subtitleFormat + "Light at player's head: " + bodyFormat + lightVal);
+	debugArrayTxt[17] = (biomeId == "NA" ? "" : subtitleFormat + "Biome: " + bodyFormat + biomeId);
 	
     //construct ui
 	let indentSize = "";
@@ -408,7 +426,17 @@ function debugDisplay(player){
 		.title(player.name)
 		.body(displayText)
 		.button("Close")
-		.show(player);
+		.button("To chat")
+		
+		debugForm.show(player).then((response) => {
+			switch(response.selection){
+				case 0 :
+					break;
+				case 1 :
+					player.sendMessage(displayText);
+					break;
+			}
+		});
 }
 //end ui functions----------------------------------------
 
@@ -603,7 +631,7 @@ function entityDied(event){
 					if (inrange &&!achievementTracker.checkAchievment("TheBeginningKill",player)){
 						achievementTracker.setAchievment("TheBeginningKill",player)
 					}
-					//{"chest":"","Feet":"","Head":"","Legs":"","Mainhand":"Empty Hand","Offhand":""}
+					//{"chest":"","Feet":"","Head":"","Legs":"","Mainhand":"Empty Hand","Offhand":""//}
 					const equipment=getequipped(player)
 					if(equipment["dayOne"]){
 						if(!chalengeTracker.checkAchievment("DayOneWither",player)){
@@ -719,6 +747,27 @@ function itemRelease(event){
 			system.runTimeout(() => {
 				player.setDynamicProperty("forkThrow", 0);
 			}, 30);
+			break;
+	}
+}
+function itemStart(event){
+	let player = event.source;
+	let itemName = event.itemStack.typeId.replace("minecraft:","");
+	
+	switch(itemName){
+		case "spyglass" :
+			player.setDynamicProperty("spying", 1);
+			spying(player);
+			break;
+	}
+}
+function itemStop(event){
+	let player = event.source;
+	let itemName = event.itemStack.typeId.replace("minecraft:","");
+	
+	switch(itemName){
+		case "spyglass" :
+			player.setDynamicProperty("spying", 0);
 			break;
 	}
 }
@@ -1686,9 +1735,6 @@ function entityInteractions(){
 		//tag items dropped by the cat. then check if they were picked up
 		//[achievement] Where Have You Been? | Receive a gift from a tamed cat in the morning. | The gift must be picked up from the ground.
 		//Requires look through looking glass method.
-		//[advancement] Is It a Balloon? | Look at a Ghast through a Spyglass | Look at a ghast through a spyglass while the ghast is focused on you.
-		//[advancement] Is It a Bird? | Look at a Parrot through a Spyglass | —
-		//[advancement] Is It a Plane? | Look at the Ender Dragon through a Spyglass | —
 	//done--------------------
 }
 function entityKills(victim,player,cause,weapon){
@@ -1861,7 +1907,6 @@ function redstoneInteractions(){
 }
 
 function spawnAndBreed(entity, player){
-	
 	switch(entity){
 		case "iron_golem" :
 			if(!advancementTracker.checkAchievment("HiredHelp",player)){
@@ -1885,13 +1930,15 @@ function spawnAndBreed(entity, player){
 			}
 			break;
 		case "cow" :
+			player.setDynamicProperty("breed_" + entity, 1);
 			if(!achievementTracker.checkAchievment("Repopulation",player)){
 				achievementTracker.setAchievment("Repopulation",player);//[achievement] Repopulation | Breed two cows with wheat. | Breed two cows or two mooshrooms.
 				if(!advancementTracker.checkAchievment("TheParrotsandtheBats",player)){
 					advancementTracker.setAchievment("TheParrotsandtheBats",player);
 				}
 			}
-		case "mule" :	
+		case "mule" :
+			player.setDynamicProperty("breed_" + entity, 1);
 			if(!achievementTracker.checkAchievment("ArtificialSelection",player)){
 				achievementTracker.setAchievment("ArtificialSelection",player);//[achievement] Artificial Selection | Breed a mule from a horse and a donkey. | —
 				if(!advancementTracker.checkAchievment("TheParrotsandtheBats",player)){
@@ -1900,6 +1947,7 @@ function spawnAndBreed(entity, player){
 			}
 			break;
 		case "panda" :
+			player.setDynamicProperty("breed_" + entity, 1);
 			if(!achievementTracker.checkAchievment("Zoologist",player)){
 				achievementTracker.setAchievment("Zoologist",player);//[achievement] Zoologist | Breed two pandas with bamboo. | —
 				if(!achievementTracker.checkAchievment("TheParrotsandtheBats",player)){
@@ -1928,18 +1976,9 @@ function spawnAndBreed(entity, player){
 		case "strider" ://*fall through*
 		case "turtle" ://*fall through*
 		case "wolf" :
+			player.setDynamicProperty("breed_" + entity, 1);
 			if(!achievementTracker.checkAchievment("TheParrotsandtheBats",player)){
 				achievementTracker.setAchievment("TheParrotsandtheBats",player);//[advancement] The Parrots and the Bats | Breed two animals together | Breed a pair of any of these 25 mobs:, Axolotl, Bee, Camel, Cat, Chicken, Cow, Donkey, Fox, Frog, Goat, Hoglin, Horse, Llama, Mooshroom, Mule, Ocelot, Panda, Pig, Rabbit, Sheep, Sniffer, Strider, Trader Llama, Turtle, Wolf, A mule must be the result of breeding a horse and a donkey for this advancement as they are not breedable together. Other breedable mobs are ignored for this advancement.
-			}
-			//[advancement] Two by Two | Breed all the animals! | Breed a pair of each of these 24 mobs:, Axolotl, Bee, Camel, Cat, Chicken, Cow, Donkey, Fox, Frog, Goat, Hoglin, Horse, Llama, Mooshroom, Mule, Ocelot, Panda, Pig, Rabbit, Sheep, Sniffer, Strider, Turtle, Wolf, A trader llama does not count as a llama, and a mule must be the result of breeding a horse and a donkey for this advancement as they are not breedable together. Other breedable mobs can be bred, but are ignored for this advancement.
-			if(getScoreIfExists(world.scoreboard.getObjective("spawnAndBreedbreed_all_bool"), player) == 0){
-				if(getScoreIfExists(world.scoreboard.getObjective("spawnAndBreed" + entity), player) == 0){
-					addToScore("spawnAndBreedbreed_all_score", player);
-					//boolScore("spawnAndBreed", entity, player, 1);
-					if(getScoreIfExists(world.scoreboard.getObjective("spawnAndBreedbreed_all_score"), player) == 24){
-						//boolScore("spawnAndBreed", "breed_all_bool", player, 1);
-					}
-				}
 			}
 			break;
 		case "trader_llama" :
@@ -1947,6 +1986,20 @@ function spawnAndBreed(entity, player){
 				achievementTracker.setAchievment("TheParrotsandtheBats",player);
 			}
 			break;
+	}
+	let propertyIds = player.getDynamicPropertyIds();
+	
+	if(!advancementTracker.checkAchievment("TwobyTwo", player)){
+		let tempBreed = 0;
+		
+		for(var i = 0; i < propertyIds.length; i++){
+			if(propertyIds[i].indexOf("breed_") > -1){
+				tempBiome++;
+			}
+		}
+		if(tempBiome >= 24){
+			advancementTracker.setAchievment("TwobyTwo", player);//[advancement] Two by Two | Breed all the animals! | Breed a pair of each of these 24 mobs:, Axolotl, Bee, Camel, Cat, Chicken, Cow, Donkey, Fox, Frog, Goat, Hoglin, Horse, Llama, Mooshroom, Mule, Ocelot, Panda, Pig, Rabbit, Sheep, Sniffer, Strider, Turtle, Wolf, A trader llama does not count as a llama, and a mule must be the result of breeding a horse and a donkey for this advancement as they are not breedable together. Other breedable mobs can be bred, but are ignored for this advancement.
+		}
 	}
 }
 function statusAndEffects(player){
@@ -2414,6 +2467,37 @@ function propertyToScore(player){
 	world.scoreboard.getObjective("stats_playTime_Minutes").setScore(player, (minPlayed === undefined ? 0 : minPlayed));
 	world.scoreboard.getObjective("stats_travel_Overwoldblocktravel").setScore(player, (overTravel === undefined ? 0 : overTravel));
 }
+function spying(player){
+	let isSpying = player.getDynamicProperty("spying");
+	let entitySpyingArray = player.getEntitiesFromViewDirection();
+	
+	for(let i = 0; i < entitySpyingArray.length; i++){
+		let entitySpying = entitySpyingArray[i].entity.typeId.replace("minecraft:","");
+		
+		switch(entitySpying){
+			case "ghast" :
+				if(!advancementTracker.checkAchievment("IsItaBalloon", player)){
+					advancementTracker.setAchievment("IsItaBalloon", player);//[advancement] Is It a Balloon? | Look at a Ghast through a Spyglass | Look at a ghast through a spyglass while the ghast is focused on you.
+				}
+				break;
+			case "parrot" :
+				if(!advancementTracker.checkAchievment("IsItaBird", player)){
+					advancementTracker.setAchievment("IsItaBird", player);//[advancement] Is It a Bird? | Look at a Parrot through a Spyglass | —
+				}
+				break;
+			case "ender_dragon" :
+				if(!advancementTracker.checkAchievment("IsItaPlane", player)){
+					advancementTracker.setAchievment("IsItaPlane", player);//[advancement] Is It a Plane? | Look at the Ender Dragon through a Spyglass | —
+				}
+				break;
+		}
+	}
+	if(isSpying){
+		system.run(() => {
+			spying(player);
+		});
+	}
+}
 function timer10Sec(){
 	system.runInterval(() => {
 		let playerArrayList = world.getAllPlayers();//get list of players
@@ -2462,6 +2546,55 @@ function timer1Min(){
 //end helper functions----------------------------------------
 
 //debug functions----------------------------------------
+function blockLookingAt(subject, player){
+	let blockInspect = "";
+	let inspectText = "";
+	let inspectLocation = "";
+	
+	if(player.getBlockFromViewDirection() && player.getBlockFromViewDirection().block.isValid()){
+		blockInspect = player.getBlockFromViewDirection({includeLiquidBlocks : true, includePassableBlocks : true}).block;
+	}
+	if(blockInspect){
+		switch(subject){
+			case "id" :
+				//inspectText = player.getBlockFromViewDirection().block.typeId;
+				inspectText = "not implemented";
+				break;
+			case "tags" :
+				inspectText = blockInspect.getTags().join(", ");
+				break;
+			case "location" :
+				inspectLocation = blockInspect.location;
+				inspectText = Math.floor(inspectLocation.x)
+							+ ", " + Math.floor(inspectLocation.y)
+							+ ", " + Math.floor(inspectLocation.z);
+				break;
+			case "distance" :
+				inspectLocation = blockInspect.location;
+				let x1 = Math.floor(player.location.x);
+				let z1 = Math.floor(player.location.z);
+				let x2 = Math.floor(inspectLocation.x);
+				let z2 = Math.floor(inspectLocation.z);
+				inspectText = calculateDistance(x1, z1, x2, z2);
+				break;
+			case "growth" :
+				inspectText = blockInspect.permutation.getState("growth");
+				break;
+			case "moisturized_amount" :
+				inspectText = blockInspect.permutation.getState("moisturized_amount");
+				break;
+			case "redstone_signal" :
+				inspectText = blockInspect.permutation.getState("redstone_signal");
+				break;
+		}
+	}
+	
+	if(inspectText){
+		return inspectText;
+	}else{
+		return "";
+	}
+}
 function facingDirection(player){
 	let faceDir = player.getRotation().y;
 	let faceTxt = "";
