@@ -88,11 +88,11 @@ export function biomeFinder(player){
 	biomeArray[85] = "birch_forest_hills";
 	biomeArray[86] = "redwood_taiga_hills_mutated";
 	
-	let variantPlayer = player.getComponent("minecraft:variant");
+	let propertyPlayer = player.getProperty("addon:biome");
 	let biomeId;
 	
-	if(variantPlayer){
-		biomeId = biomeArray[variantPlayer.value];
+	if(propertyPlayer){
+		biomeId = biomeArray[propertyPlayer];
 	}else{
 		biomeId = "NA";
 	}
@@ -270,11 +270,11 @@ function updateMask(biomeArray, name, value){
 	return bitmask
 }
 export function lightLevel(player){
-	let markVariantPlayer = player.getComponent("minecraft:mark_variant");
+	let propertyPlayer = player.getProperty("addon:light");
 	let lightId;
 	
-	if(markVariantPlayer){
-		lightId = markVariantPlayer.value;
+	if(propertyPlayer){
+		lightId = propertyPlayer;
 	}else{
 		lightId = "NA";
 	}
