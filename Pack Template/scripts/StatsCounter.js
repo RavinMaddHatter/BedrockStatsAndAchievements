@@ -572,7 +572,6 @@ function entityDied(event){
 	switch(victimName){
 		case "player" :
 			addToScore("stats_Deaths_",event.damageSource.cause, victim);
-			break;
 			const killertype = killer.typeId.replace("minecraft:","").replace("_"," ")
 			if(killer){
 				switch(killertype){
@@ -590,6 +589,31 @@ function entityDied(event){
 							if(!chalengeTracker.checkAchievment("MoreDangerousThanTheWither",killer)){
 								chalengeTracker.setAchievment("MoreDangerousThanTheWither",killer)
 							}
+						}
+						break;
+					case "elder_guardian" :
+						if(!chalengeTracker.checkAchievment("ABiggerBoat",victim)){
+							chalengeTracker.setAchievment("ABiggerBoat",victim)//[challenge] You’re Gonna Need A Bigger Boat
+						}
+						break;
+					case "silverfish" :
+						if(!chalengeTracker.checkAchievment("GameOverMan",victim)){
+							chalengeTracker.setAchievment("GameOverMan",victim)//[challenge] Game Over, Man! Game Over!
+						}
+						break;
+					case "drowned" :
+						if(!chalengeTracker.checkAchievment("YoullFloatToo",victim)){
+							chalengeTracker.setAchievment("YoullFloatToo",victim)//[challenge] You’ll Float, Too
+						}
+						break;
+					case "creeper" :
+						if(!chalengeTracker.checkAchievment("OneGoodScare",victim)){
+							chalengeTracker.setAchievment("OneGoodScare",victim)//[challenge] Everyone's Entitled To One Good Scare
+						}
+						break;
+					case "phantom" :
+						if(!chalengeTracker.checkAchievment("Deathbat",victim)){
+							chalengeTracker.setAchievment("Deathbat",victim)//[challenge] Deathbat
 						}
 						break;
 				}
@@ -640,6 +664,12 @@ function entityDied(event){
 					}
 				}
 			}
+			break;
+		case "sheep" ://[challenge] Hello Clarice…
+			break;
+		case "skeleton" ://[challenge] This... Is My Boomstick!
+			break;
+		case "stray" ://[challenge] The Night Is Dark and Full Of Terrors
 			break;
 	}
 }
@@ -2488,6 +2518,11 @@ function spying(player){
 			case "ender_dragon" :
 				if(!advancementTracker.checkAchievment("IsItaPlane", player)){
 					advancementTracker.setAchievment("IsItaPlane", player);//[advancement] Is It a Plane? | Look at the Ender Dragon through a Spyglass | —
+				}
+				break;
+			case "zombie" :
+				if(!chalengeTracker.checkAchievment("ISeeDeadPeople", player)){
+					chalengeTracker.checkAchievment("ISeeDeadPeople", player);//[challenge] I See Dead People
 				}
 				break;
 		}
