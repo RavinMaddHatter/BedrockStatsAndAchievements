@@ -569,10 +569,10 @@ function entityDied(event){
 		}
 	}
 	const killer = event.damageSource.damagingEntity
+	const killertype = killer.typeId.replace("minecraft:","").replace("_"," ")
 	switch(victimName){
 		case "player" :
 			addToScore("stats_Deaths_",event.damageSource.cause, victim);
-			const killertype = killer.typeId.replace("minecraft:","").replace("_"," ")
 			if(killer){
 				switch(killertype){
 					case "dolphin":
@@ -665,11 +665,21 @@ function entityDied(event){
 				}
 			}
 			break;
-		case "sheep" ://[challenge] Hello Clarice…
+		case "sheep" :
+			if(victim.getComponent("minecraft:is_baby")){
+				if(killertype == "player" && (!chalengeTracker.checkAchievment("HelloClarice",killer))){
+					chalengeTracker.setAchievment("HelloClarice",killer)//[challenge] Hello Clarice…
+				}
+			}
 			break;
-		case "skeleton" ://[challenge] This... Is My Boomstick!
-			break;
-		case "stray" ://[challenge] The Night Is Dark and Full Of Terrors
+		case "skeleton" :
+			if(killertype == "player" && (!chalengeTracker.checkAchievment("ThisIsMyBoomstick",killer))){
+				chalengeTracker.setAchievment("ThisIsMyBoomstick",killer)//[challenge] This... Is My Boomstick!
+			}
+		case "stray" :
+			if(killertype == "player" && (!chalengeTracker.checkAchievment("TheNightIsDark",killer))){
+				chalengeTracker.setAchievment("TheNightIsDark",killer)//[challenge] The Night Is Dark and Full Of Terrors
+			}
 			break;
 	}
 }
@@ -2522,7 +2532,7 @@ function spying(player){
 				break;
 			case "zombie" :
 				if(!chalengeTracker.checkAchievment("ISeeDeadPeople", player)){
-					chalengeTracker.checkAchievment("ISeeDeadPeople", player);//[challenge] I See Dead People
+					chalengeTracker.setAchievment("ISeeDeadPeople", player);//[challenge] I See Dead People
 				}
 				break;
 		}
