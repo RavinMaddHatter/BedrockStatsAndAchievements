@@ -96,10 +96,18 @@ world.afterEvents.dataDrivenEntityTrigger.subscribe(event=>{
 			case "on_trust" :
 				tameEvents(event);
 				break;
-			case "become_angry" ://still working on this
+			case "become_angry" :
 				if(event.entity.typeId == "minecraft:enderman"){
-					if(event.entity.getComponent("minecraft:lookat")){
-						console.warn("lookat_enderman");
+					let entity = event.entity;
+					let closePlayers = entity.dimension.getPlayers({
+						maxDistance: 64,
+						location: {x: entity.location.x, y: entity.location.y, z: entity.location.z}
+					});
+					
+					for(var i = 0; i < closePlayers.length; i++){
+						if(!chalengeTracker.checkAchievment("TheSlenderMan", closePlayers[i])){
+							chalengeTracker.setAchievment("TheSlenderMan",closePlayers[i]);//[challenge] The Slender Man
+						}
 					}
 				}
 				break;
