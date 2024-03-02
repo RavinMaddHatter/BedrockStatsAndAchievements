@@ -24,6 +24,9 @@ world.afterEvents.entityDie.subscribe(event =>{
 world.afterEvents.entityHealthChanged.subscribe(event =>{ 
 	entityChangeHealth(event);
 });
+world.afterEvents.entityHitEntity.subscribe(event =>{ 
+	entityHit(event);
+});
 world.afterEvents.entityLoad.subscribe(event =>{ 
 	loadedEntity(event);
 });
@@ -600,13 +603,17 @@ function entityDied(event){
 						}
 						break;
 					case "player":
-						
 						if(victim.getEffect("wither")){
 							if(!chalengeTracker.checkAchievment("WhereIsHatter",victim)){
 								chalengeTracker.setAchievment("WhereIsHatter",victim);
 							}
 							if(!chalengeTracker.checkAchievment("MoreDangerousThanTheWither",killer)){
 								chalengeTracker.setAchievment("MoreDangerousThanTheWither",killer);
+							}
+						}
+						if(killer.getComponent("minecraft:health").currentValue == 20){
+							if(!chalengeTracker.checkAchievment("CanBeOnlyOne", killer)){
+								chalengeTracker.setAchievment("CanBeOnlyOne", killer);//[challenge] There Can Be Only One
 							}
 						}
 						break;
@@ -700,6 +707,18 @@ function entityDied(event){
 				chalengeTracker.setAchievment("TheNightIsDark",killer);//[challenge] The Night Is Dark and Full Of Terrors
 			}
 			break;
+	}
+}
+function entityHit(event){
+	let attacker = event.damagingEntity
+	let victim = event.hitEntity
+	
+	if(attacker && victim){
+		if(attacker.typeId == "minecraft:ravager" && (victim.typeId == "minecraft:player")){
+			if(!chalengeTracker.checkAchievment("CloseToTheCar", victim)){
+				chalengeTracker.setAchievment("CloseToTheCar", victim);//[challenge] The Rhino's Getting Too Close To the Car
+			}
+		}
 	}
 }
 function entityChangeHealth(event){
