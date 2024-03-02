@@ -87,11 +87,22 @@ world.afterEvents.entityHurt.subscribe(event=>{
 });
 world.afterEvents.dataDrivenEntityTrigger.subscribe(event=>{
 	if(event.entity.typeId!="minecraft:player"){
-		if(event.eventId=="minecraft:on_tame"){
-			tameEvents(event)
-		}
-		if(event.eventId=="minecraft:on_trust"){
-			tameEvents(event)
+		let eventName = event.eventId.replace("minecraft:", "");
+		
+		switch(eventName){
+			case "on_tame" :
+				tameEvents(event);
+				break;
+			case "on_trust" :
+				tameEvents(event);
+				break;
+			case "become_angry" ://still working on this
+				if(event.entity.typeId == "minecraft:enderman"){
+					if(event.entity.getComponent("minecraft:lookat")){
+						console.warn("lookat_enderman");
+					}
+				}
+				break;
 		}
 	}
 });
@@ -577,43 +588,43 @@ function entityDied(event){
 				switch(killertype){
 					case "dolphin":
 						if(!chalengeTracker.checkAchievment("AtLeastItWasntSkyblock",victim)){
-							chalengeTracker.setAchievment("AtLeastItWasntSkyblock",victim)
+							chalengeTracker.setAchievment("AtLeastItWasntSkyblock",victim);
 						}
 						break;
 					case "player":
 						
 						if(victim.getEffect("wither")){
 							if(!chalengeTracker.checkAchievment("WhereIsHatter",victim)){
-								chalengeTracker.setAchievment("WhereIsHatter",victim)
+								chalengeTracker.setAchievment("WhereIsHatter",victim);
 							}
 							if(!chalengeTracker.checkAchievment("MoreDangerousThanTheWither",killer)){
-								chalengeTracker.setAchievment("MoreDangerousThanTheWither",killer)
+								chalengeTracker.setAchievment("MoreDangerousThanTheWither",killer);
 							}
 						}
 						break;
 					case "elder_guardian" :
-						if(!chalengeTracker.checkAchievment("ABiggerBoat",victim)){
-							chalengeTracker.setAchievment("ABiggerBoat",victim)//[challenge] You’re Gonna Need A Bigger Boat
+						if(!chalengeTracker.checkAchievment("ABiggerBoat", victim)){
+							chalengeTracker.setAchievment("ABiggerBoat", victim);//[challenge] You’re Gonna Need A Bigger Boat
 						}
 						break;
 					case "silverfish" :
-						if(!chalengeTracker.checkAchievment("GameOverMan",victim)){
-							chalengeTracker.setAchievment("GameOverMan",victim)//[challenge] Game Over, Man! Game Over!
+						if(!chalengeTracker.checkAchievment("GameOverMan", victim)){
+							chalengeTracker.setAchievment("GameOverMan", victim);//[challenge] Game Over, Man! Game Over!
 						}
 						break;
 					case "drowned" :
-						if(!chalengeTracker.checkAchievment("YoullFloatToo",victim)){
-							chalengeTracker.setAchievment("YoullFloatToo",victim)//[challenge] You’ll Float, Too
+						if(!chalengeTracker.checkAchievment("YoullFloatToo", victim)){
+							chalengeTracker.setAchievment("YoullFloatToo", victim);//[challenge] You’ll Float, Too
 						}
 						break;
 					case "creeper" :
-						if(!chalengeTracker.checkAchievment("OneGoodScare",victim)){
-							chalengeTracker.setAchievment("OneGoodScare",victim)//[challenge] Everyone's Entitled To One Good Scare
+						if(!chalengeTracker.checkAchievment("OneGoodScare", victim)){
+							chalengeTracker.setAchievment("OneGoodScare", victim);//[challenge] Everyone's Entitled To One Good Scare
 						}
 						break;
 					case "phantom" :
-						if(!chalengeTracker.checkAchievment("Deathbat",victim)){
-							chalengeTracker.setAchievment("Deathbat",victim)//[challenge] Deathbat
+						if(!chalengeTracker.checkAchievment("Deathbat", victim)){
+							chalengeTracker.setAchievment("Deathbat", victim);//[challenge] Deathbat
 						}
 						break;
 				}
@@ -621,7 +632,7 @@ function entityDied(event){
 			switch(event.damageSource.cause){
 				case "starve":
 					if(!chalengeTracker.checkAchievment("OutOfFoodAreWe",victim)){
-						chalengeTracker.setAchievment("OutOfFoodAreWe",victim)
+						chalengeTracker.setAchievment("OutOfFoodAreWe",victim);
 					}
 					OutOfFoodAreWe
 					break
@@ -633,7 +644,7 @@ function entityDied(event){
 				for(let player of world.getAllPlayers()){
 					if (player.dimension.id == "minecraft:nether"){
 						if(!chalengeTracker.checkAchievment("TellThemMrfearlessSentYou",player)){
-							chalengeTracker.setAchievment("TellThemMrfearlessSentYou",player)
+							chalengeTracker.setAchievment("TellThemMrfearlessSentYou",player);
 						}
 					}
 				}
@@ -653,13 +664,13 @@ function entityDied(event){
 					inrange = inrange && Math.abs(player.location.x-witherX)<50.5
 					inrange = inrange &&Math.abs(player.location.x-witherX)<101.75
 					if (inrange &&!achievementTracker.checkAchievment("TheBeginningKill",player)){
-						achievementTracker.setAchievment("TheBeginningKill",player)
+						achievementTracker.setAchievment("TheBeginningKill",player);
 					}
 					//{"chest":"","Feet":"","Head":"","Legs":"","Mainhand":"Empty Hand","Offhand":""//}
 					const equipment=getequipped(player)
 					if(equipment["dayOne"]){
 						if(!chalengeTracker.checkAchievment("DayOneWither",player)){
-							chalengeTracker.setAchievment("DayOneWither",player)
+							chalengeTracker.setAchievment("DayOneWither",player);
 						}
 					}
 				}
@@ -667,18 +678,18 @@ function entityDied(event){
 			break;
 		case "sheep" :
 			if(victim.getComponent("minecraft:is_baby")){
-				if(killertype == "player" && (!chalengeTracker.checkAchievment("HelloClarice",killer))){
-					chalengeTracker.setAchievment("HelloClarice",killer)//[challenge] Hello Clarice…
+				if(killertype == "player" && (!chalengeTracker.checkAchievment("HelloClarice", killer))){
+					chalengeTracker.setAchievment("HelloClarice",killer);//[challenge] Hello Clarice…
 				}
 			}
 			break;
 		case "skeleton" :
-			if(killertype == "player" && (!chalengeTracker.checkAchievment("ThisIsMyBoomstick",killer))){
-				chalengeTracker.setAchievment("ThisIsMyBoomstick",killer)//[challenge] This... Is My Boomstick!
+			if(killertype == "player" && (!chalengeTracker.checkAchievment("ThisIsMyBoomstick", killer))){
+				chalengeTracker.setAchievment("ThisIsMyBoomstick",killer);//[challenge] This... Is My Boomstick!
 			}
 		case "stray" :
-			if(killertype == "player" && (!chalengeTracker.checkAchievment("TheNightIsDark",killer))){
-				chalengeTracker.setAchievment("TheNightIsDark",killer)//[challenge] The Night Is Dark and Full Of Terrors
+			if(killertype == "player" && (!chalengeTracker.checkAchievment("TheNightIsDark", killer))){
+				chalengeTracker.setAchievment("TheNightIsDark",killer);//[challenge] The Night Is Dark and Full Of Terrors
 			}
 			break;
 	}
@@ -732,30 +743,26 @@ function itemComplete(event){
 	//done--------------------
 	let player = event.source;
 	let itemName = event.itemStack.typeId.replace("minecraft:","");
-	//[advancement] Husbandry | The world is full of friends and food | Consume anything that can be consumed.
 	if(!advancementTracker.checkAchievment("Husbandry",player)){
-		advancementTracker.setAchievment("Husbandry",player)
+		advancementTracker.setAchievment("Husbandry",player);//[advancement] Husbandry | The world is full of friends and food | Consume anything that can be consumed.
 	}
 	switch(itemName){
 		case "crossbow" :
 			player.setDynamicProperty("chargeCross", 1);
 			break;
-		//[achievement] Overpowered | Eat an Enchanted Apple | Eat an enchanted apple.
 		case "enchanted_golden_apple":
 			if(!achievementTracker.checkAchievment("Overpowered",player)){
-				achievementTracker.setAchievment("Overpowered",player)
+				achievementTracker.setAchievment("Overpowered",player);//[achievement] Overpowered | Eat an Enchanted Apple | Eat an enchanted apple.
 			}
 			break;
-		//[achievement] Pork Chop | Cook and eat a pork chop. | —
 		case "cooked_porkchop":
 			if(!achievementTracker.checkAchievment("PorkChop",player)){
-				achievementTracker.setAchievment("PorkChop",player)
+				achievementTracker.setAchievment("PorkChop",player);//[achievement] Pork Chop | Cook and eat a pork chop. | —
 			}
 			break;
-		//[achievement] Rabbit Season | Cook and Eat Rabbit Meat | —
 		case "cooked_rabbit":
 			if(!achievementTracker.checkAchievment("RabbitSeason",player)){
-				achievementTracker.setAchievment("RabbitSeason",player)
+				achievementTracker.setAchievment("RabbitSeason",player);//[achievement] Rabbit Season | Cook and Eat Rabbit Meat | —
 			}
 			break;
 		case "rotten_flesh":
@@ -763,8 +770,18 @@ function itemComplete(event){
 		//Needs a hunger or saturation component check
 			if(false){
 				if(!achievementTracker.checkAchievment("RabbitSeason",player)){
-					achievementTracker.setAchievment("RabbitSeason",player)
+					achievementTracker.setAchievment("RabbitSeason",player);
 				}
+			}
+			break;
+		case "beetroot" :
+			if(!chalengeTracker.checkAchievment("MoAllowance", player)){
+				chalengeTracker.setAchievment("MoAllowance", player);//[challenge] I Need Mo' Allowance
+			}
+			break;
+		case "glow_berries" :
+			if(!chalengeTracker.checkAchievment("GummiberryJuice", player)){
+				chalengeTracker.setAchievment("GummiberryJuice", player);//[challenge] Gummiberry Juice
 			}
 			break;
 	}
@@ -833,6 +850,16 @@ function itemStopOn(event){
 		case "glow_ink_sac" :
 			if (blockTag.includes("text_sign")){
 				usingItems(itemName, player);
+			}
+			break;
+		case "crimson_door" :
+			if(!chalengeTracker.checkAchievment("PaintItBlack", player)){
+				chalengeTracker.setAchievment("PaintItBlack", player);//[challenge] I Want It Painted Black
+			}
+			break;
+		case "ender_chest" :
+			if(!chalengeTracker.checkAchievment("WhatsInTheBox", player)){
+				chalengeTracker.setAchievment("WhatsInTheBox", player);//[challenge] What's In the Box?
 			}
 			break;
 	}
