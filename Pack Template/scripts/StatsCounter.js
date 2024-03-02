@@ -106,7 +106,7 @@ world.afterEvents.dataDrivenEntityTrigger.subscribe(event=>{
 					
 					for(var i = 0; i < closePlayers.length; i++){
 						if(!chalengeTracker.checkAchievment("TheSlenderMan", closePlayers[i])){
-							chalengeTracker.setAchievment("TheSlenderMan",closePlayers[i]);//[challenge] The Slender Man
+							chalengeTracker.setAchievment("TheSlenderMan", closePlayers[i]);//[challenge] The Slender Man
 						}
 					}
 				}
@@ -956,7 +956,13 @@ function spawnedEntity(event){
 			closest: 1,
 			location: {x: entity.location.x, y: entity.location.y, z: entity.location.z}
 		});
+		let timeVal = world.getTimeOfDay();
 		
+		if(timeVal >= 18000 && (timeVal <= 19000)){
+			if(!chalengeTracker.checkAchievment("AfterMidnight", playersClosest[0])){
+				chalengeTracker.setAchievment("AfterMidnight", playersClosest[0]);//[challenge] Never Feed Them After Midnight
+			}
+		}
 		spawnAndBreed(entityName, playersClosest[0]);
 	}
 }
@@ -1974,6 +1980,29 @@ function entityKills(victim,player,cause,weapon){
 	}
 		
 }
+function equipmentChallenges(player){
+	let headItem = getequipped(player)["Head"]
+	
+	if(headItem){
+		switch(headItem){
+			case "turtle_helmet" :
+				if(!chalengeTracker.checkAchievment("HeroInAHalfShell", player)){
+					chalengeTracker.setAchievment("HeroInAHalfShell", player);//[challenge] Hero in a Half Shell
+				}
+				break;
+			case "leather_helmet" :
+				if(!chalengeTracker.checkAchievment("FootballHead", player)){
+					chalengeTracker.setAchievment("FootballHead", player);//[challenge] Move it, Football Head!
+				}
+				break;
+			case "carved_pumpkin" :
+				if(!chalengeTracker.checkAchievment("Pumpkinhead", player)){
+					chalengeTracker.setAchievment("Pumpkinhead", player);//[challenge] Return of Pumpkinhead
+				}
+				break;
+		}
+	}
+}
 function redstoneInteractions(){
 	//to-do--------------------
 		//[achievement] Inception | Push a piston with a piston, then pull the original piston with that piston. | —
@@ -2620,6 +2649,7 @@ function timer1Min(){
 			
 			playerArrayList[i].setDynamicProperty("playTimeM", (minCount === undefined ? 0 : minCount) + 1);
 			playerArrayList[i].setDynamicProperty("biome_" + biomeFinder(playerArrayList[i]), 1);
+			equipmentChallenges(playerArrayList[i]);
 		}
 	}, 1200);
 }
