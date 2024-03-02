@@ -524,26 +524,45 @@ function changedDimension(event){
 		case "nether":
 			addToScore("stats_enteredDimension_","Nether",player);
 			if(!advancementTracker.checkAchievment("WeNeedtoGoDeeper", player)){
-				achievementTracker.setAchievment("IntoTheNether", player);//[achievement] Into The Nether | Construct a Nether Portal. | Light a nether portal.
-				advancementTracker.setAchievment("WeNeedtoGoDeeper", player);//[advancement] We Need to Go Deeper | Build, light and enter a Nether Portal | Enter the Nether dimension.
-				advancementTracker.setAchievment("Nether", player);//[advancement] Nether | Bring summer clothes | Enter the Nether dimension.
+				system.runTimeout(() => {
+					achievementTracker.setAchievment("IntoTheNether", player);//[achievement] Into The Nether | Construct a Nether Portal. | Light a nether portal.
+					advancementTracker.setAchievment("WeNeedtoGoDeeper", player);//[advancement] We Need to Go Deeper | Build, light and enter a Nether Portal | Enter the Nether dimension.
+					advancementTracker.setAchievment("Nether", player);//[advancement] Nether | Bring summer clothes | Enter the Nether dimension.
+				}, 200);
 			}
 			player.setDynamicProperty("netherEnterX", Math.floor(locationFrom.x));
 			player.setDynamicProperty("netherEnterZ", Math.floor(locationFrom.z));
+			if(!chalengeTracker.checkAchievment("WentWrong", player)){
+				let closeEntity = player.dimension.getEntities({
+					excludeTypes: ["minecraft:player", "minecraft:item"],
+					maxDistance: 1,
+					location: {x: player.location.x, y: player.location.y, z: player.location.z}
+				});
+				
+				if(closeEntity.length > 0){
+					system.runTimeout(() => {
+						chalengeTracker.setAchievment("WentWrong", player);//[challenge] Something Went Wrong
+					}, 200);
+				}
+			}
 			break;
 		case "the_end":
 			addToScore("stats_enteredDimension_","The End", player);
 			if(!advancementTracker.checkAchievment("TheEnd", player)){
-				achievementTracker.setAchievment("TheEnd", player);//[achievement] The End? | Enter an End Portal | Enter a stronghold End Portal activated with all twelve eyes of ender.
-				advancementTracker.setAchievment("TheEnd", player);//[advancement] The End? | Enter the End Portal | Enter the End dimension.
-				advancementTracker.setAchievment("TheEnd2", player);//[advancement] The End | Or the beginning? | Enter the End dimension.
+				system.runTimeout(() => {
+					achievementTracker.setAchievment("TheEnd", player);//[achievement] The End? | Enter an End Portal | Enter a stronghold End Portal activated with all twelve eyes of ender.
+					advancementTracker.setAchievment("TheEnd", player);//[advancement] The End? | Enter the End Portal | Enter the End dimension.
+					advancementTracker.setAchievment("TheEnd2", player);//[advancement] The End | Or the beginning? | Enter the End dimension.
+				}, 200);
 			}
 			break;
 		case "overworld":
 			addToScore("stats_enteredDimension_","Overworld", player);
 			if(advancementTracker.checkAchievment("TheEnd", player)){
 				if(!achievementTracker.checkAchievment("ExitTheEnd", player)){
-					achievementTracker.setAchievment("ExitTheEnd", player);//[achievement] The End | Kill the Enderdragon [sic] | Enter the end exit portal.
+					system.runTimeout(() => {
+						achievementTracker.setAchievment("ExitTheEnd", player);//[achievement] The End | Kill the Enderdragon [sic] | Enter the end exit portal.
+					}, 200);
 				}
 			}
 			if(getDimFrom == "nether"){
@@ -555,7 +574,9 @@ function changedDimension(event){
 				
 				if(portalDist >= 7000){
 					if(!advancementTracker.checkAchievment("SubspaceBubble", player)){
-						advancementTracker.setAchievment("SubspaceBubble", player);//[advancement] Subspace Bubble | Use the Nether to travel 7 km in the Overworld | Use the Nether to travel between 2 points in the Overworld with a minimum horizontal euclidean distance of 7000 blocks between each other, which is 875 blocks in the Nether.
+						system.runTimeout(() => {
+							advancementTracker.setAchievment("SubspaceBubble", player);//[advancement] Subspace Bubble | Use the Nether to travel 7 km in the Overworld | Use the Nether to travel between 2 points in the Overworld with a minimum horizontal euclidean distance of 7000 blocks between each other, which is 875 blocks in the Nether.
+						}, 200);
 					}
 				}
 			}
@@ -847,7 +868,7 @@ function itemStart(event){
 }
 function itemStop(event){
 	let player = event.source;
-	let itemName = event.itemStack.typeId.replace("minecraft:","");
+	let itemName = (event.itemStack ? event.itemStack.typeId.replace("minecraft:","") : "");
 	
 	switch(itemName){
 		case "spyglass" :
