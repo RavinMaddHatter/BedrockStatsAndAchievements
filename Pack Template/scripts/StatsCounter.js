@@ -692,6 +692,11 @@ function entityDied(event){
 						}
 					}
 					break;
+				case "void":
+					if(victim.dimension.id == "minecraft:the_end" && !chalengeTracker.checkAchievment("HattersVacationHome", victim)){
+						chalengeTracker.setAchievment("HattersVacationHome", victim);//[challenge] Hatter Vaction Home
+					}
+					break;
 			}
 			break;
 		case "dolphin":
@@ -954,6 +959,11 @@ function itemStopOn(event){
 				if(pickleCount == 3){
 					achievementTracker.setAchievment("OnePickle,TwoPickle,SeaPickle,Four", player);//[achievement] One Pickle, Two Pickle, Sea Pickle, Four | Place four Sea Pickles in a group | —
 				}
+			}
+			break;
+		case "slime" :
+			if(event.block.y == 319 && !chalengeTracker.checkAchievment("NoMoreTraders", player)){				
+				chalengeTracker.setAchievment("NoMoreTraders", player);//[challenge] No More Traders
 			}
 			break;
 	}
