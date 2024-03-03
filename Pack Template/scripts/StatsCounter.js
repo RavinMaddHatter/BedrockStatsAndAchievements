@@ -918,6 +918,22 @@ function itemStopOn(event){
 				chalengeTracker.setAchievment("WhatsInTheBox", player);//[challenge] What's In the Box?
 			}
 			break;
+		case "comparator" :
+			let block = event.block;
+			let blockDirection = block.permutation.getState("direction");
+			const closeBlock = [];
+			closeBlock[0] = block.dimension.getBlock({x: block.x, y: block.y, z: (block.z + 1)});
+			closeBlock[1] = block.dimension.getBlock({x: (block.x - 1), y: block.y, z: block.z});
+			closeBlock[2] = block.dimension.getBlock({x: block.x, y: block.y, z: (block.z - 1)});
+			closeBlock[3] = block.dimension.getBlock({x: (block.x + 1), y: block.y, z: block.z});
+			let booksStored = closeBlock[blockDirection].permutation.getState("books_stored");
+			
+			if(booksStored){
+				if(!advancementTracker.checkAchievment("ThePowerofBooks", player)){
+					advancementTracker.setAchievment("ThePowerofBooks", player);//[advancement] The Power of Books | Read the power signal of a Chiseled Bookshelf using a Comparator | Place a comparator on any side of a chiseled bookshelf or the chiseled bookshelf against a comparator to trigger the advancement.
+				}
+			}
+			break;
 	}
 }
 function leverFlipped(event){
@@ -2054,7 +2070,6 @@ function equipmentChallenges(player){
 function redstoneInteractions(){
 	//to-do--------------------
 		//[achievement] Inception | Push a piston with a piston, then pull the original piston with that piston. | —
-		//[advancement] The Power of Books | Read the power signal of a Chiseled Bookshelf using a Comparator | Place a comparator on any side of a chiseled bookshelf or the chiseled bookshelf against a comparator to trigger the advancement.
 	//done--------------------
 }
 
