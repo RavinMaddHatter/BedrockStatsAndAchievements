@@ -612,7 +612,7 @@ function entityDied(event){
 		}
 	}
 	const killer = event.damageSource.damagingEntity
-	const killertype = killer.typeId.replace("minecraft:","").replace("_"," ")
+	const killertype = (killer ? killer.typeId.replace("minecraft:","").replace("_"," ") : "")
 	switch(victimName){
 		case "player" :
 			addToScore("stats_Deaths_",event.damageSource.cause, victim);
@@ -671,10 +671,18 @@ function entityDied(event){
 						chalengeTracker.setAchievment("OutOfFoodAreWe",victim);
 					}
 					OutOfFoodAreWe
-					break
+					break;
+				case "suffocation":
+					let blockIn = victim.dimension.getBlock({x: victim.location.x, y: (victim.location.y + 1), z: victim.location.z});
+					
+					if(blockIn.hasTag("sand")){
+						if(!chalengeTracker.checkAchievment("EnterSandman", victim)){
+							chalengeTracker.setAchievment("EnterSandman", victim);//[challenge] Enter Sandman
+						}
+					}
+					break;
 			}
-
-			break
+			break;
 		case "dolphin":
 			if(victim.dimension.id=="minecraft:nether"){
 				for(let player of world.getAllPlayers()){
