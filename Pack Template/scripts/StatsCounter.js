@@ -89,9 +89,9 @@ world.afterEvents.entityHurt.subscribe(event=>{
 	onHurtEvent(event);
 });
 world.afterEvents.dataDrivenEntityTrigger.subscribe(event=>{
-	if(event.entity.typeId!="minecraft:player"){
-		let eventName = event.eventId.replace("minecraft:", "");
-		
+	let eventName = event.eventId.replace("minecraft:", "");
+	
+	if(event.entity.typeId != "minecraft:player"){
 		switch(eventName){
 			case "on_tame" :
 				tameEvents(event);
@@ -112,6 +112,17 @@ world.afterEvents.dataDrivenEntityTrigger.subscribe(event=>{
 							chalengeTracker.setAchievment("TheSlenderMan", closePlayers[i]);//[challenge] The Slender Man
 						}
 					}
+				}
+				break;
+		}
+	}
+	if(event.entity.typeId == "minecraft:player"){
+		switch(eventName){
+			case "trigger_raid" :
+				let player = event.entity;
+				
+				if(!achievementTracker.checkAchievment("Werebeingattacked", player)){
+					achievementTracker.setAchievment("Werebeingattacked", player);//[achievement] We're being attacked! | Trigger a Pillager Raid. | Walk in a village with the Bad Omen effect applied.
 				}
 				break;
 		}
@@ -1159,31 +1170,6 @@ function useItem(event){
 }
 //end event functions----------------------------------------
 
-//stat functions----------------------------------------
-function overworldBlocksTravelled(player){
-	let blkDist = player.getDynamicProperty("blockRun");
-	
-	if(player.dimension.id == "minecraft:overworld"){
-		let x1 = player.getDynamicProperty("blockRunX");
-		let z1 = player.getDynamicProperty("blockRunZ");
-		
-		if(blkDist == 0){//if first time, calculate from initial spawn location
-			x1 = player.getDynamicProperty("initialX");
-			z1 = player.getDynamicProperty("initialZ");
-		}
-		let x2 = Math.floor(player.location.x);
-		let z2 = Math.floor(player.location.z);
-		blkDist = blkDist + calculateDistance(x1, z1, x2, z2);
-		
-		player.setDynamicProperty("blockRun", blkDist);
-		player.setDynamicProperty("blockRunX", x2);
-		player.setDynamicProperty("blockRunZ", z2);
-	}
-	
-	return blkDist;
-}
-//end stat functions----------------------------------------
-
 //achievement and advancement functions----------------------------------------
 function blockInteractions(item,Block){
 	//to-do--------------------
@@ -2044,8 +2030,8 @@ function entityKills(victim,player,cause,weapon){
 	}
 		
 }
-function equipmentChallenges(player){
-	let headItem = getequipped(player)["Head"]
+function equipmentChecks(player){
+	let headItem = getequipped(player)["Head"];
 	
 	if(headItem){
 		switch(headItem){
@@ -2179,7 +2165,6 @@ function statusAndEffects(player){
 		//[advancement] Beaconator | Bring a Beacon to full power | Be within a 20×20×14 cuboid centered on a beacon block when it realizes it is being powered by a size 4 pyramid.
 		//[achievement] The Healing Power of Friendship! | Team up with an axolotl and win a fight | Team up with an axolotl by killing the hostile aquatic mob [verify] while the axolotl is fighting it (not playing dead).
 		//[advancement] The Healing Power of Friendship! | Team up with an axolotl and win a fight | Have the Regeneration effect applied from assisting an axolotl or it killing a mob.
-		//[achievement] We're being attacked! | Trigger a Pillager Raid. | Walk in a village with the Bad Omen effect applied.
 		//[advancement] Bring Home the Beacon | Construct and place a Beacon | Be within a 20×20×14 cuboid centered on a beacon block when it realizes it has become powered.
 	//done--------------------
 	const effectArray = ["fire_resistance",//potion
@@ -2259,7 +2244,6 @@ function statusAndEffects(player){
 		}
 	}
 }
-
 function trading(){
 	//to-do--------------------
 		//[achievement] Buy Low, Sell High | Trade for the best possible price. | Buy something for 1 emerald, or when the Hero of the Village effect is applied.
@@ -2269,6 +2253,25 @@ function trading(){
 		//[advancement] Star Trader | Trade with a Villager at the build height limit | Stand on any block that is higher than 318 and trade with a villager or wandering trader.
 		//[advancement] What a Deal! | Successfully trade with a Villager | Take an item from a villager or wandering trader's trading output slot, and put it in your inventory.
 	//done--------------------
+}
+function underwater(player){
+	if(!achievementTracker.checkAchievment("SleepwiththeFishes", player)){
+		let blockIn = player.dimension.getBlock({x: player.location.x, y: (player.location.y + 1), z: player.location.z});
+		
+		if(blockIn.hasTag("water")){
+			let underwaterCount = player.getDynamicProperty("underwater");
+			
+			player.setDynamicProperty("underwater", (underwaterCount === undefined ? -1 : underwaterCount) + 1);
+			if(underwaterCount == 11){
+				achievementTracker.setAchievment("FreeDiver", player);//[achievement] Free Diver | Stay underwater for 2 minutes | Drink a potion of water breathing that can last for 2 minutes or more, then jump into the water or activate a conduit or sneak on a magma block underwater for 2 minutes.
+			}
+			if(underwaterCount == 119){
+				achievementTracker.setAchievment("SleepwiththeFishes", player);//[achievement] Sleep with the Fishes | Spend a day underwater. | Spend 20 minutes underwater without any air.
+			}
+		}else{
+			player.setDynamicProperty("underwater", -1);
+		}
+	}
 }
 function usingItems(item, player){
 	switch(item){
@@ -2580,6 +2583,28 @@ function achievementUnlock(player,data){
 	display.setActionBar("\u00A7cachievement Unlocked: \u00A7e"+data)
 	player.playSound("random.levelup")
 }
+function overworldBlocksTravelled(player){
+	let blkDist = player.getDynamicProperty("blockRun");
+	
+	if(player.dimension.id == "minecraft:overworld"){
+		let x1 = player.getDynamicProperty("blockRunX");
+		let z1 = player.getDynamicProperty("blockRunZ");
+		
+		if(blkDist == 0){//if first time, calculate from initial spawn location
+			x1 = player.getDynamicProperty("initialX");
+			z1 = player.getDynamicProperty("initialZ");
+		}
+		let x2 = Math.floor(player.location.x);
+		let z2 = Math.floor(player.location.z);
+		blkDist = blkDist + calculateDistance(x1, z1, x2, z2);
+		
+		player.setDynamicProperty("blockRun", blkDist);
+		player.setDynamicProperty("blockRunX", x2);
+		player.setDynamicProperty("blockRunZ", z2);
+	}
+	
+	return blkDist;
+}
 function pearlThrow(player){
 	let x1 = player.getDynamicProperty("pearlThrowX");
 	let z1 = player.getDynamicProperty("pearlThrowZ");
@@ -2716,28 +2741,9 @@ function timer1Min(){
 			
 			player.setDynamicProperty("playTimeM", (minCount === undefined ? 0 : minCount) + 1);
 			player.setDynamicProperty("biome_" + biomeFinder(player), 1);
-			equipmentChallenges(player);
+			equipmentChecks(player);
 		}
 	}, 1200);
-}
-function underwater(player){
-	if(!achievementTracker.checkAchievment("SleepwiththeFishes", player)){
-		let blockIn = player.dimension.getBlock({x: player.location.x, y: (player.location.y + 1), z: player.location.z});
-		
-		if(blockIn.hasTag("water")){
-			let underwaterCount = player.getDynamicProperty("underwater");
-			
-			player.setDynamicProperty("underwater", (underwaterCount === undefined ? -1 : underwaterCount) + 1);
-			if(underwaterCount == 11){
-				achievementTracker.setAchievment("FreeDiver", player);//[achievement] Free Diver | Stay underwater for 2 minutes | Drink a potion of water breathing that can last for 2 minutes or more, then jump into the water or activate a conduit or sneak on a magma block underwater for 2 minutes.
-			}
-			if(underwaterCount == 119){
-				achievementTracker.setAchievment("SleepwiththeFishes", player);//[achievement] Sleep with the Fishes | Spend a day underwater. | Spend 20 minutes underwater without any air.
-			}
-		}else{
-			player.setDynamicProperty("underwater", -1);
-		}
-	}
 }
 //end helper functions----------------------------------------
 
