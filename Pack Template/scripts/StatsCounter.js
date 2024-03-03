@@ -673,10 +673,10 @@ function entityDied(event){
 					OutOfFoodAreWe
 					break;
 				case "suffocation":
-					let blockIn = victim.dimension.getBlock({x: victim.location.x, y: (victim.location.y + 1), z: victim.location.z});
-					
-					if(blockIn.hasTag("sand")){
-						if(!chalengeTracker.checkAchievment("EnterSandman", victim)){
+					if(!chalengeTracker.checkAchievment("EnterSandman", victim)){
+						let blockIn = victim.dimension.getBlock({x: victim.location.x, y: (victim.location.y + 1), z: victim.location.z});
+						
+						if(blockIn.hasTag("sand")){
 							chalengeTracker.setAchievment("EnterSandman", victim);//[challenge] Enter Sandman
 						}
 					}
@@ -919,17 +919,17 @@ function itemStopOn(event){
 			}
 			break;
 		case "comparator" :
-			let block = event.block;
-			let blockDirection = block.permutation.getState("direction");
-			const closeBlock = [];
-			closeBlock[0] = block.dimension.getBlock({x: block.x, y: block.y, z: (block.z + 1)});
-			closeBlock[1] = block.dimension.getBlock({x: (block.x - 1), y: block.y, z: block.z});
-			closeBlock[2] = block.dimension.getBlock({x: block.x, y: block.y, z: (block.z - 1)});
-			closeBlock[3] = block.dimension.getBlock({x: (block.x + 1), y: block.y, z: block.z});
-			let booksStored = closeBlock[blockDirection].permutation.getState("books_stored");
-			
-			if(booksStored){
-				if(!advancementTracker.checkAchievment("ThePowerofBooks", player)){
+			if(!advancementTracker.checkAchievment("ThePowerofBooks", player)){
+				let block = event.block;
+				let blockDirection = block.permutation.getState("direction");
+				const closeBlock = [];
+				closeBlock[0] = block.dimension.getBlock({x: block.x, y: block.y, z: (block.z + 1)});
+				closeBlock[1] = block.dimension.getBlock({x: (block.x - 1), y: block.y, z: block.z});
+				closeBlock[2] = block.dimension.getBlock({x: block.x, y: block.y, z: (block.z - 1)});
+				closeBlock[3] = block.dimension.getBlock({x: (block.x + 1), y: block.y, z: block.z});
+				let booksStored = closeBlock[blockDirection].permutation.getState("books_stored");
+				
+				if(booksStored){
 					advancementTracker.setAchievment("ThePowerofBooks", player);//[advancement] The Power of Books | Read the power signal of a Chiseled Bookshelf using a Comparator | Place a comparator on any side of a chiseled bookshelf or the chiseled bookshelf against a comparator to trigger the advancement.
 				}
 			}
@@ -2405,9 +2405,7 @@ function weaponsToolsArmor(subject, player){
 
 function worldAndBiome(subject, player){
 	//to-do--------------------
-		//[achievement] Free Diver | Stay underwater for 2 minutes | Drink a potion of water breathing that can last for 2 minutes or more, then jump into the water or activate a conduit or sneak on a magma block underwater for 2 minutes.
 		//[achievement] Map Room | Place 9 fully explored, adjacent map items into 9 item frames in a 3 by 3 square. | The frames have to be on a wall, not the floor.
-		//[achievement] Sleep with the Fishes | Spend a day underwater. | Spend 20 minutes underwater without any air.
 	//done--------------------
 		//[advancement] Adventuring Time | Discover every biome | Visit all of these 53 biomes:, Badlands, Bamboo Jungle, Beach, Birch Forest, Cherry Grove, Cold Ocean, Dark Forest, Deep Cold Ocean, Deep Dark, Deep Frozen Ocean, Deep Lukewarm Ocean, Deep Ocean, Desert, Dripstone Caves, Eroded Badlands, Flower Forest, Forest, Frozen Ocean, Frozen Peaks, Frozen River, Grove, Ice Spikes, Jagged Peaks, Jungle, Lukewarm Ocean, Lush Caves, Mangrove Swamp, Meadow, Mushroom Fields, Ocean, Old Growth Birch Forest, Old Growth Pine Taiga, Old Growth Spruce Taiga, Plains, River, Savanna, Savanna Plateau, Snowy Beach, Snowy Plains, Snowy Slopes, Snowy Taiga, Sparse Jungle, Stony Peaks, Stony Shore, Sunflower Plains, Swamp, Taiga, Warm Ocean, Windswept Forest, Windswept Gravelly Hills, Windswept Hills, Windswept Savanna, Wooded Badlands, The advancement is only for Overworld biomes. Other biomes may also be visited, but are ignored for this advancement.
 		//[achievement] Sound of Music | Make the Meadows come alive with the sound of music from a jukebox. | Use a music disc on a jukebox in the Meadow biome.
@@ -2675,12 +2673,16 @@ function timer10Sec(){
 		let playerArrayList = world.getAllPlayers();//get list of players
 		
 		for(let i = 0; i < playerArrayList.length; i++){
+			let player = playerArrayList[i];
+			
 			//distance data sampling at defined interval
-			overworldBlocksTravelled(playerArrayList[i]);
+			overworldBlocksTravelled(player);
 			//inventory checks for achievement items
-			itemInventory(playerArrayList[i]);
+			itemInventory(player);
 			//effect checks for achievement
-			statusAndEffects(playerArrayList[i]);
+			statusAndEffects(player);
+			//water checks for achievement
+			underwater(player)
 		}
 	}, 200);
 }
@@ -2691,13 +2693,14 @@ function timer1Day(){
 		let playerArrayList = world.getAllPlayers();
 		
 		for(let i = 0; i < playerArrayList.length; i++){
-			let dayCount = playerArrayList[i].getDynamicProperty("playTimeD");
+			let player = playerArrayList[i];
+			let dayCount = player.getDynamicProperty("playTimeD");
 			
-			playerArrayList[i].setDynamicProperty("playTimeD", (dayCount === undefined ? -1 : dayCount) + 1);
+			player.setDynamicProperty("playTimeD", (dayCount === undefined ? -1 : dayCount) + 1);
 			if(dayCount == 100){
-				achievementTracker.setAchievment("PassingtheTime", playerArrayList[i]);//[achievement] Passing the Time | Play for 100 days. | Play for 100 Minecraft days, which is equivalent to 33 hours in real time.
+				achievementTracker.setAchievment("PassingtheTime", player);//[achievement] Passing the Time | Play for 100 days. | Play for 100 Minecraft days, which is equivalent to 33 hours in real time.
 			}
-			worldAndBiome("biomeChecks", playerArrayList[i]);
+			worldAndBiome("biomeChecks", player);
 		}
 	}
 	
@@ -2708,13 +2711,33 @@ function timer1Min(){
 		let playerArrayList = world.getAllPlayers();
 		
 		for(let i = 0; i < playerArrayList.length; i++){
-			let minCount = playerArrayList[i].getDynamicProperty("playTimeM");
+			let player = playerArrayList[i];
+			let minCount = player.getDynamicProperty("playTimeM");
 			
-			playerArrayList[i].setDynamicProperty("playTimeM", (minCount === undefined ? 0 : minCount) + 1);
-			playerArrayList[i].setDynamicProperty("biome_" + biomeFinder(playerArrayList[i]), 1);
-			equipmentChallenges(playerArrayList[i]);
+			player.setDynamicProperty("playTimeM", (minCount === undefined ? 0 : minCount) + 1);
+			player.setDynamicProperty("biome_" + biomeFinder(player), 1);
+			equipmentChallenges(player);
 		}
 	}, 1200);
+}
+function underwater(player){
+	if(!achievementTracker.checkAchievment("SleepwiththeFishes", player)){
+		let blockIn = player.dimension.getBlock({x: player.location.x, y: (player.location.y + 1), z: player.location.z});
+		
+		if(blockIn.hasTag("water")){
+			let underwaterCount = player.getDynamicProperty("underwater");
+			
+			player.setDynamicProperty("underwater", (underwaterCount === undefined ? -1 : underwaterCount) + 1);
+			if(underwaterCount == 11){
+				achievementTracker.setAchievment("FreeDiver", player);//[achievement] Free Diver | Stay underwater for 2 minutes | Drink a potion of water breathing that can last for 2 minutes or more, then jump into the water or activate a conduit or sneak on a magma block underwater for 2 minutes.
+			}
+			if(underwaterCount == 119){
+				achievementTracker.setAchievment("SleepwiththeFishes", player);//[achievement] Sleep with the Fishes | Spend a day underwater. | Spend 20 minutes underwater without any air.
+			}
+		}else{
+			player.setDynamicProperty("underwater", -1);
+		}
+	}
 }
 //end helper functions----------------------------------------
 
