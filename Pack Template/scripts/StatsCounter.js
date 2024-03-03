@@ -945,6 +945,17 @@ function itemStopOn(event){
 				}
 			}
 			break;
+		case "sea_pickle" :
+			if(!achievementTracker.checkAchievment("OnePickle,TwoPickle,SeaPickle,Four", player)){
+				let block = event.block;
+				let belowBlock = block.dimension.getBlock({x: block.x, y: (block.y - 1), z: block.z});
+				let pickleCount = belowBlock.permutation.getState("cluster_count");
+				
+				if(pickleCount == 3){
+					achievementTracker.setAchievment("OnePickle,TwoPickle,SeaPickle,Four", player);//[achievement] One Pickle, Two Pickle, Sea Pickle, Four | Place four Sea Pickles in a group | —
+				}
+			}
+			break;
 	}
 }
 function leverFlipped(event){
@@ -1176,7 +1187,6 @@ function blockInteractions(item,Block){
 		//[achievement] Bee our guest | Use a Campfire to collect Honey from a Beehive using a Bottle without aggravating the bees. | —
 		//[achievement] Disenchanted | Use a Grindstone to get experience from an enchanted item. | —
 		//[achievement] Freight Station | Use a Hopper to move an item from a Chest Minecart to a Chest. | —
-		//[achievement] One Pickle, Two Pickle, Sea Pickle, Four | Place four Sea Pickles in a group | —
 		//[achievement] Pot Planter | Craft and place a Flower Pot. | —
 		//[achievement] Me Gold! | Dig up a buried treasure | Open a buried treasure chest
 		//[achievement] Sneak 100 | Sneaking [sic] next to a Sculk Sensor without triggering it | Sneak next to a Sculk Sensor or Warden without triggering or aggravating it.
