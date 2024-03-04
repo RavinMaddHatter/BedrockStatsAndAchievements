@@ -208,7 +208,7 @@ export const achievements = {
   },
   "ExitTheEnd": {
     "displayName": "The End",
-    "description": "Kill the Enderdragon [sic]",
+    "description": "Kill the Enderdragon",
     "globalIndex": 24,
     "category": "The_End",
     "container": "The_End1",
@@ -352,7 +352,7 @@ export const achievements = {
   },
   "TheHaggler": {
     "displayName": "The Haggler",
-    "description": "Acquire or spend 30 Emeralds by trading with villagers or with wandering trader. [sic]",
+    "description": "Acquire or spend 30 Emeralds by trading with villagers or with wandering trader.",
     "globalIndex": 40,
     "category": "Story",
     "container": "Story1",
@@ -572,7 +572,7 @@ export const achievements = {
     "globalIndex": 64,
     "category": "Adventure",
     "container": "Adventure1",
-    "implemented": false,
+    "implemented": true,
     "containerIndex": 14
   },
   "RabbitSeason": {
@@ -631,7 +631,7 @@ export const achievements = {
   },
   "TheEndAgain": {
     "displayName": "The End... Again...",
-    "description": "Respawn the Enderdragon [sic]",
+    "description": "Respawn the Enderdragon",
     "globalIndex": 71,
     "category": "The_End",
     "container": "The_End1",
@@ -770,7 +770,7 @@ export const achievements = {
     "globalIndex": 86,
     "category": "Adventure",
     "container": "Adventure1",
-    "implemented": false,
+    "implemented": true,
     "containerIndex": 25
   },
   "AlternativeFuel": {
@@ -797,7 +797,7 @@ export const achievements = {
     "globalIndex": 89,
     "category": "Story",
     "container": "Story1",
-    "implemented": false,
+    "implemented": true,
     "containerIndex": 28
   },
   "Echolocation": {
@@ -824,7 +824,7 @@ export const achievements = {
     "globalIndex": 92,
     "category": "Story",
     "container": "Story1",
-    "implemented": false,
+    "implemented": true,
     "containerIndex": 30
   },
   "WhereHaveYouBeen": {
@@ -887,7 +887,7 @@ export const achievements = {
     "globalIndex": 100,
     "category": "Adventure",
     "container": "Adventure1",
-    "implemented": false,
+    "implemented": true,
     "containerIndex": 29
   },
   "SoundtheAlarm": {
@@ -1045,7 +1045,7 @@ export const achievements = {
   },
   "FeelsLikeHome": {
     "displayName": "Feels Like Home",
-    "description": "Take a Strider for a loooong [sic] ride on a lava lake in the Overworld.",
+    "description": "Take a Strider for a loooong ride on a lava lake in the Overworld.",
     "globalIndex": 118,
     "category": "Nether",
     "container": "Nether1",
@@ -1081,7 +1081,7 @@ export const achievements = {
   },
   "Sneak100": {
     "displayName": "Sneak 100",
-    "description": "Sneaking [sic] next to a Sculk Sensor without triggering it",
+    "description": "Sneaking next to a Sculk Sensor without triggering it",
     "globalIndex": 122,
     "category": "Story",
     "container": "Story2",
@@ -1591,7 +1591,7 @@ export const advancements = {
     "globalIndex": 54,
     "category": "Adventure",
     "container": "advAdventure1",
-    "implemented": false,
+    "implemented": true,
     "containerIndex": 4
   },
   "WhataDeal": {
@@ -2106,7 +2106,7 @@ export const challenges = {
     "globalIndex": 1,
     "category": "Slackville",
     "container": "slackvill1",
-    "implemented": false,
+    "implemented": true,
     "containerIndex": 0
   },
   "BeefSlap": {
@@ -2115,7 +2115,7 @@ export const challenges = {
     "globalIndex": 2,
     "category": "Slackville",
     "container": "slackvill1",
-    "implemented": false,
+    "implemented": true,
     "containerIndex": 1
   },
   "HattersVacationHome": {
@@ -2124,7 +2124,7 @@ export const challenges = {
     "globalIndex": 3,
     "category": "Slackville",
     "container": "slackvill1",
-    "implemented": false,
+    "implemented": true,
     "containerIndex": 2
   },
   "WhyGypsy": {
@@ -2133,7 +2133,7 @@ export const challenges = {
     "globalIndex": 4,
     "category": "Slackville",
     "container": "slackvill1",
-    "implemented": false,
+    "implemented": true,
     "containerIndex": 3
   },
   "YouTooRadar": {
@@ -2142,7 +2142,7 @@ export const challenges = {
     "globalIndex": 5,
     "category": "Slackville",
     "container": "slackvill1",
-    "implemented": false,
+    "implemented": true,
     "containerIndex": 4
   },
   "AtLeastItWasntSkyblock": {
@@ -2151,7 +2151,7 @@ export const challenges = {
     "globalIndex": 6,
     "category": "Slackville",
     "container": "slackvill1",
-    "implemented": false,
+    "implemented": true,
     "containerIndex": 5
   },
   "ItsColorNotColour": {
@@ -2178,7 +2178,7 @@ export const challenges = {
     "globalIndex": 9,
     "category": "Slackville",
     "container": "slackvill1",
-    "implemented": false,
+    "implemented": true,
     "containerIndex": 8
   },
   "NoReallyHowDidWeGetHere": {
@@ -2241,7 +2241,7 @@ export const challenges = {
     "globalIndex": 16,
     "category": "Slackville",
     "container": "slackvill1",
-    "implemented": false,
+    "implemented": true,
     "containerIndex": 15
   },
   "PlickIsThatYou": {
@@ -2259,7 +2259,7 @@ export const challenges = {
     "globalIndex": 18,
     "category": "Slackville",
     "container": "slackvill1",
-    "implemented": false,
+    "implemented": true,
     "containerIndex": 17
   },
   "Structura": {
@@ -2277,7 +2277,7 @@ export const challenges = {
     "globalIndex": 20,
     "category": "Slackville",
     "container": "slackvill1",
-    "implemented": false,
+    "implemented": true,
     "containerIndex": 19
   },
   "WhereIsHatter": {
@@ -2286,7 +2286,7 @@ export const challenges = {
     "globalIndex": 21,
     "category": "Slackville",
     "container": "slackvill1",
-    "implemented": false,
+    "implemented": true,
     "containerIndex": 20
   },
   "MoreDangerousThanTheWither": {
@@ -2295,7 +2295,7 @@ export const challenges = {
     "globalIndex": 22,
     "category": "Slackville",
     "container": "slackvill1",
-    "implemented": false,
+    "implemented": true,
     "containerIndex": 21
   },
   "SeeYouInCort": {
@@ -2358,7 +2358,7 @@ export const challenges = {
     "globalIndex": 29,
     "category": "Slackville",
     "container": "slackvill1",
-    "implemented": false,
+    "implemented": true,
     "containerIndex": 28
   },
   "ItDoesntWorkLikeThat": {
@@ -2367,7 +2367,7 @@ export const challenges = {
     "globalIndex": 30,
     "category": "Slackville",
     "container": "slackvill1",
-    "implemented": false,
+    "implemented": true,
     "containerIndex": 29
   },
   "SpicyOrangeJuice": {
@@ -2376,7 +2376,7 @@ export const challenges = {
     "globalIndex": 31,
     "category": "Slackville",
     "container": "slackvill1",
-    "implemented": false,
+    "implemented": true,
     "containerIndex": 30
   },
   "OutOfFoodAreWe": {
@@ -2385,7 +2385,7 @@ export const challenges = {
     "globalIndex": 32,
     "category": "Slackville",
     "container": "slackvill1",
-    "implemented": false,
+    "implemented": true,
     "containerIndex": 31
   },
   "TmanLadder": {
@@ -2466,7 +2466,7 @@ export const challenges = {
     "globalIndex": 41,
     "category": "bud",
     "container": "bud1",
-    "implemented": false,
+    "implemented": true,
     "containerIndex": 0
   },
   "HeroInAHalfShell": {
@@ -2475,7 +2475,7 @@ export const challenges = {
     "globalIndex": 42,
     "category": "bud",
     "container": "bud1",
-    "implemented": false,
+    "implemented": true,
     "containerIndex": 1
   },
   "EnterSandman": {
@@ -2484,7 +2484,7 @@ export const challenges = {
     "globalIndex": 43,
     "category": "bud",
     "container": "bud1",
-    "implemented": false,
+    "implemented": true,
     "containerIndex": 2
   },
   "Hanami": {
@@ -2502,25 +2502,25 @@ export const challenges = {
     "globalIndex": 45,
     "category": "bud",
     "container": "bud1",
-    "implemented": false,
+    "implemented": true,
     "containerIndex": 4
   },
   "TheSlenderMan": {
     "displayName": "The Slender Man",
-    "description": "Look at an Enderman",
+    "description": "Be within 64 blocks of an enderman when he is angered",
     "globalIndex": 46,
     "category": "bud",
     "container": "bud1",
-    "implemented": false,
+    "implemented": true,
     "containerIndex": 5
   },
   "Pumpkinhead": {
     "displayName": "Return of Pumpkinhead",
-    "description": "Wear a Jack o'Lantern on your head",
+    "description": "Wear a Carved Pumpkin on your head",
     "globalIndex": 47,
     "category": "bud",
     "container": "bud1",
-    "implemented": false,
+    "implemented": true,
     "containerIndex": 6
   },
   "GummiberryJuice": {
@@ -2529,7 +2529,7 @@ export const challenges = {
     "globalIndex": 48,
     "category": "bud",
     "container": "bud1",
-    "implemented": false,
+    "implemented": true,
     "containerIndex": 7
   },
   "DeadTravelFast": {
@@ -2547,7 +2547,7 @@ export const challenges = {
     "globalIndex": 50,
     "category": "bud",
     "container": "bud1",
-    "implemented": false,
+    "implemented": true,
     "containerIndex": 9
   },
   "GameOverMan": {
@@ -2556,7 +2556,7 @@ export const challenges = {
     "globalIndex": 51,
     "category": "bud",
     "container": "bud1",
-    "implemented": false,
+    "implemented": true,
     "containerIndex": 10
   },
   "HelloClarice": {
@@ -2565,7 +2565,7 @@ export const challenges = {
     "globalIndex": 52,
     "category": "bud",
     "container": "bud1",
-    "implemented": false,
+    "implemented": true,
     "containerIndex": 11
   },
   "WentWrong": {
@@ -2574,7 +2574,7 @@ export const challenges = {
     "globalIndex": 53,
     "category": "bud",
     "container": "bud1",
-    "implemented": false,
+    "implemented": true,
     "containerIndex": 12
   },
   "YoullFloatToo": {
@@ -2583,7 +2583,7 @@ export const challenges = {
     "globalIndex": 54,
     "category": "bud",
     "container": "bud1",
-    "implemented": false,
+    "implemented": true,
     "containerIndex": 13
   },
   "ThisIsMyBoomstick": {
@@ -2592,7 +2592,7 @@ export const challenges = {
     "globalIndex": 55,
     "category": "bud",
     "container": "bud1",
-    "implemented": false,
+    "implemented": true,
     "containerIndex": 14
   },
   "TheNightIsDark": {
@@ -2601,7 +2601,7 @@ export const challenges = {
     "globalIndex": 56,
     "category": "bud",
     "container": "bud1",
-    "implemented": false,
+    "implemented": true,
     "containerIndex": 15
   },
   "AfterMidnight": {
@@ -2610,7 +2610,7 @@ export const challenges = {
     "globalIndex": 57,
     "category": "bud",
     "container": "bud1",
-    "implemented": false,
+    "implemented": true,
     "containerIndex": 16
   },
   "OneGoodScare": {
@@ -2619,7 +2619,7 @@ export const challenges = {
     "globalIndex": 58,
     "category": "bud",
     "container": "bud1",
-    "implemented": false,
+    "implemented": true,
     "containerIndex": 17
   },
   "PaintItBlack": {
@@ -2628,7 +2628,7 @@ export const challenges = {
     "globalIndex": 59,
     "category": "bud",
     "container": "bud1",
-    "implemented": false,
+    "implemented": true,
     "containerIndex": 18
   },
   "CloseToTheCar": {
@@ -2637,7 +2637,7 @@ export const challenges = {
     "globalIndex": 60,
     "category": "bud",
     "container": "bud1",
-    "implemented": false,
+    "implemented": true,
     "containerIndex": 19
   },
   "Deathbat": {
@@ -2646,7 +2646,7 @@ export const challenges = {
     "globalIndex": 61,
     "category": "bud",
     "container": "bud1",
-    "implemented": false,
+    "implemented": true,
     "containerIndex": 20
   },
   "CanBeOnlyOne": {
@@ -2655,7 +2655,7 @@ export const challenges = {
     "globalIndex": 62,
     "category": "bud",
     "container": "bud1",
-    "implemented": false,
+    "implemented": true,
     "containerIndex": 21
   },
   "WhatsInTheBox": {
@@ -2664,7 +2664,7 @@ export const challenges = {
     "globalIndex": 63,
     "category": "bud",
     "container": "bud1",
-    "implemented": false,
+    "implemented": true,
     "containerIndex": 22
   },
   "ISeeDeadPeople": {
@@ -2673,7 +2673,7 @@ export const challenges = {
     "globalIndex": 64,
     "category": "bud",
     "container": "bud1",
-    "implemented": false,
+    "implemented": true,
     "containerIndex": 23
   }
 };

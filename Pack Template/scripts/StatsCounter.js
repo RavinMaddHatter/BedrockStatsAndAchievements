@@ -696,6 +696,11 @@ function entityDied(event){
 						chalengeTracker.setAchievment("HattersVacationHome", victim);//[challenge] Hatter Vaction Home
 					}
 					break;
+				case "lava":
+					if(!chalengeTracker.checkAchievment("SpicyOrangeJuice", victim)){
+						chalengeTracker.setAchievment("SpicyOrangeJuice", victim);//[challenge] Spicy Orange Juice
+					}
+					break;
 			}
 			break;
 		case "dolphin":
@@ -902,7 +907,8 @@ function itemStop(event){
 function itemStopOn(event){
 	let player = event.source;
 	let itemName = event.itemStack.typeId.replace("minecraft:","");
-	let blockTag = event.block.getTags();
+	let block = event.block;
+	let blockTag = block.getTags();
 	
 	switch(itemName){
 		case "oak_sign" :
@@ -935,7 +941,6 @@ function itemStopOn(event){
 			break;
 		case "comparator" :
 			if(!advancementTracker.checkAchievment("ThePowerofBooks", player)){
-				let block = event.block;
 				let blockDirection = block.permutation.getState("direction");
 				const closeBlock = [];
 				closeBlock[0] = block.dimension.getBlock({x: block.x, y: block.y, z: (block.z + 1)});
@@ -951,7 +956,6 @@ function itemStopOn(event){
 			break;
 		case "sea_pickle" :
 			if(!achievementTracker.checkAchievment("OnePickle,TwoPickle,SeaPickle,Four", player)){
-				let block = event.block;
 				let belowBlock = block.dimension.getBlock({x: block.x, y: (block.y - 1), z: block.z});
 				let pickleCount = belowBlock.permutation.getState("cluster_count");
 				
@@ -967,7 +971,6 @@ function itemStopOn(event){
 			break;
 		case "scaffolding" :
 			if(!achievementTracker.checkAchievment("TopoftheWorld", player)){
-				let block = event.block;
 				let topBlock = block.dimension.getBlock({x: block.x, y: 319, z: block.z});
 				let topBlockState = topBlock.permutation.getState("stability");
 				
@@ -1178,7 +1181,6 @@ function useItem(event){
 	let player = event.source;
 	let itemName = getequipped(player)["Mainhand"]
 	
-	
 	switch(itemName){
 		case "crossbow" :
 			if(player.getDynamicProperty("chargeCross") == 1){
@@ -1203,6 +1205,11 @@ function useItem(event){
 		case "ender_pearl" :
 			player.setDynamicProperty("pearlThrowX", Math.floor(player.location.x));
 			player.setDynamicProperty("pearlThrowZ", Math.floor(player.location.z));
+			break;
+		case "water_bucket" :
+			if(player.dimension.id == "minecraft:nether" && !chalengeTracker.checkAchievment("ItDoesntWorkLikeThat", player)){
+				chalengeTracker.setAchievment("ItDoesntWorkLikeThat", player);//[challenge] It doesn't work like that
+			}
 			break;
 	}
 }
@@ -2089,6 +2096,21 @@ function equipmentChecks(player){
 		}
 	}
 }
+function jumping(player, startTick){
+	if(!chalengeTracker.checkAchievment("StoryTime", player)){
+		if(player.isJumping){
+			system.run(() => {
+				jumping(player, startTick);
+			});
+		}else{
+			let jumpTicks = worldlife("tick") - startTick;
+			
+			if(jumpTicks >= 6000){
+				chalengeTracker.setAchievment("StoryTime", player);//[challenge] Story Time
+			}
+		}
+	}
+}
 function redstoneInteractions(){
 	//to-do--------------------
 		//[achievement] Inception | Push a piston with a piston, then pull the original piston with that piston. | —
@@ -2736,14 +2758,15 @@ function timer10Sec(){
 		for(let i = 0; i < playerArrayList.length; i++){
 			let player = playerArrayList[i];
 			
-			//distance data sampling at defined interval
-			overworldBlocksTravelled(player);
-			//inventory checks for achievement items
-			itemInventory(player);
-			//effect checks for achievement
-			statusAndEffects(player);
-			//water checks for achievement
-			underwater(player)
+			overworldBlocksTravelled(player);//distance data sampling at defined interval
+			itemInventory(player);//inventory checks for achievement items
+			statusAndEffects(player);//effect checks for achievement
+			if(player.isInWater){
+				underwater(player)//water checks for achievement
+			}
+			if(player.isJumping){
+				jumping(player, worldlife("tick"))//jump checks for challenge
+			}
 		}
 	}, 200);
 }
@@ -2760,6 +2783,9 @@ function timer1Day(){
 			player.setDynamicProperty("playTimeD", (dayCount === undefined ? -1 : dayCount) + 1);
 			if(dayCount == 100){
 				achievementTracker.setAchievment("PassingtheTime", player);//[achievement] Passing the Time | Play for 100 days. | Play for 100 Minecraft days, which is equivalent to 33 hours in real time.
+			}
+			if(dayCount == 365){
+				chalengeTracker.setAchievment("TheBestville", player);//[challenge] The BestVille
 			}
 			worldAndBiome("biomeChecks", player);
 		}
