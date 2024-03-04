@@ -101,17 +101,7 @@ world.afterEvents.dataDrivenEntityTrigger.subscribe(event=>{
 				break;
 			case "become_angry" :
 				if(event.entity.typeId == "minecraft:enderman"){
-					let entity = event.entity;
-					let closePlayers = entity.dimension.getPlayers({
-						maxDistance: 64,
-						location: {x: entity.location.x, y: entity.location.y, z: entity.location.z}
-					});
-					
-					for(var i = 0; i < closePlayers.length; i++){
-						if(!chalengeTracker.checkAchievment("TheSlenderMan", closePlayers[i])){
-							chalengeTracker.setAchievment("TheSlenderMan", closePlayers[i]);//[challenge] The Slender Man
-						}
-					}
+					angryEvents(event);
 				}
 				break;
 		}
@@ -119,11 +109,7 @@ world.afterEvents.dataDrivenEntityTrigger.subscribe(event=>{
 	if(event.entity.typeId == "minecraft:player"){
 		switch(eventName){
 			case "trigger_raid" :
-				let player = event.entity;
-				
-				if(!achievementTracker.checkAchievment("Werebeingattacked", player)){
-					achievementTracker.setAchievment("Werebeingattacked", player);//[achievement] We're being attacked! | Trigger a Pillager Raid. | Walk in a village with the Bad Omen effect applied.
-				}
+				playerDataEvents(event)
 				break;
 		}
 	}
@@ -474,6 +460,19 @@ function debugDisplay(player){
 //end ui functions----------------------------------------
 
 //event functions----------------------------------------
+function angryEvents(event){
+		let entity = event.entity;
+		let closePlayers = entity.dimension.getPlayers({
+			maxDistance: 64,
+			location: {x: entity.location.x, y: entity.location.y, z: entity.location.z}
+		});
+		
+		for(var i = 0; i < closePlayers.length; i++){
+			if(!chalengeTracker.checkAchievment("TheSlenderMan", closePlayers[i])){
+				chalengeTracker.setAchievment("TheSlenderMan", closePlayers[i]);//[challenge] The Slender Man
+			}
+		}
+}
 function preBreak(event){
 	blockBreaks["L"+event.block.x+" "+event.block.y+" "+event.block.z]=processBlockTags(event.block.getTags())
 }
@@ -945,7 +944,7 @@ function itemStopOn(event){
 				closeBlock[3] = block.dimension.getBlock({x: (block.x + 1), y: block.y, z: block.z});
 				let booksStored = closeBlock[blockDirection].permutation.getState("books_stored");
 				
-				if(booksStored){
+				if(booksStored !== undefined){
 					advancementTracker.setAchievment("ThePowerofBooks", player);//[advancement] The Power of Books | Read the power signal of a Chiseled Bookshelf using a Comparator | Place a comparator on any side of a chiseled bookshelf or the chiseled bookshelf against a comparator to trigger the advancement.
 				}
 			}
@@ -964,6 +963,17 @@ function itemStopOn(event){
 		case "slime" :
 			if(event.block.y == 319 && !chalengeTracker.checkAchievment("NoMoreTraders", player)){				
 				chalengeTracker.setAchievment("NoMoreTraders", player);//[challenge] No More Traders
+			}
+			break;
+		case "scaffolding" :
+			if(!achievementTracker.checkAchievment("TopoftheWorld", player)){
+				let block = event.block;
+				let topBlock = block.dimension.getBlock({x: block.x, y: 319, z: block.z});
+				let topBlockState = topBlock.permutation.getState("stability");
+				
+				if(topBlockState !== undefined){
+					achievementTracker.setAchievment("TopoftheWorld", player);//[achievement] Top of the World | Place scaffolding to the world limit. | Place a scaffolding at the world height limit.
+				}
 			}
 			break;
 	}
@@ -1070,6 +1080,13 @@ function statStick(event){
 	if(itemName == "stick" && (itemTag == "statStick")){
 		propertyToScore(player)
 		statList(player);
+	}
+}
+function playerDataEvents(event){
+	let player = event.entity;
+	
+	if(!achievementTracker.checkAchievment("Werebeingattacked", player)){
+		achievementTracker.setAchievment("Werebeingattacked", player);//[achievement] We're being attacked! | Trigger a Pillager Raid. | Walk in a village with the Bad Omen effect applied.
 	}
 }
 function projectileHitBlock(event){
@@ -1203,7 +1220,6 @@ function blockInteractions(item,Block){
 		//[achievement] Sound the Alarm! | Ring the bell with a hostile enemy in the village. | —
 		//[achievement] Sticky Situation | Slide down a honey block to slow your fall. | —
 		//[achievement] Tie Dye Outfit | Use a cauldron to dye all 4 unique pieces of leather armor. | —
-		//[achievement] Top of the World | Place scaffolding to the world limit. | Place a scaffolding at the world height limit.
 		//[achievement] Total Beelocation | Move and place a Bee Nest, with 3 bees inside, using Silk Touch. | —
 		//[achievement] Trampoline | Bounce 30 blocks upward off a slime block. | —
 		//[advancement] Bee Our Guest | Use a Campfire to collect Honey from a Beehive using a Glass Bottle without aggravating the Bees | Use a glass bottle on a beehive or bee nest while not angering the bees inside.
@@ -2278,7 +2294,7 @@ function underwater(player){
 	if(!achievementTracker.checkAchievment("SleepwiththeFishes", player)){
 		let blockIn = player.dimension.getBlock({x: player.location.x, y: (player.location.y + 1), z: player.location.z});
 		
-		if(blockIn.hasTag("water")){
+		if(blockIn.isValid && blockIn.hasTag("water")){
 			let underwaterCount = player.getDynamicProperty("underwater");
 			
 			player.setDynamicProperty("underwater", (underwaterCount === undefined ? -1 : underwaterCount) + 1);
