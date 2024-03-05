@@ -2097,15 +2097,15 @@ function equipmentChecks(player){
 	}
 }
 function jumping(player, startTick){
-	if(!chalengeTracker.checkAchievment("StoryTime", player)){
-		if(player.isJumping){
-			system.run(() => {
-				jumping(player, startTick);
-			});
-		}else{
+	if(player.isJumping){
+		system.run(() => {
+			jumping(player, startTick);
+		});
+	}else{
+		if(!chalengeTracker.checkAchievment("StoryTime", player)){
 			let jumpTicks = worldlife("tick") - startTick;
 			
-			if(jumpTicks >= 6000){
+			if(jumpTicks >= 5800){//5 min minus the 10sec timer. giving a small margin to the player, depending on when in the 10sec timer it's truggered.
 				chalengeTracker.setAchievment("StoryTime", player);//[challenge] Story Time
 			}
 		}
@@ -2312,22 +2312,23 @@ function trading(){
 		//[advancement] What a Deal! | Successfully trade with a Villager | Take an item from a villager or wandering trader's trading output slot, and put it in your inventory.
 	//done--------------------
 }
-function underwater(player){
-	if(!achievementTracker.checkAchievment("SleepwiththeFishes", player)){
-		let blockIn = player.dimension.getBlock({x: player.location.x, y: (player.location.y + 1), z: player.location.z});
-		
-		if(blockIn.isValid && blockIn.hasTag("water")){
-			let underwaterCount = player.getDynamicProperty("underwater");
+function underwater(player, startTick){
+	let blockIn = player.dimension.getBlock({x: player.location.x, y: (player.location.y + 1), z: player.location.z});
+	
+	if(blockIn.isValid && blockIn.hasTag("water")){
+		system.run(() => {
+			underwater(player, startTick);
+		});
+	}else{
+		if(!achievementTracker.checkAchievment("SleepwiththeFishes", player)){
+			let underwaterTicks = worldlife("tick") - startTick;
 			
-			player.setDynamicProperty("underwater", (underwaterCount === undefined ? -1 : underwaterCount) + 1);
-			if(underwaterCount == 11){
+			if(underwaterTicks >= 2200){//2 min minus the 10sec timer. giving a small margin to the player, depending on when in the 10sec timer it's truggered.
 				achievementTracker.setAchievment("FreeDiver", player);//[achievement] Free Diver | Stay underwater for 2 minutes | Drink a potion of water breathing that can last for 2 minutes or more, then jump into the water or activate a conduit or sneak on a magma block underwater for 2 minutes.
 			}
-			if(underwaterCount == 119){
+			if(underwaterTicks >= 23800){//20 min minus the 10sec timer. giving a small margin to the player, depending on when in the 10sec timer it's truggered.
 				achievementTracker.setAchievment("SleepwiththeFishes", player);//[achievement] Sleep with the Fishes | Spend a day underwater. | Spend 20 minutes underwater without any air.
 			}
-		}else{
-			player.setDynamicProperty("underwater", -1);
 		}
 	}
 }
@@ -2762,7 +2763,7 @@ function timer10Sec(){
 			itemInventory(player);//inventory checks for achievement items
 			statusAndEffects(player);//effect checks for achievement
 			if(player.isInWater){
-				underwater(player)//water checks for achievement
+				underwater(player, worldlife("tick"))//water checks for achievement
 			}
 			if(player.isJumping){
 				jumping(player, worldlife("tick"))//jump checks for challenge
