@@ -2,196 +2,58 @@
   "format_version": "1.18.20",
   "minecraft:entity": {
     "description": {
-      "identifier": "minecraft:player",
+      "identifier": "addon:biome",
+      "is_summonable": true,
       "is_spawnable": false,
-      "is_summonable": false,
       "is_experimental": false,
-      
-      //addon properties
-	
       "properties": {
         "addon:biome": {
           "type": "int",
           "range": [0, 86],
           "client_sync": true,
           "default": 0
-        },
-        "addon:light": {
-          "type": "int",
-          "range": [0, 16],
-          "client_sync": true,
-          "default": 0
-        }
-      }
-      
-      //end addon properties
-      
-    },
-
-    "component_groups": {
-      "minecraft:add_bad_omen": {
-        "minecraft:spell_effects": {
-          "add_effects": [
-            {
-              "effect": "bad_omen",
-              "duration": 6000,
-              "visible": false,
-              "display_on_screen_animation": true
-            }
-          ]
-        },
-        "minecraft:timer": {
-          "time": [ 0.0, 0.0 ],
-          "looping": false,
-          "time_down_event": {
-            "event": "minecraft:clear_add_bad_omen",
-            "target": "self"
-          }
-        }
-      },
-      "minecraft:clear_bad_omen_spell_effect": {
-        "minecraft:spell_effects": {
-        }
-      },
-      "minecraft:raid_trigger": {
-        "minecraft:raid_trigger": {
-          "triggered_event": {
-            "event": "minecraft:remove_raid_trigger",
-            "target": "self"
-          }
-        },
-        "minecraft:spell_effects": {
-          "remove_effects": "bad_omen"
-        }
+	},
+	"addon:light": {
+	  "type": "int",
+	  "range": [0, 16],
+	  "client_sync": true,
+	  "default": 0
+	}
       }
     },
-
     "components": {
-      "minecraft:experience_reward": {
-        "on_death": "Math.Min(query.player_level * 7, 100)"
-      },
-      "minecraft:type_family": {
-        "family": [ "player" ]
-      },
-      "minecraft:is_hidden_when_invisible": {
-      },
-      "minecraft:loot": {
-        "table": "loot_tables/empty.json"
-      },
-      "minecraft:collision_box": {
-        "width": 0.6,
-        "height": 1.8
-      },
-      "minecraft:can_climb": {
-      },
-      "minecraft:movement": {
-        "value": 0.1
-      },
-      "minecraft:hurt_on_condition": {
-        "damage_conditions": [
-          {
-            "filters": { "test": "in_lava", "subject": "self", "operator": "==", "value": true },
-            "cause": "lava",
-            "damage_per_tick": 4
-          }
-        ]
-      },
-      "minecraft:attack": {
-        "damage": 1
-      },
-      "minecraft:exhaustion_values": {
-        "heal": 6,
-        "jump": 0.05,
-        "sprint_jump": 0.2,
-        "mine": 0.005,
-        "attack": 0.1,
-        "damage": 0.1,
-        "walk": 0.0,
-        "sprint": 0.1,
-        "swim": 0.01
-      },
-      "minecraft:player.saturation": {
-        "value": 5,
-         "max": 20
-      },
-      "minecraft:player.exhaustion": {
-        "value": 0,
-        "max": 20
-      },
-      "minecraft:player.level": {
-        "value": 0,
-        "max": 24791
-      },
-      "minecraft:player.experience": {
-        "value": 0,
-        "max": 1
-      },
       "minecraft:breathable": {
-        "total_supply": 15,
-        "suffocate_time": -1,
-        "inhale_time": 3.75,
-        "generates_bubbles": false
+        "breathes_water": true
       },
-      "minecraft:nameable": {
-        "always_show": true,
-        "allow_name_tag_renaming": false
+      "minecraft:physics": { 
+        "has_gravity": false,
+        "has_collision": false
       },
-      "minecraft:physics": {
-        "push_towards_closest_space": true
+      "minecraft:custom_hit_test": {
+        "hitboxes": [
+          {
+            "pivot": [0, 100, 0],
+            "width": 0,
+            "height": 0
+          }
+	]
+      },
+      "minecraft:damage_sensor": {
+        "triggers": {
+          "deals_damage": false
+        }
       },
       "minecraft:pushable": {
         "is_pushable": false,
-        "is_pushable_by_piston": true
+        "is_pushable_by_piston": false
       },
-      "minecraft:insomnia": {
-        "days_until_insomnia": 3
+      "minecraft:collision_box": {
+        "width": 0.0001,
+        "height": 0.0001
       },
-      "minecraft:rideable": {
-        "seat_count": 2,
-        "family_types": [
-          "parrot_tame"
-        ],
-        "pull_in_entities": true,
-        "seats": [
-          {
-            "position": [ 0.4, -0.2, -0.1 ],
-            "min_rider_count": 0,
-            "max_rider_count": 0,
-            "lock_rider_rotation": 0
-          },
-          {
-            "position": [ -0.4, -0.2, -0.1 ],
-            "min_rider_count": 1,
-            "max_rider_count": 2,
-            "lock_rider_rotation": 0
-          }
-        ]
-      },
-      "minecraft:conditional_bandwidth_optimization": {
-      },
-      "minecraft:block_climber": {},
       "minecraft:environment_sensor": {
-        "triggers": [ //**change from singular object {} into array object []
-	  { //add bracket to enclose object and allow more array objects
-          "filters": {
-            "all_of": [
-              {
-                "test": "has_mob_effect",
-                "subject": "self",
-                "value": "bad_omen"
-              },
-              {
-                "test": "is_in_village",
-                "subject": "self",
-                "value": true
-              }
-            ]
-          },
-          "event": "minecraft:trigger_raid"
-          }, //add bracket to enclose object and allow more array objects
+        "triggers": [
 	
-	//addon components
-					
 	{ "filters": { "all_of": [ { "test": "has_biome_tag", "subject": "self", "value": "the_end" } ] }, "event": "addon:event_biome_tag_1" },
 	{ "filters": { "all_of": [ { "test": "has_biome_tag", "subject": "self", "value": "overworld" }, { "test": "has_biome_tag", "subject": "self", "value": "river" } ] }, "event": "addon:event_biome_tag_2" },
 	{ "filters": { "all_of": [ { "test": "has_biome_tag", "subject": "self", "value": "mooshroom_island" }, { "test": "has_biome_tag", "subject": "self", "value": "overworld" } ] }, "event": "addon:event_biome_tag_3" },
@@ -296,45 +158,12 @@
 	{ "filters": { "test": "light_level", "value": 14, "subject": "self" }, 		"event": "addon:event_light_14" },
 	{ "filters": { "test": "light_level", "value": 15, "subject": "self" }, 		"event": "addon:event_light_15" },
 	{ "filters": { "test": "light_level", "value": 16, "subject": "self" }, 		"event": "addon:event_light_16" }
-					
-	//end addon components
-        ] //**change from singular object {} into array object []
+	
+        ]
       }
     },
-
     "events": {
-      "minecraft:gain_bad_omen": {
-        "add": {
-          "component_groups": [
-            "minecraft:add_bad_omen"
-          ]
-        }
-      },
-      "minecraft:clear_add_bad_omen": {
-        "remove": {
-          "component_groups": [
-            "minecraft:add_bad_omen"
-          ]
-        },
-        "add": {
-          "component_groups": [
-            "minecraft:clear_bad_omen_spell_effect"
-          ]
-        }
-      },
-      "minecraft:trigger_raid": {
-        "add": {
-          "component_groups": [ "minecraft:raid_trigger" ]
-        }
-      },
-      "minecraft:remove_raid_trigger": {
-        "remove": {
-          "component_groups": [ "minecraft:raid_trigger" ]
-        }
-      },
-      
-	//addon events
-			
+	
 	"addon:event_biome_tag_1": 		{ "set_property": { "addon:biome": 1 }},
 	"addon:event_biome_tag_2": 		{ "set_property": { "addon:biome": 2 }},
 	"addon:event_biome_tag_3": 		{ "set_property": { "addon:biome": 3 }},
@@ -439,12 +268,7 @@
 	"addon:event_light_14": 		{ "set_property": { "addon:light": 14 }},
 	"addon:event_light_15": 		{ "set_property": { "addon:light": 15 }},
 	"addon:event_light_16": 		{ "set_property": { "addon:light": 16 }}
-			
-	//end addon events      
+	
     }
   }
 }
-
-
-
-
