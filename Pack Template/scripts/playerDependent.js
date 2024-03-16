@@ -88,7 +88,7 @@ export function biomeFinder(player){
 	biomeArray[85] = "birch_forest_hills";
 	biomeArray[86] = "redwood_taiga_hills_mutated";
 	
-	let propertyPlayer = player.getProperty("addon:biome");
+	const propertyPlayer = player.getProperty("addon:biome");
 	let biomeId;
 	
 	if(propertyPlayer){
@@ -270,7 +270,7 @@ function updateMask(biomeArray, name, value){
 	return bitmask
 }
 export function lightLevel(player){
-	let propertyPlayer = player.getProperty("addon:light");
+	const propertyPlayer = player.getProperty("addon:light");
 	let lightId;
 	
 	if(propertyPlayer){

@@ -89,7 +89,7 @@ world.afterEvents.entityHurt.subscribe(event=>{
 	onHurtEvent(event);
 });
 world.afterEvents.dataDrivenEntityTrigger.subscribe(event=>{
-	let eventName = event.eventId.replace("minecraft:", "");
+	const eventName = event.eventId.replace("minecraft:", "");
 	
 	if(event.entity.typeId != "minecraft:player"){
 		switch(eventName){
@@ -144,44 +144,44 @@ function statList(player){
 }
 function statListBody(player){
     //title
-	let statTxt = "Stats";
+	const statTxt = "Stats";
 	
     //formatting
-	let titleFormat = "\u00A7d";
-	let subtitleFormat = "\u00A73";
-	let itemFormat = "\u00A7a";
-	let bodyFormat = "\u00A7r";
+	const titleFormat = "\u00A7d";
+	const subtitleFormat = "\u00A73";
+	const itemFormat = "\u00A7a";
+	const bodyFormat = "\u00A7r";
 	
     //items
-	let overTravel = world.scoreboard.getObjective("stats_travel_Overwoldblocktravel");
-	let totalBlocksPlaced = world.scoreboard.getObjective("stats_blocksPlaced_total");
-	let totalBlocksBroken = world.scoreboard.getObjective("stats_blocksBroken_total");
-	let daysPlayed = world.scoreboard.getObjective("stats_playTime_MinecraftDays");
+	const overTravel = world.scoreboard.getObjective("stats_travel_Overwoldblocktravel");
+	const totalBlocksPlaced = world.scoreboard.getObjective("stats_blocksPlaced_total");
+	const totalBlocksBroken = world.scoreboard.getObjective("stats_blocksBroken_total");
+	const daysPlayed = world.scoreboard.getObjective("stats_playTime_MinecraftDays");
 	
     //consolidate scores
-	let statArrayTxt = [];
+	const statArrayTxt = [];
 	statArrayTxt[0] = subtitleFormat + "Overworld blocks travelled: " + bodyFormat + getScoreIfExists(overTravel, player);
 	statArrayTxt[1] = subtitleFormat + "Total blocks placed: " + bodyFormat + getScoreIfExists(totalBlocksPlaced, player);
 	statArrayTxt[2] = subtitleFormat + "Total blocks broken: " + bodyFormat + getScoreIfExists(totalBlocksBroken, player);
 	statArrayTxt[3] = subtitleFormat + "Minecraft days played: " + bodyFormat + getScoreIfExists(daysPlayed, player);
 	
     //construct body
-	let indentSize = "";
-	let nextLine = '\n';
-	let indentNextLine = nextLine + indentSize;
-	let displayText = titleFormat + statTxt + nextLine + nextLine + statArrayTxt.join(indentNextLine);
+	const indentSize = "";
+	const nextLine = '\n';
+	const indentNextLine = nextLine + indentSize;
+	const displayText = titleFormat + statTxt + nextLine + nextLine + statArrayTxt.join(indentNextLine);
 	
 	return displayText
 }
 function objectivesStatsDisplay(player){
     //title
-	let scoresText= ["Objectives"];
+	const scoresText= ["Objectives"];
 	
     //formatting
-	let titleFormat = "\u00A7d";
-	let subtitleFormat = "\u00A73";
-	let itemFormat = "\u00A7r";
-	let bodyFormat = "\u00A7a";
+	const titleFormat = "\u00A7d";
+	const subtitleFormat = "\u00A73";
+	const itemFormat = "\u00A7r";
+	const bodyFormat = "\u00A7a";
 	
     //items
 	let scoreboards = world.scoreboard.getObjectives();
@@ -220,10 +220,10 @@ function objectivesStatsDisplay(player){
 	}
 	
     //construct ui
-	let indentSize = "";
-	let nextLine = '\n';
-	let indentNextLine = nextLine + indentSize;
-	let allStats=titleFormat + scoresText.join(nextLine) + nextLine
+	const indentSize = "";
+	const nextLine = '\n';
+	const indentNextLine = nextLine + indentSize;
+	const allStats=titleFormat + scoresText.join(nextLine) + nextLine
 		+ nextLine
 		+ subtitleFormat + "Achievements:" + bodyFormat + indentNextLine + achievement.join(indentNextLine) + nextLine
 		+ nextLine
@@ -236,13 +236,13 @@ function objectivesStatsDisplay(player){
 }
 function blockStatsDisplay(player){
     //title
-	let scorestext= ["These are the scores being tracked"];
+	const scorestext= ["These are the scores being tracked"];
 	
     //formatting
-	let titleFormat = "\u00A7d";
-	let subtitleFormat = "\u00A73";
-	let itemFormat = "\u00A7a";
-	let bodyFormat = "\u00A7r";
+	const titleFormat = "\u00A7d";
+	const subtitleFormat = "\u00A73";
+	const itemFormat = "\u00A7a";
+	const bodyFormat = "\u00A7r";
 	
     //items
 	let scoreboards = world.scoreboard.getObjectives();
@@ -363,10 +363,10 @@ function blockStatsDisplay(player){
 	}
 	
     //construct ui
-	let indentSize = "    ";
-	let nextLine = '\n';
-	let indentNextLine = nextLine + indentSize;
-	let allStats=titleFormat + scorestext.join(nextLine) + nextLine
+	const indentSize = "    ";
+	const nextLine = '\n';
+	const indentNextLine = nextLine + indentSize;
+	const allStats=titleFormat + scorestext.join(nextLine) + nextLine
 		+ nextLine
 		+ subtitleFormat + "Blocks Broken:" + bodyFormat + indentNextLine + blocksBroken.join(indentNextLine) + nextLine
 		+ subtitleFormat + "Blocks Placed:" + bodyFormat + indentNextLine + blocksPlaced.join(indentNextLine) + nextLine
@@ -391,20 +391,20 @@ function blockStatsDisplay(player){
 }
 function debugDisplay(player){
     //title
-	let debugTxt = "Additional game info";
+	const debugTxt = "Additional game info";
 	
     //formatting
-	let titleFormat = "\u00A7d";
-	let subtitleFormat = "\u00A73";
-	let itemFormat = "\u00A7a";
-	let bodyFormat = "\u00A7r";
+	const titleFormat = "\u00A7d";
+	const subtitleFormat = "\u00A73";
+	const itemFormat = "\u00A7a";
+	const bodyFormat = "\u00A7r";
 	
     //items
-	let lightVal = lightLevel(player);
-	let biomeId =  biomeFinder(player);
+	const lightVal = lightLevel(player);
+	const biomeId =  biomeFinder(player);
 	
     //consolidate scores
-	let debugArrayTxt = [];
+	const debugArrayTxt = [];
 	debugArrayTxt[0] = subtitleFormat + "Dimension: " + bodyFormat + playerPosition(player, "dimension");
 	debugArrayTxt[1] = subtitleFormat + "XYZ: " + bodyFormat + playerPosition(player, "xyz");
 	debugArrayTxt[2] = subtitleFormat + "Block: " + bodyFormat + playerPosition(player, "block");
@@ -436,10 +436,10 @@ function debugDisplay(player){
 	debugArrayTxt[17] = (biomeId == "NA" ? "" : subtitleFormat + "Biome: " + bodyFormat + biomeId);
 	
     //construct ui
-	let indentSize = "";
-	let nextLine = '\n';
-	let indentNextLine = nextLine + indentSize;
-	let displayText = titleFormat + debugTxt + nextLine + nextLine + debugArrayTxt.join(indentNextLine);
+	const indentSize = "";
+	const nextLine = '\n';
+	const indentNextLine = nextLine + indentSize;
+	const displayText = titleFormat + debugTxt + nextLine + nextLine + debugArrayTxt.join(indentNextLine);
 	
 	let debugForm = new ActionFormData()
 		.title(player.name)
@@ -461,8 +461,8 @@ function debugDisplay(player){
 
 //event functions----------------------------------------
 function angryEvents(event){
-		let entity = event.entity;
-		let closePlayers = entity.dimension.getPlayers({
+		const entity = event.entity;
+		const closePlayers = entity.dimension.getPlayers({
 			maxDistance: 64,
 			location: {x: entity.location.x, y: entity.location.y, z: entity.location.z}
 		});
@@ -477,7 +477,7 @@ function preBreak(event){
 	blockBreaks["L"+event.block.x+" "+event.block.y+" "+event.block.z]=processBlockTags(event.block.getTags())
 }
 function blockBroken(event){
-	let player = event.player;
+	const player = event.player;
 	let blockData = blockBreaks["L"+event.block.x+" "+event.block.y+" "+event.block.z]
 	if(!blockData){
 		blockData="None"
@@ -495,8 +495,8 @@ function blockBroken(event){
 	addToScore("stats_blocksBroken_", "total", player);
 }
 function blockPlaced(event){
-	let player = event.player;
-	let blockData= getequipped(player)["Mainhand"].replace("_"," ")
+	const player = event.player;
+	const blockData= getequipped(player)["Mainhand"].replace("_"," ")
 	if (blockData!=undefined){
 		addToScore("stats_blocksPlaced_", blockData, player)
 	}
@@ -524,11 +524,11 @@ function pleatePressed(event){
 	}
 }
 function changedDimension(event){
-	let player = event.player;
-	let getDimTo = event.toDimension.id.replace("minecraft:","");
-	let getDimFrom = event.fromDimension.id.replace("minecraft:","");
-	let locationTo = event.toLocation;
-	let locationFrom = event.fromLocation;
+	const player = event.player;
+	const getDimTo = event.toDimension.id.replace("minecraft:","");
+	const getDimFrom = event.fromDimension.id.replace("minecraft:","");
+	const locationTo = event.toLocation;
+	const locationFrom = event.fromLocation;
 	
 	switch(getDimTo){
 		case "nether":
@@ -543,7 +543,7 @@ function changedDimension(event){
 			player.setDynamicProperty("netherEnterX", Math.floor(locationFrom.x));
 			player.setDynamicProperty("netherEnterZ", Math.floor(locationFrom.z));
 			if(!chalengeTracker.checkAchievment("WentWrong", player)){
-				let closeEntity = player.dimension.getEntities({
+				const closeEntity = player.dimension.getEntities({
 					excludeTypes: ["minecraft:player", "minecraft:item"],
 					maxDistance: 1,
 					location: {x: player.location.x, y: player.location.y, z: player.location.z}
@@ -576,11 +576,11 @@ function changedDimension(event){
 				}
 			}
 			if(getDimFrom == "nether"){
-				let x1 = player.getDynamicProperty("netherEnterX");
-				let z1 = player.getDynamicProperty("netherEnterZ");
-				let x2 = Math.floor(locationTo.x);
-				let z2 = Math.floor(locationTo.z);
-				let portalDist = calculateDistance(x1, z1, x2, z2);
+				const x1 = player.getDynamicProperty("netherEnterX");
+				const z1 = player.getDynamicProperty("netherEnterZ");
+				const x2 = Math.floor(locationTo.x);
+				const z2 = Math.floor(locationTo.z);
+				const portalDist = calculateDistance(x1, z1, x2, z2);
 				
 				if(portalDist >= 7000){
 					if(!advancementTracker.checkAchievment("SubspaceBubble", player)){
@@ -596,11 +596,11 @@ function changedDimension(event){
 function entityDied(event){
 	const victim = event.deadEntity
 	const cause = event.damageSource
-	let victimName= victim.typeId.replace("minecraft:","")
+	const victimName= victim.typeId.replace("minecraft:","")
 	if(event.damageSource.damagingEntity){
 		const killer = event.damageSource.damagingEntity
 		if(killer.typeId == "minecraft:player"){
-			let victimType = victim.typeId.replace("minecraft:","").replace("_"," ")
+			const victimType = victim.typeId.replace("minecraft:","").replace("_"," ")
 			addToScore("stats_entitiesKilled_",victimType, killer)
 			const equipment=getequipped(killer)
 			addToScore("stats_weaponKills_",equipment["Mainhand"].replace("_"," "), killer)
@@ -684,7 +684,7 @@ function entityDied(event){
 					break;
 				case "suffocation":
 					if(!chalengeTracker.checkAchievment("EnterSandman", victim)){
-						let blockIn = victim.dimension.getBlock({x: victim.location.x, y: (victim.location.y + 1), z: victim.location.z});
+						const blockIn = victim.dimension.getBlock({x: victim.location.x, y: (victim.location.y + 1), z: victim.location.z});
 						
 						if(blockIn.hasTag("sand")){
 							chalengeTracker.setAchievment("EnterSandman", victim);//[challenge] Enter Sandman
@@ -759,8 +759,8 @@ function entityDied(event){
 	}
 }
 function entityHit(event){
-	let attacker = event.damagingEntity
-	let victim = event.hitEntity
+	const attacker = event.damagingEntity
+	const victim = event.hitEntity
 	
 	if(attacker && victim){
 		if(attacker.typeId == "minecraft:ravager" && (victim.typeId == "minecraft:player")){
@@ -771,11 +771,11 @@ function entityHit(event){
 	}
 }
 function entityChangeHealth(event){
-	let source = event.entity;
+	const source = event.entity;
 	
 	if(source.typeId == "minecraft:player"){
-		let oldVal = event.oldValue;
-		let newVal = event.newValue;
+		const oldVal = event.oldValue;
+		const newVal = event.newValue;
 		
 		if(oldVal <= 0 && (newVal >= (oldVal +1))){
 			usingItems("totem_of_undying", source);
@@ -783,8 +783,8 @@ function entityChangeHealth(event){
 	}
 }
 function hitByProjectile(event){
-	let projectile = event.projectile.typeId.replace("minecraft:","");
-	let source = event.source;
+	const projectile = event.projectile.typeId.replace("minecraft:","");
+	const source = event.source;
 	if(source && (source.typeId == "minecraft:player")){
 		switch(projectile){
 			case "arrow" :
@@ -803,7 +803,7 @@ function getArrowType(arrow){
 	return "Arrow"
 }
 function initSpawn(event){
-	let player = event.player;
+	const player = event.player;
 	
 	if(!player.getDynamicProperty("1spawn") == 1){//verify the player hasn't spawned previously	
 		player.setDynamicProperty("initialX", Math.floor(player.location.x));//record player initial location x
@@ -817,8 +817,8 @@ function itemComplete(event){
 		//[achievement] Castaway | Eat nothing but dried kelp for three in-game days | Eat dried kelp once; in the following three in-game days, eat nothing but dried kelp.
 		//[advancement] A Balanced Diet | Eat everything that is edible, even if it's not good for you | Eat each of these 40 foods:, Apple, Baked Potato, Beetroot, Beetroot Soup, Bread, Carrot, Chorus Fruit, Cooked Chicken, Cooked Cod, Cooked Mutton, Cooked Porkchop, Cooked Rabbit, Cooked Salmon, Cookie, Dried Kelp, Enchanted Golden Apple, Glow Berries, Golden Apple, Golden Carrot, Honey Bottle, Melon Slice, Mushroom Stew, Poisonous Potato, Potato, Pufferfish, Pumpkin Pie, Rabbit Stew, Raw Beef, Raw Chicken, Raw Cod, Raw Mutton, Raw Porkchop, Raw Rabbit, Raw Salmon, Rotten Flesh, Spider Eye, Steak, Suspicious Stew, Sweet Berries, Tropical Fish, Other foods and consumables can be eaten, but are ignored for this advancement.
 	//done--------------------
-	let player = event.source;
-	let itemName = event.itemStack.typeId.replace("minecraft:","");
+	const player = event.source;
+	const itemName = event.itemStack.typeId.replace("minecraft:","");
 	if(!advancementTracker.checkAchievment("Husbandry",player)){
 		advancementTracker.setAchievment("Husbandry",player);//[advancement] Husbandry | The world is full of friends and food | Consume anything that can be consumed.
 	}
@@ -863,8 +863,8 @@ function itemComplete(event){
 	}
 }
 function itemRelease(event){
-	let player = event.source;
-	let itemName = event.itemStack.typeId.replace("minecraft:","");
+	const player = event.source;
+	const itemName = event.itemStack.typeId.replace("minecraft:","");
 	
 	switch(itemName){
 		case "bow" :
@@ -884,8 +884,8 @@ function itemRelease(event){
 	}
 }
 function itemStart(event){
-	let player = event.source;
-	let itemName = event.itemStack.typeId.replace("minecraft:","");
+	const player = event.source;
+	const itemName = event.itemStack.typeId.replace("minecraft:","");
 	
 	switch(itemName){
 		case "spyglass" :
@@ -895,8 +895,8 @@ function itemStart(event){
 	}
 }
 function itemStop(event){
-	let player = event.source;
-	let itemName = (event.itemStack ? event.itemStack.typeId.replace("minecraft:","") : "");
+	const player = event.source;
+	const itemName = (event.itemStack ? event.itemStack.typeId.replace("minecraft:","") : "");
 	
 	switch(itemName){
 		case "spyglass" :
@@ -905,10 +905,10 @@ function itemStop(event){
 	}
 }
 function itemStopOn(event){
-	let player = event.source;
-	let itemName = event.itemStack.typeId.replace("minecraft:","");
-	let block = event.block;
-	let blockTag = block.getTags();
+	const player = event.source;
+	const itemName = event.itemStack.typeId.replace("minecraft:","");
+	const block = event.block;
+	const blockTag = block.getTags();
 	
 	switch(itemName){
 		case "oak_sign" :
@@ -941,13 +941,13 @@ function itemStopOn(event){
 			break;
 		case "comparator" :
 			if(!advancementTracker.checkAchievment("ThePowerofBooks", player)){
-				let blockDirection = block.permutation.getState("direction");
+				const blockDirection = block.permutation.getState("direction");
 				const closeBlock = [];
 				closeBlock[0] = block.dimension.getBlock({x: block.x, y: block.y, z: (block.z + 1)});
 				closeBlock[1] = block.dimension.getBlock({x: (block.x - 1), y: block.y, z: block.z});
 				closeBlock[2] = block.dimension.getBlock({x: block.x, y: block.y, z: (block.z - 1)});
 				closeBlock[3] = block.dimension.getBlock({x: (block.x + 1), y: block.y, z: block.z});
-				let booksStored = closeBlock[blockDirection].permutation.getState("books_stored");
+				const booksStored = closeBlock[blockDirection].permutation.getState("books_stored");
 				
 				if(booksStored !== undefined){
 					advancementTracker.setAchievment("ThePowerofBooks", player);//[advancement] The Power of Books | Read the power signal of a Chiseled Bookshelf using a Comparator | Place a comparator on any side of a chiseled bookshelf or the chiseled bookshelf against a comparator to trigger the advancement.
@@ -956,8 +956,8 @@ function itemStopOn(event){
 			break;
 		case "sea_pickle" :
 			if(!achievementTracker.checkAchievment("OnePickle,TwoPickle,SeaPickle,Four", player)){
-				let belowBlock = block.dimension.getBlock({x: block.x, y: (block.y - 1), z: block.z});
-				let pickleCount = belowBlock.permutation.getState("cluster_count");
+				const belowBlock = block.dimension.getBlock({x: block.x, y: (block.y - 1), z: block.z});
+				const pickleCount = belowBlock.permutation.getState("cluster_count");
 				
 				if(pickleCount == 3){
 					achievementTracker.setAchievment("OnePickle,TwoPickle,SeaPickle,Four", player);//[achievement] One Pickle, Two Pickle, Sea Pickle, Four | Place four Sea Pickles in a group | —
@@ -971,8 +971,8 @@ function itemStopOn(event){
 			break;
 		case "scaffolding" :
 			if(!achievementTracker.checkAchievment("TopoftheWorld", player)){
-				let topBlock = block.dimension.getBlock({x: block.x, y: 319, z: block.z});
-				let topBlockState = topBlock.permutation.getState("stability");
+				const topBlock = block.dimension.getBlock({x: block.x, y: 319, z: block.z});
+				const topBlockState = topBlock.permutation.getState("stability");
 				
 				if(topBlockState !== undefined){
 					achievementTracker.setAchievment("TopoftheWorld", player);//[achievement] Top of the World | Place scaffolding to the world limit. | Place a scaffolding at the world height limit.
@@ -985,11 +985,11 @@ function leverFlipped(event){
 	addToScore("stats_redstonInteractions_","Lever", event.player);
 }
 function loadedEntity(event){
-	let entity = event.entity;
-	let entityName = entity.typeId.replace("minecraft:", "");
+	const entity = event.entity;
+	const entityName = entity.typeId.replace("minecraft:", "");
 	//when bastion mobs load, search for nearby players and give them an achievement
 	if(entityName == "piglin_brute"){
-		let closePlayers = entity.dimension.getPlayers({
+		const closePlayers = entity.dimension.getPlayers({
 			maxDistance: 100,
 			location: {x: entity.location.x, y: entity.location.y, z: entity.location.z}
 		});
@@ -1002,9 +1002,9 @@ function loadedEntity(event){
 	}
 }
 function spawnedEntity(event){
-	let entity = event.entity;
-	let entityName = entity.typeId.replace("minecraft:","");
-	let playersClosest = entity.dimension.getPlayers({
+	const entity = event.entity;
+	const entityName = entity.typeId.replace("minecraft:","");
+	const playersClosest = entity.dimension.getPlayers({
 				closest: 1,
 				location: {x: entity.location.x, y: entity.location.y, z: entity.location.z}
 			})[0];
@@ -1012,7 +1012,7 @@ function spawnedEntity(event){
 	    //when fortress mobs spawn, search for nearby players and give them an achievement
 		case "blaze" ://*fall through*
 		case "wither_skeleton" :{
-			let closePlayers = entity.dimension.getPlayers({
+			const closePlayers = entity.dimension.getPlayers({
 				maxDistance: 50,
 				location: {x: entity.location.x, y: entity.location.y, z: entity.location.z}
 			});
@@ -1031,7 +1031,7 @@ function spawnedEntity(event){
 			break;
 		
 		case "ender_dragon" :
-			let closePlayers = entity.dimension.getPlayers({
+			const closePlayers = entity.dimension.getPlayers({
 				maxDistance: 192,
 				location: {x: entity.location.x, y: entity.location.y, z: entity.location.z}
 			});
@@ -1061,11 +1061,11 @@ function spawnedEntity(event){
 	}
 	//check for bred mobs
 	if(event.cause == "Born"){
-		let playersClosest = entity.dimension.getPlayers({
+		const playersClosest = entity.dimension.getPlayers({
 			closest: 1,
 			location: {x: entity.location.x, y: entity.location.y, z: entity.location.z}
 		});
-		let timeVal = world.getTimeOfDay();
+		const timeVal = world.getTimeOfDay();
 		
 		if(timeVal >= 18000 && (timeVal <= 19000)){
 			if(!chalengeTracker.checkAchievment("AfterMidnight", playersClosest[0])){
@@ -1076,9 +1076,9 @@ function spawnedEntity(event){
 	}
 }
 function statStick(event){
-	let player = event.source;
-	let itemName = event.itemStack.typeId.replace("minecraft:", "");
-	let itemTag = event.itemStack.nameTag;
+	const player = event.source;
+	const itemName = event.itemStack.typeId.replace("minecraft:", "");
+	const itemTag = event.itemStack.nameTag;
 	
 	if(itemName == "stick" && (itemTag == "statStick")){
 		propertyToScore(player)
@@ -1086,20 +1086,20 @@ function statStick(event){
 	}
 }
 function playerDataEvents(event){
-	let player = event.entity;
+	const player = event.entity;
 	
 	if(!achievementTracker.checkAchievment("Werebeingattacked", player)){
 		achievementTracker.setAchievment("Werebeingattacked", player);//[achievement] We're being attacked! | Trigger a Pillager Raid. | Walk in a village with the Bad Omen effect applied.
 	}
 }
 function projectileHitBlock(event){
-	let shooter = event.source;
-	let projectile = event.projectile.typeId.replace("minecraft:","");
+	const shooter = event.source;
+	const projectile = event.projectile.typeId.replace("minecraft:","");
 	
 	if(shooter){
 		if(shooter.typeId=="minecraft:player"){
-			let player = shooter
-			let block = event.getBlockHit().block;
+			const player = shooter
+			const block = event.getBlockHit().block;
 			
 			if(block.isvalid){
 				if(block.permutation.matches("minecraft:target")){
@@ -1113,7 +1113,7 @@ function projectileHitBlock(event){
 	}
 }
 function targetHit(event){
-	let power = event.redstonePower;
+	const power = event.redstonePower;
 	
 	if(power == 15){
 		let closePlayers = event.dimension.getPlayers({
@@ -1178,8 +1178,8 @@ function useItemOn(event){
 	}
 }
 function useItem(event){
-	let player = event.source;
-	let itemName = getequipped(player)["Mainhand"]
+	const player = event.source;
+	const itemName = getequipped(player)["Mainhand"]
 	
 	switch(itemName){
 		case "crossbow" :
@@ -1399,7 +1399,7 @@ function itemInventory(player){
 						"skull_pottery_sherd",
 						"snort_pottery_sherd"];
 	
-	let inventoryPlayer = player.getComponent("minecraft:inventory");
+	const inventoryPlayer = player.getComponent("minecraft:inventory");
 	let index=0;
 	let inventorymask = 0;
 	let armorMask = 0;
@@ -1408,7 +1408,7 @@ function itemInventory(player){
 	let woolMask = 0;
 	let froglight = 0;
 	for (let slot = 0; slot<36;slot++){
-		let itemStack = inventoryPlayer.container.getItem(slot);
+		const itemStack = inventoryPlayer.container.getItem(slot);
 		if (itemStack){
 			const itemName = itemStack.typeId.replace("minecraft:","")
 			if(loseItems.includes(itemName)){
@@ -1442,7 +1442,7 @@ function itemInventory(player){
 	}
 	const equip = getequipped(player)
 	for(const slot of ["Chest","Feet","Head","Legs"]){
-		let itemName = equip[slot];
+		const itemName = equip[slot];
 		if(armorTypes.includes(itemName)){
 			index = armorTypes.indexOf(itemName)
 			armorMask = armorMask | (0b1<<index)
@@ -1793,7 +1793,7 @@ function checkArmorachievements(player,armorMask){
 function tameEvents(event){
 	const animalType = event.entity.typeId.replace("minecraft:","")
 	
-	let player = event.entity.dimension.getPlayers({
+	const player = event.entity.dimension.getPlayers({
 		closest: 1,
 			location: {x: event.entity.location.x, y: event.entity.location.y, z: event.entity.location.z}
 	})[0];
@@ -2074,7 +2074,7 @@ function entityKills(victim,player,cause,weapon){
 		
 }
 function equipmentChecks(player){
-	let headItem = getequipped(player)["Head"];
+	const headItem = getequipped(player)["Head"];
 	
 	if(headItem){
 		switch(headItem){
@@ -2103,7 +2103,7 @@ function jumping(player, startTick){
 		});
 	}else{
 		if(!chalengeTracker.checkAchievment("StoryTime", player)){
-			let jumpTicks = worldlife("tick") - startTick;
+			const jumpTicks = worldlife("tick") - startTick;
 			
 			if(jumpTicks >= 5800){//5 min minus the 10sec timer. giving a small margin to the player, depending on when in the 10sec timer it's truggered.
 				chalengeTracker.setAchievment("StoryTime", player);//[challenge] Story Time
@@ -2198,14 +2198,14 @@ function spawnAndBreed(entity, player){
 			}
 			break;
 	}
-	let propertyIds = player.getDynamicPropertyIds();
+	const propertyIds = player.getDynamicPropertyIds();
 	
 	if(!advancementTracker.checkAchievment("TwobyTwo", player)){
 		let tempBreed = 0;
 		
 		for(var i = 0; i < propertyIds.length; i++){
 			if(propertyIds[i].indexOf("breed_") > -1){
-				tempBiome++;
+				tempBreed++;
 			}
 		}
 		if(tempBiome >= 24){
@@ -2313,7 +2313,7 @@ function trading(){
 	//done--------------------
 }
 function underwater(player, startTick){
-	let blockIn = player.dimension.getBlock({x: player.location.x, y: (player.location.y + 1), z: player.location.z});
+	const blockIn = player.dimension.getBlock({x: player.location.x, y: (player.location.y + 1), z: player.location.z});
 	
 	if(blockIn.isValid && blockIn.hasTag("water")){
 		system.run(() => {
@@ -2321,7 +2321,7 @@ function underwater(player, startTick){
 		});
 	}else{
 		if(!achievementTracker.checkAchievment("SleepwiththeFishes", player)){
-			let underwaterTicks = worldlife("tick") - startTick;
+			const underwaterTicks = worldlife("tick") - startTick;
 			
 			if(underwaterTicks >= 2200){//2 min minus the 10sec timer. giving a small margin to the player, depending on when in the 10sec timer it's truggered.
 				achievementTracker.setAchievment("FreeDiver", player);//[achievement] Free Diver | Stay underwater for 2 minutes | Drink a potion of water breathing that can last for 2 minutes or more, then jump into the water or activate a conduit or sneak on a magma block underwater for 2 minutes.
@@ -2426,12 +2426,12 @@ function weaponsToolsArmor(subject, player){
 					fishArray[3] = "tropical_fish";
 					let fishSlots = 0
 					let fishCount = 0
-					let inventoryPlayer = player.getComponent("minecraft:inventory");
+					const inventoryPlayer = player.getComponent("minecraft:inventory");
 					for(let slotnum = 0; slotnum < 36; slotnum++){
-						let slotItem = inventoryPlayer.container.getItem(slotnum);
+						const slotItem = inventoryPlayer.container.getItem(slotnum);
 						if(slotItem){
-							let slotItemName = slotItem.typeId.replace("minecraft:","");
-							let slotItemAmount = slotItem.amount;
+							const slotItemName = slotItem.typeId.replace("minecraft:","");
+							const slotItemAmount = slotItem.amount;
 							if(fishArray.includes(slotItemName)){
 								fishSlots=fishSlots | 0b1<<fishArray.indexOf(slotItemName)
 								fishCount+=slotItemAmount
@@ -2444,10 +2444,10 @@ function weaponsToolsArmor(subject, player){
 						let tempSlots=0
 						let tempfishCount = 0
 						for(let slotnum = 0; slotnum < 36; slotnum++){
-						let slotItem = inventoryPlayer.container.getItem(slotnum);
+						const slotItem = inventoryPlayer.container.getItem(slotnum);
 						if(slotItem){
-							let slotItemName = slotItem.typeId.replace("minecraft:","");
-							let slotItemAmount = slotItem.amount;
+							const slotItemName = slotItem.typeId.replace("minecraft:","");
+							const slotItemAmount = slotItem.amount;
 							if(fishArray.includes(slotItemName)){
 								tempSlots=tempSlots | 0b1<<fishArray.indexOf(slotItemName)
 								tempfishCount+=slotItemAmount
@@ -2474,7 +2474,7 @@ function worldAndBiome(subject, player){
 		//[advancement] Sound of Music | Make the Meadows come alive with the sound of music from a Jukebox | While in a meadow biome, place down a jukebox and use a music disc on it.
 	switch(subject){
 		case "biomeChecks" :
-			let propertyIds = player.getDynamicPropertyIds();
+			const propertyIds = player.getDynamicPropertyIds();
 			
 			if((propertyIds.includes("biome_basalt_deltas"))
 			    &&(propertyIds.includes("biome_crimson_forest"))
@@ -2653,8 +2653,8 @@ function overworldBlocksTravelled(player){
 			x1 = player.getDynamicProperty("initialX");
 			z1 = player.getDynamicProperty("initialZ");
 		}
-		let x2 = Math.floor(player.location.x);
-		let z2 = Math.floor(player.location.z);
+		const x2 = Math.floor(player.location.x);
+		const z2 = Math.floor(player.location.z);
 		blkDist = blkDist + calculateDistance(x1, z1, x2, z2);
 		
 		player.setDynamicProperty("blockRun", blkDist);
@@ -2665,11 +2665,11 @@ function overworldBlocksTravelled(player){
 	return blkDist;
 }
 function pearlThrow(player){
-	let x1 = player.getDynamicProperty("pearlThrowX");
-	let z1 = player.getDynamicProperty("pearlThrowZ");
-	let x2 = Math.floor(player.location.x);
-	let z2 = Math.floor(player.location.z);
-	let pearlDist = calculateDistance(x1, z1, x2, z2);
+	const x1 = player.getDynamicProperty("pearlThrowX");
+	const z1 = player.getDynamicProperty("pearlThrowZ");
+	const x2 = Math.floor(player.location.x);
+	const z2 = Math.floor(player.location.z);
+	const pearlDist = calculateDistance(x1, z1, x2, z2);
 	
 	if(pearlDist > 100){
 		usingItems("ender_pearl", player);
@@ -2681,16 +2681,16 @@ function pearlThrow(player){
 		world.scoreboard.addObjective("stats_travel_Farthestenderpearlthrow", "stats_travel_Farthest ender pearl throw");
 		world.scoreboard.getObjective("stats_travel_Farthestenderpearlthrow").setScore(player, 0);
 	}
-	let bestPearl = world.scoreboard.getObjective("stats_travel_Farthestenderpearlthrow").getScore(player);
+	const bestPearl = world.scoreboard.getObjective("stats_travel_Farthestenderpearlthrow").getScore(player);
 	if(pearlDist > bestPearl){
 		world.scoreboard.getObjective("stats_travel_Farthestenderpearlthrow").setScore(player, pearlDist);
 	}
 }
 function propertyToScore(player){
     //declare variables
-	let daysPlayed = player.getDynamicProperty("playTimeD");
-	let minPlayed = player.getDynamicProperty("playTimeM");
-	let overTravel = player.getDynamicProperty("blockRun");
+	const daysPlayed = player.getDynamicProperty("playTimeD");
+	const minPlayed = player.getDynamicProperty("playTimeM");
+	const overTravel = player.getDynamicProperty("blockRun");
 	
     //add categories
 	if(!world.scoreboard.getObjective("stats_playTime_")){
@@ -2717,11 +2717,11 @@ function propertyToScore(player){
 	world.scoreboard.getObjective("stats_travel_Overwoldblocktravel").setScore(player, (overTravel === undefined ? 0 : overTravel));
 }
 function spying(player){
-	let isSpying = player.getDynamicProperty("spying");
-	let entitySpyingArray = player.getEntitiesFromViewDirection();
+	const isSpying = player.getDynamicProperty("spying");
+	const entitySpyingArray = player.getEntitiesFromViewDirection();
 	
 	for(let i = 0; i < entitySpyingArray.length; i++){
-		let entitySpying = entitySpyingArray[i].entity.typeId.replace("minecraft:","");
+		const entitySpying = entitySpyingArray[i].entity.typeId.replace("minecraft:","");
 		
 		switch(entitySpying){
 			case "ghast" :
@@ -2754,10 +2754,10 @@ function spying(player){
 }
 function timer10Sec(){
 	system.runInterval(() => {
-		let playerArrayList = world.getAllPlayers();//get list of players
+		const playerArrayList = world.getAllPlayers();//get list of players
 		
 		for(let i = 0; i < playerArrayList.length; i++){
-			let player = playerArrayList[i];
+			const player = playerArrayList[i];
 			
 			overworldBlocksTravelled(player);//distance data sampling at defined interval
 			itemInventory(player);//inventory checks for achievement items
@@ -2772,14 +2772,14 @@ function timer10Sec(){
 	}, 200);
 }
 function timer1Day(){
-	let timeVal = world.getTimeOfDay();
+	const timeVal = world.getTimeOfDay();
 	
 	if(timeVal == 6000){
-		let playerArrayList = world.getAllPlayers();
+		const playerArrayList = world.getAllPlayers();
 		
 		for(let i = 0; i < playerArrayList.length; i++){
-			let player = playerArrayList[i];
-			let dayCount = player.getDynamicProperty("playTimeD");
+			const player = playerArrayList[i];
+			const dayCount = player.getDynamicProperty("playTimeD");
 			
 			player.setDynamicProperty("playTimeD", (dayCount === undefined ? -1 : dayCount) + 1);
 			if(dayCount == 100){
@@ -2796,11 +2796,11 @@ function timer1Day(){
 }
 function timer1Min(){
 	system.runInterval(() => {
-		let playerArrayList = world.getAllPlayers();
+		const playerArrayList = world.getAllPlayers();
 		
 		for(let i = 0; i < playerArrayList.length; i++){
-			let player = playerArrayList[i];
-			let minCount = player.getDynamicProperty("playTimeM");
+			const player = playerArrayList[i];
+			const minCount = player.getDynamicProperty("playTimeM");
 			
 			player.setDynamicProperty("playTimeM", (minCount === undefined ? 0 : minCount) + 1);
 			player.setDynamicProperty("biome_" + biomeFinder(player), 1);
@@ -2836,10 +2836,10 @@ function blockLookingAt(subject, player){
 				break;
 			case "distance" :
 				inspectLocation = blockInspect.location;
-				let x1 = Math.floor(player.location.x);
-				let z1 = Math.floor(player.location.z);
-				let x2 = Math.floor(inspectLocation.x);
-				let z2 = Math.floor(inspectLocation.z);
+				const x1 = Math.floor(player.location.x);
+				const z1 = Math.floor(player.location.z);
+				const x2 = Math.floor(inspectLocation.x);
+				const z2 = Math.floor(inspectLocation.z);
 				inspectText = calculateDistance(x1, z1, x2, z2);
 				break;
 			case "growth" :
@@ -2861,7 +2861,7 @@ function blockLookingAt(subject, player){
 	}
 }
 function facingDirection(player){
-	let faceDir = player.getRotation().y;
+	const faceDir = player.getRotation().y;
 	let faceTxt = "";
 	
 	switch(true){
@@ -2894,8 +2894,8 @@ function facingDirection(player){
 	return faceTxt;
 }
 function getTheTime(style){
-	let timeVal = world.getTimeOfDay();
-	let timeOffset = timeVal + 6000
+	const timeVal = world.getTimeOfDay();
+	const timeOffset = timeVal + 6000
 	let timeHour = 0;
 	let timeMin = 0;
 	let timePeriod = "";
@@ -2926,7 +2926,7 @@ function getTheTime(style){
 	return timeClock;
 }
 function moonCycle(){
-	let moonPh = world.getMoonPhase();
+	const moonPh = world.getMoonPhase();
 	let moonTxt = "";
 	
 	switch(moonPh){
@@ -2959,10 +2959,10 @@ function moonCycle(){
 	return moonTxt;
 }
 function playerPosition(player, option){
-	let playerDim = player.dimension.id.replace("minecraft:", "");
-	let playerPosX = player.location.x;
-	let playerPosY = player.location.y;
-	let playerPosZ = player.location.z;
+	const playerDim = player.dimension.id.replace("minecraft:", "");
+	const playerPosX = player.location.x;
+	const playerPosY = player.location.y;
+	const playerPosZ = player.location.z;
 	let playerPosTxt = "";
 	
 	switch(option){
@@ -2996,11 +2996,11 @@ function playerPosition(player, option){
 }
 function playerRespawn(player){
 	if(player.getSpawnPoint()){
-		let spawnDim = player.getSpawnPoint().dimension.id.replace("minecraft:", "");
-		let spawnX = player.getSpawnPoint().x;
-		let spawnY = player.getSpawnPoint().y;
-		let spawnZ = player.getSpawnPoint().z;
-		let spawnTxt = "\n        " + spawnDim + ",\n        " + spawnX + ",\n        " + spawnY + ",\n        " + spawnZ;
+		const spawnDim = player.getSpawnPoint().dimension.id.replace("minecraft:", "");
+		const spawnX = player.getSpawnPoint().x;
+		const spawnY = player.getSpawnPoint().y;
+		const spawnZ = player.getSpawnPoint().z;
+		const spawnTxt = "\n        " + spawnDim + ",\n        " + spawnX + ",\n        " + spawnY + ",\n        " + spawnZ;
 		
 		return spawnTxt;
 	}else{
@@ -3022,10 +3022,10 @@ function worldlife(unit){
 	return lifeVal;
 }
 function worldSpawn(){
-	let spawnX = world.getDefaultSpawnLocation().x;
-	let spawnY = world.getDefaultSpawnLocation().y;
-	let spawnZ = world.getDefaultSpawnLocation().z;
-	let spawnTxt = " " + spawnX + ", " + spawnY + ", " + spawnZ;
+	const spawnX = world.getDefaultSpawnLocation().x;
+	const spawnY = world.getDefaultSpawnLocation().y;
+	const spawnZ = world.getDefaultSpawnLocation().z;
+	const spawnTxt = " " + spawnX + ", " + spawnY + ", " + spawnZ;
 	
 	return spawnTxt;
 }
