@@ -112,8 +112,8 @@ export function biomeChecker(player){
 					"deep_ocean",
 					"cold_ocean",
 					"deep_lukewarm_ocean",
-					"deep_frozen_ocean"
-					]
+					"deep_frozen_ocean",
+					"deep_cold_ocean"]
 	const miscBiomes = ["the_end",
 					"river",
 					"mushroom_island",
@@ -127,7 +127,6 @@ export function biomeChecker(player){
 					"plains",
 					"ocean",
 					"bamboo_jungle_hills",
-					"deep_cold_ocean"
 					]
 	const coldBiomes = ["frozen_river",
 						"legacy_frozen_ocean",
