@@ -5,65 +5,65 @@ export function biomeFinder(player){
 	biomeArray[2] = "river";
 	biomeArray[3] = "mushroom_island";
 	biomeArray[4] = "mangrove_swamp";
-	biomeArray[5] = "mushroom_island_shore";
-	biomeArray[6] = "frozen_river";
-	biomeArray[7] = "ocean";
-	biomeArray[8] = "legacy_frozen_ocean";
-	biomeArray[9] = "stony_peaks";
-	biomeArray[10] = "mesa";
-	biomeArray[11] = "desert";
-	biomeArray[12] = "deep_dark";
-	biomeArray[13] = "warm_ocean";
-	biomeArray[14] = "beach";
-	biomeArray[15] = "swampland";
-	biomeArray[16] = "stone_beach";
-	biomeArray[17] = "basalt_deltas";
-	biomeArray[18] = "warped_forest";
-	biomeArray[19] = "soulsand_valley";
-	biomeArray[20] = "savanna";
-	biomeArray[21] = "desert_mutated";
-	biomeArray[22] = "lukewarm_ocean";
-	biomeArray[23] = "frozen_ocean";
-	biomeArray[24] = "deep_ocean";
-	biomeArray[25] = "cold_ocean";
-	biomeArray[26] = "ice_mountains";
-	biomeArray[27] = "desert_hills";
-	biomeArray[28] = "extreme_hills";
-	biomeArray[29] = "cold_beach";
-	biomeArray[30] = "ice_plains";
-	biomeArray[31] = "lush_caves";
-	biomeArray[32] = "dripstone_caves";
-	biomeArray[33] = "deep_warm_ocean";
-	biomeArray[34] = "taiga";
-	biomeArray[35] = "crimson_forest";
-	biomeArray[36] = "savanna_plateau";
-	biomeArray[37] = "savanna_mutated";
-	biomeArray[38] = "mesa_plateau";
-	biomeArray[39] = "jungle";
-	biomeArray[40] = "mesa_plateau_stone_mutated";
-	biomeArray[41] = "swampland_mutated";
-	biomeArray[42] = "jungle_mutated";
-	biomeArray[43] = "deep_lukewarm_ocean";
-	biomeArray[44] = "deep_frozen_ocean";
-	biomeArray[45] = "deep_cold_ocean";
-	biomeArray[46] = "mesa_bryce";
-	biomeArray[47] = "ice_plains_spikes";
-	biomeArray[48] = "extreme_hills_mutated";
-	biomeArray[49] = "jungle_hills";
-	biomeArray[50] = "jungle_edge";
-	biomeArray[51] = "bamboo_jungle";
-	biomeArray[52] = "jagged_peaks";
-	biomeArray[53] = "grove";
-	biomeArray[54] = "frozen_peaks";
-	biomeArray[55] = "snowy_slopes";
-	biomeArray[56] = "plains";
-	biomeArray[57] = "flower_forest";
-	biomeArray[58] = "forest";
-	biomeArray[59] = "meadow";
-	biomeArray[60] = "cherry_grove";
-	biomeArray[61] = "taiga_hills";
-	biomeArray[62] = "cold_taiga";
-	biomeArray[63] = "mesa_plateau_stone";
+	biomeArray[5] = "warped_forest";
+	biomeArray[6] = "mushroom_island_shore";
+	biomeArray[7] = "frozen_river";
+	biomeArray[8] = "ocean";
+	biomeArray[9] = "legacy_frozen_ocean";
+	biomeArray[10] = "stony_peaks";
+	biomeArray[11] = "mesa";
+	biomeArray[12] = "desert";
+	biomeArray[13] = "savanna";
+	biomeArray[14] = "deep_dark";
+	biomeArray[15] = "ice_plains";
+	biomeArray[16] = "warm_ocean";
+	biomeArray[17] = "beach";
+	biomeArray[18] = "taiga";
+	biomeArray[19] = "swampland";
+	biomeArray[20] = "stone_beach";
+	biomeArray[21] = "basalt_deltas";
+	biomeArray[22] = "soulsand_valley";
+	biomeArray[23] = "mesa_plateau";
+	biomeArray[24] = "jungle";
+	biomeArray[25] = "desert_mutated";
+	biomeArray[26] = "lukewarm_ocean";
+	biomeArray[27] = "frozen_ocean";
+	biomeArray[28] = "deep_ocean";
+	biomeArray[29] = "cold_ocean";
+	biomeArray[30] = "ice_mountains";
+	biomeArray[31] = "desert_hills";
+	biomeArray[32] = "extreme_hills";
+	biomeArray[33] = "cold_beach";
+	biomeArray[34] = "lush_caves";
+	biomeArray[35] = "dripstone_caves";
+	biomeArray[36] = "forest";
+	biomeArray[37] = "deep_warm_ocean";
+	biomeArray[38] = "mesa_plateau_stone";
+	biomeArray[39] = "crimson_forest";
+	biomeArray[40] = "savanna_plateau";
+	biomeArray[41] = "savanna_mutated";
+	biomeArray[42] = "mesa_plateau_stone_mutated";
+	biomeArray[43] = "swampland_mutated";
+	biomeArray[44] = "jungle_mutated";
+	biomeArray[45] = "deep_lukewarm_ocean";
+	biomeArray[46] = "deep_frozen_ocean";
+	biomeArray[47] = "deep_cold_ocean";
+	biomeArray[48] = "mesa_bryce";
+	biomeArray[49] = "ice_plains_spikes";
+	biomeArray[50] = "extreme_hills_mutated";
+	biomeArray[51] = "jungle_hills";
+	biomeArray[52] = "jungle_edge";
+	biomeArray[53] = "bamboo_jungle";
+	biomeArray[54] = "jagged_peaks";
+	biomeArray[55] = "grove";
+	biomeArray[56] = "frozen_peaks";
+	biomeArray[57] = "snowy_slopes";
+	biomeArray[58] = "plains";
+	biomeArray[59] = "flower_forest";
+	biomeArray[60] = "meadow";
+	biomeArray[61] = "cherry_grove";
+	biomeArray[62] = "taiga_hills";
+	biomeArray[63] = "cold_taiga";
 	biomeArray[64] = "mesa_plateau_mutated";
 	biomeArray[65] = "savanna_plateau_mutated";
 	biomeArray[66] = "roofed_forest";
@@ -88,11 +88,11 @@ export function biomeFinder(player){
 	biomeArray[85] = "birch_forest_hills";
 	biomeArray[86] = "redwood_taiga_hills_mutated";
 	
-	const propertyPlayer = player.getProperty("addon:biome");
+	let variantPlayer = player.getComponent("minecraft:variant");
 	let biomeId;
 	
-	if(propertyPlayer){
-		biomeId = biomeArray[propertyPlayer];
+	if(variantPlayer){
+		biomeId = biomeArray[variantPlayer.value];
 	}else{
 		biomeId = "NA";
 	}
@@ -100,108 +100,104 @@ export function biomeFinder(player){
 	return biomeId;
 }
 export function biomeChecker(player){
-	const nether = ["basalt_deltas",
-					"crimson_forest",
-					"hell",
+	const nether = ["warped_forest",
+					"basalt_deltas",
 					"soulsand_valley",
-					"warped_forest"]
+					"crimson_forest",
+					"hell"
+					]
 	const oceans = ["warm_ocean",
 					"lukewarm_ocean",
 					"frozen_ocean",
 					"deep_ocean",
 					"cold_ocean",
 					"deep_lukewarm_ocean",
-					"deep_frozen_ocean",
-					"deep_cold_ocean"]
-	const miscBiomes = [
-					"plains",
-					"swampland",
-					"swampland_mutated",
-					"ocean",
+					"deep_frozen_ocean"
+					]
+	const miscBiomes = ["the_end",
 					"river",
-//					"windswept_hills",
 					"mushroom_island",
 					"mushroom_island_shore",
+					"mangrove_swamp",
 					"beach",
+					"swampland",
+					"deep_warm_ocean",
 					"stone_beach",
-//					"stone_shore",
+					"swampland_mutated",
+					"plains",
+					"ocean",
+					"bamboo_jungle_hills",
+					"deep_cold_ocean"
+					]
+	const coldBiomes = ["frozen_river",
+						"legacy_frozen_ocean",
+						"ice_plains",
+						"ice_plains_spikes",
+						"cold_beach",
+						]
+	const desertBiomes = ["mesa",
+					"desert",
 					"savanna",
+					"mesa_plateau",
+					"desert_mutated",
+					"desert_hills",
+					"mesa_plateau_stone",
 					"savanna_plateau",
 					"savanna_mutated",
-					"savanna_plateau_mutated"]
-	const coldBiomes = [
-					"frozen_river",
-					"ice_plains",
-//					"snowy_tundra",
-					"cold_beach",
-					"cold_taiga",
-					"cold_taiga_hills",
-					"ice_plains_spikes",
-					"cold_taiga_mutated"]
-	const desertBiomes = [
-					"desert",
-					"desert_hills",
-//					"desert_lakes",
-					"mesa_plateau_mutated",
-					"mesa_plateau",
-					"mesa",
-					"mesa_bryce",
-					"mesa_plateau_stone",
 					"mesa_plateau_stone_mutated",
-					"mesa_plateau_mutated"]
+					"mesa_bryce",
+					"mesa_plateau_mutated",
+					"savanna_plateau_mutated"
+					]
 // needs unification with array above(all below
 	const mountains = [
-					"mountains",
-					"mountain_edge",
+					"stony_peaks",
 					"ice_mountains",
-					"wooded_mountains",
-					"gravelly_mountains",
+					"extreme_hills",
+					"extreme_hills_mutated",
+					"jagged_peaks",
 					"frozen_peaks",
 					"snowy_slopes",
-					"jagged_peaks",
-					"stony_peaks",
-					"gravelly_mountains+",
-					"windswept_gravelly_hills",
-					"taiga_mountains"]
-	const underGound=[
+					"extreme_hills_edge"
+					
+					]
+	const underGound=["deep_dark",
 					"lush_caves",
-					"deep_dark",
-					"deep_dark",
-					"dripstone_caves"]
-	const flowers = [
+					"dripstone_caves"					
+					]
+	const flowers = ["flower_forest",
 					"meadow",
-					"grove",
-					"sunflower_plains",
-					"flower_forest"]
-	const forests = [
-					"taiga",
-					"forest",
-					"windswept_forest",
-					"wooded_hills",
-					"taiga_hills",
+					"sunflower_plains"
+					]
+	const forests = ["taiga",
 					"jungle",
+					"forest",
+					"jungle_mutated",
 					"jungle_hills",
-					"sparse_jungle",
 					"jungle_edge",
-					"modified_jungle",
-					"modified_jungle_edge",
-					"birch_forest",
-					"birch_forest_hills",
-					"dark_forest",
-					"old_growth_pine_taiga",
-					"giant_tree_taiga",
-					"giant_tree_taiga_hills",
-					"old_growth_birch_forest",
-					"tall_birch_forest",
-					"tall_birch_hills",
-					"dark_forest_hills",
-					"old_growth_spruce_taiga",
-					"giant_spruce_taiga",
-					"giant_spruce_taiga_hills",
 					"bamboo_jungle",
-					"bamboo_jungle_hills",
-					"mangrove_swamp",
-					"cherry_grove"]
+					"grove",
+					"cherry_grove",
+					"taiga_hills",
+					"cold_taiga",
+					"roofed_forest",
+					"taiga_mutated",
+					"roofed_forest_mutated",
+					"jungle_edge_mutated",
+					"extreme_hills_plus_trees_mutated",
+					"extreme_hills_plus_trees",
+					"birch_forest",
+					"forest_hills",
+					"mega_taiga",
+					"redwood_taiga_mutated",
+					"mega_taiga_hills",
+					"cold_taiga_hills",
+					"cold_taiga_mutated",
+					"birch_forest_hills_mutated",
+					"birch_forest_mutated",
+					"birch_forest_hills",
+					"redwood_taiga_hills_mutated"
+					]
 	const biome = biomeFinder(player)
 	if(nether.includes(biome)){
 		const isNew = checkNew(nether, "netherBiomes", biome)
@@ -270,11 +266,11 @@ function updateMask(biomeArray, name, value){
 	return bitmask
 }
 export function lightLevel(player){
-	const propertyPlayer = player.getProperty("addon:light");
+	let markVariantPlayer = player.getComponent("minecraft:mark_variant");
 	let lightId;
 	
-	if(propertyPlayer){
-		lightId = propertyPlayer;
+	if(markVariantPlayer){
+		lightId = markVariantPlayer.value;
 	}else{
 		lightId = "NA";
 	}
