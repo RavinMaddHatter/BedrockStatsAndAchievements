@@ -1,57 +1,58 @@
-{//1.20.71.01
-  "format_version": "1.18.20",
+{//1.21.0.03
+  "format_version": "1.21.0",
   "minecraft:entity": {
     "description": {
       "identifier": "minecraft:player",
+      "spawn_category": "creature",
       "is_spawnable": false,
       "is_summonable": false,
-      "is_experimental": false,
-      
-      //addon properties
-	
       "properties": {
         "addon:biome": {
           "type": "int",
-          "range": [0, 86],
+          "range": [
+            0,
+            86
+          ],
           "client_sync": true,
           "default": 0
         },
         "addon:light": {
           "type": "int",
-          "range": [0, 16],
+          "range": [
+            0,
+            16
+          ],
           "client_sync": true,
           "default": 0
         }
       }
-      
-      //end addon properties
-      
     },
-
     "component_groups": {
-      "minecraft:add_bad_omen": {
+      "minecraft:add_raid_omen": {
         "minecraft:spell_effects": {
           "add_effects": [
             {
-              "effect": "bad_omen",
-              "duration": 6000,
-              "visible": false,
+              "effect": "raid_omen",
+              "duration": 30,
               "display_on_screen_animation": true
             }
-          ]
+          ],
+          "remove_effects": "bad_omen"
         },
         "minecraft:timer": {
-          "time": [ 0.0, 0.0 ],
+          "time": [
+            0.0,
+            0.0
+          ],
           "looping": false,
           "time_down_event": {
-            "event": "minecraft:clear_add_bad_omen",
+            "event": "minecraft:clear_add_raid_omen",
             "target": "self"
           }
         }
       },
-      "minecraft:clear_bad_omen_spell_effect": {
-        "minecraft:spell_effects": {
-        }
+      "minecraft:clear_raid_omen_spell_effect": {
+        "minecraft:spell_effects": {}
       },
       "minecraft:raid_trigger": {
         "minecraft:raid_trigger": {
@@ -59,38 +60,39 @@
             "event": "minecraft:remove_raid_trigger",
             "target": "self"
           }
-        },
-        "minecraft:spell_effects": {
-          "remove_effects": "bad_omen"
         }
       }
     },
-
     "components": {
       "minecraft:experience_reward": {
         "on_death": "Math.Min(query.player_level * 7, 100)"
       },
       "minecraft:type_family": {
-        "family": [ "player" ]
+        "family": [
+          "player"
+        ]
       },
-      "minecraft:is_hidden_when_invisible": {
-      },
+      "minecraft:is_hidden_when_invisible": {},
       "minecraft:loot": {
-        "table": "loot_tables/empty.json"
+        "table": "loot_tables\/empty.json"
       },
       "minecraft:collision_box": {
         "width": 0.6,
         "height": 1.8
       },
-      "minecraft:can_climb": {
-      },
+      "minecraft:can_climb": {},
       "minecraft:movement": {
         "value": 0.1
       },
       "minecraft:hurt_on_condition": {
         "damage_conditions": [
           {
-            "filters": { "test": "in_lava", "subject": "self", "operator": "==", "value": true },
+            "filters": {
+              "test": "in_lava",
+              "subject": "self",
+              "operator": "==",
+              "value": true
+            },
             "cause": "lava",
             "damage_per_tick": 4
           }
@@ -112,7 +114,7 @@
       },
       "minecraft:player.saturation": {
         "value": 5,
-         "max": 20
+        "max": 20
       },
       "minecraft:player.exhaustion": {
         "value": 0,
@@ -154,297 +156,3428 @@
         "pull_in_entities": true,
         "seats": [
           {
-            "position": [ 0.4, -0.2, -0.1 ],
+            "position": [
+              0.4,
+              -0.2,
+              -0.1
+            ],
             "min_rider_count": 0,
             "max_rider_count": 0,
             "lock_rider_rotation": 0
           },
           {
-            "position": [ -0.4, -0.2, -0.1 ],
+            "position": [
+              -0.4,
+              -0.2,
+              -0.1
+            ],
             "min_rider_count": 1,
             "max_rider_count": 2,
             "lock_rider_rotation": 0
           }
         ]
       },
-      "minecraft:conditional_bandwidth_optimization": {
-      },
+      "minecraft:conditional_bandwidth_optimization": {},
       "minecraft:block_climber": {},
       "minecraft:environment_sensor": {
-        "triggers": [ //**change from singular object {} into array object []
-	  { //add bracket to enclose object and allow more array objects
-          "filters": {
-            "all_of": [
-              {
-                "test": "has_mob_effect",
-                "subject": "self",
-                "value": "bad_omen"
-              },
-              {
-                "test": "is_in_village",
-                "subject": "self",
-                "value": true
-              }
-            ]
+        "triggers": [
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "has_mob_effect",
+                  "subject": "self",
+                  "value": "bad_omen"
+                },
+                {
+                  "test": "is_in_village",
+                  "subject": "self",
+                  "value": true
+                }
+              ]
+            },
+            "event": "minecraft:gain_raid_omen"
           },
-          "event": "minecraft:trigger_raid"
-          }, //add bracket to enclose object and allow more array objects
-	
-	//addon components
-					
-	{ "filters": { "all_of": [ { "test": "has_biome_tag", "subject": "self", "value": "the_end" } ] }, "event": "addon:event_biome_tag_1" },
-	{ "filters": { "all_of": [ { "test": "has_biome_tag", "subject": "self", "value": "overworld" }, { "test": "has_biome_tag", "subject": "self", "value": "river" } ] }, "event": "addon:event_biome_tag_2" },
-	{ "filters": { "all_of": [ { "test": "has_biome_tag", "subject": "self", "value": "mooshroom_island" }, { "test": "has_biome_tag", "subject": "self", "value": "overworld" } ] }, "event": "addon:event_biome_tag_3" },
-	{ "filters": { "all_of": [ { "test": "has_biome_tag", "subject": "self", "value": "overworld" }, { "test": "has_biome_tag", "subject": "self", "value": "mangrove_swamp" } ] }, "event": "addon:event_biome_tag_4" },
-	{ "filters": { "all_of": [ { "test": "has_biome_tag", "subject": "self", "value": "mooshroom_island" }, { "test": "has_biome_tag", "subject": "self", "value": "overworld" }, { "test": "has_biome_tag", "subject": "self", "value": "shore" } ] }, "event": "addon:event_biome_tag_5" },
-	{ "filters": { "all_of": [ { "test": "has_biome_tag", "subject": "self", "value": "frozen" }, { "test": "has_biome_tag", "subject": "self", "value": "overworld" }, { "test": "has_biome_tag", "subject": "self", "value": "river" } ] }, "event": "addon:event_biome_tag_6" },
-	{ "filters": { "all_of": [ { "test": "has_biome_tag", "subject": "self", "value": "monster" }, { "test": "has_biome_tag", "subject": "self", "value": "ocean" }, { "test": "has_biome_tag", "subject": "self", "value": "overworld" } ] }, "event": "addon:event_biome_tag_7" },
-	{ "filters": { "all_of": [ { "test": "has_biome_tag", "subject": "self", "value": "frozen" }, { "test": "has_biome_tag", "subject": "self", "value": "ocean" }, { "test": "has_biome_tag", "subject": "self", "value": "overworld" } ] }, "event": "addon:event_biome_tag_8" },
-	{ "filters": { "all_of": [ { "test": "has_biome_tag", "subject": "self", "value": "mountains" }, { "test": "has_biome_tag", "subject": "self", "value": "monster" }, { "test": "has_biome_tag", "subject": "self", "value": "overworld" } ] }, "event": "addon:event_biome_tag_9" },
-	{ "filters": { "all_of": [ { "test": "has_biome_tag", "subject": "self", "value": "mesa" }, { "test": "has_biome_tag", "subject": "self", "value": "monster" }, { "test": "has_biome_tag", "subject": "self", "value": "overworld" } ] }, "event": "addon:event_biome_tag_10" },
-	{ "filters": { "all_of": [ { "test": "has_biome_tag", "subject": "self", "value": "desert" }, { "test": "has_biome_tag", "subject": "self", "value": "monster" }, { "test": "has_biome_tag", "subject": "self", "value": "overworld" } ] }, "event": "addon:event_biome_tag_11" },
-	{ "filters": { "all_of": [ { "test": "has_biome_tag", "subject": "self", "value": "caves" }, { "test": "has_biome_tag", "subject": "self", "value": "deep_dark" }, { "test": "has_biome_tag", "subject": "self", "value": "overworld" } ] }, "event": "addon:event_biome_tag_12" },
-	{ "filters": { "all_of": [ { "test": "has_biome_tag", "subject": "self", "value": "monster" }, { "test": "has_biome_tag", "subject": "self", "value": "ocean" }, { "test": "has_biome_tag", "subject": "self", "value": "overworld" }, { "test": "has_biome_tag", "subject": "self", "value": "warm" } ] }, "event": "addon:event_biome_tag_13" },
-	{ "filters": { "all_of": [ { "test": "has_biome_tag", "subject": "self", "value": "beach" }, { "test": "has_biome_tag", "subject": "self", "value": "monster" }, { "test": "has_biome_tag", "subject": "self", "value": "overworld" }, { "test": "has_biome_tag", "subject": "self", "value": "warm" } ] }, "event": "addon:event_biome_tag_14" },
-	{ "filters": { "all_of": [ { "test": "has_biome_tag", "subject": "self", "value": "animal" }, { "test": "has_biome_tag", "subject": "self", "value": "monster" }, { "test": "has_biome_tag", "subject": "self", "value": "overworld" }, { "test": "has_biome_tag", "subject": "self", "value": "swamp" } ] }, "event": "addon:event_biome_tag_15" },
-	{ "filters": { "all_of": [ { "test": "has_biome_tag", "subject": "self", "value": "beach" }, { "test": "has_biome_tag", "subject": "self", "value": "monster" }, { "test": "has_biome_tag", "subject": "self", "value": "overworld" }, { "test": "has_biome_tag", "subject": "self", "value": "stone" } ] }, "event": "addon:event_biome_tag_16" },
-	{ "filters": { "all_of": [ { "test": "has_biome_tag", "subject": "self", "value": "nether" }, { "test": "has_biome_tag", "subject": "self", "value": "basalt_deltas" }, { "test": "has_biome_tag", "subject": "self", "value": "spawn_many_magma_cubes" }, { "test": "has_biome_tag", "subject": "self", "value": "spawn_ghast" } ] }, "event": "addon:event_biome_tag_17" },
-	{ "filters": { "all_of": [ { "test": "has_biome_tag", "subject": "self", "value": "nether" }, { "test": "has_biome_tag", "subject": "self", "value": "netherwart_forest" }, { "test": "has_biome_tag", "subject": "self", "value": "warped_forest" }, { "test": "has_biome_tag", "subject": "self", "value": "spawn_endermen" } ] }, "event": "addon:event_biome_tag_18" },
-	{ "filters": { "all_of": [ { "test": "has_biome_tag", "subject": "self", "value": "nether" }, { "test": "has_biome_tag", "subject": "self", "value": "soulsand_valley" }, { "test": "has_biome_tag", "subject": "self", "value": "spawn_ghast" }, { "test": "has_biome_tag", "subject": "self", "value": "spawn_endermen" } ] }, "event": "addon:event_biome_tag_19" },
-	{ "filters": { "all_of": [ { "test": "has_biome_tag", "subject": "self", "value": "animal" }, { "test": "has_biome_tag", "subject": "self", "value": "monster" }, { "test": "has_biome_tag", "subject": "self", "value": "overworld" }, { "test": "has_biome_tag", "subject": "self", "value": "savanna" } ] }, "event": "addon:event_biome_tag_20" },
-	{ "filters": { "all_of": [ { "test": "has_biome_tag", "subject": "self", "value": "desert" }, { "test": "has_biome_tag", "subject": "self", "value": "monster" }, { "test": "has_biome_tag", "subject": "self", "value": "mutated" }, { "test": "has_biome_tag", "subject": "self", "value": "overworld_generation" } ] }, "event": "addon:event_biome_tag_21" },
-	{ "filters": { "all_of": [ { "test": "has_biome_tag", "subject": "self", "value": "lukewarm" }, { "test": "has_biome_tag", "subject": "self", "value": "monster" }, { "test": "has_biome_tag", "subject": "self", "value": "ocean" }, { "test": "has_biome_tag", "subject": "self", "value": "overworld" } ] }, "event": "addon:event_biome_tag_22" },
-	{ "filters": { "all_of": [ { "test": "has_biome_tag", "subject": "self", "value": "frozen" }, { "test": "has_biome_tag", "subject": "self", "value": "monster" }, { "test": "has_biome_tag", "subject": "self", "value": "ocean" }, { "test": "has_biome_tag", "subject": "self", "value": "overworld" } ] }, "event": "addon:event_biome_tag_23" },
-	{ "filters": { "all_of": [ { "test": "has_biome_tag", "subject": "self", "value": "deep" }, { "test": "has_biome_tag", "subject": "self", "value": "monster" }, { "test": "has_biome_tag", "subject": "self", "value": "ocean" }, { "test": "has_biome_tag", "subject": "self", "value": "overworld" } ] }, "event": "addon:event_biome_tag_24" },
-	{ "filters": { "all_of": [ { "test": "has_biome_tag", "subject": "self", "value": "cold" }, { "test": "has_biome_tag", "subject": "self", "value": "monster" }, { "test": "has_biome_tag", "subject": "self", "value": "ocean" }, { "test": "has_biome_tag", "subject": "self", "value": "overworld" } ] }, "event": "addon:event_biome_tag_25" },
-	{ "filters": { "all_of": [ { "test": "has_biome_tag", "subject": "self", "value": "frozen" }, { "test": "has_biome_tag", "subject": "self", "value": "ice" }, { "test": "has_biome_tag", "subject": "self", "value": "mountain" }, { "test": "has_biome_tag", "subject": "self", "value": "overworld" } ] }, "event": "addon:event_biome_tag_26" },
-	{ "filters": { "all_of": [ { "test": "has_biome_tag", "subject": "self", "value": "desert" }, { "test": "has_biome_tag", "subject": "self", "value": "hills" }, { "test": "has_biome_tag", "subject": "self", "value": "monster" }, { "test": "has_biome_tag", "subject": "self", "value": "overworld" } ] }, "event": "addon:event_biome_tag_27" },
-	{ "filters": { "all_of": [ { "test": "has_biome_tag", "subject": "self", "value": "animal" }, { "test": "has_biome_tag", "subject": "self", "value": "extreme_hills" }, { "test": "has_biome_tag", "subject": "self", "value": "monster" }, { "test": "has_biome_tag", "subject": "self", "value": "overworld" } ] }, "event": "addon:event_biome_tag_28" },
-	{ "filters": { "all_of": [ { "test": "has_biome_tag", "subject": "self", "value": "beach" }, { "test": "has_biome_tag", "subject": "self", "value": "cold" }, { "test": "has_biome_tag", "subject": "self", "value": "monster" }, { "test": "has_biome_tag", "subject": "self", "value": "overworld" } ] }, "event": "addon:event_biome_tag_29" },
-	{ "filters": { "all_of": [ { "test": "has_biome_tag", "subject": "self", "value": "frozen" }, { "test": "has_biome_tag", "subject": "self", "value": "ice" }, { "test": "has_biome_tag", "subject": "self", "value": "ice_plains" }, { "test": "has_biome_tag", "subject": "self", "value": "overworld" } ] }, "event": "addon:event_biome_tag_30" },
-	{ "filters": { "all_of": [ { "test": "has_biome_tag", "subject": "self", "value": "caves" }, { "test": "has_biome_tag", "subject": "self", "value": "lush_caves" }, { "test": "has_biome_tag", "subject": "self", "value": "overworld" }, { "test": "has_biome_tag", "subject": "self", "value": "monster" } ] }, "event": "addon:event_biome_tag_31" },
-	{ "filters": { "all_of": [ { "test": "has_biome_tag", "subject": "self", "value": "caves" }, { "test": "has_biome_tag", "subject": "self", "value": "overworld" }, { "test": "has_biome_tag", "subject": "self", "value": "dripstone_caves" }, { "test": "has_biome_tag", "subject": "self", "value": "monster" } ] }, "event": "addon:event_biome_tag_32" },
-	{ "filters": { "all_of": [ { "test": "has_biome_tag", "subject": "self", "value": "deep" }, { "test": "has_biome_tag", "subject": "self", "value": "monster" }, { "test": "has_biome_tag", "subject": "self", "value": "ocean" }, { "test": "has_biome_tag", "subject": "self", "value": "overworld" }, { "test": "has_biome_tag", "subject": "self", "value": "warm" } ] }, "event": "addon:event_biome_tag_33" },
-	{ "filters": { "all_of": [ { "test": "has_biome_tag", "subject": "self", "value": "animal" }, { "test": "has_biome_tag", "subject": "self", "value": "forest" }, { "test": "has_biome_tag", "subject": "self", "value": "monster" }, { "test": "has_biome_tag", "subject": "self", "value": "overworld" }, { "test": "has_biome_tag", "subject": "self", "value": "taiga" } ] }, "event": "addon:event_biome_tag_34" },
-	{ "filters": { "all_of": [ { "test": "has_biome_tag", "subject": "self", "value": "nether" }, { "test": "has_biome_tag", "subject": "self", "value": "netherwart_forest" }, { "test": "has_biome_tag", "subject": "self", "value": "crimson_forest" }, { "test": "has_biome_tag", "subject": "self", "value": "spawn_few_zombified_piglins" }, { "test": "has_biome_tag", "subject": "self", "value": "spawn_piglin" } ] }, "event": "addon:event_biome_tag_35" },
-	{ "filters": { "all_of": [ { "test": "has_biome_tag", "subject": "self", "value": "animal" }, { "test": "has_biome_tag", "subject": "self", "value": "monster" }, { "test": "has_biome_tag", "subject": "self", "value": "overworld" }, { "test": "has_biome_tag", "subject": "self", "value": "plateau" }, { "test": "has_biome_tag", "subject": "self", "value": "savanna" } ] }, "event": "addon:event_biome_tag_36" },
-	{ "filters": { "all_of": [ { "test": "has_biome_tag", "subject": "self", "value": "animal" }, { "test": "has_biome_tag", "subject": "self", "value": "monster" }, { "test": "has_biome_tag", "subject": "self", "value": "mutated" }, { "test": "has_biome_tag", "subject": "self", "value": "overworld" }, { "test": "has_biome_tag", "subject": "self", "value": "savanna" } ] }, "event": "addon:event_biome_tag_37" },
-	{ "filters": { "all_of": [ { "test": "has_biome_tag", "subject": "self", "value": "mesa" }, { "test": "has_biome_tag", "subject": "self", "value": "monster" }, { "test": "has_biome_tag", "subject": "self", "value": "overworld" }, { "test": "has_biome_tag", "subject": "self", "value": "plateau" }, { "test": "has_biome_tag", "subject": "self", "value": "rare" } ] }, "event": "addon:event_biome_tag_38" },
-	{ "filters": { "all_of": [ { "test": "has_biome_tag", "subject": "self", "value": "animal" }, { "test": "has_biome_tag", "subject": "self", "value": "jungle" }, { "test": "has_biome_tag", "subject": "self", "value": "monster" }, { "test": "has_biome_tag", "subject": "self", "value": "overworld" }, { "test": "has_biome_tag", "subject": "self", "value": "rare" } ] }, "event": "addon:event_biome_tag_39" },
-	{ "filters": { "all_of": [ { "test": "has_biome_tag", "subject": "self", "value": "mesa" }, { "test": "has_biome_tag", "subject": "self", "value": "monster" }, { "test": "has_biome_tag", "subject": "self", "value": "mutated" }, { "test": "has_biome_tag", "subject": "self", "value": "overworld" }, { "test": "has_biome_tag", "subject": "self", "value": "plateau" } ] }, "event": "addon:event_biome_tag_40" },
-	{ "filters": { "all_of": [ { "test": "has_biome_tag", "subject": "self", "value": "animal" }, { "test": "has_biome_tag", "subject": "self", "value": "monster" }, { "test": "has_biome_tag", "subject": "self", "value": "mutated" }, { "test": "has_biome_tag", "subject": "self", "value": "swamp" }, { "test": "has_biome_tag", "subject": "self", "value": "overworld_generation" } ] }, "event": "addon:event_biome_tag_41" },
-	{ "filters": { "all_of": [ { "test": "has_biome_tag", "subject": "self", "value": "animal" }, { "test": "has_biome_tag", "subject": "self", "value": "jungle" }, { "test": "has_biome_tag", "subject": "self", "value": "monster" }, { "test": "has_biome_tag", "subject": "self", "value": "mutated" }, { "test": "has_biome_tag", "subject": "self", "value": "overworld_generation" } ] }, "event": "addon:event_biome_tag_42" },
-	{ "filters": { "all_of": [ { "test": "has_biome_tag", "subject": "self", "value": "deep" }, { "test": "has_biome_tag", "subject": "self", "value": "lukewarm" }, { "test": "has_biome_tag", "subject": "self", "value": "monster" }, { "test": "has_biome_tag", "subject": "self", "value": "ocean" }, { "test": "has_biome_tag", "subject": "self", "value": "overworld" } ] }, "event": "addon:event_biome_tag_43" },
-	{ "filters": { "all_of": [ { "test": "has_biome_tag", "subject": "self", "value": "deep" }, { "test": "has_biome_tag", "subject": "self", "value": "frozen" }, { "test": "has_biome_tag", "subject": "self", "value": "monster" }, { "test": "has_biome_tag", "subject": "self", "value": "ocean" }, { "test": "has_biome_tag", "subject": "self", "value": "overworld" } ] }, "event": "addon:event_biome_tag_44" },
-	{ "filters": { "all_of": [ { "test": "has_biome_tag", "subject": "self", "value": "cold" }, { "test": "has_biome_tag", "subject": "self", "value": "deep" }, { "test": "has_biome_tag", "subject": "self", "value": "monster" }, { "test": "has_biome_tag", "subject": "self", "value": "ocean" }, { "test": "has_biome_tag", "subject": "self", "value": "overworld" } ] }, "event": "addon:event_biome_tag_45" },
-	{ "filters": { "all_of": [ { "test": "has_biome_tag", "subject": "self", "value": "animal" }, { "test": "has_biome_tag", "subject": "self", "value": "mesa" }, { "test": "has_biome_tag", "subject": "self", "value": "monster" }, { "test": "has_biome_tag", "subject": "self", "value": "mutated" }, { "test": "has_biome_tag", "subject": "self", "value": "overworld" } ] }, "event": "addon:event_biome_tag_46" },
-	{ "filters": { "all_of": [ { "test": "has_biome_tag", "subject": "self", "value": "frozen" }, { "test": "has_biome_tag", "subject": "self", "value": "ice_plains" }, { "test": "has_biome_tag", "subject": "self", "value": "monster" }, { "test": "has_biome_tag", "subject": "self", "value": "mutated" }, { "test": "has_biome_tag", "subject": "self", "value": "overworld" } ] }, "event": "addon:event_biome_tag_47" },
-	{ "filters": { "all_of": [ { "test": "has_biome_tag", "subject": "self", "value": "animal" }, { "test": "has_biome_tag", "subject": "self", "value": "extreme_hills" }, { "test": "has_biome_tag", "subject": "self", "value": "monster" }, { "test": "has_biome_tag", "subject": "self", "value": "mutated" }, { "test": "has_biome_tag", "subject": "self", "value": "overworld" } ] }, "event": "addon:event_biome_tag_48" },
-	{ "filters": { "all_of": [ { "test": "has_biome_tag", "subject": "self", "value": "animal" }, { "test": "has_biome_tag", "subject": "self", "value": "hills" }, { "test": "has_biome_tag", "subject": "self", "value": "jungle" }, { "test": "has_biome_tag", "subject": "self", "value": "monster" }, { "test": "has_biome_tag", "subject": "self", "value": "overworld" } ] }, "event": "addon:event_biome_tag_49" },
-	{ "filters": { "all_of": [ { "test": "has_biome_tag", "subject": "self", "value": "animal" }, { "test": "has_biome_tag", "subject": "self", "value": "edge" }, { "test": "has_biome_tag", "subject": "self", "value": "jungle" }, { "test": "has_biome_tag", "subject": "self", "value": "monster" }, { "test": "has_biome_tag", "subject": "self", "value": "overworld" } ] }, "event": "addon:event_biome_tag_50" },
-	{ "filters": { "all_of": [ { "test": "has_biome_tag", "subject": "self", "value": "animal" }, { "test": "has_biome_tag", "subject": "self", "value": "bamboo" }, { "test": "has_biome_tag", "subject": "self", "value": "jungle" }, { "test": "has_biome_tag", "subject": "self", "value": "monster" }, { "test": "has_biome_tag", "subject": "self", "value": "overworld" } ] }, "event": "addon:event_biome_tag_51" },
-	{ "filters": { "all_of": [ { "test": "has_biome_tag", "subject": "self", "value": "mountains" }, { "test": "has_biome_tag", "subject": "self", "value": "monster" }, { "test": "has_biome_tag", "subject": "self", "value": "overworld" }, { "test": "has_biome_tag", "subject": "self", "value": "frozen" }, { "test": "has_biome_tag", "subject": "self", "value": "jagged_peaks" } ] }, "event": "addon:event_biome_tag_52" },
-	{ "filters": { "all_of": [ { "test": "has_biome_tag", "subject": "self", "value": "mountains" }, { "test": "has_biome_tag", "subject": "self", "value": "cold" }, { "test": "has_biome_tag", "subject": "self", "value": "monster" }, { "test": "has_biome_tag", "subject": "self", "value": "overworld" }, { "test": "has_biome_tag", "subject": "self", "value": "grove" } ] }, "event": "addon:event_biome_tag_53" },
-	{ "filters": { "all_of": [ { "test": "has_biome_tag", "subject": "self", "value": "mountains" }, { "test": "has_biome_tag", "subject": "self", "value": "monster" }, { "test": "has_biome_tag", "subject": "self", "value": "overworld" }, { "test": "has_biome_tag", "subject": "self", "value": "frozen" }, { "test": "has_biome_tag", "subject": "self", "value": "frozen_peaks" } ] }, "event": "addon:event_biome_tag_54" },
-	{ "filters": { "all_of": [ { "test": "has_biome_tag", "subject": "self", "value": "mountains" }, { "test": "has_biome_tag", "subject": "self", "value": "monster" }, { "test": "has_biome_tag", "subject": "self", "value": "overworld" }, { "test": "has_biome_tag", "subject": "self", "value": "snowy_slopes" }, { "test": "has_biome_tag", "subject": "self", "value": "frozen" } ] }, "event": "addon:event_biome_tag_55" },
-	{ "filters": { "all_of": [ { "test": "has_biome_tag", "subject": "self", "value": "animal" }, { "test": "has_biome_tag", "subject": "self", "value": "monster" }, { "test": "has_biome_tag", "subject": "self", "value": "overworld" }, { "test": "has_biome_tag", "subject": "self", "value": "plains" }, { "test": "has_biome_tag", "subject": "self", "value": "bee_habitat" } ] }, "event": "addon:event_biome_tag_56" },
-	{ "filters": { "all_of": [ { "test": "has_biome_tag", "subject": "self", "value": "flower_forest" }, { "test": "has_biome_tag", "subject": "self", "value": "monster" }, { "test": "has_biome_tag", "subject": "self", "value": "mutated" }, { "test": "has_biome_tag", "subject": "self", "value": "overworld" }, { "test": "has_biome_tag", "subject": "self", "value": "bee_habitat" } ] }, "event": "addon:event_biome_tag_57" },
-	{ "filters": { "all_of": [ { "test": "has_biome_tag", "subject": "self", "value": "animal" }, { "test": "has_biome_tag", "subject": "self", "value": "forest" }, { "test": "has_biome_tag", "subject": "self", "value": "monster" }, { "test": "has_biome_tag", "subject": "self", "value": "overworld" }, { "test": "has_biome_tag", "subject": "self", "value": "bee_habitat" } ] }, "event": "addon:event_biome_tag_58" },
-	{ "filters": { "all_of": [ { "test": "has_biome_tag", "subject": "self", "value": "mountains" }, { "test": "has_biome_tag", "subject": "self", "value": "monster" }, { "test": "has_biome_tag", "subject": "self", "value": "overworld" }, { "test": "has_biome_tag", "subject": "self", "value": "meadow" }, { "test": "has_biome_tag", "subject": "self", "value": "bee_habitat" } ] }, "event": "addon:event_biome_tag_59" },
-	{ "filters": { "all_of": [ { "test": "has_biome_tag", "subject": "self", "value": "mountains" }, { "test": "has_biome_tag", "subject": "self", "value": "monster" }, { "test": "has_biome_tag", "subject": "self", "value": "overworld" }, { "test": "has_biome_tag", "subject": "self", "value": "cherry_grove" }, { "test": "has_biome_tag", "subject": "self", "value": "bee_habitat" } ] }, "event": "addon:event_biome_tag_60" },
-	{ "filters": { "all_of": [ { "test": "has_biome_tag", "subject": "self", "value": "animal" }, { "test": "has_biome_tag", "subject": "self", "value": "forest" }, { "test": "has_biome_tag", "subject": "self", "value": "hills" }, { "test": "has_biome_tag", "subject": "self", "value": "monster" }, { "test": "has_biome_tag", "subject": "self", "value": "overworld" }, { "test": "has_biome_tag", "subject": "self", "value": "taiga" } ] }, "event": "addon:event_biome_tag_61" },
-	{ "filters": { "all_of": [ { "test": "has_biome_tag", "subject": "self", "value": "animal" }, { "test": "has_biome_tag", "subject": "self", "value": "cold" }, { "test": "has_biome_tag", "subject": "self", "value": "forest" }, { "test": "has_biome_tag", "subject": "self", "value": "monster" }, { "test": "has_biome_tag", "subject": "self", "value": "overworld" }, { "test": "has_biome_tag", "subject": "self", "value": "taiga" } ] }, "event": "addon:event_biome_tag_62" },
-	{ "filters": { "all_of": [ { "test": "has_biome_tag", "subject": "self", "value": "mesa" }, { "test": "has_biome_tag", "subject": "self", "value": "monster" }, { "test": "has_biome_tag", "subject": "self", "value": "overworld" }, { "test": "has_biome_tag", "subject": "self", "value": "plateau" }, { "test": "has_biome_tag", "subject": "self", "value": "rare" }, { "test": "has_biome_tag", "subject": "self", "value": "stone" } ] }, "event": "addon:event_biome_tag_63" },
-	{ "filters": { "all_of": [ { "test": "has_biome_tag", "subject": "self", "value": "mesa" }, { "test": "has_biome_tag", "subject": "self", "value": "monster" }, { "test": "has_biome_tag", "subject": "self", "value": "mutated" }, { "test": "has_biome_tag", "subject": "self", "value": "overworld" }, { "test": "has_biome_tag", "subject": "self", "value": "plateau" }, { "test": "has_biome_tag", "subject": "self", "value": "stone" } ] }, "event": "addon:event_biome_tag_64" },
-	{ "filters": { "all_of": [ { "test": "has_biome_tag", "subject": "self", "value": "animal" }, { "test": "has_biome_tag", "subject": "self", "value": "monster" }, { "test": "has_biome_tag", "subject": "self", "value": "mutated" }, { "test": "has_biome_tag", "subject": "self", "value": "overworld" }, { "test": "has_biome_tag", "subject": "self", "value": "plateau" }, { "test": "has_biome_tag", "subject": "self", "value": "savanna" } ] }, "event": "addon:event_biome_tag_65" },
-	{ "filters": { "all_of": [ { "test": "has_biome_tag", "subject": "self", "value": "animal" }, { "test": "has_biome_tag", "subject": "self", "value": "forest" }, { "test": "has_biome_tag", "subject": "self", "value": "monster" }, { "test": "has_biome_tag", "subject": "self", "value": "no_legacy_worldgen" }, { "test": "has_biome_tag", "subject": "self", "value": "overworld" }, { "test": "has_biome_tag", "subject": "self", "value": "roofed" } ] }, "event": "addon:event_biome_tag_66" },
-	{ "filters": { "all_of": [ { "test": "has_biome_tag", "subject": "self", "value": "animal" }, { "test": "has_biome_tag", "subject": "self", "value": "forest" }, { "test": "has_biome_tag", "subject": "self", "value": "monster" }, { "test": "has_biome_tag", "subject": "self", "value": "mutated" }, { "test": "has_biome_tag", "subject": "self", "value": "taiga" }, { "test": "has_biome_tag", "subject": "self", "value": "overworld_generation" } ] }, "event": "addon:event_biome_tag_67" },
-	{ "filters": { "all_of": [ { "test": "has_biome_tag", "subject": "self", "value": "animal" }, { "test": "has_biome_tag", "subject": "self", "value": "forest" }, { "test": "has_biome_tag", "subject": "self", "value": "monster" }, { "test": "has_biome_tag", "subject": "self", "value": "mutated" }, { "test": "has_biome_tag", "subject": "self", "value": "roofed" }, { "test": "has_biome_tag", "subject": "self", "value": "overworld_generation" } ] }, "event": "addon:event_biome_tag_68" },
-	{ "filters": { "all_of": [ { "test": "has_biome_tag", "subject": "self", "value": "animal" }, { "test": "has_biome_tag", "subject": "self", "value": "edge" }, { "test": "has_biome_tag", "subject": "self", "value": "jungle" }, { "test": "has_biome_tag", "subject": "self", "value": "monster" }, { "test": "has_biome_tag", "subject": "self", "value": "mutated" }, { "test": "has_biome_tag", "subject": "self", "value": "overworld_generation" } ] }, "event": "addon:event_biome_tag_69" },
-	{ "filters": { "all_of": [ { "test": "has_biome_tag", "subject": "self", "value": "animal" }, { "test": "has_biome_tag", "subject": "self", "value": "extreme_hills" }, { "test": "has_biome_tag", "subject": "self", "value": "forest" }, { "test": "has_biome_tag", "subject": "self", "value": "monster" }, { "test": "has_biome_tag", "subject": "self", "value": "mutated" }, { "test": "has_biome_tag", "subject": "self", "value": "overworld" } ] }, "event": "addon:event_biome_tag_70" },
-	{ "filters": { "all_of": [ { "test": "has_biome_tag", "subject": "self", "value": "animal" }, { "test": "has_biome_tag", "subject": "self", "value": "extreme_hills" }, { "test": "has_biome_tag", "subject": "self", "value": "forest" }, { "test": "has_biome_tag", "subject": "self", "value": "monster" }, { "test": "has_biome_tag", "subject": "self", "value": "mountain" }, { "test": "has_biome_tag", "subject": "self", "value": "overworld" } ] }, "event": "addon:event_biome_tag_71" },
-	{ "filters": { "all_of": [ { "test": "has_biome_tag", "subject": "self", "value": "animal" }, { "test": "has_biome_tag", "subject": "self", "value": "edge" }, { "test": "has_biome_tag", "subject": "self", "value": "extreme_hills" }, { "test": "has_biome_tag", "subject": "self", "value": "monster" }, { "test": "has_biome_tag", "subject": "self", "value": "mountain" }, { "test": "has_biome_tag", "subject": "self", "value": "overworld" } ] }, "event": "addon:event_biome_tag_72" },
-	{ "filters": { "all_of": [ { "test": "has_biome_tag", "subject": "self", "value": "animal" }, { "test": "has_biome_tag", "subject": "self", "value": "bamboo" }, { "test": "has_biome_tag", "subject": "self", "value": "hills" }, { "test": "has_biome_tag", "subject": "self", "value": "jungle" }, { "test": "has_biome_tag", "subject": "self", "value": "monster" }, { "test": "has_biome_tag", "subject": "self", "value": "overworld" } ] }, "event": "addon:event_biome_tag_73" },
-	{ "filters": { "all_of": [ { "test": "has_biome_tag", "subject": "self", "value": "animal" }, { "test": "has_biome_tag", "subject": "self", "value": "monster" }, { "test": "has_biome_tag", "subject": "self", "value": "mutated" }, { "test": "has_biome_tag", "subject": "self", "value": "overworld" }, { "test": "has_biome_tag", "subject": "self", "value": "plains" }, { "test": "has_biome_tag", "subject": "self", "value": "bee_habitat" } ] }, "event": "addon:event_biome_tag_74" },
-	{ "filters": { "all_of": [ { "test": "has_biome_tag", "subject": "self", "value": "animal" }, { "test": "has_biome_tag", "subject": "self", "value": "birch" }, { "test": "has_biome_tag", "subject": "self", "value": "forest" }, { "test": "has_biome_tag", "subject": "self", "value": "monster" }, { "test": "has_biome_tag", "subject": "self", "value": "overworld" }, { "test": "has_biome_tag", "subject": "self", "value": "bee_habitat" } ] }, "event": "addon:event_biome_tag_75" },
-	{ "filters": { "all_of": [ { "test": "has_biome_tag", "subject": "self", "value": "animal" }, { "test": "has_biome_tag", "subject": "self", "value": "hills" }, { "test": "has_biome_tag", "subject": "self", "value": "monster" }, { "test": "has_biome_tag", "subject": "self", "value": "overworld" }, { "test": "has_biome_tag", "subject": "self", "value": "forest" }, { "test": "has_biome_tag", "subject": "self", "value": "bee_habitat" } ] }, "event": "addon:event_biome_tag_76" },
-	{ "filters": { "all_of": [ { "test": "has_biome_tag", "subject": "self", "value": "animal" }, { "test": "has_biome_tag", "subject": "self", "value": "forest" }, { "test": "has_biome_tag", "subject": "self", "value": "mega" }, { "test": "has_biome_tag", "subject": "self", "value": "monster" }, { "test": "has_biome_tag", "subject": "self", "value": "overworld" }, { "test": "has_biome_tag", "subject": "self", "value": "rare" }, { "test": "has_biome_tag", "subject": "self", "value": "taiga" } ] }, "event": "addon:event_biome_tag_77" },
-	{ "filters": { "all_of": [ { "test": "has_biome_tag", "subject": "self", "value": "animal" }, { "test": "has_biome_tag", "subject": "self", "value": "forest" }, { "test": "has_biome_tag", "subject": "self", "value": "mega" }, { "test": "has_biome_tag", "subject": "self", "value": "monster" }, { "test": "has_biome_tag", "subject": "self", "value": "mutated" }, { "test": "has_biome_tag", "subject": "self", "value": "overworld" }, { "test": "has_biome_tag", "subject": "self", "value": "taiga" } ] }, "event": "addon:event_biome_tag_78" },
-	{ "filters": { "all_of": [ { "test": "has_biome_tag", "subject": "self", "value": "animal" }, { "test": "has_biome_tag", "subject": "self", "value": "forest" }, { "test": "has_biome_tag", "subject": "self", "value": "hills" }, { "test": "has_biome_tag", "subject": "self", "value": "mega" }, { "test": "has_biome_tag", "subject": "self", "value": "monster" }, { "test": "has_biome_tag", "subject": "self", "value": "overworld" }, { "test": "has_biome_tag", "subject": "self", "value": "taiga" } ] }, "event": "addon:event_biome_tag_79" },
-	{ "filters": { "all_of": [ { "test": "has_biome_tag", "subject": "self", "value": "animal" }, { "test": "has_biome_tag", "subject": "self", "value": "cold" }, { "test": "has_biome_tag", "subject": "self", "value": "forest" }, { "test": "has_biome_tag", "subject": "self", "value": "hills" }, { "test": "has_biome_tag", "subject": "self", "value": "monster" }, { "test": "has_biome_tag", "subject": "self", "value": "overworld" }, { "test": "has_biome_tag", "subject": "self", "value": "taiga" } ] }, "event": "addon:event_biome_tag_80" },
-	{ "filters": { "all_of": [ { "test": "has_biome_tag", "subject": "self", "value": "nether" }, { "test": "has_biome_tag", "subject": "self", "value": "nether_wastes" }, { "test": "has_biome_tag", "subject": "self", "value": "spawn_magma_cubes" }, { "test": "has_biome_tag", "subject": "self", "value": "spawn_zombified_piglin" }, { "test": "has_biome_tag", "subject": "self", "value": "spawn_few_piglins" }, { "test": "has_biome_tag", "subject": "self", "value": "spawn_ghast" }, { "test": "has_biome_tag", "subject": "self", "value": "spawn_endermen" } ] }, "event": "addon:event_biome_tag_81" },
-	{ "filters": { "all_of": [ { "test": "has_biome_tag", "subject": "self", "value": "animal" }, { "test": "has_biome_tag", "subject": "self", "value": "cold" }, { "test": "has_biome_tag", "subject": "self", "value": "forest" }, { "test": "has_biome_tag", "subject": "self", "value": "monster" }, { "test": "has_biome_tag", "subject": "self", "value": "mutated" }, { "test": "has_biome_tag", "subject": "self", "value": "taiga" }, { "test": "has_biome_tag", "subject": "self", "value": "overworld_generation" } ] }, "event": "addon:event_biome_tag_82" },
-	{ "filters": { "all_of": [ { "test": "has_biome_tag", "subject": "self", "value": "animal" }, { "test": "has_biome_tag", "subject": "self", "value": "birch" }, { "test": "has_biome_tag", "subject": "self", "value": "forest" }, { "test": "has_biome_tag", "subject": "self", "value": "hills" }, { "test": "has_biome_tag", "subject": "self", "value": "monster" }, { "test": "has_biome_tag", "subject": "self", "value": "mutated" }, { "test": "has_biome_tag", "subject": "self", "value": "overworld_generation" } ] }, "event": "addon:event_biome_tag_83" },
-	{ "filters": { "all_of": [ { "test": "has_biome_tag", "subject": "self", "value": "animal" }, { "test": "has_biome_tag", "subject": "self", "value": "birch" }, { "test": "has_biome_tag", "subject": "self", "value": "forest" }, { "test": "has_biome_tag", "subject": "self", "value": "monster" }, { "test": "has_biome_tag", "subject": "self", "value": "mutated" }, { "test": "has_biome_tag", "subject": "self", "value": "bee_habitat" }, { "test": "has_biome_tag", "subject": "self", "value": "overworld_generation" } ] }, "event": "addon:event_biome_tag_84" },
-	{ "filters": { "all_of": [ { "test": "has_biome_tag", "subject": "self", "value": "animal" }, { "test": "has_biome_tag", "subject": "self", "value": "birch" }, { "test": "has_biome_tag", "subject": "self", "value": "forest" }, { "test": "has_biome_tag", "subject": "self", "value": "hills" }, { "test": "has_biome_tag", "subject": "self", "value": "monster" }, { "test": "has_biome_tag", "subject": "self", "value": "overworld" }, { "test": "has_biome_tag", "subject": "self", "value": "bee_habitat" } ] }, "event": "addon:event_biome_tag_85" },
-	{ "filters": { "all_of": [ { "test": "has_biome_tag", "subject": "self", "value": "animal" }, { "test": "has_biome_tag", "subject": "self", "value": "forest" }, { "test": "has_biome_tag", "subject": "self", "value": "hills" }, { "test": "has_biome_tag", "subject": "self", "value": "mega" }, { "test": "has_biome_tag", "subject": "self", "value": "monster" }, { "test": "has_biome_tag", "subject": "self", "value": "mutated" }, { "test": "has_biome_tag", "subject": "self", "value": "taiga" }, { "test": "has_biome_tag", "subject": "self", "value": "overworld_generation" } ] }, "event": "addon:event_biome_tag_86" },
-	
-	{ "filters": { "test": "light_level", "value": 0, "subject": "self" }, 		"event": "addon:event_light_0" },
-	{ "filters": { "test": "light_level", "value": 1, "subject": "self" }, 		"event": "addon:event_light_1" },
-	{ "filters": { "test": "light_level", "value": 2, "subject": "self" }, 		"event": "addon:event_light_2" },
-	{ "filters": { "test": "light_level", "value": 3, "subject": "self" }, 		"event": "addon:event_light_3" },
-	{ "filters": { "test": "light_level", "value": 4, "subject": "self" }, 		"event": "addon:event_light_4" },
-	{ "filters": { "test": "light_level", "value": 5, "subject": "self" }, 		"event": "addon:event_light_5" },
-	{ "filters": { "test": "light_level", "value": 6, "subject": "self" }, 		"event": "addon:event_light_6" },
-	{ "filters": { "test": "light_level", "value": 7, "subject": "self" }, 		"event": "addon:event_light_7" },
-	{ "filters": { "test": "light_level", "value": 8, "subject": "self" }, 		"event": "addon:event_light_8" },
-	{ "filters": { "test": "light_level", "value": 9, "subject": "self" }, 		"event": "addon:event_light_9" },
-	{ "filters": { "test": "light_level", "value": 10, "subject": "self" }, 		"event": "addon:event_light_10" },
-	{ "filters": { "test": "light_level", "value": 11, "subject": "self" }, 		"event": "addon:event_light_11" },
-	{ "filters": { "test": "light_level", "value": 12, "subject": "self" }, 		"event": "addon:event_light_12" },
-	{ "filters": { "test": "light_level", "value": 13, "subject": "self" }, 		"event": "addon:event_light_13" },
-	{ "filters": { "test": "light_level", "value": 14, "subject": "self" }, 		"event": "addon:event_light_14" },
-	{ "filters": { "test": "light_level", "value": 15, "subject": "self" }, 		"event": "addon:event_light_15" },
-	{ "filters": { "test": "light_level", "value": 16, "subject": "self" }, 		"event": "addon:event_light_16" }
-					
-	//end addon components
-        ] //**change from singular object {} into array object []
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "the_end"
+                }
+              ]
+            },
+            "event": "addon:event_biome_tag_0"
+          },
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "overworld"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "mangrove_swamp"
+                }
+              ]
+            },
+            "event": "addon:event_biome_tag_1"
+          },
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "mooshroom_island"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "overworld"
+                }
+              ]
+            },
+            "event": "addon:event_biome_tag_2"
+          },
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "overworld"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "river"
+                }
+              ]
+            },
+            "event": "addon:event_biome_tag_3"
+          },
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "caves"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "deep_dark"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "overworld"
+                }
+              ]
+            },
+            "event": "addon:event_biome_tag_4"
+          },
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "desert"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "monster"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "overworld"
+                }
+              ]
+            },
+            "event": "addon:event_biome_tag_5"
+          },
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "frozen"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "overworld"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "river"
+                }
+              ]
+            },
+            "event": "addon:event_biome_tag_6"
+          },
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "frozen"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "ocean"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "overworld"
+                }
+              ]
+            },
+            "event": "addon:event_biome_tag_7"
+          },
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "mesa"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "monster"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "overworld"
+                }
+              ]
+            },
+            "event": "addon:event_biome_tag_8"
+          },
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "mooshroom_island"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "overworld"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "shore"
+                }
+              ]
+            },
+            "event": "addon:event_biome_tag_9"
+          },
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "monster"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "ocean"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "overworld"
+                }
+              ]
+            },
+            "event": "addon:event_biome_tag_10"
+          },
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "mountains"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "monster"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "overworld"
+                }
+              ]
+            },
+            "event": "addon:event_biome_tag_11"
+          },
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "nether"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "basalt_deltas"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "spawn_many_magma_cubes"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "spawn_ghast"
+                }
+              ]
+            },
+            "event": "addon:event_biome_tag_12"
+          },
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "beach"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "monster"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "overworld"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "warm"
+                }
+              ]
+            },
+            "event": "addon:event_biome_tag_13"
+          },
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "beach"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "cold"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "monster"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "overworld"
+                }
+              ]
+            },
+            "event": "addon:event_biome_tag_14"
+          },
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "cold"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "monster"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "ocean"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "overworld"
+                }
+              ]
+            },
+            "event": "addon:event_biome_tag_15"
+          },
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "deep"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "monster"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "ocean"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "overworld"
+                }
+              ]
+            },
+            "event": "addon:event_biome_tag_16"
+          },
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "desert"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "hills"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "monster"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "overworld"
+                }
+              ]
+            },
+            "event": "addon:event_biome_tag_17"
+          },
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "desert"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "monster"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "mutated"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "overworld_generation"
+                }
+              ]
+            },
+            "event": "addon:event_biome_tag_18"
+          },
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "caves"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "overworld"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "dripstone_caves"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "monster"
+                }
+              ]
+            },
+            "event": "addon:event_biome_tag_19"
+          },
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "animal"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "extreme_hills"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "monster"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "overworld"
+                }
+              ]
+            },
+            "event": "addon:event_biome_tag_20"
+          },
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "frozen"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "monster"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "ocean"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "overworld"
+                }
+              ]
+            },
+            "event": "addon:event_biome_tag_21"
+          },
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "frozen"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "ice"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "mountain"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "overworld"
+                }
+              ]
+            },
+            "event": "addon:event_biome_tag_22"
+          },
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "frozen"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "ice"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "ice_plains"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "overworld"
+                }
+              ]
+            },
+            "event": "addon:event_biome_tag_23"
+          },
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "lukewarm"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "monster"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "ocean"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "overworld"
+                }
+              ]
+            },
+            "event": "addon:event_biome_tag_24"
+          },
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "caves"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "lush_caves"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "overworld"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "monster"
+                }
+              ]
+            },
+            "event": "addon:event_biome_tag_25"
+          },
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "animal"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "monster"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "overworld"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "savanna"
+                }
+              ]
+            },
+            "event": "addon:event_biome_tag_26"
+          },
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "nether"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "soulsand_valley"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "spawn_ghast"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "spawn_endermen"
+                }
+              ]
+            },
+            "event": "addon:event_biome_tag_27"
+          },
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "beach"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "monster"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "overworld"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "stone"
+                }
+              ]
+            },
+            "event": "addon:event_biome_tag_28"
+          },
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "animal"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "monster"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "overworld"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "swamp"
+                }
+              ]
+            },
+            "event": "addon:event_biome_tag_29"
+          },
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "monster"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "ocean"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "overworld"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "warm"
+                }
+              ]
+            },
+            "event": "addon:event_biome_tag_30"
+          },
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "nether"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "netherwart_forest"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "warped_forest"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "spawn_endermen"
+                }
+              ]
+            },
+            "event": "addon:event_biome_tag_31"
+          },
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "animal"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "bamboo"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "jungle"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "monster"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "overworld"
+                }
+              ]
+            },
+            "event": "addon:event_biome_tag_32"
+          },
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "mountains"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "monster"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "overworld"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "cherry_grove"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "bee_habitat"
+                }
+              ]
+            },
+            "event": "addon:event_biome_tag_33"
+          },
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "nether"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "netherwart_forest"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "crimson_forest"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "spawn_few_zombified_piglins"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "spawn_piglin"
+                }
+              ]
+            },
+            "event": "addon:event_biome_tag_34"
+          },
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "cold"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "deep"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "monster"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "ocean"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "overworld"
+                }
+              ]
+            },
+            "event": "addon:event_biome_tag_35"
+          },
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "deep"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "frozen"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "monster"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "ocean"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "overworld"
+                }
+              ]
+            },
+            "event": "addon:event_biome_tag_36"
+          },
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "deep"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "lukewarm"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "monster"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "ocean"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "overworld"
+                }
+              ]
+            },
+            "event": "addon:event_biome_tag_37"
+          },
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "deep"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "monster"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "ocean"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "overworld"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "warm"
+                }
+              ]
+            },
+            "event": "addon:event_biome_tag_38"
+          },
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "animal"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "extreme_hills"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "monster"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "mutated"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "overworld"
+                }
+              ]
+            },
+            "event": "addon:event_biome_tag_39"
+          },
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "flower_forest"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "monster"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "mutated"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "overworld"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "bee_habitat"
+                }
+              ]
+            },
+            "event": "addon:event_biome_tag_40"
+          },
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "animal"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "forest"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "monster"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "overworld"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "bee_habitat"
+                }
+              ]
+            },
+            "event": "addon:event_biome_tag_41"
+          },
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "mountains"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "monster"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "overworld"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "frozen"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "frozen_peaks"
+                }
+              ]
+            },
+            "event": "addon:event_biome_tag_42"
+          },
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "mountains"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "cold"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "monster"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "overworld"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "grove"
+                }
+              ]
+            },
+            "event": "addon:event_biome_tag_43"
+          },
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "frozen"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "ice_plains"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "monster"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "mutated"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "overworld"
+                }
+              ]
+            },
+            "event": "addon:event_biome_tag_44"
+          },
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "mountains"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "monster"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "overworld"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "frozen"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "jagged_peaks"
+                }
+              ]
+            },
+            "event": "addon:event_biome_tag_45"
+          },
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "animal"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "jungle"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "monster"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "overworld"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "rare"
+                }
+              ]
+            },
+            "event": "addon:event_biome_tag_46"
+          },
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "animal"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "edge"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "jungle"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "monster"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "overworld"
+                }
+              ]
+            },
+            "event": "addon:event_biome_tag_47"
+          },
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "animal"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "hills"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "jungle"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "monster"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "overworld"
+                }
+              ]
+            },
+            "event": "addon:event_biome_tag_48"
+          },
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "animal"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "jungle"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "monster"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "mutated"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "overworld_generation"
+                }
+              ]
+            },
+            "event": "addon:event_biome_tag_49"
+          },
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "mountains"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "monster"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "overworld"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "meadow"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "bee_habitat"
+                }
+              ]
+            },
+            "event": "addon:event_biome_tag_50"
+          },
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "animal"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "mesa"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "monster"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "mutated"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "overworld"
+                }
+              ]
+            },
+            "event": "addon:event_biome_tag_51"
+          },
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "mesa"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "monster"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "overworld"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "plateau"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "rare"
+                }
+              ]
+            },
+            "event": "addon:event_biome_tag_52"
+          },
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "mesa"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "monster"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "mutated"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "overworld"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "plateau"
+                }
+              ]
+            },
+            "event": "addon:event_biome_tag_53"
+          },
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "animal"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "monster"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "overworld"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "plains"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "bee_habitat"
+                }
+              ]
+            },
+            "event": "addon:event_biome_tag_54"
+          },
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "animal"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "monster"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "mutated"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "overworld"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "savanna"
+                }
+              ]
+            },
+            "event": "addon:event_biome_tag_55"
+          },
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "animal"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "monster"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "overworld"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "plateau"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "savanna"
+                }
+              ]
+            },
+            "event": "addon:event_biome_tag_56"
+          },
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "mountains"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "monster"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "overworld"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "snowy_slopes"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "frozen"
+                }
+              ]
+            },
+            "event": "addon:event_biome_tag_57"
+          },
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "animal"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "monster"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "mutated"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "swamp"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "overworld_generation"
+                }
+              ]
+            },
+            "event": "addon:event_biome_tag_58"
+          },
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "animal"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "forest"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "monster"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "overworld"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "taiga"
+                }
+              ]
+            },
+            "event": "addon:event_biome_tag_59"
+          },
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "animal"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "bamboo"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "hills"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "jungle"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "monster"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "overworld"
+                }
+              ]
+            },
+            "event": "addon:event_biome_tag_60"
+          },
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "animal"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "birch"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "forest"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "monster"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "overworld"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "bee_habitat"
+                }
+              ]
+            },
+            "event": "addon:event_biome_tag_61"
+          },
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "animal"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "cold"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "forest"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "monster"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "overworld"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "taiga"
+                }
+              ]
+            },
+            "event": "addon:event_biome_tag_62"
+          },
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "animal"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "edge"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "extreme_hills"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "monster"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "mountain"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "overworld"
+                }
+              ]
+            },
+            "event": "addon:event_biome_tag_63"
+          },
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "animal"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "extreme_hills"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "forest"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "monster"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "mountain"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "overworld"
+                }
+              ]
+            },
+            "event": "addon:event_biome_tag_64"
+          },
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "animal"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "extreme_hills"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "forest"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "monster"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "mutated"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "overworld"
+                }
+              ]
+            },
+            "event": "addon:event_biome_tag_65"
+          },
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "animal"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "hills"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "monster"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "overworld"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "forest"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "bee_habitat"
+                }
+              ]
+            },
+            "event": "addon:event_biome_tag_66"
+          },
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "animal"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "edge"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "jungle"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "monster"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "mutated"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "overworld_generation"
+                }
+              ]
+            },
+            "event": "addon:event_biome_tag_67"
+          },
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "mesa"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "monster"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "mutated"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "overworld"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "plateau"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "stone"
+                }
+              ]
+            },
+            "event": "addon:event_biome_tag_68"
+          },
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "mesa"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "monster"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "overworld"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "plateau"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "rare"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "stone"
+                }
+              ]
+            },
+            "event": "addon:event_biome_tag_69"
+          },
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "animal"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "forest"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "monster"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "no_legacy_worldgen"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "overworld"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "roofed"
+                }
+              ]
+            },
+            "event": "addon:event_biome_tag_70"
+          },
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "animal"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "forest"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "monster"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "mutated"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "roofed"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "overworld_generation"
+                }
+              ]
+            },
+            "event": "addon:event_biome_tag_71"
+          },
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "animal"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "monster"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "mutated"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "overworld"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "plateau"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "savanna"
+                }
+              ]
+            },
+            "event": "addon:event_biome_tag_72"
+          },
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "animal"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "monster"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "mutated"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "overworld"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "plains"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "bee_habitat"
+                }
+              ]
+            },
+            "event": "addon:event_biome_tag_73"
+          },
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "animal"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "forest"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "hills"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "monster"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "overworld"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "taiga"
+                }
+              ]
+            },
+            "event": "addon:event_biome_tag_74"
+          },
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "animal"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "forest"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "monster"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "mutated"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "taiga"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "overworld_generation"
+                }
+              ]
+            },
+            "event": "addon:event_biome_tag_75"
+          },
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "animal"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "birch"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "forest"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "hills"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "monster"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "overworld"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "bee_habitat"
+                }
+              ]
+            },
+            "event": "addon:event_biome_tag_76"
+          },
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "animal"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "birch"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "forest"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "hills"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "monster"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "mutated"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "overworld_generation"
+                }
+              ]
+            },
+            "event": "addon:event_biome_tag_77"
+          },
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "animal"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "birch"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "forest"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "monster"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "mutated"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "bee_habitat"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "overworld_generation"
+                }
+              ]
+            },
+            "event": "addon:event_biome_tag_78"
+          },
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "animal"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "cold"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "forest"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "hills"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "monster"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "overworld"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "taiga"
+                }
+              ]
+            },
+            "event": "addon:event_biome_tag_79"
+          },
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "animal"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "cold"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "forest"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "monster"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "mutated"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "taiga"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "overworld_generation"
+                }
+              ]
+            },
+            "event": "addon:event_biome_tag_80"
+          },
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "nether"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "nether_wastes"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "spawn_magma_cubes"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "spawn_zombified_piglin"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "spawn_few_piglins"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "spawn_ghast"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "spawn_endermen"
+                }
+              ]
+            },
+            "event": "addon:event_biome_tag_81"
+          },
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "animal"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "forest"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "mega"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "monster"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "overworld"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "rare"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "taiga"
+                }
+              ]
+            },
+            "event": "addon:event_biome_tag_82"
+          },
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "animal"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "forest"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "hills"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "mega"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "monster"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "overworld"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "taiga"
+                }
+              ]
+            },
+            "event": "addon:event_biome_tag_83"
+          },
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "animal"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "forest"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "mega"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "monster"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "mutated"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "overworld"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "taiga"
+                }
+              ]
+            },
+            "event": "addon:event_biome_tag_84"
+          },
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "animal"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "forest"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "hills"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "mega"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "monster"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "mutated"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "taiga"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "subject": "self",
+                  "value": "overworld_generation"
+                }
+              ]
+            },
+            "event": "addon:event_biome_tag_85"
+          },
+          {
+            "filters": {
+              "test": "light_level",
+              "value": 0,
+              "subject": "self"
+            },
+            "event": "addon:event_light_0"
+          },
+          {
+            "filters": {
+              "test": "light_level",
+              "value": 1,
+              "subject": "self"
+            },
+            "event": "addon:event_light_1"
+          },
+          {
+            "filters": {
+              "test": "light_level",
+              "value": 2,
+              "subject": "self"
+            },
+            "event": "addon:event_light_2"
+          },
+          {
+            "filters": {
+              "test": "light_level",
+              "value": 3,
+              "subject": "self"
+            },
+            "event": "addon:event_light_3"
+          },
+          {
+            "filters": {
+              "test": "light_level",
+              "value": 4,
+              "subject": "self"
+            },
+            "event": "addon:event_light_4"
+          },
+          {
+            "filters": {
+              "test": "light_level",
+              "value": 5,
+              "subject": "self"
+            },
+            "event": "addon:event_light_5"
+          },
+          {
+            "filters": {
+              "test": "light_level",
+              "value": 6,
+              "subject": "self"
+            },
+            "event": "addon:event_light_6"
+          },
+          {
+            "filters": {
+              "test": "light_level",
+              "value": 7,
+              "subject": "self"
+            },
+            "event": "addon:event_light_7"
+          },
+          {
+            "filters": {
+              "test": "light_level",
+              "value": 8,
+              "subject": "self"
+            },
+            "event": "addon:event_light_8"
+          },
+          {
+            "filters": {
+              "test": "light_level",
+              "value": 9,
+              "subject": "self"
+            },
+            "event": "addon:event_light_9"
+          },
+          {
+            "filters": {
+              "test": "light_level",
+              "value": 10,
+              "subject": "self"
+            },
+            "event": "addon:event_light_10"
+          },
+          {
+            "filters": {
+              "test": "light_level",
+              "value": 11,
+              "subject": "self"
+            },
+            "event": "addon:event_light_11"
+          },
+          {
+            "filters": {
+              "test": "light_level",
+              "value": 12,
+              "subject": "self"
+            },
+            "event": "addon:event_light_12"
+          },
+          {
+            "filters": {
+              "test": "light_level",
+              "value": 13,
+              "subject": "self"
+            },
+            "event": "addon:event_light_13"
+          },
+          {
+            "filters": {
+              "test": "light_level",
+              "value": 14,
+              "subject": "self"
+            },
+            "event": "addon:event_light_14"
+          },
+          {
+            "filters": {
+              "test": "light_level",
+              "value": 15,
+              "subject": "self"
+            },
+            "event": "addon:event_light_15"
+          },
+          {
+            "filters": {
+              "test": "light_level",
+              "value": 16,
+              "subject": "self"
+            },
+            "event": "addon:event_light_16"
+          }
+        ]
       }
     },
-
     "events": {
-      "minecraft:gain_bad_omen": {
+      "minecraft:gain_raid_omen": {
         "add": {
           "component_groups": [
-            "minecraft:add_bad_omen"
+            "minecraft:add_raid_omen"
           ]
         }
       },
-      "minecraft:clear_add_bad_omen": {
+      "minecraft:clear_add_raid_omen": {
         "remove": {
           "component_groups": [
-            "minecraft:add_bad_omen"
+            "minecraft:add_raid_omen"
           ]
         },
         "add": {
           "component_groups": [
-            "minecraft:clear_bad_omen_spell_effect"
+            "minecraft:clear_raid_omen_spell_effect"
           ]
         }
       },
       "minecraft:trigger_raid": {
         "add": {
-          "component_groups": [ "minecraft:raid_trigger" ]
+          "component_groups": [
+            "minecraft:raid_trigger"
+          ]
         }
       },
       "minecraft:remove_raid_trigger": {
         "remove": {
-          "component_groups": [ "minecraft:raid_trigger" ]
+          "component_groups": [
+            "minecraft:raid_trigger"
+          ]
         }
       },
-      
-	//addon events
-			
-	"addon:event_biome_tag_1": 		{ "set_property": { "addon:biome": 1 }},
-	"addon:event_biome_tag_2": 		{ "set_property": { "addon:biome": 2 }},
-	"addon:event_biome_tag_3": 		{ "set_property": { "addon:biome": 3 }},
-	"addon:event_biome_tag_4": 		{ "set_property": { "addon:biome": 4 }},
-	"addon:event_biome_tag_5": 		{ "set_property": { "addon:biome": 5 }},
-	"addon:event_biome_tag_6": 		{ "set_property": { "addon:biome": 6 }},
-	"addon:event_biome_tag_7": 		{ "set_property": { "addon:biome": 7 }},
-	"addon:event_biome_tag_8": 		{ "set_property": { "addon:biome": 8 }},
-	"addon:event_biome_tag_9": 		{ "set_property": { "addon:biome": 9 }},
-	"addon:event_biome_tag_10": 		{ "set_property": { "addon:biome": 10 }},
-	"addon:event_biome_tag_11": 		{ "set_property": { "addon:biome": 11 }},
-	"addon:event_biome_tag_12": 		{ "set_property": { "addon:biome": 12 }},
-	"addon:event_biome_tag_13": 		{ "set_property": { "addon:biome": 13 }},
-	"addon:event_biome_tag_14": 		{ "set_property": { "addon:biome": 14 }},
-	"addon:event_biome_tag_15": 		{ "set_property": { "addon:biome": 15 }},
-	"addon:event_biome_tag_16": 		{ "set_property": { "addon:biome": 16 }},
-	"addon:event_biome_tag_17": 		{ "set_property": { "addon:biome": 17 }},
-	"addon:event_biome_tag_18": 		{ "set_property": { "addon:biome": 18 }},
-	"addon:event_biome_tag_19": 		{ "set_property": { "addon:biome": 19 }},
-	"addon:event_biome_tag_20": 		{ "set_property": { "addon:biome": 20 }},
-	"addon:event_biome_tag_21": 		{ "set_property": { "addon:biome": 21 }},
-	"addon:event_biome_tag_22": 		{ "set_property": { "addon:biome": 22 }},
-	"addon:event_biome_tag_23": 		{ "set_property": { "addon:biome": 23 }},
-	"addon:event_biome_tag_24": 		{ "set_property": { "addon:biome": 24 }},
-	"addon:event_biome_tag_25": 		{ "set_property": { "addon:biome": 25 }},
-	"addon:event_biome_tag_26": 		{ "set_property": { "addon:biome": 26 }},
-	"addon:event_biome_tag_27": 		{ "set_property": { "addon:biome": 27 }},
-	"addon:event_biome_tag_28": 		{ "set_property": { "addon:biome": 28 }},
-	"addon:event_biome_tag_29": 		{ "set_property": { "addon:biome": 29 }},
-	"addon:event_biome_tag_30": 		{ "set_property": { "addon:biome": 30 }},
-	"addon:event_biome_tag_31": 		{ "set_property": { "addon:biome": 31 }},
-	"addon:event_biome_tag_32": 		{ "set_property": { "addon:biome": 32 }},
-	"addon:event_biome_tag_33": 		{ "set_property": { "addon:biome": 33 }},
-	"addon:event_biome_tag_34": 		{ "set_property": { "addon:biome": 34 }},
-	"addon:event_biome_tag_35": 		{ "set_property": { "addon:biome": 35 }},
-	"addon:event_biome_tag_36": 		{ "set_property": { "addon:biome": 36 }},
-	"addon:event_biome_tag_37": 		{ "set_property": { "addon:biome": 37 }},
-	"addon:event_biome_tag_38": 		{ "set_property": { "addon:biome": 38 }},
-	"addon:event_biome_tag_39": 		{ "set_property": { "addon:biome": 39 }},
-	"addon:event_biome_tag_40": 		{ "set_property": { "addon:biome": 40 }},
-	"addon:event_biome_tag_41": 		{ "set_property": { "addon:biome": 41 }},
-	"addon:event_biome_tag_42": 		{ "set_property": { "addon:biome": 42 }},
-	"addon:event_biome_tag_43": 		{ "set_property": { "addon:biome": 43 }},
-	"addon:event_biome_tag_44": 		{ "set_property": { "addon:biome": 44 }},
-	"addon:event_biome_tag_45": 		{ "set_property": { "addon:biome": 45 }},
-	"addon:event_biome_tag_46": 		{ "set_property": { "addon:biome": 46 }},
-	"addon:event_biome_tag_47": 		{ "set_property": { "addon:biome": 47 }},
-	"addon:event_biome_tag_48": 		{ "set_property": { "addon:biome": 48 }},
-	"addon:event_biome_tag_49": 		{ "set_property": { "addon:biome": 49 }},
-	"addon:event_biome_tag_50": 		{ "set_property": { "addon:biome": 50 }},
-	"addon:event_biome_tag_51": 		{ "set_property": { "addon:biome": 51 }},
-	"addon:event_biome_tag_52": 		{ "set_property": { "addon:biome": 52 }},
-	"addon:event_biome_tag_53": 		{ "set_property": { "addon:biome": 53 }},
-	"addon:event_biome_tag_54": 		{ "set_property": { "addon:biome": 54 }},
-	"addon:event_biome_tag_55": 		{ "set_property": { "addon:biome": 55 }},
-	"addon:event_biome_tag_56": 		{ "set_property": { "addon:biome": 56 }},
-	"addon:event_biome_tag_57": 		{ "set_property": { "addon:biome": 57 }},
-	"addon:event_biome_tag_58": 		{ "set_property": { "addon:biome": 58 }},
-	"addon:event_biome_tag_59": 		{ "set_property": { "addon:biome": 59 }},
-	"addon:event_biome_tag_60": 		{ "set_property": { "addon:biome": 60 }},
-	"addon:event_biome_tag_61": 		{ "set_property": { "addon:biome": 61 }},
-	"addon:event_biome_tag_62": 		{ "set_property": { "addon:biome": 62 }},
-	"addon:event_biome_tag_63": 		{ "set_property": { "addon:biome": 63 }},
-	"addon:event_biome_tag_64": 		{ "set_property": { "addon:biome": 64 }},
-	"addon:event_biome_tag_65": 		{ "set_property": { "addon:biome": 65 }},
-	"addon:event_biome_tag_66": 		{ "set_property": { "addon:biome": 66 }},
-	"addon:event_biome_tag_67": 		{ "set_property": { "addon:biome": 67 }},
-	"addon:event_biome_tag_68": 		{ "set_property": { "addon:biome": 68 }},
-	"addon:event_biome_tag_69": 		{ "set_property": { "addon:biome": 69 }},
-	"addon:event_biome_tag_70": 		{ "set_property": { "addon:biome": 70 }},
-	"addon:event_biome_tag_71": 		{ "set_property": { "addon:biome": 71 }},
-	"addon:event_biome_tag_72": 		{ "set_property": { "addon:biome": 72 }},
-	"addon:event_biome_tag_73": 		{ "set_property": { "addon:biome": 73 }},
-	"addon:event_biome_tag_74": 		{ "set_property": { "addon:biome": 74 }},
-	"addon:event_biome_tag_75": 		{ "set_property": { "addon:biome": 75 }},
-	"addon:event_biome_tag_76": 		{ "set_property": { "addon:biome": 76 }},
-	"addon:event_biome_tag_77": 		{ "set_property": { "addon:biome": 77 }},
-	"addon:event_biome_tag_78": 		{ "set_property": { "addon:biome": 78 }},
-	"addon:event_biome_tag_79": 		{ "set_property": { "addon:biome": 79 }},
-	"addon:event_biome_tag_80": 		{ "set_property": { "addon:biome": 80 }},
-	"addon:event_biome_tag_81": 		{ "set_property": { "addon:biome": 81 }},
-	"addon:event_biome_tag_82": 		{ "set_property": { "addon:biome": 82 }},
-	"addon:event_biome_tag_83": 		{ "set_property": { "addon:biome": 83 }},
-	"addon:event_biome_tag_84": 		{ "set_property": { "addon:biome": 84 }},
-	"addon:event_biome_tag_85": 		{ "set_property": { "addon:biome": 85 }},
-	"addon:event_biome_tag_86": 		{ "set_property": { "addon:biome": 86 }},
-	
-	"addon:event_light_0": 		{ "set_property": { "addon:light": 0 }},
-	"addon:event_light_1": 		{ "set_property": { "addon:light": 1 }},
-	"addon:event_light_2": 		{ "set_property": { "addon:light": 2 }},
-	"addon:event_light_3": 		{ "set_property": { "addon:light": 3 }},
-	"addon:event_light_4": 		{ "set_property": { "addon:light": 4 }},
-	"addon:event_light_5": 		{ "set_property": { "addon:light": 5 }},
-	"addon:event_light_6": 		{ "set_property": { "addon:light": 6 }},
-	"addon:event_light_7": 		{ "set_property": { "addon:light": 7 }},
-	"addon:event_light_8": 		{ "set_property": { "addon:light": 8 }},
-	"addon:event_light_9": 		{ "set_property": { "addon:light": 9 }},
-	"addon:event_light_10": 		{ "set_property": { "addon:light": 10 }},
-	"addon:event_light_11": 		{ "set_property": { "addon:light": 11 }},
-	"addon:event_light_12": 		{ "set_property": { "addon:light": 12 }},
-	"addon:event_light_13": 		{ "set_property": { "addon:light": 13 }},
-	"addon:event_light_14": 		{ "set_property": { "addon:light": 14 }},
-	"addon:event_light_15": 		{ "set_property": { "addon:light": 15 }},
-	"addon:event_light_16": 		{ "set_property": { "addon:light": 16 }}
-			
-	//end addon events      
+      "addon:event_biome_tag_0": {
+        "set_property": {
+          "addon:biome": 0
+        }
+      },
+      "addon:event_biome_tag_1": {
+        "set_property": {
+          "addon:biome": 1
+        }
+      },
+      "addon:event_biome_tag_2": {
+        "set_property": {
+          "addon:biome": 2
+        }
+      },
+      "addon:event_biome_tag_3": {
+        "set_property": {
+          "addon:biome": 3
+        }
+      },
+      "addon:event_biome_tag_4": {
+        "set_property": {
+          "addon:biome": 4
+        }
+      },
+      "addon:event_biome_tag_5": {
+        "set_property": {
+          "addon:biome": 5
+        }
+      },
+      "addon:event_biome_tag_6": {
+        "set_property": {
+          "addon:biome": 6
+        }
+      },
+      "addon:event_biome_tag_7": {
+        "set_property": {
+          "addon:biome": 7
+        }
+      },
+      "addon:event_biome_tag_8": {
+        "set_property": {
+          "addon:biome": 8
+        }
+      },
+      "addon:event_biome_tag_9": {
+        "set_property": {
+          "addon:biome": 9
+        }
+      },
+      "addon:event_biome_tag_10": {
+        "set_property": {
+          "addon:biome": 10
+        }
+      },
+      "addon:event_biome_tag_11": {
+        "set_property": {
+          "addon:biome": 11
+        }
+      },
+      "addon:event_biome_tag_12": {
+        "set_property": {
+          "addon:biome": 12
+        }
+      },
+      "addon:event_biome_tag_13": {
+        "set_property": {
+          "addon:biome": 13
+        }
+      },
+      "addon:event_biome_tag_14": {
+        "set_property": {
+          "addon:biome": 14
+        }
+      },
+      "addon:event_biome_tag_15": {
+        "set_property": {
+          "addon:biome": 15
+        }
+      },
+      "addon:event_biome_tag_16": {
+        "set_property": {
+          "addon:biome": 16
+        }
+      },
+      "addon:event_biome_tag_17": {
+        "set_property": {
+          "addon:biome": 17
+        }
+      },
+      "addon:event_biome_tag_18": {
+        "set_property": {
+          "addon:biome": 18
+        }
+      },
+      "addon:event_biome_tag_19": {
+        "set_property": {
+          "addon:biome": 19
+        }
+      },
+      "addon:event_biome_tag_20": {
+        "set_property": {
+          "addon:biome": 20
+        }
+      },
+      "addon:event_biome_tag_21": {
+        "set_property": {
+          "addon:biome": 21
+        }
+      },
+      "addon:event_biome_tag_22": {
+        "set_property": {
+          "addon:biome": 22
+        }
+      },
+      "addon:event_biome_tag_23": {
+        "set_property": {
+          "addon:biome": 23
+        }
+      },
+      "addon:event_biome_tag_24": {
+        "set_property": {
+          "addon:biome": 24
+        }
+      },
+      "addon:event_biome_tag_25": {
+        "set_property": {
+          "addon:biome": 25
+        }
+      },
+      "addon:event_biome_tag_26": {
+        "set_property": {
+          "addon:biome": 26
+        }
+      },
+      "addon:event_biome_tag_27": {
+        "set_property": {
+          "addon:biome": 27
+        }
+      },
+      "addon:event_biome_tag_28": {
+        "set_property": {
+          "addon:biome": 28
+        }
+      },
+      "addon:event_biome_tag_29": {
+        "set_property": {
+          "addon:biome": 29
+        }
+      },
+      "addon:event_biome_tag_30": {
+        "set_property": {
+          "addon:biome": 30
+        }
+      },
+      "addon:event_biome_tag_31": {
+        "set_property": {
+          "addon:biome": 31
+        }
+      },
+      "addon:event_biome_tag_32": {
+        "set_property": {
+          "addon:biome": 32
+        }
+      },
+      "addon:event_biome_tag_33": {
+        "set_property": {
+          "addon:biome": 33
+        }
+      },
+      "addon:event_biome_tag_34": {
+        "set_property": {
+          "addon:biome": 34
+        }
+      },
+      "addon:event_biome_tag_35": {
+        "set_property": {
+          "addon:biome": 35
+        }
+      },
+      "addon:event_biome_tag_36": {
+        "set_property": {
+          "addon:biome": 36
+        }
+      },
+      "addon:event_biome_tag_37": {
+        "set_property": {
+          "addon:biome": 37
+        }
+      },
+      "addon:event_biome_tag_38": {
+        "set_property": {
+          "addon:biome": 38
+        }
+      },
+      "addon:event_biome_tag_39": {
+        "set_property": {
+          "addon:biome": 39
+        }
+      },
+      "addon:event_biome_tag_40": {
+        "set_property": {
+          "addon:biome": 40
+        }
+      },
+      "addon:event_biome_tag_41": {
+        "set_property": {
+          "addon:biome": 41
+        }
+      },
+      "addon:event_biome_tag_42": {
+        "set_property": {
+          "addon:biome": 42
+        }
+      },
+      "addon:event_biome_tag_43": {
+        "set_property": {
+          "addon:biome": 43
+        }
+      },
+      "addon:event_biome_tag_44": {
+        "set_property": {
+          "addon:biome": 44
+        }
+      },
+      "addon:event_biome_tag_45": {
+        "set_property": {
+          "addon:biome": 45
+        }
+      },
+      "addon:event_biome_tag_46": {
+        "set_property": {
+          "addon:biome": 46
+        }
+      },
+      "addon:event_biome_tag_47": {
+        "set_property": {
+          "addon:biome": 47
+        }
+      },
+      "addon:event_biome_tag_48": {
+        "set_property": {
+          "addon:biome": 48
+        }
+      },
+      "addon:event_biome_tag_49": {
+        "set_property": {
+          "addon:biome": 49
+        }
+      },
+      "addon:event_biome_tag_50": {
+        "set_property": {
+          "addon:biome": 50
+        }
+      },
+      "addon:event_biome_tag_51": {
+        "set_property": {
+          "addon:biome": 51
+        }
+      },
+      "addon:event_biome_tag_52": {
+        "set_property": {
+          "addon:biome": 52
+        }
+      },
+      "addon:event_biome_tag_53": {
+        "set_property": {
+          "addon:biome": 53
+        }
+      },
+      "addon:event_biome_tag_54": {
+        "set_property": {
+          "addon:biome": 54
+        }
+      },
+      "addon:event_biome_tag_55": {
+        "set_property": {
+          "addon:biome": 55
+        }
+      },
+      "addon:event_biome_tag_56": {
+        "set_property": {
+          "addon:biome": 56
+        }
+      },
+      "addon:event_biome_tag_57": {
+        "set_property": {
+          "addon:biome": 57
+        }
+      },
+      "addon:event_biome_tag_58": {
+        "set_property": {
+          "addon:biome": 58
+        }
+      },
+      "addon:event_biome_tag_59": {
+        "set_property": {
+          "addon:biome": 59
+        }
+      },
+      "addon:event_biome_tag_60": {
+        "set_property": {
+          "addon:biome": 60
+        }
+      },
+      "addon:event_biome_tag_61": {
+        "set_property": {
+          "addon:biome": 61
+        }
+      },
+      "addon:event_biome_tag_62": {
+        "set_property": {
+          "addon:biome": 62
+        }
+      },
+      "addon:event_biome_tag_63": {
+        "set_property": {
+          "addon:biome": 63
+        }
+      },
+      "addon:event_biome_tag_64": {
+        "set_property": {
+          "addon:biome": 64
+        }
+      },
+      "addon:event_biome_tag_65": {
+        "set_property": {
+          "addon:biome": 65
+        }
+      },
+      "addon:event_biome_tag_66": {
+        "set_property": {
+          "addon:biome": 66
+        }
+      },
+      "addon:event_biome_tag_67": {
+        "set_property": {
+          "addon:biome": 67
+        }
+      },
+      "addon:event_biome_tag_68": {
+        "set_property": {
+          "addon:biome": 68
+        }
+      },
+      "addon:event_biome_tag_69": {
+        "set_property": {
+          "addon:biome": 69
+        }
+      },
+      "addon:event_biome_tag_70": {
+        "set_property": {
+          "addon:biome": 70
+        }
+      },
+      "addon:event_biome_tag_71": {
+        "set_property": {
+          "addon:biome": 71
+        }
+      },
+      "addon:event_biome_tag_72": {
+        "set_property": {
+          "addon:biome": 72
+        }
+      },
+      "addon:event_biome_tag_73": {
+        "set_property": {
+          "addon:biome": 73
+        }
+      },
+      "addon:event_biome_tag_74": {
+        "set_property": {
+          "addon:biome": 74
+        }
+      },
+      "addon:event_biome_tag_75": {
+        "set_property": {
+          "addon:biome": 75
+        }
+      },
+      "addon:event_biome_tag_76": {
+        "set_property": {
+          "addon:biome": 76
+        }
+      },
+      "addon:event_biome_tag_77": {
+        "set_property": {
+          "addon:biome": 77
+        }
+      },
+      "addon:event_biome_tag_78": {
+        "set_property": {
+          "addon:biome": 78
+        }
+      },
+      "addon:event_biome_tag_79": {
+        "set_property": {
+          "addon:biome": 79
+        }
+      },
+      "addon:event_biome_tag_80": {
+        "set_property": {
+          "addon:biome": 80
+        }
+      },
+      "addon:event_biome_tag_81": {
+        "set_property": {
+          "addon:biome": 81
+        }
+      },
+      "addon:event_biome_tag_82": {
+        "set_property": {
+          "addon:biome": 82
+        }
+      },
+      "addon:event_biome_tag_83": {
+        "set_property": {
+          "addon:biome": 83
+        }
+      },
+      "addon:event_biome_tag_84": {
+        "set_property": {
+          "addon:biome": 84
+        }
+      },
+      "addon:event_biome_tag_85": {
+        "set_property": {
+          "addon:biome": 85
+        }
+      },
+      "addon:event_light_0": {
+        "set_property": {
+          "addon:light": 0
+        }
+      },
+      "addon:event_light_1": {
+        "set_property": {
+          "addon:light": 1
+        }
+      },
+      "addon:event_light_2": {
+        "set_property": {
+          "addon:light": 2
+        }
+      },
+      "addon:event_light_3": {
+        "set_property": {
+          "addon:light": 3
+        }
+      },
+      "addon:event_light_4": {
+        "set_property": {
+          "addon:light": 4
+        }
+      },
+      "addon:event_light_5": {
+        "set_property": {
+          "addon:light": 5
+        }
+      },
+      "addon:event_light_6": {
+        "set_property": {
+          "addon:light": 6
+        }
+      },
+      "addon:event_light_7": {
+        "set_property": {
+          "addon:light": 7
+        }
+      },
+      "addon:event_light_8": {
+        "set_property": {
+          "addon:light": 8
+        }
+      },
+      "addon:event_light_9": {
+        "set_property": {
+          "addon:light": 9
+        }
+      },
+      "addon:event_light_10": {
+        "set_property": {
+          "addon:light": 10
+        }
+      },
+      "addon:event_light_11": {
+        "set_property": {
+          "addon:light": 11
+        }
+      },
+      "addon:event_light_12": {
+        "set_property": {
+          "addon:light": 12
+        }
+      },
+      "addon:event_light_13": {
+        "set_property": {
+          "addon:light": 13
+        }
+      },
+      "addon:event_light_14": {
+        "set_property": {
+          "addon:light": 14
+        }
+      },
+      "addon:event_light_15": {
+        "set_property": {
+          "addon:light": 15
+        }
+      },
+      "addon:event_light_16": {
+        "set_property": {
+          "addon:light": 16
+        }
+      }
     }
   }
 }
-
-
-
-

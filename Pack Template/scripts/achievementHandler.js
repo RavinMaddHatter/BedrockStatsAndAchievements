@@ -49,7 +49,7 @@ export class achievementHandler{
 		const status = this.checkAchievment(handle,player)
 		
 	}
-	getAllAchievmentData(handle,player){
+	getAllAchievmentData(player){
 		let playerData={}
 		for (let dynamicProperty of this.dynamicProperties){
 			playerData[dynamicProperty]=player.getDynamicProperty(dynamicProperty)
@@ -57,10 +57,10 @@ export class achievementHandler{
 		let achievmentData={}
 		for (const [achievmentHandle, achievementDef] of Object.entries(this.achievments)) {
 			if (!(achievementDef.category in achievmentData)){
-				achievmentData[category]={}
+				achievmentData[achievementDef.category]={}
 			}
-			achievmentData[category][achievmentHandle]=achievementDef
-			achievmentData[category][achievmentHandle].unlocked=playerData[achievementDef.container]&0b1<<achievementDef.containerIndex > 0
+			achievmentData[achievementDef.category][achievmentHandle]=achievementDef
+			achievmentData[achievementDef.category][achievmentHandle].unlocked=this.checkAchievment(achievmentHandle,player)
 		}
 		return achievmentData
 	}
