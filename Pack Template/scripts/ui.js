@@ -1,14 +1,14 @@
 import {ActionFormData, ActionFormResponse } from "@minecraft/server-ui";
 import { world, system } from '@minecraft/server';
 import {biomeFinder, lightLevel} from "playerDependent"
+import {getScoreIfExists} from "helperFunctions.js"
 const debugToggle = true;
 
 export class uiHandler{
-	constructor(achievementTracker,advancementTracker,chalengeTracker,getScoreIfExists){
+	constructor(achievementTracker,advancementTracker,chalengeTracker){
 		this.achievementTracker = achievementTracker;
 		this.advancementTracker = advancementTracker;
 		this.chalengeTracker = chalengeTracker;
-		this.getScoreIfExists = getScoreIfExists;
 	}
 	statList(player){
 		let statForm = new ActionFormData()
@@ -53,10 +53,10 @@ export class uiHandler{
 		
 		//consolidate scores
 		let statArrayTxt = [];
-		statArrayTxt[0] = subtitleFormat + "Overworld blocks travelled: " + bodyFormat + this.getScoreIfExists(overTravel, player);
-		statArrayTxt[1] = subtitleFormat + "Total blocks placed: " + bodyFormat + this.getScoreIfExists(totalBlocksPlaced, player);
-		statArrayTxt[2] = subtitleFormat + "Total blocks broken: " + bodyFormat + this.getScoreIfExists(totalBlocksBroken, player);
-		statArrayTxt[3] = subtitleFormat + "Minecraft days played: " + bodyFormat + this.getScoreIfExists(daysPlayed, player);
+		statArrayTxt[0] = subtitleFormat + "Overworld blocks travelled: " + bodyFormat + getScoreIfExists(overTravel, player);
+		statArrayTxt[1] = subtitleFormat + "Total blocks placed: " + bodyFormat + getScoreIfExists(totalBlocksPlaced, player);
+		statArrayTxt[2] = subtitleFormat + "Total blocks broken: " + bodyFormat + getScoreIfExists(totalBlocksBroken, player);
+		statArrayTxt[3] = subtitleFormat + "Minecraft days played: " + bodyFormat + getScoreIfExists(daysPlayed, player);
 		
 		//construct body
 		let indentSize = "";
@@ -196,19 +196,19 @@ export class uiHandler{
 		let damageScoreboard = world.scoreboard.getObjective("stats_DamageDelt_");
 		let damageTakenScoreboard = world.scoreboard.getObjective("stats_DamageTaken_");
 		
-		blocksBroken = [itemFormat + "Total: " + bodyFormat + this.getScoreIfExists(totalBlocksBroken,player)];
-		blocksPlaced = [itemFormat + "Total: " + bodyFormat + this.getScoreIfExists(totalBlocksPlaced,player)];
-		entitiesKilled = [itemFormat + "Total: " + bodyFormat + this.getScoreIfExists(totalKilled,player)];
-		weaponKills = [itemFormat + "Total: " + bodyFormat + this.getScoreIfExists(weaponKillsBoard,player)];
-		deaths = [itemFormat + "Total: " + bodyFormat + this.getScoreIfExists(totalDeaths,player)];
-		enteredDimensions = [itemFormat + "Total: " + bodyFormat + this.getScoreIfExists(totalEnteredDimensions,player)];
-		redstoneInteractions = [itemFormat + "Total: " + bodyFormat + this.getScoreIfExists(totalRedstoneInteractions,player)];
-		enemiesShot = [itemFormat + "Total: " + bodyFormat + this.getScoreIfExists(totalEnimiesShot,player)];
-		itemsReleased = [itemFormat + "Total: " + bodyFormat + this.getScoreIfExists(totalItemsReleased,player)];
-		achievmentsUnlocked = [itemFormat + "Total: " + bodyFormat + this.getScoreIfExists(totalachievments,player)];
-		tamed = [itemFormat + "Total: " + bodyFormat + this.getScoreIfExists(tamedScoreboard,player)];
-		damage = [itemFormat + "Total: " + bodyFormat + this.getScoreIfExists(damageScoreboard,player)];
-		damagetaken = [itemFormat + "Total: " + bodyFormat + this.getScoreIfExists(damageTakenScoreboard,player)];
+		blocksBroken = [itemFormat + "Total: " + bodyFormat + getScoreIfExists(totalBlocksBroken,player)];
+		blocksPlaced = [itemFormat + "Total: " + bodyFormat + getScoreIfExists(totalBlocksPlaced,player)];
+		entitiesKilled = [itemFormat + "Total: " + bodyFormat + getScoreIfExists(totalKilled,player)];
+		weaponKills = [itemFormat + "Total: " + bodyFormat + getScoreIfExists(weaponKillsBoard,player)];
+		deaths = [itemFormat + "Total: " + bodyFormat + getScoreIfExists(totalDeaths,player)];
+		enteredDimensions = [itemFormat + "Total: " + bodyFormat + getScoreIfExists(totalEnteredDimensions,player)];
+		redstoneInteractions = [itemFormat + "Total: " + bodyFormat + getScoreIfExists(totalRedstoneInteractions,player)];
+		enemiesShot = [itemFormat + "Total: " + bodyFormat + getScoreIfExists(totalEnimiesShot,player)];
+		itemsReleased = [itemFormat + "Total: " + bodyFormat + getScoreIfExists(totalItemsReleased,player)];
+		achievmentsUnlocked = [itemFormat + "Total: " + bodyFormat + getScoreIfExists(totalachievments,player)];
+		tamed = [itemFormat + "Total: " + bodyFormat + getScoreIfExists(tamedScoreboard,player)];
+		damage = [itemFormat + "Total: " + bodyFormat + getScoreIfExists(damageScoreboard,player)];
+		damagetaken = [itemFormat + "Total: " + bodyFormat + getScoreIfExists(damageTakenScoreboard,player)];
 		
 		//consolidate scores
 		for( let i in scoreboards){
@@ -223,7 +223,7 @@ export class uiHandler{
 			}
 			switch (type){
 				case "stats":
-					tempScore = this.getScoreIfExists(board,player);
+					tempScore = getScoreIfExists(board,player);
 					if(name.length>0){
 						switch(category){
 							case "blocksBroken":

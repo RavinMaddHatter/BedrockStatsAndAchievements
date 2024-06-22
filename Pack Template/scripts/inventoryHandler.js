@@ -1,11 +1,11 @@
 import { world } from '@minecraft/server';
+import {getequipped} from "helperFunctions.js"
 
 export class inventoryHandler{
-	constructor(achievementTracker,advancementTracker,chalengeTracker,getequipped){
+	constructor(achievementTracker,advancementTracker,chalengeTracker){
 		this.achievementTracker = achievementTracker;
 		this.advancementTracker = advancementTracker;
 		this.chalengeTracker = chalengeTracker;
-		this.getequipped = getequipped;
 	}
 	itemInventory(player){
 		//to-do--------------------
@@ -178,7 +178,7 @@ export class inventoryHandler{
 				}
 			}
 		}
-		const equip = this.getequipped(player)
+		const equip = getequipped(player)
 		for(const slot of ["Chest","Feet","Head","Legs"]){
 			let itemName = equip[slot];
 			if(armorTypes.includes(itemName)){
