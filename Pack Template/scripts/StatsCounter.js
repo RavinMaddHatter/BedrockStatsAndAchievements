@@ -150,16 +150,17 @@ function statListBody(player){
 }
 function objectivesStatsDisplay(player){
     //title
-	let scoresText= ["Objectives"];
+	let scoresText= [];
 	
     //formatting
-	let titleFormat = "\u00A7d";
-	let subtitleFormat = "\u00A73";
-	let itemFormat = "\u00A7r";
-	let bodyFormat = "\u00A7a";
-	let boolPos = "\u2714";
-	let boolNeg = " ";
-	let display = " " 
+	const titleFormat = "\u00A7d";
+	const subtitleFormat = "\u00A73";
+	const itemFormat = "\u00A7r";
+	const bodyFormat = "\u00A7a";
+	const boolPos = "\u2714";
+	const indent = "   ";
+	const boolNeg = " ";
+	let display = " ";
 	
     //items
 	let scoreboards = world.scoreboard.getObjectives();
@@ -169,53 +170,65 @@ function objectivesStatsDisplay(player){
 	let challenges = [];
 	const allAchievments = achievementTracker.getAllAchievmentData(player)
 	for(let category in allAchievments){
+		let newCategory=true;
 		for(const handle in allAchievments[category]){
+			if(newCategory){
+				achievement.push(subtitleFormat+allAchievments[category][handle].category+ ": ");
+				newCategory=false;
+			}
 			if(allAchievments[category][handle].unlocked){
 				display=boolPos
 			}
 			else{
 				display=boolNeg
 			}
-			achievement.push(itemFormat+allAchievments[category][handle].displayName+ ": " + bodyFormat + display);
+			achievement.push(indent+itemFormat+allAchievments[category][handle].displayName+ ": " + bodyFormat + display);
 		}
 	}
 	const allAdvancements = advancementTracker.getAllAchievmentData(player)
 	for(let category in allAdvancements){
+		let newCategory=true;
 		for(const handle in allAdvancements[category]){
+			if(newCategory){
+				advancement.push(subtitleFormat+allAdvancements[category][handle].category+ ": ");
+				newCategory=false;
+			}
 			if(allAdvancements[category][handle].unlocked){
 				display=boolPos
 			}
 			else{
 				display=boolNeg
 			}
-			advancement.push(itemFormat+allAdvancements[category][handle].displayName+ ": " + bodyFormat + display);
+			advancement.push(indent+itemFormat+allAdvancements[category][handle].displayName+ ": " + bodyFormat + display);
 		}
 	}
 	const allChallenges = chalengeTracker.getAllAchievmentData(player)
 	for(let category in allChallenges){
+		let newCategory=true;
 		for(const handle in allChallenges[category]){
+			if(newCategory){
+				challenges.push(subtitleFormat+allChallenges[category][handle].category+ ": ");
+				newCategory=false;
+			}
 			if(allChallenges[category][handle].unlocked){
 				display=boolPos
 			}
 			else{
 				display=boolNeg
 			}
-			challenges.push(itemFormat+allChallenges[category][handle].displayName+ ": " + bodyFormat + display);
+			challenges.push(indent+itemFormat+allChallenges[category][handle].displayName+ ": " + bodyFormat + display);
 		}
 	}
-
-	
     //construct ui
 	let indentSize = "";
 	let nextLine = '\n';
 	let indentNextLine = nextLine + indentSize;
 	let allStats=titleFormat + scoresText.join(nextLine) + nextLine
+		+ titleFormat + "Achievements:" + bodyFormat + indentNextLine + achievement.join(indentNextLine) + nextLine
 		+ nextLine
-		+ subtitleFormat + "Achievements:" + bodyFormat + indentNextLine + achievement.join(indentNextLine) + nextLine
+		+ titleFormat + "Advancements:" + bodyFormat + indentNextLine + advancement.join(indentNextLine) + nextLine
 		+ nextLine
-		+ subtitleFormat + "Advancements:" + bodyFormat + indentNextLine + advancement.join(indentNextLine) + nextLine
-		+ nextLine
-		+ subtitleFormat + "Challenges:" + bodyFormat + indentNextLine + challenges.join(indentNextLine) + nextLine;
+		+ titleFormat + "Challenges:" + bodyFormat + indentNextLine + challenges.join(indentNextLine) + nextLine;
 	let statsForm = new ActionFormData()
 		.title(player.name)
 		.body(allStats)
@@ -662,7 +675,6 @@ function getArrowType(arrow){
 }
 function initSpawn(event){
 	let player = event.player;
-	
 	if(!player.getDynamicProperty("1spawn") == 1){//verify the player hasn't spawned previously	
 		player.setDynamicProperty("initialX", Math.floor(player.location.x));//record player initial location x
 		player.setDynamicProperty("initialZ", Math.floor(player.location.z));//record player initial location z
@@ -737,7 +749,11 @@ function itemRelease(event){
 }
 function itemStopOn(event){
 	let player = event.source;
-	let itemName = event.itemStack.typeId.replace("minecraft:","");
+	let itemName = "";
+	if (event.itemStack){
+		
+		itemName = event.itemStack.typeId.replace("minecraft:","");
+	}
 	let blockTag = event.block.getTags();
 	
 	switch(itemName){
@@ -784,10 +800,12 @@ function loadedEntity(event){
 function spawnedEntity(event){
 	let entity = event.entity;
 	let entityName = entity.typeId.replace("minecraft:","");
-	let playersClosest = entity.dimension.getPlayers({
-				closest: 1,
-				location: {x: entity.location.x, y: entity.location.y, z: entity.location.z}
-			})[0];
+	if (entity.hasOwnProperty("dimension") ){
+		let playersClosest = entity.dimension.getPlayers({
+					closest: 1,
+					location: {x: entity.location.x, y: entity.location.y, z: entity.location.z}
+				})[0];
+	}
 	switch(entityName){
 	    //when fortress mobs spawn, search for nearby players and give them an achievement
 		case "blaze" ://*fall through*
@@ -950,8 +968,6 @@ function useItemOn(event){
 function useItem(event){
 	let player = event.source;
 	let itemName = getequipped(player)["Mainhand"]
-	
-	
 	switch(itemName){
 		case "crossbow" :
 			if(player.getDynamicProperty("chargeCross") == 1){
@@ -1590,7 +1606,7 @@ function tameEvents(event){
 		closest: 1,
 			location: {x: event.entity.location.x, y: event.entity.location.y, z: event.entity.location.z}
 	})[0];
-	this.addToScore("stats_Tamed_",animalType,player)
+	addToScore("stats_Tamed_",animalType,player)
 	if (event.eventId=="minecraft:on_tame"){
 		//[advancement] Best Friends Forever | Tame an animal | Tame one of these 8 tameable mobs:, Cat, Donkey, Horse, Llama, Mule, Parrot, Trader Llama, Wolf
 		if(!advancementTracker.checkAchievment("BestFriendsForever",player)){
@@ -1944,13 +1960,13 @@ function spawnAndBreed(entity, player){
 		case "strider" ://*fall through*
 		case "turtle" ://*fall through*
 		case "wolf" :
-			if(!achievementTracker.checkAchievment("TheParrotsandtheBats",player)){
-				achievementTracker.setAchievment("TheParrotsandtheBats",player);//[advancement] The Parrots and the Bats | Breed two animals together | Breed a pair of any of these 25 mobs:, Axolotl, Bee, Camel, Cat, Chicken, Cow, Donkey, Fox, Frog, Goat, Hoglin, Horse, Llama, Mooshroom, Mule, Ocelot, Panda, Pig, Rabbit, Sheep, Sniffer, Strider, Trader Llama, Turtle, Wolf, A mule must be the result of breeding a horse and a donkey for this advancement as they are not breedable together. Other breedable mobs are ignored for this advancement.
+			if(!advancementTracker.checkAchievment("TheParrotsandtheBats",player)){
+				advancementTracker.setAchievment("TheParrotsandtheBats",player);//[advancement] The Parrots and the Bats | Breed two animals together | Breed a pair of any of these 25 mobs:, Axolotl, Bee, Camel, Cat, Chicken, Cow, Donkey, Fox, Frog, Goat, Hoglin, Horse, Llama, Mooshroom, Mule, Ocelot, Panda, Pig, Rabbit, Sheep, Sniffer, Strider, Trader Llama, Turtle, Wolf, A mule must be the result of breeding a horse and a donkey for this advancement as they are not breedable together. Other breedable mobs are ignored for this advancement.
 			}
 			//[advancement] Two by Two | Breed all the animals! | Breed a pair of each of these 24 mobs:, Axolotl, Bee, Camel, Cat, Chicken, Cow, Donkey, Fox, Frog, Goat, Hoglin, Horse, Llama, Mooshroom, Mule, Ocelot, Panda, Pig, Rabbit, Sheep, Sniffer, Strider, Turtle, Wolf, A trader llama does not count as a llama, and a mule must be the result of breeding a horse and a donkey for this advancement as they are not breedable together. Other breedable mobs can be bred, but are ignored for this advancement.
 			if(getScoreIfExists(world.scoreboard.getObjective("spawnAndBreedbreed_all_bool"), player) == 0){
 				if(getScoreIfExists(world.scoreboard.getObjective("spawnAndBreed" + entity), player) == 0){
-					addToScore("spawnAndBreedbreed_all_score", player);
+					addToScore("spawnAndBreedbreed_all_score",entity, player);
 					//boolScore("spawnAndBreed", entity, player, 1);
 					if(getScoreIfExists(world.scoreboard.getObjective("spawnAndBreedbreed_all_score"), player) == 24){
 						//boolScore("spawnAndBreed", "breed_all_bool", player, 1);
@@ -1959,8 +1975,8 @@ function spawnAndBreed(entity, player){
 			}
 			break;
 		case "trader_llama" :
-			if(!achievementTracker.checkAchievment("TheParrotsandtheBats",player)){
-				achievementTracker.setAchievment("TheParrotsandtheBats",player);
+			if(!advancementTracker.checkAchievment("TheParrotsandtheBats",player)){
+				advancementTracker.setAchievment("TheParrotsandtheBats",player);
 			}
 			break;
 	}
@@ -2289,7 +2305,7 @@ function getequipped(player){
 	const equipComp = player.getComponent("minecraft:equippable");
 	let equipment={"dayOne":true,"chest":"","Feet":"","Head":"","Legs":"","Mainhand":"Empty Hand","Offhand":""}
 	if( equipComp.getEquipment("Chest")){
-		equipment["chest"] = equipComp.getEquipment("Chest").typeId.replace("minecraft:","")
+		equipment["Chest"] = equipComp.getEquipment("Chest").typeId.replace("minecraft:","")
 	}
 	if(equipComp.getEquipment("Feet")){
 		equipment["Feet"] = equipComp.getEquipment("Feet").typeId.replace("minecraft:","")

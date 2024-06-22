@@ -59,8 +59,10 @@ export class achievementHandler{
 			if (!(achievementDef.category in achievmentData)){
 				achievmentData[achievementDef.category]={}
 			}
-			achievmentData[achievementDef.category][achievmentHandle]=achievementDef
-			achievmentData[achievementDef.category][achievmentHandle].unlocked=this.checkAchievment(achievmentHandle,player)
+			if(achievementDef.implemented){
+				achievmentData[achievementDef.category][achievmentHandle]=achievementDef
+				achievmentData[achievementDef.category][achievmentHandle].unlocked=this.checkAchievment(achievmentHandle,player)
+			}
 		}
 		return achievmentData
 	}
