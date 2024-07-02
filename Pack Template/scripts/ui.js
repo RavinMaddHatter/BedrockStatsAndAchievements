@@ -366,7 +366,7 @@ export class uiHandler{
 				playerPosTxt =  " " + playerPosX.toFixed(2) + ", " + playerPosY.toFixed(2) + ", " + playerPosZ.toFixed(2);
 				break;
 			case "block" :
-				playerPosTxt =  " " + Math.floor(playerPosX) + ", " + Math.floor(playerPosY) + " " + Math.floor(playerPosZ);
+				playerPosTxt =  " " + (playerPosX > 0 ? Math.floor(playerPosX) : Math.ceil(playerPosX)) + ", " + (playerPosY > 0 ? Math.floor(playerPosY) : Math.ceil(playerPosY)) + ", " + (playerPosZ > 0 ? Math.floor(playerPosZ) : Math.ceil(playerPosZ));
 				break;
 			case "chunk" :
 				playerPosTxt = Math.floor(playerPosX / 16) + ", " + Math.floor(playerPosY / 16) + ", " + Math.floor(playerPosZ / 16);
@@ -381,10 +381,10 @@ export class uiHandler{
 				playerPosTxt = playerDim;
 				break;
 			case "nether" :
-				playerPosTxt = (playerDim == "overworld" ? (Math.floor(playerPosX/8) + ", " + Math.floor(playerPosZ/8)) : "");
+				playerPosTxt = (playerDim == "overworld" ? ((playerPosX/8).toFixed(2) + ", " + (playerPosZ/8).toFixed(2)) : "");
 				break;
 			case "overworld" :
-				playerPosTxt = (playerDim == "nether" ? (Math.floor(playerPosX*8) + ", " + Math.floor(playerPosZ*8)) : "");
+				playerPosTxt = (playerDim == "nether" ? ((playerPosX*8).toFixed(2) + ", " + (playerPosZ*8).toFixed(2)) : "");
 				break;
 		}
 		
