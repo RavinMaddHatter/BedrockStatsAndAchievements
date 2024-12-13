@@ -228,7 +228,7 @@ export class uiHandler{
 						switch(category){
 							case "blocksBroken":
 								if (!name.includes("total")){
-									blocksBroken.push(itemFormat + name+ ": " + bodyFormat + tempScore.toString());
+									blocksBroken.push(itemFormat + name.replace("minecraft:","")+ ": " + bodyFormat + tempScore.toString());
 								}
 								break;
 							case "blocksPlaced":

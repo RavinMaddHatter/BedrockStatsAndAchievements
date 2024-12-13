@@ -38,6 +38,7 @@ world.afterEvents.itemCompleteUse.subscribe(event=>{
 });
 world.afterEvents.itemUse.subscribe(event=>{
 	statStick(event)
+	
 	useItem(event)
 })
 world.afterEvents.itemUseOn.subscribe(event=>{
@@ -169,7 +170,7 @@ function changedDimension(event){
 			if(!advancementTracker.checkAchievment("TheEnd", player)){
 				achievementTracker.setAchievment("TheEnd", player);//[achievement] The End? | Enter an End Portal | Enter a stronghold End Portal activated with all twelve eyes of ender.
 				advancementTracker.setAchievment("TheEnd", player);//[advancement] The End? | Enter the End Portal | Enter the End dimension.
-				advancementTracker.setAchievment("TheEnd2", player);//[advancement] The End | Or the beginning? | Enter the End dimension.
+//				advancementTracker.setAchievment("TheEnd2", player);//[advancement] The End | Or the beginning? | Enter the End dimension.
 			}
 			break;
 		case "overworld":
@@ -457,6 +458,7 @@ function loadedEntity(event){
 function spawnedEntity(event){
 	let entity = event.entity;
 	let entityName = entity.typeId.replace("minecraft:","");
+	let playersClosest=null
 	if (entity.hasOwnProperty("dimension") ){
 		let playersClosest = entity.dimension.getPlayers({
 					closest: 1,
@@ -1063,6 +1065,7 @@ function spawnAndBreed(entity, player){
 					advancementTracker.setAchievment("TheParrotsandtheBats",player);
 				}
 			}
+			break;
 		case "mule" :	
 			if(!achievementTracker.checkAchievment("ArtificialSelection",player)){
 				achievementTracker.setAchievment("ArtificialSelection",player);//[achievement] Artificial Selection | Breed a mule from a horse and a donkey. | —
