@@ -247,7 +247,7 @@ export class inventoryHandler{
 		//[achievement] Cover me in debris | Wear a full set of Netherite armor | Have a full set of Netherite armor in your inventory.
 		//[advancement] Cover Me in Debris | Get a full suit of Netherite armor | Have a full set of netherite armor in your inventory.
 		if((allNetheriteArmorMask & armorMask)==allNetheriteArmorMask){
-			if(!this.advancementTracker.checkAchievment("Covermeindebris",player)){
+			if(!this.achievementTracker.checkAchievment("Covermeindebris",player)){
 				this.advancementTracker.setAchievment("Covermeindebris",player)
 				this.achievementTracker.setAchievment("Covermeindebris",player)
 			}

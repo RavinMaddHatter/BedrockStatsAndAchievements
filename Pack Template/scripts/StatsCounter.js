@@ -1,7 +1,7 @@
 import { world, system } from '@minecraft/server';
 import { achievements, advancements, challenges} from "Translation";
 import {achievementHandler} from "achievementHandler"
-import {biomeFinder, lightLevel} from "playerDependent"
+import {biomeFinder,biomeChecker, lightLevel} from "playerDependent"
 import {inventoryHandler} from "inventoryHandler.js"
 import {uiHandler} from "ui.js"
 import {addToScore,getequipped,achievementUnlock,propertyToScore,calculateDistance,getScoreIfExists} from "helperFunctions.js"
@@ -108,7 +108,7 @@ function blockBroken(event){
 	}
 	delete blockBreaks["L"+event.block.x+" "+event.block.y+" "+event.block.z]
 	if (blockData!=undefined){
-		addToScore("stats_blocksBroken_", blockData, player)
+		addToScore("stats_blocksBroken_", blockData.replace("_"," "), player)
 	}
 	//[achievement] Getting Wood | Punch a tree until a block of wood pops out. | Pick up a log from the ground.
 	if(blockData.includes("log")){
@@ -122,7 +122,7 @@ function blockPlaced(event){
 	let player = event.player;
 	let blockData= getequipped(player)["Mainhand"].replace("_"," ")
 	if (blockData!=undefined){
-		addToScore("stats_blocksPlaced_", blockData, player)
+		addToScore("stats_blocksPlaced_", blockData.replace("_"," "), player)
 	}
 	addToScore("stats_blocksPlaced_", "total", player);
 }
@@ -132,7 +132,7 @@ function buttonPushed(event){
 		if (event.block.getTags().includes("wood")){
 			type = "Wood Buttons"
 		}
-		addToScore("stats_redstonInteractions_",type, event.source)
+		addToScore("stats_redstonInteractions_",type.replace("_"," "), event.source)
 	}
 }
 function pleatePressed(event){
@@ -144,7 +144,7 @@ function pleatePressed(event){
 		if (event.block.getTags().includes("wood")){
 			type = "Wood Pressure Plate"
 		}
-		addToScore("stats_redstonInteractions_",type, event.source)
+		addToScore("stats_redstonInteractions_",type.replace("_"," "), event.source)
 	}
 }
 function changedDimension(event){
@@ -203,12 +203,21 @@ function entityDied(event){
 	if(event.damageSource.damagingEntity){
 		const killer = event.damageSource.damagingEntity
 		if(killer.typeId == "minecraft:player"){
-			let victimType = victim.typeId.replace("minecraft:","").replace("_"," ")
-			addToScore("stats_entitiesKilled_",victimType, killer)
-			const equipment=getequipped(killer)
-			addToScore("stats_weaponKills_",equipment["Mainhand"].replace("_"," "), killer)
-			entityKills(victim,killer,cause.cause,equipment["Mainhand"])
 			const projectile=event.damageSource.damagingProjectile
+			let victimType = victim.typeId.replace("minecraft:","").replace("_"," ")
+			addToScore("stats_entitiesKilled_",victimType.replace("_"," "), killer)
+			let equipment = getequipped(killer)
+			let weapon = equipment["Mainhand"]
+			if(projectile){
+				let projectileType = projectile.typeId
+				if (projectileType.includes("trident")){
+					weapon="trident"
+				}
+				
+			}
+			addToScore("stats_weaponKills_",weapon.replace("_"," "), killer)
+			entityKills(victim,killer,cause.cause,weapon)
+			
 
 			if(projectile){
 				if(projectile.typeId=="minecraft:fireball"){
@@ -329,7 +338,7 @@ function hitByProjectile(event){
 }
 function getArrowType(arrow){
 	//cant do this yet...
-	return "Arrow"
+	return "Arrow".replace("_"," ")
 }
 function initSpawn(event){
 	let player = event.player;
@@ -459,10 +468,10 @@ function spawnedEntity(event){
 	let entity = event.entity;
 	let entityName = entity.typeId.replace("minecraft:","");
 	let playersClosest=null
-	if (entity.hasOwnProperty("dimension") ){
-		let playersClosest = entity.dimension.getPlayers({
+	if (entity.dimension){
+		playersClosest = entity.dimension.getPlayers({
 					closest: 1,
-					location: {x: entity.location.x, y: entity.location.y, z: entity.location.z}
+					location: entity.location
 				})[0];
 	}
 	switch(entityName){
@@ -501,8 +510,9 @@ function spawnedEntity(event){
 			
 				//[achievement] Zombie Doctor | Cure a zombie villager. | Throw a splash potion of weakness at a zombie villager and give it a golden apple (by facing the zombie and pressing the use key with a golden apple in your hand)
 			if(event.cause=="Transformed"){
-				if(!achievementTracker.checkAchievment("ZombieDoctor", playersClosest)){
+				if(!advancementTracker.checkAchievment("ZombieDoctor", playersClosest)){
 					achievementTracker.setAchievment("ZombieDoctor", playersClosest);//[advancement] A Terrible Fortress | Break your way into a Nether Fortress | Enter a nether fortress.
+					advancementTracker.setAchievment("ZombieDoctor", playersClosest);
 				}
 			}
 			break;
@@ -531,7 +541,7 @@ function statStick(event){
 	let itemName = event.itemStack.typeId.replace("minecraft:", "");
 	let itemTag = event.itemStack.nameTag;
 	
-	if(itemName == "stick" && (itemTag == "statStick")){
+	if(itemName == "stick" && (itemTag == "stats" ||itemTag == "Stats" )){
 		propertyToScore(player)
 		ui.statList(player);
 	}
@@ -748,7 +758,7 @@ function tameEvents(event){
 		closest: 1,
 			location: {x: event.entity.location.x, y: event.entity.location.y, z: event.entity.location.z}
 	})[0];
-	addToScore("stats_Tamed_",animalType,player)
+	addToScore("stats_Tamed_",animalType.replace("_"," "),player)
 	if (event.eventId=="minecraft:on_tame"){
 		//[advancement] Best Friends Forever | Tame an animal | Tame one of these 8 tameable mobs:, Cat, Donkey, Horse, Llama, Mule, Parrot, Trader Llama, Wolf
 		if(!advancementTracker.checkAchievment("BestFriendsForever",player)){
@@ -802,12 +812,13 @@ function tameEvents(event){
 					catMask=0b000000000000
 				}
 				const variant = event.entity.getComponent("minecraft:variant")
-
-				catMask = catMask | 0b1 << variant.value
-				player.setDynamicProperty("catMask",catMask)
-				if(catMask==0b11111111111){
-					advancementTracker.setAchievment("ACompleteCatalogue",player)
-				}
+				if(variant){
+					catMask = catMask | 0b1 << variant.value
+					player.setDynamicProperty("catMask",catMask)
+					if(catMask==0b11111111111){
+						advancementTracker.setAchievment("ACompleteCatalogue",player)
+					}
+				}					
 			}
 	}
 	addToScore("stats_AnimalsTaimed_", animalType.replace("_",""), player)
@@ -819,8 +830,13 @@ function onHurtEvent(event){
 		const agressor = source.damagingEntity
 		const agressorType = agressor.typeId.replace("minecraft:","")
 		if(agressorType=="player"){
-			const weapon = getequipped(agressor)["Mainhand"]
-			addToScore("stats_DamageDelt_",weapon,agressor,Math.round(event.damage))
+			
+			let weapon = getequipped(agressor)["Mainhand"]
+			if (source.damagingProjectile){
+				weapon = source.damagingProjectile.typeId.replace("minecraft:","")
+			}
+			
+			addToScore("stats_DamageDelt_",weapon.replace("_"," "),agressor,Math.round(event.damage))
 		//[achievement] Overkill | Deal nine hearts of damage in a single hit. | Damage can be dealt to any mob, even those that do not have nine hearts of health overall.
 			if(event.damage>9){
 				if(!achievementTracker.checkAchievment("Overkill",agressor)){
@@ -828,7 +844,7 @@ function onHurtEvent(event){
 				}
 			}
 		}else if(victim.typeId.replace("minecraft:","")=="player"){
-			addToScore("stats_DamageTaken_",agressor.typeId.replace("minecraft:",""),victim)
+			addToScore("stats_DamageTaken_",agressor.typeId.replace("minecraft:","").replace("_"," "),victim)
 		}
 	}
 }
@@ -1052,7 +1068,7 @@ function spawnAndBreed(entity, player){
 			break;
 		case "ender_dragon" :
 			if(world.getDynamicProperty("dragonKill") == 1){
-				if(world.getDynamicProperty("TheEndAgain") == 1){
+				if(!world.getDynamicProperty("TheEndAgain") == 1){
 					achievementTracker.setAchievment("TheEndAgain",player);//[achievement] The End... Again... | Respawn the Enderdragon | —
 					advancementTracker.setAchievment("TheEndAgain",player);//[advancement] The End... Again... | Respawn the Ender Dragon | Be within a 192 block radius from the coordinates (0.0, 128, 0.0) when an ender dragon is summoned using end crystals.
 				}
@@ -1077,8 +1093,8 @@ function spawnAndBreed(entity, player){
 		case "panda" :
 			if(!achievementTracker.checkAchievment("Zoologist",player)){
 				achievementTracker.setAchievment("Zoologist",player);//[achievement] Zoologist | Breed two pandas with bamboo. | —
-				if(!achievementTracker.checkAchievment("TheParrotsandtheBats",player)){
-					achievementTracker.setAchievment("TheParrotsandtheBats",player);
+				if(!advancementTracker.checkAchievment("TheParrotsandtheBats",player)){
+					advancementTracker.setAchievment("TheParrotsandtheBats",player);
 				}
 			}
 			break;
@@ -1109,7 +1125,7 @@ function spawnAndBreed(entity, player){
 			//[advancement] Two by Two | Breed all the animals! | Breed a pair of each of these 24 mobs:, Axolotl, Bee, Camel, Cat, Chicken, Cow, Donkey, Fox, Frog, Goat, Hoglin, Horse, Llama, Mooshroom, Mule, Ocelot, Panda, Pig, Rabbit, Sheep, Sniffer, Strider, Turtle, Wolf, A trader llama does not count as a llama, and a mule must be the result of breeding a horse and a donkey for this advancement as they are not breedable together. Other breedable mobs can be bred, but are ignored for this advancement.
 			if(getScoreIfExists(world.scoreboard.getObjective("spawnAndBreedbreed_all_bool"), player) == 0){
 				if(getScoreIfExists(world.scoreboard.getObjective("spawnAndBreed" + entity), player) == 0){
-					addToScore("spawnAndBreedbreed_all_score",entity, player);
+					addToScore("spawnAndBreedbreed_all_score",entity.replace("_"," "), player);
 					//boolScore("spawnAndBreed", entity, player, 1);
 					if(getScoreIfExists(world.scoreboard.getObjective("spawnAndBreedbreed_all_score"), player) == 24){
 						//boolScore("spawnAndBreed", "breed_all_bool", player, 1);
@@ -1209,7 +1225,7 @@ function statusAndEffects(player){
 	}
 	if((heroMask & effectMask)==heroMask){
 		//[advancement] Hero of the Village | Successfully defend a village from a raid | Kill at least one raid mob during a raid and wait until it ends in victory.
-		if(!advancementTracker.checkAchievment("HerooftheVillage"),player){
+		if(!advancementTracker.checkAchievment("HerooftheVillage",player)){
 			advancementTracker.setAchievment("HerooftheVillage",player)
 		}
 	}
@@ -1226,6 +1242,7 @@ function trading(){
 	//done--------------------
 }
 function usingItems(item, player){
+	console.warn(item)
 	switch(item){
 		case "oak_sign" :
 			if(!achievementTracker.checkAchievment("ItsaSign", player)){
@@ -1445,6 +1462,9 @@ function timer10Sec(){
 			inventoryClass.itemInventory(playerArrayList[i],getequipped);
 			//effect checks for achievement
 			statusAndEffects(playerArrayList[i]);
+			playerArrayList[i].setDynamicProperty("biome_" + biomeFinder(playerArrayList[i]), 1);
+			biomeChecker(playerArrayList[i],achievementTracker,advancementTracker)
+
 		}
 	}, 200);
 }
@@ -1473,12 +1493,9 @@ function timer1Day(){
 function timer1Min(){
 	system.runInterval(() => {
 		let playerArrayList = world.getAllPlayers();
-		
 		for(let i = 0; i < playerArrayList.length; i++){
 			let minCount = playerArrayList[i].getDynamicProperty("playTimeM");
-			
 			playerArrayList[i].setDynamicProperty("playTimeM", (minCount === undefined ? 0 : minCount) + 1);
-			playerArrayList[i].setDynamicProperty("biome_" + biomeFinder(playerArrayList[i]), 1);
 		}
 	}, 1200);
 }

@@ -4,6 +4,16 @@ import {biomeFinder, lightLevel} from "playerDependent"
 import {getScoreIfExists} from "helperFunctions.js"
 const debugToggle = true;
 
+function capitalize(value){
+	let output=""
+	value.split(" ").forEach((word)=>{
+		if (word.length>1){
+			output+=word[0].toUpperCase()+word.slice(1)+" "
+		}
+	})
+	return output.substring(0, output.length - 1)
+}
+
 export class uiHandler{
 	constructor(achievementTracker,advancementTracker,chalengeTracker){
 		this.achievementTracker = achievementTracker;
@@ -221,18 +231,20 @@ export class uiHandler{
 			if(!(name)){
 				name="";
 			}
+			name = name.replace("minecraft:","")
+			name = capitalize(name)
 			switch (type){
 				case "stats":
 					tempScore = getScoreIfExists(board,player);
 					if(name.length>0){
 						switch(category){
 							case "blocksBroken":
-								if (!name.includes("total")){
-									blocksBroken.push(itemFormat + name.replace("minecraft:","")+ ": " + bodyFormat + tempScore.toString());
+								if (!name.includes("Total")){
+									blocksBroken.push(itemFormat + name + ": " + bodyFormat + tempScore.toString());
 								}
 								break;
 							case "blocksPlaced":
-								if (!name.includes("total")){
+								if (!name.includes("Total")){
 									blocksPlaced.push(itemFormat + name+ ": " + bodyFormat + tempScore.toString());
 								}
 								break;

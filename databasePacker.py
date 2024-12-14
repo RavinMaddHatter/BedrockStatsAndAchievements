@@ -29,7 +29,7 @@ def convertToJson(ws,playerJson=True):
                                     "implemented": implemented,
                                     "containerIndex": int(containerIndex)-1}
     return dataStructure
-with open("Pack Template\\scripts\\textObjects.js","w+") as file:
+with open("Pack Template\\scripts\\Translation.js","w+") as file:
     file.write("export const achievements = " + json.dumps(convertToJson(achievments),indent=2) + ";\n")
     file.write("export const advancements = " + json.dumps(convertToJson(advancements),indent=2) + ";\n")
     file.write("export const challenges = " + json.dumps(convertToJson(challenges),indent=2) + ";\n")
