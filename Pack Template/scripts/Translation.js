@@ -797,7 +797,7 @@ export const achievements = {
     "globalIndex": 89,
     "category": "Story",
     "container": "Story1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 28
   },
   "Echolocation": {
@@ -824,7 +824,7 @@ export const achievements = {
     "globalIndex": 92,
     "category": "Story",
     "container": "Story1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 30
   },
   "WhereHaveYouBeen": {
@@ -887,7 +887,7 @@ export const achievements = {
     "globalIndex": 100,
     "category": "Adventure",
     "container": "Adventure1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 29
   },
   "SoundtheAlarm": {
@@ -1591,7 +1591,7 @@ export const advancements = {
     "globalIndex": 54,
     "category": "Adventure",
     "container": "advAdventure1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 4
   },
   "WhataDeal": {
@@ -1834,7 +1834,7 @@ export const advancements = {
     "globalIndex": 81,
     "category": "Adventure",
     "container": "advAdventure1",
-    "implemented": true,
+    "implemented": false,
     "containerIndex": 31
   },
   "VeryVeryFrightening": {
