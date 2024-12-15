@@ -9,6 +9,10 @@ challenges = excelworkbook["Challenges"]
 
 def convertToJson(ws,playerJson=True):
     dataStructure={}
+    print()
+    print()
+    print("Name | Category | Description ")
+    print("--- | --- | ---")
     for row in ws.iter_rows(min_row=3,max_col=10):
         if(type(row[6].value)!=type(None)):
             name = row[6].value.replace(" ","").replace("'","").replace(".","").replace("!","").replace("?","")
@@ -20,6 +24,8 @@ def convertToJson(ws,playerJson=True):
             description=row[1].value
             playerJsonRequired=row[8].value=="true"
             implemented=row[7].value
+            if implemented:
+                print(f"{displayname} | {category} | {description}")
             if playerJson or not playerJsonRequired:
                 dataStructure[name]={"displayName": displayname,
                                     "description": description,
